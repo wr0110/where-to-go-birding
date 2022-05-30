@@ -5,19 +5,16 @@ import Map from "components/Map";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { getHotspot } from "lib/firebase";
+import useCounty from "hooks/useCounty";
+
 
 export default function Hotspot() {
 	const [data, setData] = React.useState<any>();
 	const router = useRouter();
 	const slug = router.query.slug as string;
 	const countySlug = (router.query.countySlug as string)?.replace("-county", "");
-
+	const { countyColor, countyName } = useCounty(countySlug);
 	const { name, lat, lng, address, links, about, tips, restrooms, locationId } = data || {};
-
-	const countyColor = "#92ad39";
-
-	const county = "summit-county";
-	const countyName = "Summit County";
 
 	const nameParts = name?.split("--");
 	const nameShort = nameParts?.length ? nameParts[1] : name;
@@ -44,7 +41,7 @@ export default function Hotspot() {
 						))}
 					</div>
 					{name &&
-						<HotspotSummary county={county} countyName={countyName} name={name} locationId={locationId} lat={lat} lng={lng} />
+						<HotspotSummary countySlug={countySlug} countyName={countyName} name={name} locationId={locationId} lat={lat} lng={lng} />
 					}
 					{tips &&
 						<div className="mb-4">
@@ -71,7 +68,7 @@ export default function Hotspot() {
 					{restrooms && <span>Restrooms on site.</span>}
 				</div>
 				<div>
-					<img src={`/maps/${county}.jpg`} width="260" className="mx-auto mb-10" alt={`${countyName} map`} />
+					<img src={`/maps/${countySlug}.jpg`} width="260" className="mx-auto mb-10" alt={`${countyName} county map`} />
 					{(lat && lng) && <Map lat={lat} lng={lng} />}
 				</div>
 			</div>

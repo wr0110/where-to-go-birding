@@ -16,6 +16,16 @@ export const tinyMceOptions = {
 	elementpath: false,
 }
 
+export function capitalize(str: string) {
+	if (typeof str !== "string") return str;
+	const words = str.split(" ");
+	for (let i = 0; i < words.length; i++) {
+			words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+	}
+
+	return words.join(" ");
+}
+
 export async function geocode(lat: number, lng: number) {
 	console.log("Geocoding", lat, lng);
 	Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_GEOCODE_KEY);
