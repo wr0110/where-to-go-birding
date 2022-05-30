@@ -3,15 +3,15 @@ type Props = {
 	locationId: string,
 	lat: number,
 	lng: number,
-	county: string,
+	countySlug: string,
 	countyName: string,
 }
 
-export default function Address({ county, countyName, name, locationId, lat, lng }: Props) {
+export default function Address({ countySlug, countyName, name, locationId, lat, lng }: Props) {
 	return (
 		<div className="px-3 py-2 border mb-6">
 			<h3 className="mb-4 font-bold">eBird Hotspot</h3>
-			<h3 className="my-4 font-bold"><a href={`/${county}`}>{countyName}</a></h3>
+			<h3 className="my-4 font-bold"><a href={`/${countySlug}`}>{countyName} County</a></h3>
 			<h3 className="font-bold">{name}</h3>
 			Coordinates: {lat}, {lng}<br/>
 			Bar charts:

@@ -1,0 +1,26 @@
+{
+	"nw": {
+		"label": "Northwest",
+		"color": "#46a695"
+	},
+	"ne": {
+		"label": "Northeast",
+		"color": "#92ad39"
+	},
+	"ce": {
+		"label": "Central",
+		"color": "#8c4cb5"
+	},
+	"ec": {
+		"label": "East Central",
+		"color": "#e57700"
+	},
+	"sw": {
+		"label": "Southwest",
+		"color": "#efd75e"
+	},
+	"se": {
+		"label": "Southeast",
+		"color": "#ce0d02"
+	}
+}
