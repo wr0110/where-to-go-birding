@@ -27,7 +27,7 @@ export default function County() {
 					<ol>
 						{hotspots?.map(({ name, slug }) => (
 							<li key={slug}>
-								<Link href={`/${countySlug}/${slug}`}>{name}</Link>
+								<Link href={`/${countySlug}-county/${slug}`}>{name}</Link>
 							</li>
 						))}
 					</ol>
