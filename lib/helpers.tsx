@@ -33,7 +33,7 @@ export async function geocode(lat: number, lng: number) {
 	Geocode.setLocationType("ROOFTOP");
 	const response = await Geocode.fromLatLng(lat, lng);
 	
-	let city: string, state: string, zip:string, street: string, road: string;
+	let city: string, state: string, zip:string, road: string;
 	for (let i = 0; i < response.results[0].address_components.length; i++) {
 		for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
 			switch (response.results[0].address_components[i].types[j]) {
@@ -46,15 +46,11 @@ export async function geocode(lat: number, lng: number) {
 				case "postal_code":
 					zip = response.results[0].address_components[i].long_name;
 					break;
-				case "street_number":
-					street = response.results[0].address_components[i].long_name;
-					break;
 				case "route":
 					road = response.results[0].address_components[i].long_name;
 					break;
 			}
 		}
 	}
-	const address = street && road ? `${street} ${road}` : null;
-	return { address, city, state, zip };
+	return { road, city, state, zip };
 }

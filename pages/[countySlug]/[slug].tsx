@@ -3,29 +3,33 @@ import Address from "components/Address";
 import HotspotSummary from "components/HotspotSummary";
 import Map from "components/Map";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { getHotspot } from "lib/firebase";
+import { getHotspot, getHotspotByLocationId } from "lib/firebase";
 import useCounty from "hooks/useCounty";
+import AboutSection from "components/AboutSection";
 
+const getParent = async (hotspotId: string) => {
+	if (!hotspotId) return null;
+	const data = await getHotspotByLocationId(hotspotId);
+	if (!data) return null;
+	const { name, about, slug } = data;
+	return { name, about, slug };
 
-export default function Hotspot() {
-	const [data, setData] = React.useState<any>();
-	const router = useRouter();
-	const slug = router.query.slug as string;
-	const countySlug = (router.query.countySlug as string)?.replace("-county", "");
+}
+
+export async function getServerSideProps({ query: { slug, countySlug }}) {
+	countySlug = countySlug.replace("-county", "");
+	const data = await getHotspot(countySlug, slug);
+	const parent = await getParent(data.parentId);
+
+  return {
+    props: { countySlug, parent, ...data },
+  }
+}
+
+export default function Hotspot({ countySlug, name, lat, lng, address, links, about, tips, restrooms, locationId, parent }) {	
 	const { countyColor, countyName } = useCounty(countySlug);
-	const { name, lat, lng, address, links, about, tips, restrooms, locationId } = data || {};
-
 	const nameParts = name?.split("--");
 	const nameShort = nameParts?.length ? nameParts[1] : name;
-
-	React.useEffect(() => {
-		const fetchData = async () => {
-			const hotspotData = await getHotspot(countySlug, slug);
-			setData(hotspotData);
-		}
-		if (countySlug && slug) fetchData();
-	}, [countySlug, slug]);
 
 	return (
 		<div className="container pb-16">
@@ -39,31 +43,25 @@ export default function Hotspot() {
 						{links?.map(({ href, title }, index) => (
 							<a key={index} href={href} target="_blank" rel="noopener noreferrer">{title}</a>
 						))}
+						{parent &&
+							<p className="mt-4">
+								Also, see <Link href={`/${countySlug}-county/${parent.slug}`}>{parent.name}</Link>
+							</p>
+						}
 					</div>
 					{name &&
 						<HotspotSummary countySlug={countySlug} countyName={countyName} name={name} locationId={locationId} lat={lat} lng={lng} />
 					}
-					{tips &&
-						<div className="mb-4">
-							<h3 className="font-bold">Tips for birding {nameShort}</h3>
-							<p dangerouslySetInnerHTML={{__html: tips}} />
-						</div>
+					{tips?.text &&
+						<AboutSection heading={`Tips for birding ${nameShort}`} {...tips} />
 					}
 					
 					{about?.text &&
-						<div className="mb-4">
-							<h3 className="font-bold">About {nameShort}</h3>
-							<p dangerouslySetInnerHTML={{__html: about.text}} />
-							<p className="text-[0.6rem] mt-1">
-								{(about?.source && about?.link) &&
-									<>
-										From&nbsp;
-										<a href={about.link} target="_blank" rel="noopener noreferrer">{about.source}</a>
-									</>
-								}
-								{(about?.source && ! about?.link) && <span className="text-xs">From {about.source}</span>}
-							</p>
-						</div>
+						<AboutSection heading={`Tips for birding ${nameShort}`} {...about} />
+					}
+
+					{(parent?.about?.text && parent?.name) &&
+						<AboutSection heading={`Tips for birding ${parent.name}`} {...parent.about} />
 					}
 					{restrooms && <span>Restrooms on site.</span>}
 				</div>

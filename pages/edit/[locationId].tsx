@@ -20,7 +20,11 @@ type Hotspot = {
 }
 
 type Inputs = {
-	tips: string,
+	tips: {
+		text: string,
+		source: string,
+		link: string,	
+	},
 	about: {
 		text: string,
 		source: string,
@@ -33,7 +37,9 @@ type Inputs = {
 		zip: string,
 	},
 	restrooms: string,
+	roadside: string,
 	slug: string,
+	parentId: string,
 };
 
 export default function Edit() {
@@ -46,10 +52,13 @@ export default function Edit() {
 
 	const router = useRouter();
 	const locationId = router.query.locationId as string;
-	const form = useForm<Inputs>();
+	const form = useForm<Inputs>({
+		defaultValues: {
+			roadside: "",
+			restrooms: "",
+		}
+	});
 	const { name, latitude, longitude, subnational1Code, subnational2Code, subnational2Name } = hotspot || {};
-
-	
 
 	const handleSubmit: SubmitHandler<Inputs> = async (data) => {
 		setSaving(true);
@@ -65,7 +74,10 @@ export default function Edit() {
 			countySlug: countySlug,
 			lat: latitude,
 			lng: longitude,
-			tips: tipsRef.current.getContent(),
+			tips: {
+				...data.tips,
+				text: tipsRef.current.getContent(),
+			},
 			about: {
 				...data.about,
 				text: aboutRef.current.getContent(),
@@ -84,17 +96,17 @@ export default function Edit() {
 
 			const hotspotData = await getHotspotByLocationId(locationId);
 			if (hotspotData) {
-				form.reset(hotspotData);
+				form.reset(hotspotData, { keepDefaultValues: true });
 				setInitialTips(hotspotData.tips);
 				setInitialAbout(hotspotData.about.text);
 			}
 			if (!hotspotData || !hotspotData.address.city || !hotspotData.address.state || !hotspotData.address.zip) {
-				const { address, city, state, zip } = await geocode(data.latitude, data.longitude);
+				const { road, city, state, zip } = await geocode(data.latitude, data.longitude);
 				form.setValue("address.city", city);
 				form.setValue("address.state", state);
 				form.setValue("address.zip", zip);
 				if (!hotspotData) {
-					form.setValue("address.street", address);
+					form.setValue("address.street", road);
 				}
 			}
 		}
@@ -134,11 +146,23 @@ export default function Edit() {
 
 						<div>
 							<label className="text-gray-500 font-bold">
+								Parent Hotspot ID<br/>
+								<Input type="text" name="parentId" />
+								<span className="text-xs text-gray-500 font-normal">Example: L12345678</span>
+							</label>
+						</div>
+
+						<div>
+							<label className="text-gray-500 font-bold">
 								Tips for birding<br/>
 								<div className="mt-1">
 									<Editor id="tips-editor" onInit={(e, editor) => tipsRef.current = editor} initialValue={initialTips} init={tinyMceOptions} />
 								</div>
 							</label>
+							<div className="mt-2 grid grid-cols-2 gap-4">
+								<Input type="text" name="tips.source" placeholder="Source Title" className="text-sm"/>
+								<Input type="text" name="tips.link" placeholder="Source URL" className="text-sm"/>
+							</div>
 						</div>
 
 						<div>
@@ -156,7 +180,7 @@ export default function Edit() {
 
 						<div>
 							<label className="text-gray-500 font-bold">
-								Are there restrooms on site?
+								Restrooms on site
 							</label><br/>
 							<div className="mt-1 flex gap-2">
 								<label>
@@ -165,6 +189,21 @@ export default function Edit() {
 								<br/>
 								<label>
 									<input {...form.register("restrooms")} type="radio" name="restrooms" value="No"/> No
+								</label>
+							</div>
+						</div>
+
+						<div>
+							<label className="text-gray-500 font-bold">
+								Roadside accessible
+							</label><br/>
+							<div className="mt-1 flex gap-2">
+								<label>
+									<input {...form.register("roadside")} type="radio" name="roadside" value="Yes"/> Yes
+								</label>
+								<br/>
+								<label>
+									<input {...form.register("roadside")} type="radio" name="roadside" value="No"/> No
 								</label>
 							</div>
 						</div>
