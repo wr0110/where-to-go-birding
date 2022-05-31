@@ -8,6 +8,7 @@ import FormError from "components/FormError";
 import { Editor } from "@tinymce/tinymce-react";
 import { saveHotspot, getHotspotByLocationId } from "lib/firebase";
 import { slugify, tinyMceOptions, geocode } from "lib/helpers";
+import InputLinks from "components/InputLinks";
 
 type Hotspot = {
 	locationId: string,
@@ -36,6 +37,10 @@ type Inputs = {
 		state: string,
 		zip: string,
 	},
+	links: {
+		label: string,
+		url: string,
+	}[],
 	restrooms: string,
 	roadside: string,
 	slug: string,
@@ -54,8 +59,8 @@ export default function Edit() {
 	const locationId = router.query.locationId as string;
 	const form = useForm<Inputs>({
 		defaultValues: {
-			roadside: "",
-			restrooms: "",
+			roadside: "No",
+			restrooms: "No",
 		}
 	});
 	const { name, latitude, longitude, subnational1Code, subnational2Code, subnational2Name } = hotspot || {};
@@ -150,6 +155,11 @@ export default function Edit() {
 								<Input type="text" name="parentId" />
 								<span className="text-xs text-gray-500 font-normal">Example: L12345678</span>
 							</label>
+						</div>
+
+						<div>
+							<label className="text-gray-500 font-bold">Links</label>
+							<InputLinks />
 						</div>
 
 						<div>

@@ -40,8 +40,8 @@ export default function Hotspot({ countySlug, name, lat, lng, address, links, ab
 						{ name &&
 							<Address line1={nameParts?.length ? nameParts[0] : name} line2={nameShort} {...address} />
 						}
-						{links?.map(({ href, title }, index) => (
-							<a key={index} href={href} target="_blank" rel="noopener noreferrer">{title}</a>
+						{links?.map(({ url, label }, index) => (
+							<a key={index} href={url} target="_blank" rel="noreferrer">{label}</a>
 						))}
 						{parent &&
 							<p className="mt-4">
