@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
 		<>
 			<Header />
 			<Component {...pageProps} />
-			<Footer stateLabel={state.label} facebook={state.facebook} twitter={state.twitter} />
+			<Footer/>
 		</>
 	)
 }
