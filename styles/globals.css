@@ -8,6 +8,7 @@
 		color: #4f4f4f;
 		@apply leading-6;
 		@apply antialiased;
+		@apply pt-32;
 	}
 
 	a {

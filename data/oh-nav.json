@@ -1,0 +1,114 @@
+[
+	{
+		"label": "About Birding in Ohio",
+		"childItems": [
+			{
+				"label": "About this website",
+				"href": "/about"
+			},
+			{
+				"label": "About eBird",
+				"href": "/about-ebird"
+			},
+			{
+				"label": "eBird Reviewers",
+				"href": "/about-ebird-reviewers"
+			},
+			{
+				"label": "Focus on...",
+				"href": "/focus-on"
+			},
+			{
+				"label": "Help Topics",
+				"href": "/help"
+			}
+		]
+	},
+	{
+		"label": "Find a Location",
+		"childItems": [
+			{
+				"label": "Alphabetical List of Hotspots",
+				"href": "/alphabetical-index"
+			},
+			{
+				"label": "County Pages",
+				"href": "#counties"
+			},
+			{
+				"label": "Map of OhioCounties",
+				"href": "#county-map"
+			},
+			{
+				"label": "Top Birding Locations",
+				"href": "#top-locations"
+			},
+			{
+				"label": "Ohio Birding Drives",
+				"href": "/birding-drives"
+			},
+			{
+				"label": "Ohio Birding Hikes",
+				"href": "/birding-day-hikes"
+			},
+			{
+				"label": "Roadside Birding",
+				"href": "/roadside-birding"
+			},
+			{
+				"label": "Accessible Facilities",
+				"href": "/accessible-facilities"
+			},
+			{
+				"label": "Audubon Important Bird Areas",
+				"href": "/important-bird-areas"
+			}
+		]
+	},
+	{
+		"label": "Find a Bird",
+		"childItems": [
+			{
+				"label": "Recent Sightings",
+				"href": "#recent"
+			},
+			{
+				"label": "eBird Rare Bird Alert",
+				"href": "https://ebird.org/alert/summary?sid=SN35533&sortBy=obsDt&o=desc",
+				"target": "_blank"
+			},
+			{
+				"label": "About Rare Birds",
+				"href": "/rarities"
+			}
+	 	]
+	},
+	{
+	 "label": "How to Help",
+	 "href": "/how-to-help"
+	},
+	{
+	 "label": "What's New",
+	 "href": "/whats-new"
+	},
+	{
+		"label": "The OOS",
+		"childItems": [
+			{
+				"label": "Visit the OOS",
+				"href": "https://www.ohiobirds.org/",
+				"target": "_blank"
+			},
+			{
+				"label": "Become a Member",
+				"href": "https://ohiobirds.org/membership/membership-renewals/",
+				"target": "_blank"
+			},
+			{
+				"label": "Donae!",
+				"href": "https://ohiobirds.org/membership/donate-now/",
+				"target": "_blank"
+			}
+		]
+	}
+]
