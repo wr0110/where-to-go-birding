@@ -1,17 +1,9 @@
 import * as React from "react";
-import { MailIcon } from "@heroicons/react/outline";
-import Nav from "data/oh-nav.json";
+import Nav from "data/nav.json";
 import NavItem from "components/NavItem";
-import HamburgerIcon from "icons/Hamburger";
 
-type Props = {
-	stateLabel: string,
-	email: string,
-}
-
-export default function Header({ email }: Props) {
+export default function Header() {
 	const [collapsed, setCollapsed] = React.useState<boolean>(false);
-	const [mobileShow, setMobileShow] = React.useState<boolean>(false);
 	
 	React.useEffect(() => {
 		const onScroll = () => {
@@ -22,25 +14,23 @@ export default function Header({ email }: Props) {
 	}, []);
 
 	return (
-		<header className="bg-white border-b static lg:fixed top-0 right-0 left-0">
-			<div className="bg-[#4a84b2] py-2">
-				<div className="container flex gap-6 justify-end text-xs">
-					<a href={`mailto:${email}`} className="text-white flex gap-1 items-center" target="_blank" rel="noreferrer">
-						<MailIcon className="h-4 w-4 opacity-85" /> {email}
-					</a>
-				</div>
-			</div>
+		<header className="bg-white border-b static md:fixed top-0 right-0 left-0 pl-3 sm:pr-4 md:pr-10 shadow-sm">
 			<div>
-				<div className="container flex justify-between">
-					<span>Logo</span>
-					<nav>
-						<ul className="flex-col lg:flex-row absolute lg:relative shadow-lg lg:shadow-none p-6 lg:p-0 bg-white left-[8%] right-[8%] lg:top-0 top-[116px] flex gap-6 border-t-[#2ea3f2] border-t-[3px] lg:border-t-0">
+				<div className="sm:flex justify-between py-2 items-center">
+					<div className="flex gap-2 items-center">
+						<img src="/logo.jpg" className={`w-[50px] ${!collapsed ? "md:w-[100px]" : ""} transition-all duration-300 h-auto`} />
+						<div className="flex flex-col justify-center">
+							<h1 className={`text-lg ${!collapsed ? "md:text-3xl" : ""} text-gray-900 transition-all duration-300`}>eBird Hotspots</h1>
+							<em className="text-[0.8em] leading-4 text-gray-500">Where to Go Birding</em>
+						</div>
+					</div>
+					<nav className="mt-2 md:mt-0">
+						<ul className="flex gap-7">
 							{Nav.map((item) => (
-								<NavItem key={item.label} collapsed={collapsed} className={`bg-gray-100 lg:bg-transparent p-4 ${collapsed ? "lg:py-3" : "lg:py-8"}`} {...item} />
+								<NavItem key={item.label} {...item} />
 							))}
 						</ul>
 					</nav>
-					<HamburgerIcon className="block lg:hidden cursor-pointer text-xl text-[#2EA3F2] my-8" onClick={() => setMobileShow(!collapsed)} />
 				</div>
 			</div>
 			

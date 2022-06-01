@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
 	
 	return (
 		<>
-			<Header email={state.email} stateLabel={state.label} />
+			<Header />
 			<Component {...pageProps} />
 			<Footer stateLabel={state.label} facebook={state.facebook} twitter={state.twitter} />
 		</>
