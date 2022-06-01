@@ -1,0 +1,253 @@
+[
+	{
+		"label": "Alabama",
+		"slug": "alabama",
+		"ebirdCode": "US-AL"
+	},
+	{
+		"label": "Alaska",
+		"slug": "alaska",
+		"ebirdCode": "US-AK"
+	},
+	{
+		"label": "Arizona",
+		"slug": "arizona",
+		"ebirdCode": "US-AZ"
+	},
+	{
+		"label": "Arkansas",
+		"slug": "arkansas",
+		"ebirdCode": "US-AR"
+	},
+	{
+		"label": "California",
+		"slug": "california",
+		"ebirdCode": "US-CA"
+	},
+	{
+		"label": "Colorado",
+		"slug": "colorado",
+		"ebirdCode": "US-CO"
+	},
+	{
+		"label": "Connecticut",
+		"slug": "connecticut",
+		"ebirdCode": "US-CT"
+	},
+	{
+		"label": "Delaware",
+		"slug": "delaware",
+		"ebirdCode": "US-DE"
+	},
+	{
+		"label": "Florida",
+		"slug": "florida",
+		"ebirdCode": "US-FL"
+	},
+	{
+		"label": "Georgia",
+		"slug": "georgia",
+		"ebirdCode": "US-GA"
+	},
+	{
+		"label": "Hawaii",
+		"slug": "hawaii",
+		"ebirdCode": "US-HI"
+	},
+	{
+		"label": "Idaho",
+		"slug": "idaho",
+		"ebirdCode": "US-ID"
+	},
+	{
+		"label": "Illinois",
+		"slug": "illinois",
+		"ebirdCode": "US-IL"
+	},
+	{
+		"label": "Indiana",
+		"slug": "indiana",
+		"ebirdCode": "US-IN"
+	},
+	{
+		"label": "Iowa",
+		"slug": "iowa",
+		"ebirdCode": "US-IA"
+	},
+	{
+		"label": "Kansas",
+		"slug": "kansas",
+		"ebirdCode": "US-KS"
+	},
+	{
+		"label": "Kentucky",
+		"slug": "kentucky",
+		"ebirdCode": "US-KY"
+	},
+	{
+		"label": "Louisiana",
+		"slug": "louisiana",
+		"ebirdCode": "US-LA"
+	},
+	{
+		"label": "Maine",
+		"slug": "maine",
+		"ebirdCode": "US-ME"
+	},
+	{
+		"label": "Maryland",
+		"slug": "maryland",
+		"ebirdCode": "US-MD"
+	},
+	{
+		"label": "Massachusetts",
+		"slug": "massachusetts",
+		"ebirdCode": "US-MA"
+	},
+	{
+		"label": "Michigan",
+		"slug": "michigan",
+		"ebirdCode": "US-MI"
+	},
+	{
+		"label": "Minnesota",
+		"slug": "minnesota",
+		"ebirdCode": "US-MN"
+	},
+	{
+		"label": "Mississippi",
+		"slug": "mississippi",
+		"ebirdCode": "US-MS"
+	},
+	{
+		"label": "Missouri",
+		"slug": "missouri",
+		"ebirdCode": "US-MO"
+	},
+	{
+		"label": "Montana",
+		"slug": "montana",
+		"ebirdCode": "US-MT"
+	},
+	{
+		"label": "Nebraska",
+		"slug": "nebraska",
+		"ebirdCode": "US-NE"
+	},
+	{
+		"label": "Nevada",
+		"slug": "nevada",
+		"ebirdCode": "US-NV"
+	},
+	{
+		"label": "New Hampshire",
+		"slug": "new-hampshire",
+		"ebirdCode": "US-NH"
+	},
+	{
+		"label": "New Jersey",
+		"slug": "new-jersey",
+		"ebirdCode": "US-NJ"
+	},
+	{
+		"label": "New Mexico",
+		"slug": "new-mexico",
+		"ebirdCode": "US-NM"
+	},
+	{
+		"label": "New York",
+		"slug": "new-york",
+		"ebirdCode": "US-NY"
+	},
+	{
+		"label": "North Carolina",
+		"slug": "north-carolina",
+		"ebirdCode": "US-NC"
+	},
+	{
+		"label": "North Dakota",
+		"slug": "north-dakota",
+		"ebirdCode": "US-ND"
+	},
+	{
+		"label": "Ohio",
+		"slug": "ohio",
+		"ebirdCode": "US-OH",
+		"active": true
+	},
+	{
+		"label": "Oklahoma",
+		"slug": "oklahoma",
+		"ebirdCode": "US-OK"
+	},
+	{
+		"label": "Oregon",
+		"slug": "oregon",
+		"ebirdCode": "US-OR"
+	},
+	{
+		"label": "Pennsylvania",
+		"slug": "pennsylvania",
+		"ebirdCode": "US-PA"
+	},
+	{
+		"label": "Rhode Island",
+		"slug": "rhode-island",
+		"ebirdCode": "US-RI"
+	},
+	{
+		"label": "South Carolina",
+		"slug": "south-carolina",
+		"ebirdCode": "US-SC"
+	},
+	{
+		"label": "South Dakota",
+		"slug": "south-dakota",
+		"ebirdCode": "US-SD"
+	},
+	{
+		"label": "Tennessee",
+		"slug": "tennessee",
+		"ebirdCode": "US-TN"
+	},
+	{
+		"label": "Texas",
+		"slug": "texas",
+		"ebirdCode": "US-TX"
+	},
+	{
+		"label": "Utah",
+		"slug": "utah",
+		"ebirdCode": "US-UT"
+	},
+	{
+		"label": "Vermont",
+		"slug": "vermont",
+		"ebirdCode": "US-VT"
+	},
+	{
+		"label": "Virginia",
+		"slug": "virginia",
+		"ebirdCode": "US-VA"
+	},
+	{
+		"label": "Washington",
+		"slug": "washington",
+		"ebirdCode": "US-WA"
+	},
+	{
+		"label": "West Virginia",
+		"slug": "west-virginia",
+		"ebirdCode": "US-WV"
+	},
+	{
+		"label": "Wisconsin",
+		"slug": "wisconsin",
+		"ebirdCode": "US-WI"
+	},
+	{
+		"label": "Wyoming",
+		"slug": "wyoming",
+		"ebirdCode": "US-WY"
+	}
+]
