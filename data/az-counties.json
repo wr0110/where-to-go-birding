@@ -1,0 +1,17 @@
+{
+	"apache": [null, "001", true],
+	"cochise": [null, "003", true],
+	"coconino": [null, "005", true],
+	"gila": [null, "007", true],
+	"graham": [null, "009", true],
+	"greenlee": [null, "011", true],
+	"la-paz": [null, "012", true],
+	"maricopa": [null, "013", true],
+	"mohave": [null, "015", true],
+	"navajo": [null, "017", true],
+	"pima": [null, "019", true],
+	"pinal": [null, "021", true],
+	"santa-cruz": [null, "023", true],
+	"yavapai": [null, "025", true],
+	"yuma": [null, "027", true]
+}

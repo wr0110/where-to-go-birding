@@ -1,5 +1,5 @@
 import Geocode from "react-geocode";
-
+import States from "data/states.json";
 
 export function slugify(title?: string) {
 	if (!title) return null;
@@ -53,4 +53,20 @@ export async function geocode(lat: number, lng: number) {
 		}
 	}
 	return { road, city, state, zip };
+}
+
+export function getState(param: string) {
+	const slug = param.replace("birding-in-", "");
+	const data = States.find(state => state.slug === slug);
+	return data;
+}
+
+export function formatCountyArray(countyObject: object) {
+	if (!countyObject) return null;
+	return Object.entries(countyObject).map(([key, value]) => ({
+		slug: key,
+		ebirdCode: value[1],
+		name: capitalize(key.replace("-", " ")),
+		active: value[2],
+	}))
 }

@@ -4,7 +4,7 @@ export default function EbirdTable({heading, stateCode}) {
 	}
 
 	return (
-		<table className="border border-gray-500 text-center mb-4">
+		<table className="scale-[0.68] xs:scale-90 sm:scale-100 origin-top-left border border-gray-500 text-center mb-4">
 			<tbody>
 				<tr>
 					<th colSpan={12} className="border border-gray-500">{heading}</th>
@@ -49,7 +49,7 @@ type TdProps = {
 
 function Td({span=1, url, color, textLight, children}: TdProps) {
 	return (
-		<td colSpan={span} className={`px-2.5 py-1.5 text-xs border border-gray-500 bg-[#${color}]`}>
+		<td colSpan={span} className={`px-2.5 py-1.5 text-xs border border-gray-500`} style={{ background: `#${color}` }}>
 			<a href={url} target="_blank" rel="noreferrer" className={textLight ? "text-white" : "text-black"}>{children}</a>
 		</td>
 	);
