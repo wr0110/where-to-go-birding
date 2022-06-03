@@ -1,33 +1,31 @@
 import * as React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { getHotspots } from "lib/firebase";
+import { getCounty, getState } from "lib/helpers";
 
-export default function County() {
-	const [hotspots, setHotspots] = React.useState<any>();
-	const router = useRouter();
-	const countySlug = (router.query.countySlug as string)?.replace("-county", "");
-	const countyColor = "#92ad39";
+export async function getServerSideProps({ query: { stateSlug, countySlug }}) {
+	const state = getState(stateSlug);
+	if (!state) return { notFound: true };
 
-	const countyName = "Summit County";
+	const county = getCounty(state.code, countySlug);
+	if (!county) return { notFound: true };
+	
+	const hotspots = await getHotspots(county.slug) || [];
+  return {
+    props: { stateSlug: state.slug, countySlug: county.slug, hotspots, ...county },
+  }
+}
 
-	React.useEffect(() => {
-		const fetchData = async () => {
-			const data = await getHotspots(countySlug);
-			setHotspots(data);
-		}
-		if (countySlug) fetchData();
-	}, [countySlug]);
-
+export default function County({ stateSlug, countySlug, hotspots, name, color }) {
 	return (
 		<div className="container pb-16">
-			<h1 className="font-bold text-white text-2xl header-gradient p-3 my-16" style={{"--county-color": countyColor} as React.CSSProperties}>{countyName}</h1>
+			<h1 className="font-bold text-white text-2xl header-gradient p-3 my-16" style={{"--county-color": color} as React.CSSProperties}>{name} County</h1>
 			<div className="grid grid-cols-2 gap-12">
 				<div>
 					<ol>
 						{hotspots?.map(({ name, slug }) => (
 							<li key={slug}>
-								<Link href={`/${countySlug}-county/${slug}`}>{name}</Link>
+								<Link href={`/birding-in-${stateSlug}/${countySlug}-county/${slug}`}>{name}</Link>
 							</li>
 						))}
 					</ol>

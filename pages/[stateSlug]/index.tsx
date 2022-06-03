@@ -87,10 +87,10 @@ export default function State({label, code, slug, rareSid, needsSid, yearNeedsSi
 			</div>
 			<h3 id="counties" className="text-lg mb-4 font-bold">{label} Counties</h3>
 			<div className="columns-3 sm:columns-4 lg:columns-6 mb-12">
-				{counties?.map(({name, slug, ebirdCode, active}) => (
+				{counties?.map(({name, slug: countySlug, ebirdCode, active}) => (
 					<p key={name}>
 						{active ? (
-							<Link href={`/birding-in-${slug}`}><a className="font-bold">{name}</a></Link>
+							<Link href={`/birding-in-${slug}/${countySlug}-county`}><a className="font-bold">{name}</a></Link>
 						) : (
 							<a href={`https://ebird.org/region/US-${code}-${ebirdCode}?yr=all`} target="_blank" rel="noreferrer">{name}</a>
 						)}

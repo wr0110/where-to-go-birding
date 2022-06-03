@@ -1,17 +1,20 @@
+import Link from "next/link";
+
 type Props = {
 	name: string,
 	locationId: string,
 	lat: number,
 	lng: number,
 	countySlug: string,
+	stateSlug: string,
 	countyName: string,
 }
 
-export default function Address({ countySlug, countyName, name, locationId, lat, lng }: Props) {
+export default function Address({ stateSlug, countySlug, countyName, name, locationId, lat, lng }: Props) {
 	return (
 		<div className="px-3 py-2 border mb-6">
 			<h3 className="mb-4 font-bold">eBird Hotspot</h3>
-			<h3 className="my-4 font-bold"><a href={`/${countySlug}`}>{countyName} County</a></h3>
+			<h3 className="my-4 font-bold"><Link href={`/birding-in-${stateSlug}/${countySlug}-county`}>{`${countyName} County`}</Link></h3>
 			<h3 className="font-bold">{name}</h3>
 			Coordinates: {lat}, {lng}<br/>
 			Bar charts:

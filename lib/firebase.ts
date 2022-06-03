@@ -33,6 +33,7 @@ export async function getHotspot(countySlug: string, slug: string) {
 }
 
 export async function getHotspots(countySlug: string) {
+	if (!countySlug) return null;
 	const collectionRef = collection(db, "hotspots");
 	const q = query(collectionRef, where("countySlug", "==", countySlug));
 	const snapshot = await getDocs(q);
