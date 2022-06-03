@@ -1,5 +1,9 @@
 import Geocode from "react-geocode";
 import States from "data/states.json";
+import Counties from "data/oh-counties.json";
+import Regions from "data/oh-regions.json";
+import ArizonaCounties from "data/az-counties.json";
+import OhioCounties from "data/oh-counties.json";
 
 export function slugify(title?: string) {
 	if (!title) return null;
@@ -61,12 +65,33 @@ export function getState(param: string) {
 	return data;
 }
 
+export function getCounty(stateCode:string, countySlug: string) {
+	const countyArrays = {
+		"OH": OhioCounties,
+		"AZ": ArizonaCounties,
+	}
+	const slug = countySlug.replace("-county", "");
+	const array = countyArrays[stateCode];
+	if (!array) return {}
+	const county = array[slug];
+	if (!county) return {}
+	const region = county[0];
+	return {
+		slug,
+		name: capitalize(slug.replaceAll("-", " ")),
+		region,
+		ebirdCode: county[1],
+		regionLabel: Regions[region],
+		color: Regions[region].color,
+	}
+}
+
 export function formatCountyArray(countyObject: object) {
 	if (!countyObject) return null;
 	return Object.entries(countyObject).map(([key, value]) => ({
 		slug: key,
 		ebirdCode: value[1],
-		name: capitalize(key.replace("-", " ")),
+		name: capitalize(key.replaceAll("-", " ")),
 		active: value[2],
 	}))
 }
