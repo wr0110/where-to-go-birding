@@ -32,9 +32,23 @@ export async function getServerSideProps({ query: { stateSlug, countySlug, slug 
   }
 }
 
-export default function Hotspot({ stateSlug,county, name, lat, lng, address, links, about, tips, restrooms, locationId, parent }) {	
+export default function Hotspot({ stateSlug,county, name, lat, lng, address, links, about, tips, restrooms, roadside, accessible, locationId, parent }) {	
 	const nameParts = name?.split("--");
 	const nameShort = nameParts?.length ? nameParts[1] : name;
+
+	let extraLinks = [];
+	if (roadside === "Yes") {
+		extraLinks.push({
+			label: "Roadside Birding",
+			url: `/birding-in-${stateSlug}/roadside-birding`
+		});
+	}
+	if (parent) {
+		extraLinks.push({
+			label: parent.name,
+			url: `/birding-in-${stateSlug}/${county.slug}-county/${parent.slug}`
+		});
+	}
 
 	return (
 		<div className="container pb-16">
@@ -48,9 +62,10 @@ export default function Hotspot({ stateSlug,county, name, lat, lng, address, lin
 						{links?.map(({ url, label }, index) => (
 							<a key={index} href={url} target="_blank" rel="noreferrer">{label}</a>
 						))}
-						{parent &&
+						{extraLinks.length > 0 &&
 							<p className="mt-4">
-								Also, see <Link href={`/${county.slug}-county/${parent.slug}`}>{parent.name}</Link>
+								Also, see:<br />
+								{extraLinks?.map(({ url, label }) => <Link href={url} key={label}>{label}</Link>)}
 							</p>
 						}
 					</div>
@@ -68,7 +83,15 @@ export default function Hotspot({ stateSlug,county, name, lat, lng, address, lin
 					{(parent?.about?.text && parent?.name) &&
 						<AboutSection heading={`Tips for birding ${parent.name}`} {...parent.about} />
 					}
-					{restrooms && <span>Restrooms on site.</span>}
+					<div className="space-y-1">
+						{restrooms === "Yes" && <p>Restrooms on site.</p>}
+						{restrooms === "No" && <p>No restrooms on site.</p>}
+						{accessible === "ADA" && <p>ADA accessible facilities on site.</p>}
+						{accessible === "Birdability" && (
+							<p>Accessible facilities on site, listed as a <a href="https://www.birdability.org/" target="_blank" rel="noreferrer">Birdability</a> location.</p>
+						)}
+						{roadside === "Yes" && <p>Roadside accessible.</p>}
+					</div>
 				</div>
 				<div>
 					{stateSlug === "ohio" && <img src={`/oh-maps/${county.slug}.jpg`} width="260" className="mx-auto mb-10" alt={`${county.name} county map`} />}

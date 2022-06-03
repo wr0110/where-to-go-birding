@@ -7,7 +7,7 @@ import Submit from "components/Submit";
 import FormError from "components/FormError";
 import { Editor } from "@tinymce/tinymce-react";
 import { saveHotspot, getHotspotByLocationId } from "lib/firebase";
-import { slugify, tinyMceOptions, geocode } from "lib/helpers";
+import { slugify, tinyMceOptions, geocode, getStateByCode } from "lib/helpers";
 import InputLinks from "components/InputLinks";
 
 type Hotspot = {
@@ -43,6 +43,7 @@ type Inputs = {
 	}[],
 	restrooms: string,
 	roadside: string,
+	accessible: string,
 	slug: string,
 	parentId: string,
 };
@@ -59,8 +60,9 @@ export default function Edit() {
 	const locationId = router.query.locationId as string;
 	const form = useForm<Inputs>({
 		defaultValues: {
-			roadside: "No",
-			restrooms: "No",
+			roadside: "",
+			restrooms: "",
+			accessible: "",
 		}
 	});
 	const { name, latitude, longitude, subnational1Code, subnational2Code, subnational2Name } = hotspot || {};
@@ -89,7 +91,8 @@ export default function Edit() {
 			},
 		});
 		setSaving(false);
-		router.push(`/${countySlug}-county/${slug}`);
+		const state = getStateByCode(subnational1Code.replace("US-", ""));
+		router.push(`/birding-in-${state.slug}/${countySlug}-county/${slug}`);
 	}
 
 	React.useEffect(() => {
@@ -200,6 +203,29 @@ export default function Edit() {
 								<label>
 									<input {...form.register("restrooms")} type="radio" name="restrooms" value="No"/> No
 								</label>
+								<br/>
+								<label>
+									<input {...form.register("restrooms")} type="radio" name="restrooms" value=""/> Unknown
+								</label>
+							</div>
+						</div>
+
+						<div>
+							<label className="text-gray-500 font-bold">
+								Accessible facilities
+							</label><br/>
+							<div className="mt-1 flex gap-2">
+								<label>
+									<input {...form.register("accessible")} type="radio" name="accessible" value="ADA"/> ADA
+								</label>
+								<br/>
+								<label>
+									<input {...form.register("accessible")} type="radio" name="accessible" value="Birdability"/> Birdability
+								</label>
+								<br/>
+								<label>
+									<input {...form.register("accessible")} type="radio" name="accessible" value=""/> Unknown
+								</label>
 							</div>
 						</div>
 
@@ -214,6 +240,10 @@ export default function Edit() {
 								<br/>
 								<label>
 									<input {...form.register("roadside")} type="radio" name="roadside" value="No"/> No
+								</label>
+								<br/>
+								<label>
+									<input {...form.register("roadside")} type="radio" name="roadside" value=""/> Unknown
 								</label>
 							</div>
 						</div>

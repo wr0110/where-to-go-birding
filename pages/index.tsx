@@ -9,7 +9,7 @@ export default function Home() {
 			<h2 className="text-2xl mb-4 font-bold">Welcome to eBird Hotspots</h2>
 			<h3 className="text-lg mb-4 font-bold">United States</h3>
 			<p className="mb-4">Links in plain text are to pages in the eBird website. Links in <strong>bold text</strong> are to pages in this website with additional information about hotspots.</p>
-			<div className="columns-5 mb-12">
+			<div className="columns-2 xs:columns-3 sm:columns-5 mb-12">
 				{States.map(({label, slug, code, active}) => (
 					<p key={code}>
 						{active ? (

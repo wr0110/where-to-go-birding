@@ -65,6 +65,11 @@ export function getState(param: string) {
 	return data;
 }
 
+export function getStateByCode(code: string) {
+	const data = States.find(state => state.code === code);
+	return data;
+}
+
 export function getCounty(stateCode:string, countySlug: string) {
 	const countyArrays = {
 		"OH": OhioCounties,
@@ -79,10 +84,10 @@ export function getCounty(stateCode:string, countySlug: string) {
 	return {
 		slug,
 		name: capitalize(slug.replaceAll("-", " ")),
-		region,
+		region: region || null,
 		ebirdCode: county[1],
-		regionLabel: Regions[region],
-		color: Regions[region].color,
+		regionLabel: Regions[region] || null,
+		color: Regions[region]?.color || "#4a84b2",
 	}
 }
 
