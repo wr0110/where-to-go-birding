@@ -1,7 +1,7 @@
 import * as React from "react";
 import Link from "next/link";
-import EbirdLogo from "components/EbirdLogo";
 import States from "data/states.json";
+import EbirdDescription from "components/EbirdDescription";
 
 export default function Home() {
 	return (
@@ -10,12 +10,12 @@ export default function Home() {
 			<h3 className="text-lg mb-4 font-bold">United States</h3>
 			<p className="mb-4">Links in plain text are to pages in the eBird website. Links in <strong>bold text</strong> are to pages in this website with additional information about hotspots.</p>
 			<div className="columns-5 mb-12">
-				{States.map(({label, slug, ebirdCode, active}) => (
-					<p key={ebirdCode}>
+				{States.map(({label, slug, code, active}) => (
+					<p key={code}>
 						{active ? (
 							<Link href={`/birding-in-${slug}`}><a className="font-bold">{label}</a></Link>
 						) : (
-							<a href={`https://ebird.org/region/${ebirdCode}/regions?yr=all&m=`} target="_blank" rel="noreferrer">{label}</a>
+							<a href={`https://ebird.org/region/US-${code}/regions?yr=all&m=`} target="_blank" rel="noreferrer">{label}</a>
 						)}
 					</p>
 				))}
@@ -24,12 +24,7 @@ export default function Home() {
 				<div>
 					<p className="mb-4">This website collects tips for birding from local birders and descriptions and maps of eBird hotspots from eBird and other websites. In eBird, hotspots are shared locations where birders may report their bird sightings to eBird. Hotspots provide birders with information about birding locations where birds are being seen.</p>
 					<p className="mb-4">Ken Ostermiller, a volunteer hotspot reviewer for eBird, created and manages the website.</p>
-					<p className="mb-4">
-						<a href="https://ebird.org" target="_blank" rel="noreferrer">
-							<EbirdLogo className="border p-4 w-[125px] h-[125px] float-right ml-4 mt-2 mb-4" />
-						</a>
-						<a href="https://ebird.org" target="_blank" rel="noreferrer">eBird</a> is a real-time, online checklist program that has revolutionized the way that the birding community reports and accesses information about birds. Jointly sponsored by the Laboratory of Ornithology at Cornell University and the National Audubon Society, eBird provides rich data sources for basic information on bird abundance and distribution.
-					</p>
+					<EbirdDescription />
 					<h3 className="text-lg font-bold mb-4">eBird can help you</h3>
 					<p className="mb-4">+ Record the birds you see+ Keep track of your bird lists<br/>+ Explore dynamic maps and graphs<br/>+ Share your sightings and join the eBird community<br/>+ Contribute to science and conservation</p>
 				</div>

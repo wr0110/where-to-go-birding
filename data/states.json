@@ -2,252 +2,385 @@
 	{
 		"label": "Alabama",
 		"slug": "alabama",
-		"ebirdCode": "US-AL"
+		"code": "AL"
 	},
 	{
 		"label": "Alaska",
 		"slug": "alaska",
-		"ebirdCode": "US-AK"
+		"code": "AK"
 	},
 	{
 		"label": "Arizona",
 		"slug": "arizona",
-		"ebirdCode": "US-AZ"
+		"code": "AZ",
+		"active": true,
+		"links": [
+			{
+				"section": "Arizona Organizations and Bird Clubs",
+				"links": [
+					{
+						"label": "Southeast Arizona Rare Bird Alert",
+						"url": "http://www.searcherra.org/"
+					},
+					{
+						"label": "Arizona Field Ornithologists",
+						"url": "http://www.azfo.org/index.html"
+					}
+				]
+			},
+			{
+				"section": "Audubon Society Chapters",
+				"links": [
+					{
+						"label": "Audubon Arizona",
+						"url": "http://az.audubon.org/"
+					},
+					{
+						"label": "Desert Rivers Audubon Society",
+						"url": "http://www.desertriversaudubon.org/"
+					},
+					{
+						"label": "Maricopa Audubon Society",
+						"url": "http://www.maricopaaudubon.org/"
+					},
+					{
+						"label": "Northern Arizona Audubon Society",
+						"url": "http://www.northernarizonaaudubon.org/"
+					},
+					{
+						"label": "Prescott Audubon Society",
+						"url": "http://www.prescottaudubon.org/"
+					},
+					{
+						"label": "Sonoran Audubon Society",
+						"url": "http://sonoranaudubon.org/"
+					},
+					{
+						"label": "Tucson Audubon Society",
+						"url": "http://www.tucsonaudubon.org/"
+					},
+					{
+						"label": "White Mountain Audubon Society",
+						"url": "http://www.whitemountainaudubon.org/"
+					},
+					{
+						"label": "Yuma Audubon Society",
+						"url": "http://www.yumaaudubon.org/"
+					}
+				]
+			},
+			{
+				"section": "Local Organizations",
+				"links": [
+					{
+						"label": "Arizona Native Plant Society",
+						"url": "http://aznps.com/"
+					},
+					{
+						"label": "Nature Conservancy in Arizona",
+						"url": "https://www.nature.org/en-us/about-us/where-we-work/united-states/arizona/"
+					},
+					{
+						"label": "Southeastern Arizona Bird Observatory",
+						"url": "https://sabo.org/"
+					}
+				]
+			},
+			{
+				"section": "Arboretums",
+				"links": [
+					{
+						"label": "Desert Botanical Garden (Phoenix)",
+						"url": "https://www.dbg.org/"
+					},
+					{
+						"label": "Desert Botanical Garden Birdwalks",
+						"url": "https://sites.google.com/site/dbgbirdwalks/"
+					},
+					{
+						"label": "Boyce Thompson Arboretum (Superior)",
+						"url": "http://www.btarboretum.org/"
+					}
+					,
+					{
+						"label": "Flagstaff Arboretum (Flagstaff)",
+						"url": "https://www.thearb.org/"
+					}
+				]
+			},
+			{
+				"section": "Nature Preserves",
+				"links": [
+					{
+						"label": "Ramsey Canyon Preserve",
+						"url": "https://www.nature.org/en-us/get-involved/how-to-help/places-we-protect/ramsey-canyon-preserve/"
+					},
+					{
+						"label": "Hassayampa River Preserve",
+						"url": "https://www.nature.org/en-us/get-involved/how-to-help/places-we-protect/hassayampa-river-preserve/"
+					}
+				]
+			},
+			{
+				"section": "Zoos and Nature Parks",
+				"links": [
+					{
+						"label": "Arizona Sonora Desert Museum",
+						"url": "http://www.desertmuseum.org/"
+					},
+					{
+						"label": "Environmental Education Center (Chandler)",
+						"url": "https://www.chandleraz.gov/explore/chandler-recreation/centers-and-facilities/environmental-education-center?pageid=682"
+					},
+					{
+						"label": "The Phoenix Zoo",
+						"url": "https://www.phoenixzoo.org/"
+					},
+					{
+						"label": "Gilbert Riparian Preserve",
+						"url": "https://www.gilbertaz.gov/departments/parks-and-recreation/riparian-preserve-at-water-ranch"
+					}
+				]
+			}
+		]
 	},
 	{
 		"label": "Arkansas",
 		"slug": "arkansas",
-		"ebirdCode": "US-AR"
+		"code": "AR"
 	},
 	{
 		"label": "California",
 		"slug": "california",
-		"ebirdCode": "US-CA"
+		"code": "CA"
 	},
 	{
 		"label": "Colorado",
 		"slug": "colorado",
-		"ebirdCode": "US-CO"
+		"code": "CO"
 	},
 	{
 		"label": "Connecticut",
 		"slug": "connecticut",
-		"ebirdCode": "US-CT"
+		"code": "CT"
 	},
 	{
 		"label": "Delaware",
 		"slug": "delaware",
-		"ebirdCode": "US-DE"
+		"code": "DE"
 	},
 	{
 		"label": "Florida",
 		"slug": "florida",
-		"ebirdCode": "US-FL"
+		"code": "FL"
 	},
 	{
 		"label": "Georgia",
 		"slug": "georgia",
-		"ebirdCode": "US-GA"
+		"code": "GA"
 	},
 	{
 		"label": "Hawaii",
 		"slug": "hawaii",
-		"ebirdCode": "US-HI"
+		"code": "HI"
 	},
 	{
 		"label": "Idaho",
 		"slug": "idaho",
-		"ebirdCode": "US-ID"
+		"code": "ID"
 	},
 	{
 		"label": "Illinois",
 		"slug": "illinois",
-		"ebirdCode": "US-IL"
+		"code": "IL"
 	},
 	{
 		"label": "Indiana",
 		"slug": "indiana",
-		"ebirdCode": "US-IN"
+		"code": "IN"
 	},
 	{
 		"label": "Iowa",
 		"slug": "iowa",
-		"ebirdCode": "US-IA"
+		"code": "IA"
 	},
 	{
 		"label": "Kansas",
 		"slug": "kansas",
-		"ebirdCode": "US-KS"
+		"code": "KS"
 	},
 	{
 		"label": "Kentucky",
 		"slug": "kentucky",
-		"ebirdCode": "US-KY"
+		"code": "KY"
 	},
 	{
 		"label": "Louisiana",
 		"slug": "louisiana",
-		"ebirdCode": "US-LA"
+		"code": "LA"
 	},
 	{
 		"label": "Maine",
 		"slug": "maine",
-		"ebirdCode": "US-ME"
+		"code": "ME"
 	},
 	{
 		"label": "Maryland",
 		"slug": "maryland",
-		"ebirdCode": "US-MD"
+		"code": "MD"
 	},
 	{
 		"label": "Massachusetts",
 		"slug": "massachusetts",
-		"ebirdCode": "US-MA"
+		"code": "MA"
 	},
 	{
 		"label": "Michigan",
 		"slug": "michigan",
-		"ebirdCode": "US-MI"
+		"code": "MI"
 	},
 	{
 		"label": "Minnesota",
 		"slug": "minnesota",
-		"ebirdCode": "US-MN"
+		"code": "MN"
 	},
 	{
 		"label": "Mississippi",
 		"slug": "mississippi",
-		"ebirdCode": "US-MS"
+		"code": "MS"
 	},
 	{
 		"label": "Missouri",
 		"slug": "missouri",
-		"ebirdCode": "US-MO"
+		"code": "MO"
 	},
 	{
 		"label": "Montana",
 		"slug": "montana",
-		"ebirdCode": "US-MT"
+		"code": "MT"
 	},
 	{
 		"label": "Nebraska",
 		"slug": "nebraska",
-		"ebirdCode": "US-NE"
+		"code": "NE"
 	},
 	{
 		"label": "Nevada",
 		"slug": "nevada",
-		"ebirdCode": "US-NV"
+		"code": "NV"
 	},
 	{
 		"label": "New Hampshire",
 		"slug": "new-hampshire",
-		"ebirdCode": "US-NH"
+		"code": "NH"
 	},
 	{
 		"label": "New Jersey",
 		"slug": "new-jersey",
-		"ebirdCode": "US-NJ"
+		"code": "NJ"
 	},
 	{
 		"label": "New Mexico",
 		"slug": "new-mexico",
-		"ebirdCode": "US-NM"
+		"code": "NM"
 	},
 	{
 		"label": "New York",
 		"slug": "new-york",
-		"ebirdCode": "US-NY"
+		"code": "NY"
 	},
 	{
 		"label": "North Carolina",
 		"slug": "north-carolina",
-		"ebirdCode": "US-NC"
+		"code": "NC"
 	},
 	{
 		"label": "North Dakota",
 		"slug": "north-dakota",
-		"ebirdCode": "US-ND"
+		"code": "ND"
 	},
 	{
 		"label": "Ohio",
 		"slug": "ohio",
-		"ebirdCode": "US-OH",
+		"code": "OH",
+		"rareSid": "SN35533",
+		"needsSid": "SN10379",
+		"yearNeedsSid": "SN33836",
 		"active": true
 	},
 	{
 		"label": "Oklahoma",
 		"slug": "oklahoma",
-		"ebirdCode": "US-OK"
+		"code": "OK"
 	},
 	{
 		"label": "Oregon",
 		"slug": "oregon",
-		"ebirdCode": "US-OR"
+		"code": "OR"
 	},
 	{
 		"label": "Pennsylvania",
 		"slug": "pennsylvania",
-		"ebirdCode": "US-PA"
+		"code": "PA"
 	},
 	{
 		"label": "Rhode Island",
 		"slug": "rhode-island",
-		"ebirdCode": "US-RI"
+		"code": "RI"
 	},
 	{
 		"label": "South Carolina",
 		"slug": "south-carolina",
-		"ebirdCode": "US-SC"
+		"code": "SC"
 	},
 	{
 		"label": "South Dakota",
 		"slug": "south-dakota",
-		"ebirdCode": "US-SD"
+		"code": "SD"
 	},
 	{
 		"label": "Tennessee",
 		"slug": "tennessee",
-		"ebirdCode": "US-TN"
+		"code": "TN"
 	},
 	{
 		"label": "Texas",
 		"slug": "texas",
-		"ebirdCode": "US-TX"
+		"code": "TX"
 	},
 	{
 		"label": "Utah",
 		"slug": "utah",
-		"ebirdCode": "US-UT"
+		"code": "UT"
 	},
 	{
 		"label": "Vermont",
 		"slug": "vermont",
-		"ebirdCode": "US-VT"
+		"code": "VT"
 	},
 	{
 		"label": "Virginia",
 		"slug": "virginia",
-		"ebirdCode": "US-VA"
+		"code": "VA"
 	},
 	{
 		"label": "Washington",
 		"slug": "washington",
-		"ebirdCode": "US-WA"
+		"code": "WA"
 	},
 	{
 		"label": "West Virginia",
 		"slug": "west-virginia",
-		"ebirdCode": "US-WV"
+		"code": "WV"
 	},
 	{
 		"label": "Wisconsin",
 		"slug": "wisconsin",
-		"ebirdCode": "US-WI"
+		"code": "WI"
 	},
 	{
 		"label": "Wyoming",
 		"slug": "wyoming",
-		"ebirdCode": "US-WY"
+		"code": "WY"
 	}
 ]

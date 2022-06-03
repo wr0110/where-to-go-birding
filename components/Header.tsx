@@ -14,7 +14,7 @@ export default function Header() {
 	}, []);
 
 	return (
-		<header className="bg-white border-b static md:fixed top-0 right-0 left-0 pl-3 sm:pr-4 md:pr-10 shadow-sm">
+		<header className="bg-white border-b static md:fixed top-0 right-0 left-0 pl-3 sm:pr-4 md:pr-10 shadow-sm z-10">
 			<div>
 				<div className="sm:flex justify-between py-2 items-center">
 					<div className="flex gap-2 items-center">
