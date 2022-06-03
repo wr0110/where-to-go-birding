@@ -56,10 +56,12 @@ Safety first
 			<div className="columns-1 sm:columns-3 mb-12">
 				{hotspots.map(({countySlug, countyName, hotspots}) => (
 					<p key={countySlug} className="mb-4 break-inside-avoid">
-						<strong>{countyName}</strong><br/>
+						<Link href={`/birding-in-${stateSlug}/${countySlug}-county`}>{countyName}</Link><br/>
 						{hotspots.map(({name, slug}) => (
 							<>
-								<Link key={slug} href={`/birding-in-${stateSlug}/${countySlug}-county/${slug}`}>{name}</Link>
+								<Link key={slug} href={`/birding-in-${stateSlug}/${countySlug}-county/${slug}`}>
+									<a className="font-bold">{name}</a>
+								</Link>
 								<br/>
 							</>
 						))}
