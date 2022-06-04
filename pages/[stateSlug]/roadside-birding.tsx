@@ -52,7 +52,7 @@ Safety first
 					</p>
 				</div>
 			</div>
-			<h3 className="text-lg mb-8 font-bold">Roadside Birding Locations listed by County</h3>
+			<h3 className="text-lg mb-8 font-bold">Roadside Birding Locations Listed by County</h3>
 			<div className="columns-1 sm:columns-3 mb-12">
 				{hotspots.map(({countySlug, countyName, hotspots}) => (
 					<p key={countySlug} className="mb-4 break-inside-avoid">

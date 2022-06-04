@@ -224,6 +224,10 @@ export default function Edit() {
 								</label>
 								<br/>
 								<label>
+									<input {...form.register("accessible")} type="radio" name="accessible" value="No"/> None
+								</label>
+								<br/>
+								<label>
 									<input {...form.register("accessible")} type="radio" name="accessible" value=""/> Unknown
 								</label>
 							</div>
