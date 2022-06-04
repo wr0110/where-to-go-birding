@@ -1,5 +1,5 @@
 import Link from "next/link";
-import EbirdTable from "components/EbirdTable";
+import EbirdStateSummary from "components/EbirdStateSummary";
 import OhioMap from "components/OhioMap";
 import ArizonaMap from "components/ArizonaMap";
 import OhioCounties from "data/oh-counties.json";
@@ -50,36 +50,7 @@ export default function State({label, code, slug, rareSid, needsSid, yearNeedsSi
 						<a href="#notable">{label} Notable Bird Sightings</a>
 					</p>
 					<h3 className="text-lg mb-2 font-bold">Explore {label} in eBird</h3>
-					<EbirdTable heading={`${label} Statewide Bar Charts`} stateCode={code} />
-					<h4 className="font-bold">eBird Links</h4>
-					<p className="mb-4">
-						<a href={`https://ebird.org/ebird/subnational1/US-${code}?yr=all&amp;m=&amp;rank=mrec`} target="_blank" rel="noreferrer">Overview</a>
-						&nbsp;–&nbsp;
-						<a href={`https://ebird.org/ebird/subnational1/US-${code}/regions?yr=all&amp;m=&amp;hsStats_sortBy=num_species&amp;hsStats_o=desc`} target="_blank" rel="noreferrer">Counties</a>
-						&nbsp;–&nbsp;
-						<a href={`https://ebird.org/ebird/subnational1/US-${code}/hotspots?yr=all&amp;m=`} target="_blank" rel="noreferrer">Hotspots</a>
-						&nbsp;–&nbsp;
-						<a href={`https://ebird.org/ebird/subnational1/US-${code}/activity?yr=all&amp;m=`} target="_blank" rel="noreferrer">Recent Visits</a><br/>
-						<a href={`https://ebird.org/alert/summary?sid=${rareSid}`}>eBird Rare Bird Alert for {label}</a>
-					</p>
-					<h4 className="font-bold">Top {label} eBirders</h4>
-					<p  className="mb-4">
-						<a href={`https://ebird.org/ebird/top100?locInfo.regionType=subnational1&amp;locInfo.regionCode=US-${code}&amp;year=AAAA`} target="_blank" rel="noreferrer">All Time</a>
-					</p>
-					<h4 className="font-bold">My eBird {label} links</h4>
-					<p className="mb-4">
-						<a href={`https://ebird.org/ebird/MyEBird?cmd=list&amp;rtype=subnational1&amp;r=US-${code}&amp;time=life&amp;sortKey=obs_dt&amp;o=desc`} target="_blank" rel="noreferrer" >Life List</a>
-						&nbsp;–&nbsp;
-						<a href={`https://ebird.org/ebird/MyEBird?cmd=lifeList&amp;listType=US-${code}&amp;listCategory=allStates&amp;time=year`} target="_blank" rel="noreferrer">Year List</a>
-						&nbsp;–&nbsp;
-						<a href={`https://ebird.org/ebird/MyEBird?cmd=lifeList&amp;listType=US-${code}&amp;listCategory=allStates&amp;time=month`} target="_blank" rel="noreferrer">Month List</a>
-					</p>
-					<h4 className="font-bold">Needs Alert (birds you have not seen in {label})</h4>
-					<p className="mb-4">
-						<a href={`https://ebird.org/alert/summary?sid=${needsSid}`} rel="noreferrer" target="_blank">Never Seen</a>
-						&nbsp;–&nbsp;
-						<a href={`https://ebird.org/alert/summary?sid=${yearNeedsSid}`}  rel="noreferrer" target="_blank">Not Seen This Year</a>
-					</p>
+					<EbirdStateSummary code={code} rareSid={rareSid} needsSid={needsSid} yearNeedsSid={yearNeedsSid} />					
 				</div>
 				<div className="flex justify-center items-start">
 					{map}
