@@ -48,7 +48,7 @@ Safety first
 						Please use care when birding these locations. When you stop, pull off as far as you are able. Use flashers when there is traffic. If you park to get out of your vehicle, park at a pull off or on the berm completely off the pavement. Many of these locations are on roads that traverse privately owned land. Do not enter a private property without permission.
 					</p>
 					<p className="mb-4">
-						Also, see the list of hotspot locations which have <Link href={`/birding-in-${stateSlug}/accessible`}>handicap accessible facilities</Link>.
+						Also, see the list of hotspot locations which have <Link href={`/birding-in-${stateSlug}/accessible-facilities`}>handicap accessible facilities</Link>.
 					</p>
 				</div>
 			</div>
