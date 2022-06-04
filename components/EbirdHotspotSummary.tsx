@@ -10,7 +10,7 @@ type Props = {
 	countyName: string,
 }
 
-export default function Address({ stateSlug, countySlug, countyName, name, locationId, lat, lng }: Props) {
+export default function EbirdHotspotSummary({ stateSlug, countySlug, countyName, name, locationId, lat, lng }: Props) {
 	return (
 		<div className="px-3 py-2 border mb-6">
 			<h3 className="mb-4 font-bold">eBird Hotspot</h3>
@@ -31,17 +31,17 @@ export default function Address({ stateSlug, countySlug, countyName, name, locat
 				<br/>
 			eBird links:
 				&nbsp;
-				<a href={`https://ebird.org/ebird/hotspots?hs=${locationId}&amp;yr=all&amp;m=`} target="_blank" rel="noreferrer">Hotspot map</a>
+				<a href={`https://ebird.org/ebird/hotspots?hs=${locationId}&yr=all&m=`} target="_blank" rel="noreferrer">Hotspot map</a>
 				&nbsp;–&nbsp;
-				<a href={`https://ebird.org/ebird/hotspot/${locationId}?yr=all&amp;m=&amp;rank=mrec`} target="_blank" rel="noreferrer">View details</a>
+				<a href={`https://ebird.org/ebird/hotspot/${locationId}?yr=all&m=&rank=mrec`} target="_blank" rel="noreferrer">View details</a>
 				&nbsp;–&nbsp;
-				<a href={`https://ebird.org/ebird/hotspot/${locationId}/activity?yr=all&amp;m=`} target="_blank" rel="noreferrer">Recent visits</a>
+				<a href={`https://ebird.org/ebird/hotspot/${locationId}/activity?yr=all&m=`} target="_blank" rel="noreferrer">Recent visits</a>
 				<br/>
 			My eBird links:
 				&nbsp;
-				<a href={`https://ebird.org/ebird/MyEBird?cmd=list&amp;rtype=loc&amp;r=${locationId}&amp;time=life`} target="_blank" rel="noreferrer">Location life list</a>
+				<a href={`https://ebird.org/ebird/MyEBird?cmd=list&rtype=loc&r=${locationId}&time=life`} target="_blank" rel="noreferrer">Location life list</a>
 				&nbsp;–&nbsp;
-				<a href={`https://ebird.org/ebird/submit/effort?locID=${locationId}&amp;clr=1`} target="_blank" rel="noreferrer">Submit data</a>
+				<a href={`https://ebird.org/ebird/submit/effort?locID=${locationId}&clr=1`} target="_blank" rel="noreferrer">Submit data</a>
 		</div>
 	)
 }

@@ -1,6 +1,6 @@
 import * as React from "react";
 import Address from "components/Address";
-import HotspotSummary from "components/HotspotSummary";
+import EbirdHotspotSummary from "components/EbirdHotspotSummary";
 import Map from "components/Map";
 import Link from "next/link";
 import { getHotspot, getHotspotByLocationId } from "lib/firebase";
@@ -70,7 +70,7 @@ export default function Hotspot({ stateSlug,county, name, lat, lng, address, lin
 						}
 					</div>
 					{name &&
-						<HotspotSummary stateSlug={stateSlug} countySlug={county.slug} countyName={county.name} name={name} locationId={locationId} lat={lat} lng={lng} />
+						<EbirdHotspotSummary stateSlug={stateSlug} countySlug={county.slug} countyName={county.name} name={name} locationId={locationId} lat={lat} lng={lng} />
 					}
 					{tips?.text &&
 						<AboutSection heading={`Tips for birding ${nameShort}`} {...tips} />
