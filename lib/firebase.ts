@@ -52,6 +52,16 @@ export async function getRoadsideHotspots(stateCode: string) {
 	}
 }
 
+export async function getAccessibleHotspots(stateCode: string) {
+	if (!stateCode) return null;
+	const collectionRef = collection(db, "hotspots");
+	const q = query(collectionRef, where("stateCode", "==", `US-${stateCode}`), where("accessible", "in", ["ABA", "Birdability"]));
+	const snapshot = await getDocs(q);
+	if (!snapshot.empty) {
+		return snapshot.docs.map(item => item.data());
+	}
+}
+
 export async function saveHotspot(id: string, data: any) {
 	await setDoc(doc(db, "hotspots", id), data);
 }
