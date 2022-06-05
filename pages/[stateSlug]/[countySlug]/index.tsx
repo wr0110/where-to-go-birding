@@ -2,6 +2,7 @@ import * as React from "react";
 import Link from "next/link";
 import { getHotspots } from "lib/firebase";
 import { getCounty, getState } from "lib/helpers";
+import Map from "components/Map";
 
 export async function getServerSideProps({ query: { stateSlug, countySlug }}) {
 	const state = getState(stateSlug);
@@ -12,16 +13,22 @@ export async function getServerSideProps({ query: { stateSlug, countySlug }}) {
 	
 	const hotspots = await getHotspots(county.slug) || [];
   return {
-    props: { stateSlug: state.slug, countySlug: county.slug, hotspots, ...county },
+    props: { stateSlug: state.slug, stateLabel: state.label, countySlug: county.slug, hotspots, ...county },
   }
 }
 
-export default function County({ stateSlug, countySlug, hotspots, name, color }) {
+export default function County({ stateSlug, stateLabel, countySlug, hotspots, name, color }) {
+	const links = [];
 	return (
 		<div className="container pb-16">
-			<h1 className="font-bold text-white text-2xl header-gradient p-3 my-16" style={{"--county-color": color} as React.CSSProperties}>{name} County</h1>
+			<h1 className="font-bold text-white text-2xl header-gradient p-3 my-16" style={{"--county-color": color} as React.CSSProperties}>{name}</h1>
 			<div className="grid grid-cols-2 gap-12">
 				<div>
+					<div className="mb-6">
+						{links?.map(({ url, label }, index) => (
+							<a key={index} href={url} target="_blank" rel="noreferrer">{label}</a>
+						))}
+					</div>
 					<ol>
 						{hotspots?.map(({ name, slug }) => (
 							<li key={slug}>
@@ -30,7 +37,9 @@ export default function County({ stateSlug, countySlug, hotspots, name, color })
 						))}
 					</ol>
 				</div>
-				<div></div>
+				<div>
+					<Map address={`${name} County, ${stateLabel}`} zoom={null} type="roadmap" />
+				</div>
 			</div>
 			<hr className="my-4"/>
 			<p>
