@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getHotspots } from "lib/firebase";
 import { getCounty, getState } from "lib/helpers";
 import Map from "components/Map";
+import Heading from "components/Heading";
 
 export async function getServerSideProps({ query: { stateSlug, countySlug }}) {
 	const state = getState(stateSlug);
@@ -21,7 +22,7 @@ export default function County({ stateSlug, stateLabel, countySlug, hotspots, na
 	const links = [];
 	return (
 		<div className="container pb-16">
-			<h1 className="font-bold text-white text-2xl header-gradient p-3 my-16" style={{"--county-color": color} as React.CSSProperties}>{name}</h1>
+			<Heading color={color}>{name}</Heading>
 			<div className="grid grid-cols-2 gap-12">
 				<div>
 					<div className="mb-6">
