@@ -44,6 +44,7 @@ type Inputs = {
 	restrooms: string,
 	roadside: string,
 	accessible: string,
+	dayhike: string,
 	slug: string,
 	parentId: string,
 };
@@ -63,6 +64,7 @@ export default function Edit() {
 			roadside: "",
 			restrooms: "",
 			accessible: "",
+			dayhike: "No",
 		}
 	});
 	const { name, latitude, longitude, subnational1Code, subnational2Code, subnational2Name } = hotspot || {};
@@ -248,6 +250,21 @@ export default function Edit() {
 								<br/>
 								<label>
 									<input {...form.register("roadside")} type="radio" name="roadside" value=""/> Unknown
+								</label>
+							</div>
+						</div>
+
+						<div>
+							<label className="text-gray-500 font-bold">
+								Day Hike
+							</label><br/>
+							<div className="mt-1 flex gap-2">
+								<label>
+									<input {...form.register("dayhike")} type="radio" name="dayhike" value="Yes"/> Yes
+								</label>
+								<br/>
+								<label>
+									<input {...form.register("dayhike")} type="radio" name="dayhike" value="No"/> No
 								</label>
 							</div>
 						</div>
