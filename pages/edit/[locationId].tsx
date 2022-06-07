@@ -9,6 +9,8 @@ import { Editor } from "@tinymce/tinymce-react";
 import { saveHotspot, getHotspotByLocationId } from "lib/firebase";
 import { slugify, tinyMceOptions, geocode, getStateByCode } from "lib/helpers";
 import InputLinks from "components/InputLinks";
+import Select from "components/Select";
+import IBAs from "data/oh-iba.json";
 
 type Hotspot = {
 	locationId: string,
@@ -47,7 +49,13 @@ type Inputs = {
 	dayhike: string,
 	slug: string,
 	parentId: string,
+	iba: {
+		value: string,
+		label: string,
+	},
 };
+
+const ibaOptions = IBAs.map(({ slug, name }) => ({ value: slug, label: name }));
 
 export default function Edit() {
 	const [hotspot, setHotspot] = React.useState<Hotspot>();
@@ -83,6 +91,7 @@ export default function Edit() {
 			countySlug: countySlug,
 			lat: latitude,
 			lng: longitude,
+			iba: data.iba || null,
 			tips: {
 				...data.tips,
 				text: tipsRef.current.getContent(),
@@ -191,6 +200,13 @@ export default function Edit() {
 								<Input type="text" name="about.source" placeholder="Source Title" className="text-sm"/>
 								<Input type="text" name="about.link" placeholder="Source URL" className="text-sm"/>
 							</div>
+						</div>
+
+						<div>
+							<label className="text-gray-500 font-bold">
+								Important Bird Area<br/>
+								<Select name="iba" options={ibaOptions} />
+							</label>
 						</div>
 
 						<div>
