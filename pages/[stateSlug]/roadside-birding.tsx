@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getRoadsideHotspots } from "lib/firebase";
 import { getState, capitalize } from "lib/helpers";
+import Heading from "components/Heading";
 
 export async function getServerSideProps({ query: { stateSlug }}) {
 	const state = getState(stateSlug);
@@ -31,7 +32,7 @@ export async function getServerSideProps({ query: { stateSlug }}) {
 export default function RoadsideBirding({ stateSlug, hotspots }) {
 	return (
 		<div className="container pb-16 mt-12">
-			<h1 className="text-3xl mb-12">Roadside Birding</h1>
+			<Heading>Roadside Birding</Heading>
 			<div className="md:flex gap-8 items-start mb-8">
 				<figure className="border p-2 bg-gray-200 text-center text-xs mb-4">
 					<img src="/riddle-rd.jpg" className="md:min-w-[400px] mx-auto" />

@@ -1,3 +1,4 @@
+import * as React from "react";
 import Link from "next/link";
 import EbirdStateSummary from "components/EbirdStateSummary";
 import OhioMap from "components/OhioMap";
@@ -7,6 +8,7 @@ import ArizonaCounties from "data/az-counties.json";
 import { getState, formatCountyArray } from "lib/helpers";
 import EbirdDescription from "components/EbirdDescription";
 import EbirdHelpLinks from "components/EbirdHelpLinks";
+import StateFeatureLinks from "components/StateFeatureLinks";
 import States from "data/states.json";
 
 export async function getStaticPaths() {
@@ -29,7 +31,7 @@ export async function getStaticProps({ params: { stateSlug }}) {
   }
 }
 
-export default function State({label, code, slug, rareSid, needsSid, yearNeedsSid, links, counties}) {
+export default function State({label, code, slug, features, rareSid, needsSid, yearNeedsSid, links, counties}) {
 	const maps = {
 		"OH": <OhioMap />,
 		"AZ": <ArizonaMap />,
@@ -49,6 +51,9 @@ export default function State({label, code, slug, rareSid, needsSid, yearNeedsSi
 						<a href="#top-locations">Top Birding Locations in {label}</a><br/>
 						<a href="#notable">{label} Notable Bird Sightings</a>
 					</p>
+					{features?.length > 0 &&
+						<StateFeatureLinks slug={slug} features={features} />
+					}
 					<h3 className="text-lg mb-2 font-bold">Explore {label} in eBird</h3>
 					<EbirdStateSummary code={code} rareSid={rareSid} needsSid={needsSid} yearNeedsSid={yearNeedsSid} />					
 				</div>
@@ -88,17 +93,17 @@ export default function State({label, code, slug, rareSid, needsSid, yearNeedsSi
 				<div>
 					<EbirdHelpLinks />
 					{links?.map(({section, links}) => (
-						<>
+						<React.Fragment key={section}>
 							<h3 className="text-lg mb-4 font-bold">{section}</h3>
 							<p className="mb-4">
 								{links.map(({label, url}) => (
-									<>
+										<React.Fragment key={label}>
 										<a key={label} href={url} target="_blank" rel="noreferrer">{label}</a>
 										<br />
-										</>
+										</React.Fragment>
 									))}
 							</p>
-						</>
+						</React.Fragment>
 					))}
 				</div>
 			</div>
