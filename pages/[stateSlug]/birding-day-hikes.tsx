@@ -2,8 +2,10 @@ import Link from "next/link";
 import { getDayHikeHotspots } from "lib/firebase";
 import { getState, capitalize } from "lib/helpers";
 import Heading from "components/Heading";
+import { GetServerSideProps } from "next";
 
-export async function getServerSideProps({ query: { stateSlug }}) {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+	const stateSlug = query.stateSlug as string;
 	const state = getState(stateSlug);
 	if (!state) return { notFound: true };
 	
