@@ -2,7 +2,7 @@ type Props = {
 	address?: string,
 	lat?: number,
 	lng?: number,
-	zoom?: number | null,
+	zoom?: number,
 	type?: string,
 }
 
@@ -14,6 +14,7 @@ export default function Address({ type="satellite", address, lat, lng, zoom=15 }
 	}
 	return (
 		<iframe
+			key={url}
 			width="600"
 			height="450"
 			style={{ border: 0 }}
