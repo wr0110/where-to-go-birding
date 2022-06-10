@@ -6,6 +6,7 @@ export type State = {
 	rareSid: string,
 	needsSid: string,
 	yearNeedsSid: string,
+	ebirdPortal?: string,
 }
 
 export type StateLinks = {

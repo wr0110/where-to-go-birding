@@ -1,3 +1,4 @@
+import * as React from "react";
 import Link from "next/link";
 import { getState } from "lib/localData";
 import { GetServerSideProps } from "next";
@@ -46,12 +47,12 @@ export default function ImportantBirdAreas({ areas, stateSlug }: Props) {
 			</div>
 			<div className="columns-1 sm:columns-3 mb-12">
 				{areas.map(({name, slug}) => (
-					<>
-						<Link key={slug} href={`/birding-in-${stateSlug}/important-bird-areas/${slug}`}>
+					<React.Fragment key={slug}>
+						<Link href={`/birding-in-${stateSlug}/important-bird-areas/${slug}`}>
 							<a className="font-bold">{name}</a>
 						</Link>
 						<br/>
-					</>
+					</React.Fragment>
 				))}
 			</div>
 		</div>
