@@ -1,9 +1,5 @@
 import Geocode from "react-geocode";
-import States from "data/states.json";
-import Counties from "data/oh-counties.json";
-import Regions from "data/oh-regions.json";
-import ArizonaCounties from "data/az-counties.json";
-import OhioCounties from "data/oh-counties.json";
+import { Hotspot } from "lib/types";
 
 export function slugify(title?: string) {
 	if (!title) return null;
@@ -30,14 +26,44 @@ export function capitalize(str: string) {
 	return words.join(" ");
 }
 
+type HotspotMap = {
+	[x:string]: {
+		name: string,
+		slug: string,
+	}[]
+}
+
+export function restructureHotspotsByCounty(hotspots: Hotspot[]) {
+	let counties: HotspotMap = {}
+	hotspots.forEach(({countySlug, slug, name}) => {
+		if (!countySlug) return;
+		if (!counties[countySlug]) {
+			counties[countySlug] = []
+		}
+		counties[countySlug].push({ name, slug });
+	});
+
+	return Object.entries(counties).map(([key, hotspots]) => ({
+		countySlug: key,
+		countyName: capitalize(key.replaceAll("-", " ")),
+		hotspots,
+	}));
+}
+
 export async function geocode(lat: number, lng: number) {
 	console.log("Geocoding", lat, lng);
-	Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_GEOCODE_KEY);
+	const apiKey = process.env.NEXT_PUBLIC_GOOGLE_GEOCODE_KEY;
+	if (!apiKey) return {};
+	Geocode.setApiKey(apiKey);
 	Geocode.setRegion("us");
+	// @ts-expect-error
 	Geocode.setLocationType("ROOFTOP");
-	const response = await Geocode.fromLatLng(lat, lng);
+	const response = await Geocode.fromLatLng(lat.toString(), lng.toString());
 	
-	let city: string, state: string, zip:string, road: string;
+	let city = "";
+	let state = "";
+	let zip = "";
+	let road = "";
 	for (let i = 0; i < response.results[0].address_components.length; i++) {
 		for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
 			switch (response.results[0].address_components[i].types[j]) {
@@ -57,46 +83,4 @@ export async function geocode(lat: number, lng: number) {
 		}
 	}
 	return { road, city, state, zip };
-}
-
-export function getState(param: string) {
-	const slug = param.replace("birding-in-", "");
-	const data = States.find(state => state.slug === slug);
-	return data;
-}
-
-export function getStateByCode(code: string) {
-	const data = States.find(state => state.code === code);
-	return data;
-}
-
-export function getCounty(stateCode:string, countySlug: string) {
-	const countyArrays = {
-		"OH": OhioCounties,
-		"AZ": ArizonaCounties,
-	}
-	const slug = countySlug.replace("-county", "");
-	const array = countyArrays[stateCode];
-	if (!array) return {}
-	const county = array[slug];
-	if (!county) return {}
-	const region = county[0];
-	return {
-		slug,
-		name: capitalize(slug.replaceAll("-", " ")),
-		region: region || null,
-		ebirdCode: county[1],
-		regionLabel: Regions[region] || null,
-		color: Regions[region]?.color || "#4a84b2",
-	}
-}
-
-export function formatCountyArray(countyObject: object) {
-	if (!countyObject) return null;
-	return Object.entries(countyObject).map(([key, value]) => ({
-		slug: key,
-		ebirdCode: value[1],
-		name: capitalize(key.replaceAll("-", " ")),
-		active: value[2],
-	}))
 }

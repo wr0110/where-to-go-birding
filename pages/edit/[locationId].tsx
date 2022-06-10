@@ -6,8 +6,9 @@ import Form from "components/Form";
 import Submit from "components/Submit";
 import FormError from "components/FormError";
 import { Editor } from "@tinymce/tinymce-react";
-import { saveHotspot, getHotspotByLocationId } from "lib/firebase";
-import { slugify, tinyMceOptions, geocode, getStateByCode } from "lib/helpers";
+import { getHotspotByLocationId } from "lib/firebase";
+import { slugify, tinyMceOptions, geocode } from "lib/helpers";
+import { getStateByCode } from "lib/localData";
 import InputLinks from "components/InputLinks";
 import Select from "components/Select";
 import IBAs from "data/oh-iba.json";
@@ -69,41 +70,54 @@ export default function Edit() {
 	const locationId = router.query.locationId as string;
 	const form = useForm<Inputs>({
 		defaultValues: {
-			roadside: "",
-			restrooms: "",
-			accessible: "",
+			roadside: "Unknown",
+			restrooms: "Unknown",
+			accessible: "Unknown",
 			dayhike: "No",
 		}
 	});
 	const { name, latitude, longitude, subnational1Code, subnational2Code, subnational2Name } = hotspot || {};
+	const isOH = subnational1Code === "OH";
 
 	const handleSubmit: SubmitHandler<Inputs> = async (data) => {
 		setSaving(true);
 		const slug = data.slug || slugify(name);
 		const countySlug = slugify(subnational2Name);
-		await saveHotspot(locationId, {
-			...data,
-			locationId,
-			name,
-			slug,
-			stateCode: subnational1Code,
-			countyCode: subnational2Code,
-			countySlug: countySlug,
-			lat: latitude,
-			lng: longitude,
-			iba: data.iba || null,
-			tips: {
-				...data.tips,
-				text: tipsRef.current.getContent(),
-			},
-			about: {
-				...data.about,
-				text: aboutRef.current.getContent(),
-			},
-		});
+		const response = await fetch("/api/hotspot/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+				...data,
+				locationId,
+				name,
+				slug,
+				stateCode: subnational1Code,
+				countyCode: subnational2Code,
+				countySlug: countySlug,
+				lat: latitude,
+				lng: longitude,
+				iba: data.iba || null,
+				tips: {
+					...data.tips,
+					text: tipsRef.current.getContent(),
+				},
+				about: {
+					...data.about,
+					text: aboutRef.current.getContent(),
+				},
+			}),
+    });
 		setSaving(false);
-		const state = getStateByCode(subnational1Code.replace("US-", ""));
-		router.push(`/birding-in-${state.slug}/${countySlug}-county/${slug}`);
+		const json = await response.json();
+		if (json.success) {
+			const state = subnational1Code ? getStateByCode(subnational1Code.replace("US-", "")) : null;
+			router.push(`/birding-in-${state?.slug}/${countySlug}-county/${slug}`);
+		} else {
+			console.error(json.error);
+			alert("Error saving hotspot");
+		}
 	}
 
 	React.useEffect(() => {
@@ -121,11 +135,11 @@ export default function Edit() {
 			}
 			if (!hotspotData || !hotspotData.address.city || !hotspotData.address.state || !hotspotData.address.zip) {
 				const { road, city, state, zip } = await geocode(data.latitude, data.longitude);
-				form.setValue("address.city", city);
-				form.setValue("address.state", state);
-				form.setValue("address.zip", zip);
+				form.setValue("address.city", city || "");
+				form.setValue("address.state", state || "");
+				form.setValue("address.zip", zip || "");
 				if (!hotspotData) {
-					form.setValue("address.street", road);
+					form.setValue("address.street", road || "");
 				}
 			}
 		}
@@ -202,12 +216,14 @@ export default function Edit() {
 							</div>
 						</div>
 
-						<div>
-							<label className="text-gray-500 font-bold">
-								Important Bird Area<br/>
-								<Select name="iba" options={ibaOptions} />
-							</label>
-						</div>
+						{isOH &&
+							<div>
+								<label className="text-gray-500 font-bold">
+									Important Bird Area<br/>
+									<Select name="iba" options={ibaOptions} />
+								</label>
+							</div>
+						}
 
 						<div>
 							<label className="text-gray-500 font-bold">
@@ -223,7 +239,7 @@ export default function Edit() {
 								</label>
 								<br/>
 								<label>
-									<input {...form.register("restrooms")} type="radio" name="restrooms" value=""/> Unknown
+									<input {...form.register("restrooms")} type="radio" name="restrooms" value="Unknown"/> Unknown
 								</label>
 							</div>
 						</div>
@@ -246,7 +262,7 @@ export default function Edit() {
 								</label>
 								<br/>
 								<label>
-									<input {...form.register("accessible")} type="radio" name="accessible" value=""/> Unknown
+									<input {...form.register("accessible")} type="radio" name="accessible" value="Unknown"/> Unknown
 								</label>
 							</div>
 						</div>
@@ -265,7 +281,7 @@ export default function Edit() {
 								</label>
 								<br/>
 								<label>
-									<input {...form.register("roadside")} type="radio" name="roadside" value=""/> Unknown
+									<input {...form.register("roadside")} type="radio" name="roadside" value="Unknown"/> Unknown
 								</label>
 							</div>
 						</div>

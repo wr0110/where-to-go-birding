@@ -1,11 +1,14 @@
 import * as React from "react";
+import { GetServerSideProps } from "next";
+import { ParsedUrlQuery } from "querystring";
 import Address from "components/Address";
 import EbirdHotspotSummary from "components/EbirdHotspotSummary";
 import Map from "components/Map";
 import Link from "next/link";
 import { getHotspot, getHotspotByLocationId } from "lib/firebase";
 import AboutSection from "components/AboutSection";
-import { getCounty, getState } from "lib/helpers";
+import { getCounty, getState } from "lib/localData";
+import { County, Hotspot as HotspotType } from "lib/types";
 
 const getParent = async (hotspotId: string) => {
 	if (!hotspotId) return null;
@@ -16,12 +19,19 @@ const getParent = async (hotspotId: string) => {
 
 }
 
-export async function getServerSideProps({ query: { stateSlug, countySlug, slug }}) {
+interface Params extends ParsedUrlQuery {
+	stateSlug: string,
+	countySlug: string,
+	slug: string,
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+	const { stateSlug, countySlug, slug } = query as Params;
 	const state = getState(stateSlug);
 	if (!state) return { notFound: true };
 
 	const county = getCounty(state.code, countySlug);
-	if (!county) return { notFound: true };
+	if (!county?.slug) return { notFound: true };
 
 	const data = await getHotspot(county.slug, slug);
 	if (!data) return { notFound: true };
@@ -32,7 +42,13 @@ export async function getServerSideProps({ query: { stateSlug, countySlug, slug 
   }
 }
 
-export default function Hotspot({ stateSlug,county, name, lat, lng, address, links, about, tips, restrooms, roadside, accessible, locationId, parent }) {	
+interface Props extends HotspotType {
+	county: County,
+	stateSlug: string,
+	parent: HotspotType | null,
+}
+
+export default function Hotspot({ stateSlug, county, name, lat, lng, address, links, about, tips, restrooms, roadside, accessible, locationId, parent }: Props) {	
 	const nameParts = name?.split("--");
 	const nameShort = nameParts?.length ? nameParts[1] : name;
 
