@@ -2,7 +2,7 @@ type Props = {
 	address?: string,
 	lat?: number,
 	lng?: number,
-	zoom?: number,
+	zoom?: number | null,
 	type?: string,
 }
 

@@ -12,6 +12,7 @@ import { getStateByCode } from "lib/localData";
 import InputLinks from "components/InputLinks";
 import Select from "components/Select";
 import IBAs from "data/oh-iba.json";
+import AdminPage from "components/AdminPage";
 
 type Hotspot = {
 	locationId: string,
@@ -148,165 +149,167 @@ export default function Edit() {
 	}, [locationId]);
 
 	return (
-		<div className="container pb-16 my-12">
-			<Form form={form} onSubmit={handleSubmit}>
-				<div className="max-w-2xl mx-auto">
-					<div className="px-4 py-5 bg-white space-y-6 sm:p-6">
+		<AdminPage title="Edit Hotspot">
+			<div className="container pb-16 my-12">
+				<Form form={form} onSubmit={handleSubmit}>
+					<div className="max-w-2xl mx-auto">
+						<div className="px-4 py-5 bg-white space-y-6 sm:p-6">
 
-						<h2 className="text-xl font-bold text-gray-600 border-b pb-4">{name}</h2>
-						<Input type="hidden" name="slug" />
-						
-						<div>
-							<label className="text-gray-500 font-bold">
-								Address<br/>
-								<Input type="text" name="address.street" placeholder="Street" />
-							</label>
-							<div className="grid grid-cols-3 gap-4 mt-2">
-								<div>
-									<Input type="text" name="address.city" placeholder="City" required />
-									<FormError name="address.city" />
-								</div>
-								<div>
-									<Input type="text" name="address.state" placeholder="State" required />
-									<FormError name="address.state" />
-								</div>
-								<div>
-									<Input type="text" name="address.zip" placeholder="Zip" required />
-									<FormError name="address.zip" />
-								</div>
-							</div>
-						</div>
-
-						<div>
-							<label className="text-gray-500 font-bold">
-								Parent Hotspot ID<br/>
-								<Input type="text" name="parentId" />
-								<span className="text-xs text-gray-500 font-normal">Example: L12345678</span>
-							</label>
-						</div>
-
-						<div>
-							<label className="text-gray-500 font-bold">Links</label>
-							<InputLinks />
-						</div>
-
-						<div>
-							<label className="text-gray-500 font-bold">
-								Tips for birding<br/>
-								<div className="mt-1">
-									<Editor id="tips-editor" onInit={(e, editor) => tipsRef.current = editor} initialValue={initialTips} init={tinyMceOptions} />
-								</div>
-							</label>
-							<div className="mt-2 grid grid-cols-2 gap-4">
-								<Input type="text" name="tips.source" placeholder="Source Title" className="text-sm"/>
-								<Input type="text" name="tips.link" placeholder="Source URL" className="text-sm"/>
-							</div>
-						</div>
-
-						<div>
-							<label className="text-gray-500 font-bold">
-								About the location<br/>
-								<div className="mt-1">
-									<Editor id="about-editor" onInit={(e, editor) => aboutRef.current = editor} initialValue={initialAbout} init={tinyMceOptions} />
-								</div>
-							</label>
-							<div className="mt-2 grid grid-cols-2 gap-4">
-								<Input type="text" name="about.source" placeholder="Source Title" className="text-sm"/>
-								<Input type="text" name="about.link" placeholder="Source URL" className="text-sm"/>
-							</div>
-						</div>
-
-						{isOH &&
+							<h2 className="text-xl font-bold text-gray-600 border-b pb-4">{name}</h2>
+							<Input type="hidden" name="slug" />
+							
 							<div>
 								<label className="text-gray-500 font-bold">
-									Important Bird Area<br/>
-									<Select name="iba" options={ibaOptions} />
+									Address<br/>
+									<Input type="text" name="address.street" placeholder="Street" />
 								</label>
+								<div className="grid grid-cols-3 gap-4 mt-2">
+									<div>
+										<Input type="text" name="address.city" placeholder="City" required />
+										<FormError name="address.city" />
+									</div>
+									<div>
+										<Input type="text" name="address.state" placeholder="State" required />
+										<FormError name="address.state" />
+									</div>
+									<div>
+										<Input type="text" name="address.zip" placeholder="Zip" required />
+										<FormError name="address.zip" />
+									</div>
+								</div>
 							</div>
-						}
 
-						<div>
-							<label className="text-gray-500 font-bold">
-								Restrooms on site
-							</label><br/>
-							<div className="mt-1 flex gap-2">
-								<label>
-									<input {...form.register("restrooms")} type="radio" name="restrooms" value="Yes"/> Yes
-								</label>
-								<br/>
-								<label>
-									<input {...form.register("restrooms")} type="radio" name="restrooms" value="No"/> No
-								</label>
-								<br/>
-								<label>
-									<input {...form.register("restrooms")} type="radio" name="restrooms" value="Unknown"/> Unknown
+							<div>
+								<label className="text-gray-500 font-bold">
+									Parent Hotspot ID<br/>
+									<Input type="text" name="parentId" />
+									<span className="text-xs text-gray-500 font-normal">Example: L12345678</span>
 								</label>
 							</div>
+
+							<div>
+								<label className="text-gray-500 font-bold">Links</label>
+								<InputLinks />
+							</div>
+
+							<div>
+								<label className="text-gray-500 font-bold">
+									Tips for birding<br/>
+									<div className="mt-1">
+										<Editor id="tips-editor" onInit={(e, editor) => tipsRef.current = editor} initialValue={initialTips} init={tinyMceOptions} />
+									</div>
+								</label>
+								<div className="mt-2 grid grid-cols-2 gap-4">
+									<Input type="text" name="tips.source" placeholder="Source Title" className="text-sm"/>
+									<Input type="text" name="tips.link" placeholder="Source URL" className="text-sm"/>
+								</div>
+							</div>
+
+							<div>
+								<label className="text-gray-500 font-bold">
+									About the location<br/>
+									<div className="mt-1">
+										<Editor id="about-editor" onInit={(e, editor) => aboutRef.current = editor} initialValue={initialAbout} init={tinyMceOptions} />
+									</div>
+								</label>
+								<div className="mt-2 grid grid-cols-2 gap-4">
+									<Input type="text" name="about.source" placeholder="Source Title" className="text-sm"/>
+									<Input type="text" name="about.link" placeholder="Source URL" className="text-sm"/>
+								</div>
+							</div>
+
+							{isOH &&
+								<div>
+									<label className="text-gray-500 font-bold">
+										Important Bird Area<br/>
+										<Select name="iba" options={ibaOptions} />
+									</label>
+								</div>
+							}
+
+							<div>
+								<label className="text-gray-500 font-bold">
+									Restrooms on site
+								</label><br/>
+								<div className="mt-1 flex gap-2">
+									<label>
+										<input {...form.register("restrooms")} type="radio" name="restrooms" value="Yes"/> Yes
+									</label>
+									<br/>
+									<label>
+										<input {...form.register("restrooms")} type="radio" name="restrooms" value="No"/> No
+									</label>
+									<br/>
+									<label>
+										<input {...form.register("restrooms")} type="radio" name="restrooms" value="Unknown"/> Unknown
+									</label>
+								</div>
+							</div>
+
+							<div>
+								<label className="text-gray-500 font-bold">
+									Accessible facilities
+								</label><br/>
+								<div className="mt-1 flex gap-2">
+									<label>
+										<input {...form.register("accessible")} type="radio" name="accessible" value="ADA"/> ADA
+									</label>
+									<br/>
+									<label>
+										<input {...form.register("accessible")} type="radio" name="accessible" value="Birdability"/> Birdability
+									</label>
+									<br/>
+									<label>
+										<input {...form.register("accessible")} type="radio" name="accessible" value="No"/> None
+									</label>
+									<br/>
+									<label>
+										<input {...form.register("accessible")} type="radio" name="accessible" value="Unknown"/> Unknown
+									</label>
+								</div>
+							</div>
+
+							<div>
+								<label className="text-gray-500 font-bold">
+									Roadside accessible
+								</label><br/>
+								<div className="mt-1 flex gap-2">
+									<label>
+										<input {...form.register("roadside")} type="radio" name="roadside" value="Yes"/> Yes
+									</label>
+									<br/>
+									<label>
+										<input {...form.register("roadside")} type="radio" name="roadside" value="No"/> No
+									</label>
+									<br/>
+									<label>
+										<input {...form.register("roadside")} type="radio" name="roadside" value="Unknown"/> Unknown
+									</label>
+								</div>
+							</div>
+
+							<div>
+								<label className="text-gray-500 font-bold">
+									Day Hike
+								</label><br/>
+								<div className="mt-1 flex gap-2">
+									<label>
+										<input {...form.register("dayhike")} type="radio" name="dayhike" value="Yes"/> Yes
+									</label>
+									<br/>
+									<label>
+										<input {...form.register("dayhike")} type="radio" name="dayhike" value="No"/> No
+									</label>
+								</div>
+							</div>
+
 						</div>
-
-						<div>
-							<label className="text-gray-500 font-bold">
-								Accessible facilities
-							</label><br/>
-							<div className="mt-1 flex gap-2">
-								<label>
-									<input {...form.register("accessible")} type="radio" name="accessible" value="ADA"/> ADA
-								</label>
-								<br/>
-								<label>
-									<input {...form.register("accessible")} type="radio" name="accessible" value="Birdability"/> Birdability
-								</label>
-								<br/>
-								<label>
-									<input {...form.register("accessible")} type="radio" name="accessible" value="No"/> None
-								</label>
-								<br/>
-								<label>
-									<input {...form.register("accessible")} type="radio" name="accessible" value="Unknown"/> Unknown
-								</label>
-							</div>
+						<div className="px-4 py-3 bg-gray-100 text-right sm:px-6 rounded">
+							<Submit loading={saving} color="green" className="font-medium">Save Hotspot</Submit>	
 						</div>
-
-						<div>
-							<label className="text-gray-500 font-bold">
-								Roadside accessible
-							</label><br/>
-							<div className="mt-1 flex gap-2">
-								<label>
-									<input {...form.register("roadside")} type="radio" name="roadside" value="Yes"/> Yes
-								</label>
-								<br/>
-								<label>
-									<input {...form.register("roadside")} type="radio" name="roadside" value="No"/> No
-								</label>
-								<br/>
-								<label>
-									<input {...form.register("roadside")} type="radio" name="roadside" value="Unknown"/> Unknown
-								</label>
-							</div>
-						</div>
-
-						<div>
-							<label className="text-gray-500 font-bold">
-								Day Hike
-							</label><br/>
-							<div className="mt-1 flex gap-2">
-								<label>
-									<input {...form.register("dayhike")} type="radio" name="dayhike" value="Yes"/> Yes
-								</label>
-								<br/>
-								<label>
-									<input {...form.register("dayhike")} type="radio" name="dayhike" value="No"/> No
-								</label>
-							</div>
-						</div>
-
 					</div>
-					<div className="px-4 py-3 bg-gray-100 text-right sm:px-6 rounded">
-						<Submit loading={saving} color="green" className="font-medium">Save Hotspot</Submit>	
-					</div>
-				</div>
-			</Form>
-		</div>
+				</Form>
+			</div>
+		</AdminPage>
 	)
 }

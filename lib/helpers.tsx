@@ -10,10 +10,22 @@ export const tinyMceOptions = {
 	height: 250,
 	menubar: false,
 	plugins: "link",
-	toolbar: "bold italic underline | link",
-	content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+	toolbar: "bold italic underline | link | cite",
+	content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px } cite { font-size: 0.75em; font-style: italic; color: #666; }',
 	branding: false,
-	elementpath: false,
+	//elementpath: false,
+	formats: {
+		potato: { inline: "cite" },
+	},
+	setup: (editor: any) => {
+		editor.ui.registry.addToggleButton("cite", {
+			text: "Cite",
+			onAction: (api: any) => {
+				editor.formatter.toggle("potato");
+				api.setActive(!api.isActive());
+			},
+		});
+	}
 }
 
 export function capitalize(str: string) {
