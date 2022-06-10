@@ -4,15 +4,21 @@ type Props = {
 	needsSid: string,
 	yearNeedsSid: string,
 	label: string,
+	portal?: string,
 }
 
-export default function EbirdStateSummary({ code, label, rareSid, needsSid, yearNeedsSid }: Props) {
+export default function EbirdStateSummary({ code, label, rareSid, needsSid, yearNeedsSid, portal }: Props) {
 	const getUrl = (bMonth: number, eMonth: number) => {
 		return `https://ebird.org/barchart?byr=1900&eyr=2060&bmo=${bMonth}&emo=${eMonth}&r=${code}`;
 	}
 
 	return (
 		<div className="mb-6">
+			{portal &&
+				<a href={portal} target="_blank" rel="noreferrer">
+					<strong>{label} eBird Portal</strong>
+				</a>
+			}
 			<p className="mb-1">
 				<a href={`https://ebird.org/ebird/subnational1/${code}?yr=all&m=&rank=mrec`} target="_blank" rel="noreferrer">Overview</a>
 				&nbsp;–&nbsp;
