@@ -9,6 +9,7 @@ import { getHotspot, getHotspotByLocationId } from "lib/firebase";
 import AboutSection from "components/AboutSection";
 import { getCounty, getState } from "lib/localData";
 import { County, Hotspot as HotspotType } from "lib/types";
+import SecureContent from "components/SecureContent";
 
 const getParent = async (hotspotId: string) => {
 	if (!hotspotId) return null;
@@ -119,9 +120,11 @@ export default function Hotspot({ stateSlug, county, name, lat, lng, address, li
 					{(lat && lng) && <Map lat={lat} lng={lng} />}
 				</div>
 			</div>
-			<p className="mt-4">
-				<Link href={`/edit/${locationId}`}>Edit Location</Link>
-			</p>
+			<SecureContent>
+				<p className="mt-4">
+					<Link href={`/edit/${locationId}`}>Edit Location</Link>
+				</p>
+			</SecureContent>
 		</div>
 	)
 }

@@ -82,10 +82,6 @@ export default function County({ state, slug, hotspots, name, ebirdCode, color }
 					)}
 				</div>
 			</div>
-			<hr className="my-4"/>
-			<p>
-				<Link href="/add">Add Hotspot</Link>
-			</p>
 		</div>
 	)
 }

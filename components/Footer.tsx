@@ -1,4 +1,11 @@
+import Link from "next/link";
+import { PencilAltIcon, UserIcon } from "@heroicons/react/outline";
+import useFirebaseLogout from "hooks/useFirebaseLogout";
+import { useUser } from "providers/user";
+
 export default function Footer() {
+	const { logout } = useFirebaseLogout();
+	const { user } = useUser();
 	return (
 		<footer>
 			<div className="bg-[#4a84b2] py-16">
@@ -11,6 +18,21 @@ export default function Footer() {
 			</div>
 			<div className="bg-[#325a79] py-3 text-xs text-gray-300 text-center">
 				© 2022 eBird Hotspots – All rights reserved.
+				<p className="mt-2">
+					{user ? (
+						<>
+							<UserIcon className="h-3 w-3 inline"/>
+							&nbsp;
+							{user?.email}
+							&nbsp;-&nbsp;
+							<button type="button" onClick={logout} className="text-[#81b5e0]">logout</button>
+						</>
+					) : (
+						<Link href="/login">
+							<a className="text-[#81b5e0]"><PencilAltIcon className="h-3 w-3 inline"/> Editor Login</a>
+						</Link>
+					)}
+				</p>
 			</div>
 		</footer>
 	)
