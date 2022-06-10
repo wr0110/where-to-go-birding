@@ -1,9 +1,16 @@
 import Link from "next/link";
-import { getState } from "lib/helpers";
+import { getState } from "lib/localData";
+import { GetServerSideProps } from "next";
+import { ParsedUrlQuery } from "querystring";
 import OhioIBA from "data/oh-iba.json";
 import Heading from "components/Heading";
 
-export async function getServerSideProps({ query: { stateSlug }}) {
+interface Params extends ParsedUrlQuery {
+	stateSlug: string,
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+	const { stateSlug } = query as Params;
 	const state = getState(stateSlug);
 	if (!state) return { notFound: true };
 	
@@ -14,7 +21,12 @@ export async function getServerSideProps({ query: { stateSlug }}) {
   }
 }
 
-export default function ImportantBirdAreas({ areas, stateSlug }) {
+type Props = {
+	stateSlug: string,
+	areas: { name: string, slug: string }[],
+}
+
+export default function ImportantBirdAreas({ areas, stateSlug }: Props) {
 	return (
 		<div className="container pb-16 mt-12">
 			<Heading>Ohio Important Bird Areas</Heading>

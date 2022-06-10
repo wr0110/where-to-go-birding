@@ -1,35 +1,34 @@
 import Link from "next/link";
 import { getAccessibleHotspots } from "lib/firebase";
-import { getState, capitalize } from "lib/helpers";
+import { getState } from "lib/localData";
+import { restructureHotspotsByCounty } from "lib/helpers";
+import { GetServerSideProps } from "next";
+import { HotspotsByCounty } from "lib/types";
+import { ParsedUrlQuery } from "querystring";
 
-export async function getServerSideProps({ query: { stateSlug }}) {
+interface Params extends ParsedUrlQuery {
+	stateSlug: string,
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+	const { stateSlug } = query as Params;
 	const state = getState(stateSlug);
 	if (!state) return { notFound: true };
 	
 	const hotspots = await getAccessibleHotspots(state.code) || [];
-	console.log(hotspots);
-
-	let counties = {}
-	hotspots.forEach(({countySlug, slug, name}) => {
-		if (!countySlug) return;
-		if (!counties[countySlug]) {
-			counties[countySlug] = []
-		}
-		counties[countySlug].push({ name, slug });
-	});
-
-	const formattedHotspots = Object.entries(counties).map(([key, hotspots]) => ({
-		countySlug: key,
-		countyName: capitalize(key.replaceAll("-", " ")),
-		hotspots,
-	}));
+	const hotspotsByCounty = restructureHotspotsByCounty(hotspots as any);
 
   return {
-    props: { stateSlug: state.slug, hotspots: formattedHotspots },
+    props: { stateSlug: state.slug, hotspots: hotspotsByCounty },
   }
 }
 
-export default function AccessibleFacilities({ stateSlug, hotspots }) {
+type Props = {
+	stateSlug: string,
+	hotspots: HotspotsByCounty,
+}
+
+export default function AccessibleFacilities({ stateSlug, hotspots }: Props) {
 	return (
 		<div className="container pb-16 mt-12">
 			<h1 className="text-3xl mb-12">Accessible Facilities</h1>

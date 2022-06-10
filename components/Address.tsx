@@ -2,9 +2,9 @@ type Props = {
 	line1: string,
 	line2?: string,
 	street?: string,
-	city: string,
-	state: string,
-	zip: string,
+	city?: string,
+	state?: string,
+	zip?: string,
 }
 
 export default function Address({ line1, line2, street, city, state, zip }: Props) {
@@ -17,7 +17,7 @@ export default function Address({ line1, line2, street, city, state, zip }: Prop
 					<span>{street}</span><br/>
 				</>
 			}
-			<span>{city}, {state} {zip}</span>
+			{city && <span>{city}, {state} {zip}</span>}
 		</div>
 	)
 }

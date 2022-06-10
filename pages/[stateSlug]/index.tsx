@@ -1,38 +1,44 @@
 import * as React from "react";
+import { GetStaticProps, GetStaticPaths } from "next";
+import { ParsedUrlQuery } from "querystring";
 import Link from "next/link";
 import EbirdStateSummary from "components/EbirdStateSummary";
 import OhioMap from "components/OhioMap";
 import ArizonaMap from "components/ArizonaMap";
-import OhioCounties from "data/oh-counties.json";
-import ArizonaCounties from "data/az-counties.json";
-import { getState, formatCountyArray } from "lib/helpers";
+import { getState, getCounties, getStateLinks } from "lib/localData";
 import EbirdDescription from "components/EbirdDescription";
 import EbirdHelpLinks from "components/EbirdHelpLinks";
 import StateFeatureLinks from "components/StateFeatureLinks";
+import RareBirds from "components/RareBirds";
 import States from "data/states.json";
+import { StateLinks, State as StateType, County as CountyType } from "lib/types";
 
-export async function getStaticPaths() {
+interface Params extends ParsedUrlQuery {
+	stateSlug: string,
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
 	const paths = States.filter(({active}) => active).map(({slug}) => ({ params: { stateSlug: slug } }));
   return { paths, fallback: true }
 }
 
-export async function getStaticProps({ params: { stateSlug }}) {
-	const countyArrays = {
-		"OH": OhioCounties,
-		"AZ": ArizonaCounties,
-	}
-
+export const getStaticProps: GetStaticProps = async ({params}) => {
+	const { stateSlug } = params as Params;
 	const state = getState(stateSlug);
 	if (!state) return { notFound: true };
-	const counties = formatCountyArray(countyArrays[state.code]) || [];
+	const counties = getCounties(state.code);
+	const links = getStateLinks(state.code);
 
-  return {
-    props: { counties, ...state},
-  }
+  return { props: { counties, links, ...state }, }
 }
 
-export default function State({label, code, slug, features, rareSid, needsSid, yearNeedsSid, links, counties}) {
-	const maps = {
+interface Props extends StateType {
+	counties: CountyType[],
+	links: StateLinks,
+}
+
+export default function State({label, code, slug, features, rareSid, needsSid, yearNeedsSid, links, counties}: Props) {
+	const maps: any = {
 		"OH": <OhioMap />,
 		"AZ": <ArizonaMap />,
 	}
@@ -55,7 +61,13 @@ export default function State({label, code, slug, features, rareSid, needsSid, y
 						<StateFeatureLinks slug={slug} features={features} />
 					}
 					<h3 className="text-lg mb-2 font-bold">Explore {label} in eBird</h3>
-					<EbirdStateSummary code={code} rareSid={rareSid} needsSid={needsSid} yearNeedsSid={yearNeedsSid} />					
+					<EbirdStateSummary
+						label={label}
+						code={`US-${code}`}
+						rareSid={rareSid}
+						needsSid={needsSid}
+						yearNeedsSid={yearNeedsSid}
+					/>
 				</div>
 				<div className="flex justify-center items-start">
 					{map}
@@ -107,6 +119,7 @@ export default function State({label, code, slug, features, rareSid, needsSid, y
 					))}
 				</div>
 			</div>
+			<RareBirds region={`US-${code}`} label={label} />
 		</div>
 	)
 }

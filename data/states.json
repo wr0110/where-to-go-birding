@@ -14,6 +14,9 @@
 		"slug": "arizona",
 		"code": "AZ",
 		"features": [],
+		"rareSid": "SN35601",
+		"needsSid": "SN10347",
+		"yearNeedsSid": "SN35168",
 		"active": true,
 		"links": [
 			{
@@ -359,7 +362,8 @@
 	{
 		"label": "Vermont",
 		"slug": "vermont",
-		"code": "VT"
+		"code": "VT",
+		"ebirdPortal": "https://ebird.org/vt/about"
 	},
 	{
 		"label": "Virginia",

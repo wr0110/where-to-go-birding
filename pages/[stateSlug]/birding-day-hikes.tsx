@@ -1,8 +1,17 @@
+import * as React from "react";
 import Link from "next/link";
 import { getDayHikeHotspots } from "lib/firebase";
-import { getState, capitalize } from "lib/helpers";
+import { restructureHotspotsByCounty } from "lib/helpers";
+import { getState } from "lib/localData";
 import Heading from "components/Heading";
 import { GetServerSideProps } from "next";
+import { HotspotsByCounty } from "lib/types";
+
+type Props = {
+	stateSlug: string,
+	stateLabel: string,
+	hotspots: HotspotsByCounty,
+}
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const stateSlug = query.stateSlug as string;
@@ -10,28 +19,14 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	if (!state) return { notFound: true };
 	
 	const hotspots = await getDayHikeHotspots(state.code) || [];
-
-	let counties = {}
-	hotspots.forEach(({countySlug, slug, name}) => {
-		if (!countySlug) return;
-		if (!counties[countySlug]) {
-			counties[countySlug] = []
-		}
-		counties[countySlug].push({ name, slug });
-	});
-
-	const formattedHotspots = Object.entries(counties).map(([key, hotspots]) => ({
-		countySlug: key,
-		countyName: capitalize(key.replaceAll("-", " ")),
-		hotspots,
-	}));
+	const hotspotsByCounty = restructureHotspotsByCounty(hotspots as any);
 
   return {
-    props: { stateSlug: state.slug, stateLabel: state.label, hotspots: formattedHotspots },
+    props: { stateSlug: state.slug, stateLabel: state.label, hotspots: hotspotsByCounty },
   }
 }
 
-export default function RoadsideBirding({ stateSlug, stateLabel, hotspots }) {
+export default function BirdingDayHikes({ stateSlug, stateLabel, hotspots }: Props) {
 	return (
 		<div className="container pb-16 mt-12">
 			<Heading>Birding Day Hikes</Heading>
@@ -49,7 +44,7 @@ Safety first
 					</p>
 				</div>
 				<figure className="border p-2 bg-gray-200 text-center text-xs mb-4">
-					<img src="/irwin-prairie.jpg" className="md:min-w-[200px] mx-auto" />
+					<img src="/irwin-prairie.jpg" className="md:min-w-[200px] mx-auto" alt="Boardwalk across marsh" />
 					<figcaption className="my-3">Irwin Prairie, Ohio<br/>Photo by Ken Ostermiller</figcaption>
 				</figure>
 			</div>
@@ -59,12 +54,12 @@ Safety first
 					<p key={countySlug} className="mb-4 break-inside-avoid">
 						<Link href={`/birding-in-${stateSlug}/${countySlug}-county`}>{countyName}</Link><br/>
 						{hotspots.map(({name, slug}) => (
-							<>
+							<React.Fragment key={name}>
 								<Link key={slug} href={`/birding-in-${stateSlug}/${countySlug}-county/${slug}`}>
 									<a className="font-bold">{name}</a>
 								</Link>
 								<br/>
-							</>
+							</React.Fragment>
 						))}
 					</p>
 				))}

@@ -1,90 +1,530 @@
-{
-	"adams": ["sw", "001", true],
-	"allen": ["nw", "003", true],
-	"ashland": ["ec", "005", true],
-	"ashtabula": ["ne", "007", true],
-	"athens": ["se", "009", true],
-	"auglaize": ["sw", "011", true],
-	"belmont": ["se", "013", true],
-	"brown": ["sw", "015", true],
-	"butler": ["sw", "017", true],
-	"carroll": ["ec", "019", true],
-	"champaign": ["sw", "021", true],
-	"clark": ["sw", "023", true],
-	"clermont": ["sw", "025", true],
-	"clinton": ["sw", "027", true],
-	"columbiana": ["ne", "029", true],
-	"coshocton": ["ec", "031", true],
-	"crawford": ["nw", "033", true],
-	"cuyahoga": ["ne", "035", true],
-	"darke": ["sw", "037", true],
-	"defiance": ["nw", "039", true],
-	"delaware": ["ce", "041", true],
-	"erie": ["nw", "043", true],
-	"fairfield": ["ce", "045", true],
-	"fayette": ["ce", "047", true],
-	"franklin": ["ce", "049", true],
-	"fulton": ["nw", "051", true],
-	"gallia": ["se", "053", true],
-	"geauga": ["ne", "055", true],
-	"greene": ["sw", "057", true],
-	"guernsey": ["ec", "059", true],
-	"hamilton": ["sw", "061", true],
-	"hancock": ["nw", "063", true],
-	"hardin": ["nw", "065", true],
-	"harrison": ["ec", "067", true],
-	"henry": ["nw", "069", true],
-	"highland": ["sw", "071", true],
-	"hocking": ["ce", "073", true],
-	"holmes": ["ec", "075", true],
-	"huron": ["nw", "077", true],
-	"jackson": ["se", "079", true],
-	"jefferson": ["ec", "081", true],
-	"knox": ["ec", "083", true],
-	"lake": ["ne", "085", true],
-	"lawrence": ["se", "087", true],
-	"licking": ["ce", "089", true],
-	"logan": ["sw", "091", true],
-	"lorain": ["ne", "093", true],
-	"lucas": ["nw", "095", true],
-	"madison": ["ce", "097", true],
-	"mahoning": ["ne", "099", true],
-	"marion": ["ce", "101", true],
-	"medina": ["ne", "103", true],
-	"meigs": ["se", "105", true],
-	"mercer": ["sw", "107", true],
-	"miami": ["sw", "109", true],
-	"monroe": ["se", "111", true],
-	"montgomery": ["sw", "113", true],
-	"morgan": ["se", "115", true],
-	"morrow": ["ce", "117", true],
-	"muskingum": ["ec", "119", true],
-	"noble": ["se", "121", true],
-	"ottawa": ["nw", "123", true],
-	"paulding": ["nw", "125", true],
-	"perry": ["ce", "127", true],
-	"pickaway": ["ce", "129", true],
-	"pike": ["se", "131", true],
-	"portage": ["ne", "133", true],
-	"preble": ["sw", "135", true],
-	"putnam": ["nw", "137", true],
-	"richland": ["ec", "139", true],
-	"ross": ["se", "141", true],
-	"sandusky": ["nw", "143", true],
-	"scioto": ["se", "145", true],
-	"seneca": ["nw", "147", true],
-	"shelby": ["sw", "149", true],
-	"stark": ["ec", "151", true],
-	"summit": ["ne", "153", true],
-	"trumbull": ["ne", "155", true],
-	"tuscarawas": ["ce", "157", true],
-	"union": ["ce", "159", true],
-	"van-wert": ["nw", "161", true],
-	"vinton": ["se", "163", true],
-	"warren": ["sw", "165", true],
-	"washington": ["se", "167", true],
-	"wayne": ["ec", "169", true],
-	"williams": ["nw", "171", true],
-	"wood": ["nw", "173", true],
-	"wyandot": ["ne", "175", true]
-}
+[
+	{
+		"slug": "adams",
+		"region": "sw",
+		"ebirdCode": "001",
+		"active": true
+	},
+	{
+		"slug": "allen",
+		"region": "nw",
+		"ebirdCode": "003",
+		"active": true
+	},
+	{
+		"slug": "ashland",
+		"region": "ec",
+		"ebirdCode": "005",
+		"active": true
+	},
+	{
+		"slug": "ashtabula",
+		"region": "ne",
+		"ebirdCode": "007",
+		"active": true
+	},
+	{
+		"slug": "athens",
+		"region": "se",
+		"ebirdCode": "009",
+		"active": true
+	},
+	{
+		"slug": "auglaize",
+		"region": "sw",
+		"ebirdCode": "011",
+		"active": true
+	},
+	{
+		"slug": "belmont",
+		"region": "se",
+		"ebirdCode": "013",
+		"active": true
+	},
+	{
+		"slug": "brown",
+		"region": "sw",
+		"ebirdCode": "015",
+		"active": true
+	},
+	{
+		"slug": "butler",
+		"region": "sw",
+		"ebirdCode": "017",
+		"active": true
+	},
+	{
+		"slug": "carroll",
+		"region": "ec",
+		"ebirdCode": "019",
+		"active": true
+	},
+	{
+		"slug": "champaign",
+		"region": "sw",
+		"ebirdCode": "021",
+		"active": true
+	},
+	{
+		"slug": "clark",
+		"region": "sw",
+		"ebirdCode": "023",
+		"active": true
+	},
+	{
+		"slug": "clermont",
+		"region": "sw",
+		"ebirdCode": "025",
+		"active": true
+	},
+	{
+		"slug": "clinton",
+		"region": "sw",
+		"ebirdCode": "027",
+		"active": true
+	},
+	{
+		"slug": "columbiana",
+		"region": "ne",
+		"ebirdCode": "029",
+		"active": true
+	},
+	{
+		"slug": "coshocton",
+		"region": "ec",
+		"ebirdCode": "031",
+		"active": true
+	},
+	{
+		"slug": "crawford",
+		"region": "nw",
+		"ebirdCode": "033",
+		"active": true
+	},
+	{
+		"slug": "cuyahoga",
+		"region": "ne",
+		"ebirdCode": "035",
+		"active": true
+	},
+	{
+		"slug": "darke",
+		"region": "sw",
+		"ebirdCode": "037",
+		"active": true
+	},
+	{
+		"slug": "defiance",
+		"region": "nw",
+		"ebirdCode": "039",
+		"active": true
+	},
+	{
+		"slug": "delaware",
+		"region": "ce",
+		"ebirdCode": "041",
+		"active": true
+	},
+	{
+		"slug": "erie",
+		"region": "nw",
+		"ebirdCode": "043",
+		"active": true
+	},
+	{
+		"slug": "fairfield",
+		"region": "ce",
+		"ebirdCode": "045",
+		"active": true
+	},
+	{
+		"slug": "fayette",
+		"region": "ce",
+		"ebirdCode": "047",
+		"active": true
+	},
+	{
+		"slug": "franklin",
+		"region": "ce",
+		"ebirdCode": "049",
+		"active": true
+	},
+	{
+		"slug": "fulton",
+		"region": "nw",
+		"ebirdCode": "051",
+		"active": true
+	},
+	{
+		"slug": "gallia",
+		"region": "se",
+		"ebirdCode": "053",
+		"active": true
+	},
+	{
+		"slug": "geauga",
+		"region": "ne",
+		"ebirdCode": "055",
+		"active": true
+	},
+	{
+		"slug": "greene",
+		"region": "sw",
+		"ebirdCode": "057",
+		"active": true
+	},
+	{
+		"slug": "guernsey",
+		"region": "ec",
+		"ebirdCode": "059",
+		"active": true
+	},
+	{
+		"slug": "hamilton",
+		"region": "sw",
+		"ebirdCode": "061",
+		"active": true
+	},
+	{
+		"slug": "hancock",
+		"region": "nw",
+		"ebirdCode": "063",
+		"active": true
+	},
+	{
+		"slug": "hardin",
+		"region": "nw",
+		"ebirdCode": "065",
+		"active": true
+	},
+	{
+		"slug": "harrison",
+		"region": "ec",
+		"ebirdCode": "067",
+		"active": true
+	},
+	{
+		"slug": "henry",
+		"region": "nw",
+		"ebirdCode": "069",
+		"active": true
+	},
+	{
+		"slug": "highland",
+		"region": "sw",
+		"ebirdCode": "071",
+		"active": true
+	},
+	{
+		"slug": "hocking",
+		"region": "ce",
+		"ebirdCode": "073",
+		"active": true
+	},
+	{
+		"slug": "holmes",
+		"region": "ec",
+		"ebirdCode": "075",
+		"active": true
+	},
+	{
+		"slug": "huron",
+		"region": "nw",
+		"ebirdCode": "077",
+		"active": true
+	},
+	{
+		"slug": "jackson",
+		"region": "se",
+		"ebirdCode": "079",
+		"active": true
+	},
+	{
+		"slug": "jefferson",
+		"region": "ec",
+		"ebirdCode": "081",
+		"active": true
+	},
+	{
+		"slug": "knox",
+		"region": "ec",
+		"ebirdCode": "083",
+		"active": true
+	},
+	{
+		"slug": "lake",
+		"region": "ne",
+		"ebirdCode": "085",
+		"active": true
+	},
+	{
+		"slug": "lawrence",
+		"region": "se",
+		"ebirdCode": "087",
+		"active": true
+	},
+	{
+		"slug": "licking",
+		"region": "ce",
+		"ebirdCode": "089",
+		"active": true
+	},
+	{
+		"slug": "logan",
+		"region": "sw",
+		"ebirdCode": "091",
+		"active": true
+	},
+	{
+		"slug": "lorain",
+		"region": "ne",
+		"ebirdCode": "093",
+		"active": true
+	},
+	{
+		"slug": "lucas",
+		"region": "nw",
+		"ebirdCode": "095",
+		"active": true
+	},
+	{
+		"slug": "madison",
+		"region": "ce",
+		"ebirdCode": "097",
+		"active": true
+	},
+	{
+		"slug": "mahoning",
+		"region": "ne",
+		"ebirdCode": "099",
+		"active": true
+	},
+	{
+		"slug": "marion",
+		"region": "ce",
+		"ebirdCode": "101",
+		"active": true
+	},
+	{
+		"slug": "medina",
+		"region": "ne",
+		"ebirdCode": "103",
+		"active": true
+	},
+	{
+		"slug": "meigs",
+		"region": "se",
+		"ebirdCode": "105",
+		"active": true
+	},
+	{
+		"slug": "mercer",
+		"region": "sw",
+		"ebirdCode": "107",
+		"active": true
+	},
+	{
+		"slug": "miami",
+		"region": "sw",
+		"ebirdCode": "109",
+		"active": true
+	},
+	{
+		"slug": "monroe",
+		"region": "se",
+		"ebirdCode": "111",
+		"active": true
+	},
+	{
+		"slug": "montgomery",
+		"region": "sw",
+		"ebirdCode": "113",
+		"active": true
+	},
+	{
+		"slug": "morgan",
+		"region": "se",
+		"ebirdCode": "115",
+		"active": true
+	},
+	{
+		"slug": "morrow",
+		"region": "ce",
+		"ebirdCode": "117",
+		"active": true
+	},
+	{
+		"slug": "muskingum",
+		"region": "ec",
+		"ebirdCode": "119",
+		"active": true
+	},
+	{
+		"slug": "noble",
+		"region": "se",
+		"ebirdCode": "121",
+		"active": true
+	},
+	{
+		"slug": "ottawa",
+		"region": "nw",
+		"ebirdCode": "123",
+		"active": true
+	},
+	{
+		"slug": "paulding",
+		"region": "nw",
+		"ebirdCode": "125",
+		"active": true
+	},
+	{
+		"slug": "perry",
+		"region": "ce",
+		"ebirdCode": "127",
+		"active": true
+	},
+	{
+		"slug": "pickaway",
+		"region": "ce",
+		"ebirdCode": "129",
+		"active": true
+	},
+	{
+		"slug": "pike",
+		"region": "se",
+		"ebirdCode": "131",
+		"active": true
+	},
+	{
+		"slug": "portage",
+		"region": "ne",
+		"ebirdCode": "133",
+		"active": true
+	},
+	{
+		"slug": "preble",
+		"region": "sw",
+		"ebirdCode": "135",
+		"active": true
+	},
+	{
+		"slug": "putnam",
+		"region": "nw",
+		"ebirdCode": "137",
+		"active": true
+	},
+	{
+		"slug": "richland",
+		"region": "ec",
+		"ebirdCode": "139",
+		"active": true
+	},
+	{
+		"slug": "ross",
+		"region": "se",
+		"ebirdCode": "141",
+		"active": true
+	},
+	{
+		"slug": "sandusky",
+		"region": "nw",
+		"ebirdCode": "143",
+		"active": true
+	},
+	{
+		"slug": "scioto",
+		"region": "se",
+		"ebirdCode": "145",
+		"active": true
+	},
+	{
+		"slug": "seneca",
+		"region": "nw",
+		"ebirdCode": "147",
+		"active": true
+	},
+	{
+		"slug": "shelby",
+		"region": "sw",
+		"ebirdCode": "149",
+		"active": true
+	},
+	{
+		"slug": "stark",
+		"region": "ec",
+		"ebirdCode": "151",
+		"active": true
+	},
+	{
+		"slug": "summit",
+		"region": "ne",
+		"ebirdCode": "153",
+		"active": true
+	},
+	{
+		"slug": "trumbull",
+		"region": "ne",
+		"ebirdCode": "155",
+		"active": true
+	},
+	{
+		"slug": "tuscarawas",
+		"region": "ce",
+		"ebirdCode": "157",
+		"active": true
+	},
+	{
+		"slug": "union",
+		"region": "ce",
+		"ebirdCode": "159",
+		"active": true
+	},
+	{
+		"slug": "van-wert",
+		"region": "nw",
+		"ebirdCode": "161",
+		"active": true
+	},
+	{
+		"slug": "vinton",
+		"region": "se",
+		"ebirdCode": "163",
+		"active": true
+	},
+	{
+		"slug": "warren",
+		"region": "sw",
+		"ebirdCode": "165",
+		"active": true
+	},
+	{
+		"slug": "washington",
+		"region": "se",
+		"ebirdCode": "167",
+		"active": true
+	},
+	{
+		"slug": "wayne",
+		"region": "ec",
+		"ebirdCode": "169",
+		"active": true
+	},
+	{
+		"slug": "williams",
+		"region": "nw",
+		"ebirdCode": "171",
+		"active": true
+	},
+	{
+		"slug": "wood",
+		"region": "nw",
+		"ebirdCode": "173",
+		"active": true
+	},
+	{
+		"slug": "wyandot",
+		"region": "ne",
+		"ebirdCode": "175",
+		"active": true
+	}
+]

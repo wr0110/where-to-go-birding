@@ -1,35 +1,31 @@
 import Link from "next/link";
 import { getRoadsideHotspots } from "lib/firebase";
-import { getState, capitalize } from "lib/helpers";
+import { restructureHotspotsByCounty } from "lib/helpers";
+import { getState } from "lib/localData";
 import Heading from "components/Heading";
+import { GetServerSideProps } from "next";
+import { HotspotsByCounty } from "lib/types";
 
-export async function getServerSideProps({ query: { stateSlug }}) {
+type Props = {
+	stateSlug: string,
+	stateLabel: string,
+	hotspots: HotspotsByCounty,
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+	const stateSlug = query.stateSlug as string;
 	const state = getState(stateSlug);
 	if (!state) return { notFound: true };
 	
 	const hotspots = await getRoadsideHotspots(state.code) || [];
-
-	let counties = {}
-	hotspots.forEach(({countySlug, slug, name}) => {
-		if (!countySlug) return;
-		if (!counties[countySlug]) {
-			counties[countySlug] = []
-		}
-		counties[countySlug].push({ name, slug });
-	});
-
-	const formattedHotspots = Object.entries(counties).map(([key, hotspots]) => ({
-		countySlug: key,
-		countyName: capitalize(key.replaceAll("-", " ")),
-		hotspots,
-	}));
+	const hotspotsByCounty = restructureHotspotsByCounty(hotspots as any);
 
   return {
-    props: { stateSlug: state.slug, hotspots: formattedHotspots },
+    props: { stateSlug: state.slug, hotspots: hotspotsByCounty },
   }
 }
 
-export default function RoadsideBirding({ stateSlug, hotspots }) {
+export default function RoadsideBirding({ stateSlug, hotspots }: Props) {
 	return (
 		<div className="container pb-16 mt-12">
 			<Heading>Roadside Birding</Heading>
