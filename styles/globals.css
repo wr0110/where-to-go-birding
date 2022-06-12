@@ -38,6 +38,20 @@
 	}
 }
 
+.formatted p {
+	@apply mb-4;
+}
+
+.formatted cite {
+	font-size: 0.75em;
+	@apply -mt-4;
+	@apply block;
+}
+
+.formatted br + cite {
+	@apply mt-0;
+}
+
 svg.icon {
 	width: 1em;
 	height: 1em;		
