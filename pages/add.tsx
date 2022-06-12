@@ -1,13 +1,8 @@
-import * as React from "react";
 import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "components/Input";
 import Form from "components/Form";
 import Submit from "components/Submit";
-import FormError from "components/FormError";
-import { Editor } from "@tinymce/tinymce-react";
-import { saveHotspot, getHotspotByLocationId } from "lib/firebase";
-import { slugify, tinyMceOptions } from "lib/helpers";
 
 type Inputs = {
 	locationId: string,

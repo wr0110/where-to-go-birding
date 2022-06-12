@@ -7,12 +7,12 @@ type Props = {
 	stateSlug: string,
 }
 
-export default function HotspotList({ countySlug, stateSlug, hotspots }: Props) {
+export default function HotspotList({ hotspots }: Props) {
 	return (
 		<ul>
-			{hotspots?.map(({ name, slug: hotspotSlug }) => (
-				<li key={hotspotSlug}>
-					<Link href={`/birding-in-${stateSlug}/${countySlug}-county/${hotspotSlug}`}>{name}</Link>
+			{hotspots?.map(({ name, url }) => (
+				<li key={url}>
+					<Link href={url}>{name}</Link>
 				</li>
 			))}
 		</ul>

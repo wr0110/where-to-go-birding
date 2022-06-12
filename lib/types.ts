@@ -30,6 +30,7 @@ export type County = {
 export type Hotspot = {
 	name: string,
 	_id?: string,
+	url: string,
 	slug: string,
 	lat: number,
 	lng: number,
@@ -37,16 +38,7 @@ export type Hotspot = {
 	stateCode: string,
 	countyCode: string,
 	countySlug: string,
-	tips?: {
-		text: string,
-		source: string,
-		link: string,	
-	},
-	about?: {
-		text: string,
-		source: string,
-		link: string,
-	},
+	about?:  string,
 	address?: {
 		street: string,
 		city: string,
@@ -73,7 +65,7 @@ export type HotspotsByCounty = [{
 	countyName: string,
 	hotspots: {
 			name: string,
-			slug: string,
+			url: string,
 	}[]
 }]
 
@@ -84,4 +76,13 @@ export type IBA = {
 	ebirdLocations?: string,
 	webpage: string,
 	about: string
+}
+
+export type EbirdHotspot = {
+	locationId: string,
+	name: string,
+	latitude: number,
+	longitude: number,
+	subnational1Code: string,
+	subnational2Code: string,
 }
