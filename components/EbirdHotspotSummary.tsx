@@ -12,7 +12,7 @@ type Props = {
 
 export default function EbirdHotspotSummary({ stateSlug, countySlug, countyName, name, locationId, lat, lng }: Props) {
 	return (
-		<div className="px-3 py-2 border mb-6">
+		<div className="mb-6">
 			<h3 className="mb-4 font-bold">eBird Hotspot</h3>
 			<h3 className="my-4 font-bold"><Link href={`/birding-in-${stateSlug}/${countySlug}-county`}>{`${countyName} County`}</Link></h3>
 			<h3 className="font-bold">{name}</h3>
