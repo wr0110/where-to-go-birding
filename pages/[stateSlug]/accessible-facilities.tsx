@@ -1,5 +1,6 @@
+import * as React from "react";
 import Link from "next/link";
-import { getAccessibleHotspots } from "lib/firebase";
+import { getAccessibleHotspotsByState } from "lib/mongo";
 import { getState } from "lib/localData";
 import { restructureHotspotsByCounty } from "lib/helpers";
 import { GetServerSideProps } from "next";
@@ -15,7 +16,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const state = getState(stateSlug);
 	if (!state) return { notFound: true };
 	
-	const hotspots = await getAccessibleHotspots(state.code) || [];
+	const hotspots = await getAccessibleHotspotsByState(state.code) || [];
 	const hotspotsByCounty = restructureHotspotsByCounty(hotspots as any);
 
   return {
@@ -45,13 +46,13 @@ Safety first
 				{hotspots.map(({countySlug, countyName, hotspots}) => (
 					<p key={countySlug} className="mb-4 break-inside-avoid">
 						<Link href={`/birding-in-${stateSlug}/${countySlug}-county`}>{countyName}</Link><br/>
-						{hotspots.map(({name, slug}) => (
-							<>
-								<Link key={slug} href={`/birding-in-${stateSlug}/${countySlug}-county/${slug}`}>
+						{hotspots.map(({name, url}) => (
+							<React.Fragment key={url}>
+								<Link href={url}>
 									<a className="font-bold">{name}</a>
 								</Link>
 								<br/>
-							</>
+							</React.Fragment>
 						))}
 					</p>
 				))}

@@ -36,16 +36,7 @@ const HotspotSchema = new Schema({
 		unique: true,
 		required: true
 	},
-	tips: {
-		text: String,
-		source: String,
-		link: String,	
-	},
-	about: {
-		text: String,
-		source: String,
-		link: String,
-	},
+	about: String,
 	address: {
 		street: String,
 		city: String,

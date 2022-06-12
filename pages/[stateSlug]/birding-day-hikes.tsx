@@ -1,6 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
-import { getDayHikeHotspots } from "lib/firebase";
+import { getHikeHotspotsByState } from "lib/mongo";
 import { restructureHotspotsByCounty } from "lib/helpers";
 import { getState } from "lib/localData";
 import Heading from "components/Heading";
@@ -18,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const state = getState(stateSlug);
 	if (!state) return { notFound: true };
 	
-	const hotspots = await getDayHikeHotspots(state.code) || [];
+	const hotspots = await getHikeHotspotsByState(state.code) || [];
 	const hotspotsByCounty = restructureHotspotsByCounty(hotspots as any);
 
   return {
@@ -53,9 +53,9 @@ Safety first
 				{hotspots.map(({countySlug, countyName, hotspots}) => (
 					<p key={countySlug} className="mb-4 break-inside-avoid">
 						<Link href={`/birding-in-${stateSlug}/${countySlug}-county`}>{countyName}</Link><br/>
-						{hotspots.map(({name, slug}) => (
-							<React.Fragment key={name}>
-								<Link key={slug} href={`/birding-in-${stateSlug}/${countySlug}-county/${slug}`}>
+						{hotspots.map(({name, url}) => (
+							<React.Fragment key={url}>
+								<Link href={url}>
 									<a className="font-bold">{name}</a>
 								</Link>
 								<br/>

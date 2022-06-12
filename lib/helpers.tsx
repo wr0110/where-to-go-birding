@@ -1,5 +1,6 @@
 import Geocode from "react-geocode";
 import { Hotspot } from "lib/types";
+import { getCountyByCode } from "lib/localData";
 
 export function slugify(title?: string) {
 	if (!title) return null;
@@ -41,25 +42,28 @@ export function capitalize(str: string) {
 type HotspotMap = {
 	[x:string]: {
 		name: string,
-		slug: string,
+		url: string,
 	}[]
 }
 
 export function restructureHotspotsByCounty(hotspots: Hotspot[]) {
 	let counties: HotspotMap = {}
-	hotspots.forEach(({countySlug, slug, name}) => {
-		if (!countySlug) return;
-		if (!counties[countySlug]) {
-			counties[countySlug] = []
+	hotspots.forEach(({countyCode, url, name}) => {
+		if (!countyCode) return;
+		if (!counties[countyCode]) {
+			counties[countyCode] = []
 		}
-		counties[countySlug].push({ name, slug });
+		counties[countyCode].push({ name, url });
 	});
 
-	return Object.entries(counties).map(([key, hotspots]) => ({
-		countySlug: key,
-		countyName: capitalize(key.replaceAll("-", " ")),
-		hotspots,
-	}));
+	return Object.entries(counties).map(([key, hotspots]) => {
+		const county = getCountyByCode(key);
+		return {
+			countySlug: county?.slug,
+			countyName: county?.name,
+			hotspots,
+		}
+	});
 }
 
 export async function geocode(lat: number, lng: number) {
@@ -95,4 +99,10 @@ export async function geocode(lat: number, lng: number) {
 		}
 	}
 	return { road, city, state, zip };
+}
+
+export async function getEbirdHotspot(locationId: string) {
+	const key = process.env.NEXT_PUBLIC_EBIRD_API;
+	const response = await fetch(`https://api.ebird.org/v2/ref/hotspot/info/${locationId}?key=${key}`);
+	return await response.json();
 }

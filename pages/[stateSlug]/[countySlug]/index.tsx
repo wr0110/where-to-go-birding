@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
-import { getHotspots } from "lib/firebase";
+import { getHotspotsByCounty } from "lib/mongo";
 import { getState, getCountyBySlug } from "lib/localData";
-import Map from "components/Map";
+import RegionMap from "components/RegionMap";
 import Heading from "components/Heading";
 import { State, Hotspot, County as CountyType } from "lib/types";
 import EbirdCountySummary from "components/EbirdCountySummary";
@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const county = getCountyBySlug(state.code, countySlug);
 	if (!county?.name) return { notFound: true };
 	
-	const hotspots = await getHotspots(county.slug) || [];
+	const hotspots = await getHotspotsByCounty(county.ebirdCode) || [];
   return {
     props: { state, hotspots, ...county },
   }
@@ -61,7 +61,7 @@ export default function County({ state, slug, hotspots, name, ebirdCode, color }
 					{state.code === "OH" &&
 						<img src={`/oh-maps/${slug}.jpg`} width="260" className="mx-auto mb-10" alt={`${name} county map`} />
 					}
-					<Map address={`${name} County, ${state.label}`} zoom={null} type="roadmap" />
+					{name && <RegionMap location={`${name} County, ${state.label}`} />}
 					{hikes.length > 0 && (
 						<>
 							<h3 className="text-lg mb-2 font-bold mt-6" id="dayhikes">Birding Day Hikes</h3>

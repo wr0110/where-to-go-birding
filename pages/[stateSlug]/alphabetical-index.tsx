@@ -15,7 +15,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const state = getState(stateSlug);
 	if (!state) return { notFound: true };
 	
-	const hotspots = await getHotspotsByState(state.code, ["-_id", "name", "url"]) || [];
+	const hotspots = await getHotspotsByState(state.code) || [];
 	let activeLetters = hotspots.map((hotspot) => hotspot.name.charAt(0).toUpperCase());
 	activeLetters = [...new Set(activeLetters)];
 

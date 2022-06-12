@@ -5,7 +5,7 @@ import Address from "components/Address";
 import EbirdHotspotSummary from "components/EbirdHotspotSummary";
 import Map from "components/Map";
 import Link from "next/link";
-import { getHotspot, getHotspotByLocationId } from "lib/firebase";
+import { getHotspotBySlug, getHotspotByLocationId } from "lib/mongo";
 import AboutSection from "components/AboutSection";
 import { getCountyBySlug, getState } from "lib/localData";
 import { County, Hotspot as HotspotType } from "lib/types";
@@ -34,7 +34,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const county = getCountyBySlug(state.code, countySlug);
 	if (!county?.slug) return { notFound: true };
 
-	const data = await getHotspot(county.slug, slug);
+	const data = await getHotspotBySlug(county.ebirdCode, slug);
 	if (!data) return { notFound: true };
 	const parent = await getParent(data.parentId);
 
@@ -49,9 +49,9 @@ interface Props extends HotspotType {
 	parent: HotspotType | null,
 }
 
-export default function Hotspot({ stateSlug, county, name, lat, lng, address, links, about, tips, restrooms, roadside, accessible, locationId, parent }: Props) {	
+export default function Hotspot({ stateSlug, county, name, lat, lng, address, links, about, restrooms, roadside, accessible, locationId, parent }: Props) {	
 	const nameParts = name?.split("--");
-	const nameShort = nameParts?.length ? nameParts[1] : name;
+	const nameShort = nameParts?.length === 2 ? nameParts[1] : name;
 
 	let extraLinks = [];
 	if (roadside === "Yes") {
@@ -74,7 +74,11 @@ export default function Hotspot({ stateSlug, county, name, lat, lng, address, li
 				<div>
 					<div className="mb-6">
 						{ name &&
-							<Address line1={nameParts?.length ? nameParts[0] : name} line2={nameShort} {...address} />
+							<Address
+								line1={nameParts?.length === 2 ? nameParts[0] : name}
+								line2={nameParts?.length === 2 ? nameShort : ""}
+								{...address}
+							/>
 						}
 						{links?.map(({ url, label }, index) => (
 							<a key={index} href={url} target="_blank" rel="noreferrer">{label}</a>
@@ -94,16 +98,13 @@ export default function Hotspot({ stateSlug, county, name, lat, lng, address, li
 					{name &&
 						<EbirdHotspotSummary stateSlug={stateSlug} countySlug={county.slug} countyName={county.name} name={name} locationId={locationId} lat={lat} lng={lng} />
 					}
-					{tips?.text &&
-						<AboutSection heading={`Tips for birding ${nameShort}`} {...tips} />
-					}
 					
-					{about?.text &&
-						<AboutSection heading={`Tips for birding ${nameShort}`} {...about} />
+					{about &&
+						<AboutSection heading={`About ${nameShort}`} text={about} />
 					}
 
-					{(parent?.about?.text && parent?.name) &&
-						<AboutSection heading={`Tips for birding ${parent.name}`} {...parent.about} />
+					{(parent?.about && parent?.name) &&
+						<AboutSection heading={`About ${parent.name}`} text={parent.about} />
 					}
 					<div className="space-y-1">
 						{restrooms === "Yes" && <p>Restrooms on site.</p>}
