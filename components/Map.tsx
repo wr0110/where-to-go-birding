@@ -8,7 +8,7 @@ type Props = {
 
 export default function Address({ type="satellite", address, lat, lng, zoom=15 }: Props) {
 	const query = address || `${lat},${lng}`;
-	let url = `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}&q=${query}&maptype=${type}`;
+	let url = `https://www.google.com/maps/embed/v1/view?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}&center=${query}&maptype=${type}`;
 	if (zoom) {
 		url = `${url}&zoom=${zoom}`;
 	}

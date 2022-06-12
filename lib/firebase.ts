@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc, collection, query, where, limit, getDocs } from "firebase/firestore"; 
+import { getFirestore, doc, getDoc, setDoc, collection, query, where, limit, getDocs, orderBy } from "firebase/firestore"; 
 
 const firebaseConfig = {
 	apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -44,6 +44,7 @@ export async function getHotspots(countySlug: string) {
 }
 
 export async function getRoadsideHotspots(stateCode: string) {
+		//TODO: Exclude about, tips, etc. ---------------------------------------------------------------------------------------------------------------------
 	if (!stateCode) return null;
 	const collectionRef = collection(db, "hotspots");
 	const q = query(collectionRef, where("stateCode", "==", `US-${stateCode}`), where("roadside", "==", "Yes"));
@@ -54,6 +55,7 @@ export async function getRoadsideHotspots(stateCode: string) {
 }
 
 export async function getDayHikeHotspots(stateCode: string) {
+		//TODO: Exclude about, tips, etc. ---------------------------------------------------------------------------------------------------------------------
 	if (!stateCode) return null;
 	const collectionRef = collection(db, "hotspots");
 	const q = query(collectionRef, where("dayhike", "==", "Yes"));
@@ -64,9 +66,21 @@ export async function getDayHikeHotspots(stateCode: string) {
 }
 
 export async function getAccessibleHotspots(stateCode: string) {
+		//TODO: Exclude about, tips, etc. ---------------------------------------------------------------------------------------------------------------------
 	if (!stateCode) return null;
 	const collectionRef = collection(db, "hotspots");
 	const q = query(collectionRef, where("stateCode", "==", `US-${stateCode}`), where("accessible", "in", ["ABA", "Birdability"]));
+	const snapshot = await getDocs(q);
+	if (!snapshot.empty) {
+		return snapshot.docs.map(item => item.data());
+	}
+}
+
+export async function getHotspotsByState(stateCode: string) {
+		//TODO: Exclude about, tips, etc. ---------------------------------------------------------------------------------------------------------------------
+	if (!stateCode) return null;
+	const collectionRef = collection(db, "hotspots");
+	const q = query(collectionRef, where("stateCode", "==", `US-${stateCode}`), orderBy("name"));
 	const snapshot = await getDocs(q);
 	if (!snapshot.empty) {
 		return snapshot.docs.map(item => item.data());

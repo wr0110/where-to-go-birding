@@ -2,7 +2,7 @@ import Link from "next/link";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { getHotspots } from "lib/firebase";
-import { getState, getCounty } from "lib/localData";
+import { getState, getCountyBySlug } from "lib/localData";
 import Map from "components/Map";
 import Heading from "components/Heading";
 import { State, Hotspot, County as CountyType } from "lib/types";
@@ -19,7 +19,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const state = getState(stateSlug);
 	if (!state) return { notFound: true };
 
-	const county = getCounty(state.code, countySlug);
+	const county = getCountyBySlug(state.code, countySlug);
 	if (!county?.name) return { notFound: true };
 	
 	const hotspots = await getHotspots(county.slug) || [];
@@ -49,7 +49,7 @@ export default function County({ state, slug, hotspots, name, ebirdCode, color }
 				<div>
 					<h3 className="text-lg mb-2 font-bold">Where to Go Birding in {name} County</h3>
 					<p className="mb-4">
-						<a href="#hotspots">Alphabetical list of Hotspots</a><br/>
+						<a href="#hotspots">Alphabetical List of Hotspots</a><br/>
 						<a href="#dayhikes">Birding Day Hikes</a><br/>
 					</p>
 					<h3 className="text-lg mb-2 font-bold">Explore {name} County in eBird</h3>

@@ -2,529 +2,529 @@
 	{
 		"slug": "adams",
 		"region": "sw",
-		"ebirdCode": "001",
+		"ebirdCode": "US-OH-001",
 		"active": true
 	},
 	{
 		"slug": "allen",
 		"region": "nw",
-		"ebirdCode": "003",
+		"ebirdCode": "US-OH-003",
 		"active": true
 	},
 	{
 		"slug": "ashland",
 		"region": "ec",
-		"ebirdCode": "005",
+		"ebirdCode": "US-OH-005",
 		"active": true
 	},
 	{
 		"slug": "ashtabula",
 		"region": "ne",
-		"ebirdCode": "007",
+		"ebirdCode": "US-OH-007",
 		"active": true
 	},
 	{
 		"slug": "athens",
 		"region": "se",
-		"ebirdCode": "009",
+		"ebirdCode": "US-OH-009",
 		"active": true
 	},
 	{
 		"slug": "auglaize",
 		"region": "sw",
-		"ebirdCode": "011",
+		"ebirdCode": "US-OH-011",
 		"active": true
 	},
 	{
 		"slug": "belmont",
 		"region": "se",
-		"ebirdCode": "013",
+		"ebirdCode": "US-OH-013",
 		"active": true
 	},
 	{
 		"slug": "brown",
 		"region": "sw",
-		"ebirdCode": "015",
+		"ebirdCode": "US-OH-015",
 		"active": true
 	},
 	{
 		"slug": "butler",
 		"region": "sw",
-		"ebirdCode": "017",
+		"ebirdCode": "US-OH-017",
 		"active": true
 	},
 	{
 		"slug": "carroll",
 		"region": "ec",
-		"ebirdCode": "019",
+		"ebirdCode": "US-OH-019",
 		"active": true
 	},
 	{
 		"slug": "champaign",
 		"region": "sw",
-		"ebirdCode": "021",
+		"ebirdCode": "US-OH-021",
 		"active": true
 	},
 	{
 		"slug": "clark",
 		"region": "sw",
-		"ebirdCode": "023",
+		"ebirdCode": "US-OH-023",
 		"active": true
 	},
 	{
 		"slug": "clermont",
 		"region": "sw",
-		"ebirdCode": "025",
+		"ebirdCode": "US-OH-025",
 		"active": true
 	},
 	{
 		"slug": "clinton",
 		"region": "sw",
-		"ebirdCode": "027",
+		"ebirdCode": "US-OH-027",
 		"active": true
 	},
 	{
 		"slug": "columbiana",
 		"region": "ne",
-		"ebirdCode": "029",
+		"ebirdCode": "US-OH-029",
 		"active": true
 	},
 	{
 		"slug": "coshocton",
 		"region": "ec",
-		"ebirdCode": "031",
+		"ebirdCode": "US-OH-031",
 		"active": true
 	},
 	{
 		"slug": "crawford",
 		"region": "nw",
-		"ebirdCode": "033",
+		"ebirdCode": "US-OH-033",
 		"active": true
 	},
 	{
 		"slug": "cuyahoga",
 		"region": "ne",
-		"ebirdCode": "035",
+		"ebirdCode": "US-OH-035",
 		"active": true
 	},
 	{
 		"slug": "darke",
 		"region": "sw",
-		"ebirdCode": "037",
+		"ebirdCode": "US-OH-037",
 		"active": true
 	},
 	{
 		"slug": "defiance",
 		"region": "nw",
-		"ebirdCode": "039",
+		"ebirdCode": "US-OH-039",
 		"active": true
 	},
 	{
 		"slug": "delaware",
 		"region": "ce",
-		"ebirdCode": "041",
+		"ebirdCode": "US-OH-041",
 		"active": true
 	},
 	{
 		"slug": "erie",
 		"region": "nw",
-		"ebirdCode": "043",
+		"ebirdCode": "US-OH-043",
 		"active": true
 	},
 	{
 		"slug": "fairfield",
 		"region": "ce",
-		"ebirdCode": "045",
+		"ebirdCode": "US-OH-045",
 		"active": true
 	},
 	{
 		"slug": "fayette",
 		"region": "ce",
-		"ebirdCode": "047",
+		"ebirdCode": "US-OH-047",
 		"active": true
 	},
 	{
 		"slug": "franklin",
 		"region": "ce",
-		"ebirdCode": "049",
+		"ebirdCode": "US-OH-049",
 		"active": true
 	},
 	{
 		"slug": "fulton",
 		"region": "nw",
-		"ebirdCode": "051",
+		"ebirdCode": "US-OH-051",
 		"active": true
 	},
 	{
 		"slug": "gallia",
 		"region": "se",
-		"ebirdCode": "053",
+		"ebirdCode": "US-OH-053",
 		"active": true
 	},
 	{
 		"slug": "geauga",
 		"region": "ne",
-		"ebirdCode": "055",
+		"ebirdCode": "US-OH-055",
 		"active": true
 	},
 	{
 		"slug": "greene",
 		"region": "sw",
-		"ebirdCode": "057",
+		"ebirdCode": "US-OH-057",
 		"active": true
 	},
 	{
 		"slug": "guernsey",
 		"region": "ec",
-		"ebirdCode": "059",
+		"ebirdCode": "US-OH-059",
 		"active": true
 	},
 	{
 		"slug": "hamilton",
 		"region": "sw",
-		"ebirdCode": "061",
+		"ebirdCode": "US-OH-061",
 		"active": true
 	},
 	{
 		"slug": "hancock",
 		"region": "nw",
-		"ebirdCode": "063",
+		"ebirdCode": "US-OH-063",
 		"active": true
 	},
 	{
 		"slug": "hardin",
 		"region": "nw",
-		"ebirdCode": "065",
+		"ebirdCode": "US-OH-065",
 		"active": true
 	},
 	{
 		"slug": "harrison",
 		"region": "ec",
-		"ebirdCode": "067",
+		"ebirdCode": "US-OH-067",
 		"active": true
 	},
 	{
 		"slug": "henry",
 		"region": "nw",
-		"ebirdCode": "069",
+		"ebirdCode": "US-OH-069",
 		"active": true
 	},
 	{
 		"slug": "highland",
 		"region": "sw",
-		"ebirdCode": "071",
+		"ebirdCode": "US-OH-071",
 		"active": true
 	},
 	{
 		"slug": "hocking",
 		"region": "ce",
-		"ebirdCode": "073",
+		"ebirdCode": "US-OH-073",
 		"active": true
 	},
 	{
 		"slug": "holmes",
 		"region": "ec",
-		"ebirdCode": "075",
+		"ebirdCode": "US-OH-075",
 		"active": true
 	},
 	{
 		"slug": "huron",
 		"region": "nw",
-		"ebirdCode": "077",
+		"ebirdCode": "US-OH-077",
 		"active": true
 	},
 	{
 		"slug": "jackson",
 		"region": "se",
-		"ebirdCode": "079",
+		"ebirdCode": "US-OH-079",
 		"active": true
 	},
 	{
 		"slug": "jefferson",
 		"region": "ec",
-		"ebirdCode": "081",
+		"ebirdCode": "US-OH-081",
 		"active": true
 	},
 	{
 		"slug": "knox",
 		"region": "ec",
-		"ebirdCode": "083",
+		"ebirdCode": "US-OH-083",
 		"active": true
 	},
 	{
 		"slug": "lake",
 		"region": "ne",
-		"ebirdCode": "085",
+		"ebirdCode": "US-OH-085",
 		"active": true
 	},
 	{
 		"slug": "lawrence",
 		"region": "se",
-		"ebirdCode": "087",
+		"ebirdCode": "US-OH-087",
 		"active": true
 	},
 	{
 		"slug": "licking",
 		"region": "ce",
-		"ebirdCode": "089",
+		"ebirdCode": "US-OH-089",
 		"active": true
 	},
 	{
 		"slug": "logan",
 		"region": "sw",
-		"ebirdCode": "091",
+		"ebirdCode": "US-OH-091",
 		"active": true
 	},
 	{
 		"slug": "lorain",
 		"region": "ne",
-		"ebirdCode": "093",
+		"ebirdCode": "US-OH-093",
 		"active": true
 	},
 	{
 		"slug": "lucas",
 		"region": "nw",
-		"ebirdCode": "095",
+		"ebirdCode": "US-OH-095",
 		"active": true
 	},
 	{
 		"slug": "madison",
 		"region": "ce",
-		"ebirdCode": "097",
+		"ebirdCode": "US-OH-097",
 		"active": true
 	},
 	{
 		"slug": "mahoning",
 		"region": "ne",
-		"ebirdCode": "099",
+		"ebirdCode": "US-OH-099",
 		"active": true
 	},
 	{
 		"slug": "marion",
 		"region": "ce",
-		"ebirdCode": "101",
+		"ebirdCode": "US-OH-101",
 		"active": true
 	},
 	{
 		"slug": "medina",
 		"region": "ne",
-		"ebirdCode": "103",
+		"ebirdCode": "US-OH-103",
 		"active": true
 	},
 	{
 		"slug": "meigs",
 		"region": "se",
-		"ebirdCode": "105",
+		"ebirdCode": "US-OH-105",
 		"active": true
 	},
 	{
 		"slug": "mercer",
 		"region": "sw",
-		"ebirdCode": "107",
+		"ebirdCode": "US-OH-107",
 		"active": true
 	},
 	{
 		"slug": "miami",
 		"region": "sw",
-		"ebirdCode": "109",
+		"ebirdCode": "US-OH-109",
 		"active": true
 	},
 	{
 		"slug": "monroe",
 		"region": "se",
-		"ebirdCode": "111",
+		"ebirdCode": "US-OH-111",
 		"active": true
 	},
 	{
 		"slug": "montgomery",
 		"region": "sw",
-		"ebirdCode": "113",
+		"ebirdCode": "US-OH-113",
 		"active": true
 	},
 	{
 		"slug": "morgan",
 		"region": "se",
-		"ebirdCode": "115",
+		"ebirdCode": "US-OH-115",
 		"active": true
 	},
 	{
 		"slug": "morrow",
 		"region": "ce",
-		"ebirdCode": "117",
+		"ebirdCode": "US-OH-117",
 		"active": true
 	},
 	{
 		"slug": "muskingum",
 		"region": "ec",
-		"ebirdCode": "119",
+		"ebirdCode": "US-OH-119",
 		"active": true
 	},
 	{
 		"slug": "noble",
 		"region": "se",
-		"ebirdCode": "121",
+		"ebirdCode": "US-OH-121",
 		"active": true
 	},
 	{
 		"slug": "ottawa",
 		"region": "nw",
-		"ebirdCode": "123",
+		"ebirdCode": "US-OH-123",
 		"active": true
 	},
 	{
 		"slug": "paulding",
 		"region": "nw",
-		"ebirdCode": "125",
+		"ebirdCode": "US-OH-125",
 		"active": true
 	},
 	{
 		"slug": "perry",
 		"region": "ce",
-		"ebirdCode": "127",
+		"ebirdCode": "US-OH-127",
 		"active": true
 	},
 	{
 		"slug": "pickaway",
 		"region": "ce",
-		"ebirdCode": "129",
+		"ebirdCode": "US-OH-129",
 		"active": true
 	},
 	{
 		"slug": "pike",
 		"region": "se",
-		"ebirdCode": "131",
+		"ebirdCode": "US-OH-131",
 		"active": true
 	},
 	{
 		"slug": "portage",
 		"region": "ne",
-		"ebirdCode": "133",
+		"ebirdCode": "US-OH-133",
 		"active": true
 	},
 	{
 		"slug": "preble",
 		"region": "sw",
-		"ebirdCode": "135",
+		"ebirdCode": "US-OH-135",
 		"active": true
 	},
 	{
 		"slug": "putnam",
 		"region": "nw",
-		"ebirdCode": "137",
+		"ebirdCode": "US-OH-137",
 		"active": true
 	},
 	{
 		"slug": "richland",
 		"region": "ec",
-		"ebirdCode": "139",
+		"ebirdCode": "US-OH-139",
 		"active": true
 	},
 	{
 		"slug": "ross",
 		"region": "se",
-		"ebirdCode": "141",
+		"ebirdCode": "US-OH-141",
 		"active": true
 	},
 	{
 		"slug": "sandusky",
 		"region": "nw",
-		"ebirdCode": "143",
+		"ebirdCode": "US-OH-143",
 		"active": true
 	},
 	{
 		"slug": "scioto",
 		"region": "se",
-		"ebirdCode": "145",
+		"ebirdCode": "US-OH-145",
 		"active": true
 	},
 	{
 		"slug": "seneca",
 		"region": "nw",
-		"ebirdCode": "147",
+		"ebirdCode": "US-OH-147",
 		"active": true
 	},
 	{
 		"slug": "shelby",
 		"region": "sw",
-		"ebirdCode": "149",
+		"ebirdCode": "US-OH-149",
 		"active": true
 	},
 	{
 		"slug": "stark",
 		"region": "ec",
-		"ebirdCode": "151",
+		"ebirdCode": "US-OH-151",
 		"active": true
 	},
 	{
 		"slug": "summit",
 		"region": "ne",
-		"ebirdCode": "153",
+		"ebirdCode": "US-OH-153",
 		"active": true
 	},
 	{
 		"slug": "trumbull",
 		"region": "ne",
-		"ebirdCode": "155",
+		"ebirdCode": "US-OH-155",
 		"active": true
 	},
 	{
 		"slug": "tuscarawas",
 		"region": "ce",
-		"ebirdCode": "157",
+		"ebirdCode": "US-OH-157",
 		"active": true
 	},
 	{
 		"slug": "union",
 		"region": "ce",
-		"ebirdCode": "159",
+		"ebirdCode": "US-OH-159",
 		"active": true
 	},
 	{
 		"slug": "van-wert",
 		"region": "nw",
-		"ebirdCode": "161",
+		"ebirdCode": "US-OH-161",
 		"active": true
 	},
 	{
 		"slug": "vinton",
 		"region": "se",
-		"ebirdCode": "163",
+		"ebirdCode": "US-OH-163",
 		"active": true
 	},
 	{
 		"slug": "warren",
 		"region": "sw",
-		"ebirdCode": "165",
+		"ebirdCode": "US-OH-165",
 		"active": true
 	},
 	{
 		"slug": "washington",
 		"region": "se",
-		"ebirdCode": "167",
+		"ebirdCode": "US-OH-167",
 		"active": true
 	},
 	{
 		"slug": "wayne",
 		"region": "ec",
-		"ebirdCode": "169",
+		"ebirdCode": "US-OH-169",
 		"active": true
 	},
 	{
 		"slug": "williams",
 		"region": "nw",
-		"ebirdCode": "171",
+		"ebirdCode": "US-OH-171",
 		"active": true
 	},
 	{
 		"slug": "wood",
 		"region": "nw",
-		"ebirdCode": "173",
+		"ebirdCode": "US-OH-173",
 		"active": true
 	},
 	{
 		"slug": "wyandot",
 		"region": "ne",
-		"ebirdCode": "175",
+		"ebirdCode": "US-OH-175",
 		"active": true
 	}
 ]

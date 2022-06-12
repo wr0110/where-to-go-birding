@@ -29,6 +29,7 @@ export type County = {
 
 export type Hotspot = {
 	name: string,
+	_id?: string,
 	slug: string,
 	lat: number,
 	lng: number,
