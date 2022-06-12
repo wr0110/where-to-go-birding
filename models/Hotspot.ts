@@ -10,6 +10,26 @@ const HotspotSchema = new Schema({
 		type: String,
 		required: true
 	},
+	url: {
+		type: String,
+		required: true
+	},
+	stateCode: {
+		type: String,
+		required: true
+	},
+	countyCode: {
+		type: String,
+		required: true
+	},
+	lat: {
+		type: Number,
+		required: true
+	},
+	lng: {
+		type: Number,
+		required: true
+	},
 	locationId: String,
 	slug: {
 		type: String,

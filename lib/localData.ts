@@ -27,18 +27,34 @@ export function getState(param: string) {
 }
 
 export function getStateByCode(code: string) {
+	code = code.replace("US-", "");
 	const data = States.find(state => state.code === code);
 	return data;
 }
 
-export function getCounty(stateCode: string, countySlug: string) {
+export function getCountyByCode(code: string) {
+	const stateCode = code.split("-")[1];
+	const array = countyArrays[stateCode];
+	if (!array) return null;
+	const county = array.find((county: County) => county.ebirdCode === code);
+	if (!county) return null;
+
+	return formatCounty(stateCode, county);
+}
+
+export function getCountyBySlug(stateCode: string, countySlug: string) {
 	const slug = countySlug.replace("-county", "");
 	const array = countyArrays[stateCode];
-	if (!array) return {}
-	const county = array.find((county: any) => county.slug === slug);
-	if (!county) return {}
-	const { region: regionCode, ebirdCode } = county;
-	const region = stateCode === "OH" ? (OhioRegions as any)[regionCode] : {};
+	if (!array) return null;
+	const county = array.find((county: County) => county.slug === slug);
+	if (!county) return null;
+	
+	return formatCounty(stateCode, county);
+}
+
+function formatCounty(stateCode: string, county: County) {
+	const { region: regionCode, ebirdCode, slug } = county;
+	const region = (regionCode && stateCode === "OH") ? (OhioRegions as any)[regionCode] : {};
 	return {
 		slug,
 		name: capitalize(slug.replaceAll("-", " ")),

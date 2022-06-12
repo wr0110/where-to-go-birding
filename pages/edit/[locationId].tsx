@@ -8,7 +8,7 @@ import FormError from "components/FormError";
 import { Editor } from "@tinymce/tinymce-react";
 import { getHotspotByLocationId } from "lib/firebase";
 import { slugify, tinyMceOptions, geocode } from "lib/helpers";
-import { getStateByCode } from "lib/localData";
+import { getStateByCode, getCountyByCode } from "lib/localData";
 import InputLinks from "components/InputLinks";
 import Select from "components/Select";
 import IBAs from "data/oh-iba.json";
@@ -81,9 +81,22 @@ export default function Edit() {
 	const isOH = subnational1Code === "OH";
 
 	const handleSubmit: SubmitHandler<Inputs> = async (data) => {
-		setSaving(true);
+		if (!subnational1Code || !subnational2Code) {
+			alert("Error retrieving location data from eBird");
+			return;
+		}
+		
 		const slug = data.slug || slugify(name);
-		const countySlug = slugify(subnational2Name);
+		const state = getStateByCode(subnational1Code);
+		const county = getCountyByCode(subnational2Code);
+
+		if (!state || !county) {
+			alert("Error getting state and county data");
+			return;
+		}
+
+		const url = `/birding-in-${state?.slug}/${county.slug}-county/${slug}`;
+		setSaving(true);
 		const response = await fetch("/api/hotspot/add", {
       method: "POST",
       headers: {
@@ -94,9 +107,9 @@ export default function Edit() {
 				locationId,
 				name,
 				slug,
+				url,
 				stateCode: subnational1Code,
 				countyCode: subnational2Code,
-				countySlug: countySlug,
 				lat: latitude,
 				lng: longitude,
 				iba: data.iba || null,
@@ -113,8 +126,7 @@ export default function Edit() {
 		setSaving(false);
 		const json = await response.json();
 		if (json.success) {
-			const state = subnational1Code ? getStateByCode(subnational1Code.replace("US-", "")) : null;
-			router.push(`/birding-in-${state?.slug}/${countySlug}-county/${slug}`);
+			router.push(url);
 		} else {
 			console.error(json.error);
 			alert("Error saving hotspot");

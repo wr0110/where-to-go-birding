@@ -7,7 +7,7 @@ import Map from "components/Map";
 import Link from "next/link";
 import { getHotspot, getHotspotByLocationId } from "lib/firebase";
 import AboutSection from "components/AboutSection";
-import { getCounty, getState } from "lib/localData";
+import { getCountyBySlug, getState } from "lib/localData";
 import { County, Hotspot as HotspotType } from "lib/types";
 import SecureContent from "components/SecureContent";
 
@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const state = getState(stateSlug);
 	if (!state) return { notFound: true };
 
-	const county = getCounty(state.code, countySlug);
+	const county = getCountyBySlug(state.code, countySlug);
 	if (!county?.slug) return { notFound: true };
 
 	const data = await getHotspot(county.slug, slug);
