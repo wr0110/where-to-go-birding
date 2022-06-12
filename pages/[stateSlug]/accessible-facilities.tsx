@@ -6,6 +6,7 @@ import { restructureHotspotsByCounty } from "lib/helpers";
 import { GetServerSideProps } from "next";
 import { HotspotsByCounty } from "lib/types";
 import { ParsedUrlQuery } from "querystring";
+import Heading from "components/Heading";
 
 interface Params extends ParsedUrlQuery {
 	stateSlug: string,
@@ -32,7 +33,7 @@ type Props = {
 export default function AccessibleFacilities({ stateSlug, hotspots }: Props) {
 	return (
 		<div className="container pb-16 mt-12">
-			<h1 className="text-3xl mb-12">Accessible Facilities</h1>
+			<Heading>Accessible Facilities</Heading>
 			<p className="mb-4">
 				<strong>Below are listed, alphabetically by county, eBird hotspots which have facilities which are ADA accessible.</strong><br/>
 				You can use your browser’s search function to search for the name of a location of interest.<br/>
