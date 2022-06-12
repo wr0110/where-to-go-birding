@@ -12,6 +12,7 @@ import StateFeatureLinks from "components/StateFeatureLinks";
 import RareBirds from "components/RareBirds";
 import States from "data/states.json";
 import { StateLinks, State as StateType, County as CountyType } from "lib/types";
+import Heading from "components/Heading";
 
 interface Params extends ParsedUrlQuery {
 	stateSlug: string,
@@ -47,7 +48,10 @@ export default function State({label, code, slug, features, rareSid, needsSid, y
 
 	return (
 		<div className="container pb-16 mt-12">
-			<h1 className="text-3xl mb-4">Birding in {label}</h1>
+			<Heading>
+				Welcome to Birding in {label}
+				{code === "OH" && <><br/><span className="text-sm">From the Ohio Ornithological Society</span></>}
+			</Heading>
 			<div className="lg:grid grid-cols-2 gap-16">
 				<div>
 					<h3 className="text-lg mb-4 font-bold">Where to Go Birding in {label}</h3>
