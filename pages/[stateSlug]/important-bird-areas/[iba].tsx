@@ -47,7 +47,7 @@ export default function ImportantBirdAreas({ state, name, slug, about, webpage, 
 				<div>
 					<img src={`/iba/${slug}.jpg`} className="w-full mb-6" />
 					<h3 className="font-bold">About {name} Important Bird Area</h3>
-					<div dangerouslySetInnerHTML={{__html: about}} />
+					<div className="formatted" dangerouslySetInnerHTML={{__html: about}} />
 					<p className="text-[0.6rem] mt-1">
 						From <a href={webpage} target="_blank" rel="noopener noreferrer">{name} Important Bird Area webpage</a>
 					</p>
