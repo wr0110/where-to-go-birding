@@ -8,6 +8,7 @@ import { State, IBA, HotspotsByCounty } from "lib/types";
 import { getIBAHotspots } from "lib/mongo";
 import { restructureHotspotsByCounty } from "lib/helpers";
 import ListHotspotsByCounty from "components/ListHotspotsByCounty";
+import EbirdIBASummary from "components/EbirdIBASummary";
 
 
 interface Params extends ParsedUrlQuery {
@@ -25,17 +26,21 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
 	const data = OhioIBA.find(item => item.slug === iba);
 
+	const locationIds = data?.ebirdCode ? [] : hotspots.map(item => item.locationId);
+
   return {
-    props: { state, hotspots: hotspotsByCounty, ...data },
+    props: { state, hotspots: hotspotsByCounty, locationIds, ...data },
   }
 }
 
 interface Props extends IBA {
 	state: State,
+	locationIds: string[],
 	hotspots: HotspotsByCounty,
 }
 
-export default function ImportantBirdAreas({ state, name, slug, about, webpage, hotspots, ebirdCode, ebirdLocations }: Props) {
+export default function ImportantBirdAreas({ state, name, slug, about, webpage, hotspots, ebirdCode, locationIds }: Props) {
+	const region = ebirdCode || locationIds.join(",");
 	return (
 		<div className="container pb-16 mt-12">
 			<Heading>{name} Important Bird Area</Heading>
@@ -51,6 +56,7 @@ export default function ImportantBirdAreas({ state, name, slug, about, webpage, 
 						<br />
 						<a href={webpage} target="_blank" rel="noreferrer">{name} Important Bird Area webpage</a>
 					</p>
+					<EbirdIBASummary region={region} />
 					<h3 className="font-bold mb-4">eBird Hotspots</h3>
 					<ListHotspotsByCounty stateSlug={state?.slug} hotspots={hotspots} />
 				</div>

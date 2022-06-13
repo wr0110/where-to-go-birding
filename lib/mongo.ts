@@ -70,11 +70,12 @@ export async function getRoadsideHotspotsByState(stateCode: string) {
 }
 
 export async function getIBAHotspots(ibaSlug: string) {
+	if (!ibaSlug) return [];
 	await connect();
 	const result = await Hotspot
 		.find({
-			"iba.slug": ibaSlug,
-		}, ["-_id", "name", "url", "countyCode"])
+			"iba.value": ibaSlug,
+		}, ["-_id", "name", "url", "countyCode", "locationId"])
 		.sort({ name: 1 })
 		.lean()
 		.exec();
