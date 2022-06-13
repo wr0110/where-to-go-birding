@@ -8,9 +8,11 @@ type Props = {
 	countySlug: string,
 	stateSlug: string,
 	countyName: string,
+	locationIds: string[],
 }
 
-export default function EbirdHotspotSummary({ stateSlug, countySlug, countyName, name, locationId, lat, lng }: Props) {
+export default function EbirdHotspotSummary({ stateSlug, countySlug, countyName, name, locationId, locationIds, lat, lng }: Props) {
+	const region = locationIds.length > 1 ? locationIds.join(",") : locationId;
 	return (
 		<div className="mb-6">
 			<h3 className="mb-4 font-bold">eBird Hotspot</h3>
@@ -19,15 +21,15 @@ export default function EbirdHotspotSummary({ stateSlug, countySlug, countyName,
 			Coordinates: {lat}, {lng}<br/>
 			Bar charts:
 				&nbsp;
-				<a href={`https://ebird.org/barchart?byr=1900&eyr=2060&bmo=1&emo=12&r=${locationId}`}>Entire Year</a>
+				<a href={`https://ebird.org/barchart?byr=1900&eyr=2060&bmo=1&emo=12&r=${region}`}>Entire Year</a>
 				&nbsp;–&nbsp;
-				<a href={`https://ebird.org/barchart?byr=1900&eyr=2060&bmo=3&emo=5&r=${locationId}`}>Spring</a>
+				<a href={`https://ebird.org/barchart?byr=1900&eyr=2060&bmo=3&emo=5&r=${region}`}>Spring</a>
 				&nbsp;–&nbsp;
-				<a href={`https://ebird.org/barchart?byr=1900&eyr=2060&bmo=6&emo=7&r=${locationId}`}>Summer</a>
+				<a href={`https://ebird.org/barchart?byr=1900&eyr=2060&bmo=6&emo=7&r=${region}`}>Summer</a>
 				&nbsp;–&nbsp;
-				<a href={`https://ebird.org/barchart?byr=1900&eyr=2060&bmo=8&emo=11&r=${locationId}`}>Fall</a>
+				<a href={`https://ebird.org/barchart?byr=1900&eyr=2060&bmo=8&emo=11&r=${region}`}>Fall</a>
 				&nbsp;–&nbsp;
-				<a href={`https://ebird.org/barchart?byr=1900&eyr=2060&bmo=12&emo=2&r=${locationId}`}>Winter</a>
+				<a href={`https://ebird.org/barchart?byr=1900&eyr=2060&bmo=12&emo=2&r=${region}`}>Winter</a>
 				<br/>
 			eBird links:
 				&nbsp;

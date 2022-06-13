@@ -5,11 +5,12 @@ import Address from "components/Address";
 import EbirdHotspotSummary from "components/EbirdHotspotSummary";
 import Map from "components/Map";
 import Link from "next/link";
-import { getHotspotBySlug, getHotspotByLocationId } from "lib/mongo";
+import { getHotspotBySlug, getHotspotByLocationId, getChildHotspots } from "lib/mongo";
 import AboutSection from "components/AboutSection";
 import { getCountyBySlug, getState } from "lib/localData";
 import { County, Hotspot as HotspotType } from "lib/types";
 import SecureContent from "components/SecureContent";
+import HotspotList from "components/HotspotList";
 
 const getParent = async (hotspotId: string) => {
 	if (!hotspotId) return null;
@@ -17,7 +18,12 @@ const getParent = async (hotspotId: string) => {
 	if (!data) return null;
 	const { name, about, slug } = data;
 	return { name, about, slug };
+}
 
+const getChildren = async (locationId: string) => {
+	if (!locationId) return null;
+	const data = await getChildHotspots(locationId);
+	return data || [];
 }
 
 interface Params extends ParsedUrlQuery {
@@ -38,8 +44,12 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	if (!data) return { notFound: true };
 	const parent = await getParent(data.parentId);
 
+	const childLocations = parent ? [] : await getChildren(data.locationId);
+	const childIds = childLocations?.map(item => item.locationId) || [];
+	const locationIds = childIds?.length > 0 ? [data?.locationId, ...childIds] : [data?.locationId];
+
   return {
-    props: { stateSlug: state.slug, county, parent, ...data },
+    props: { stateSlug: state.slug, county, parent, childLocations, locationIds, ...data },
   }
 }
 
@@ -47,9 +57,11 @@ interface Props extends HotspotType {
 	county: County,
 	stateSlug: string,
 	parent: HotspotType | null,
+	childLocations: HotspotType[],
+	locationIds: string[],
 }
 
-export default function Hotspot({ stateSlug, county, name, lat, lng, address, links, about, restrooms, roadside, accessible, locationId, parent }: Props) {	
+export default function Hotspot({ stateSlug, county, name, lat, lng, address, links, about, restrooms, roadside, accessible, locationId, parent, childLocations, locationIds }: Props) {	
 	const nameParts = name?.split("--");
 	const nameShort = nameParts?.length === 2 ? nameParts[1] : name;
 
@@ -96,9 +108,16 @@ export default function Hotspot({ stateSlug, county, name, lat, lng, address, li
 						}
 					</div>
 					{name &&
-						<EbirdHotspotSummary stateSlug={stateSlug} countySlug={county.slug} countyName={county.name} name={name} locationId={locationId} lat={lat} lng={lng} />
+						<EbirdHotspotSummary stateSlug={stateSlug} countySlug={county.slug} countyName={county.name} name={name} locationId={locationId} locationIds={locationIds} lat={lat} lng={lng} />
 					}
-					
+
+					{childLocations.length > 0 && 
+						<div className="mb-6">
+							<h3 className="mb-4 font-bold">Sub-locations</h3>
+							<HotspotList hotspots={childLocations} />
+						</div>
+					}
+
 					{about &&
 						<AboutSection heading={`About ${nameShort}`} text={about} />
 					}
