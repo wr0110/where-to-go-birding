@@ -8,7 +8,7 @@ import { State, IBA, HotspotsByCounty } from "lib/types";
 import { getIBAHotspots } from "lib/mongo";
 import { restructureHotspotsByCounty } from "lib/helpers";
 import ListHotspotsByCounty from "components/ListHotspotsByCounty";
-import EbirdIBASummary from "components/EbirdIBASummary";
+import EbirdBarcharts from "components/EbirdBarcharts";
 
 
 interface Params extends ParsedUrlQuery {
@@ -44,7 +44,7 @@ export default function ImportantBirdAreas({ state, name, slug, about, webpage, 
 	return (
 		<div className="container pb-16 mt-12">
 			<Heading>{name} Important Bird Area</Heading>
-			<div className="grid grid-cols-2 gap-12">
+			<div className="md:grid grid-cols-2 gap-12">
 				<div>
 					<p className="font-bold mb-6">
 						<Link href={`/birding-in-${state?.slug}/important-bird-areas`}><a>{state?.label} Important Bird Areas</a></Link>
@@ -56,7 +56,7 @@ export default function ImportantBirdAreas({ state, name, slug, about, webpage, 
 						<br />
 						<a href={webpage} target="_blank" rel="noreferrer">{name} Important Bird Area webpage</a>
 					</p>
-					<EbirdIBASummary region={region} />
+					<EbirdBarcharts region={region} />
 					<h3 className="font-bold mb-4">eBird Hotspots</h3>
 					<ListHotspotsByCounty stateSlug={state?.slug} hotspots={hotspots} />
 				</div>

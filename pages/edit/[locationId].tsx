@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const ebirdData: EbirdHotspot = await getEbirdHotspot(locationId);
 	return {
     props: {
-			id: data?._id,
+			id: data?._id || null,
 			isNew: !data,
 			data: {
 				...data,
@@ -95,7 +95,7 @@ export default function Edit({ id, isNew, data }: Props) {
 		setSaving(false);
 		const json = await response.json();
 		if (json.success) {
-			router.push(data.url);
+			router.push(url);
 		} else {
 			console.error(json.error);
 			alert("Error saving hotspot");

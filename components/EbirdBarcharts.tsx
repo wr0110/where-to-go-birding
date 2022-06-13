@@ -2,7 +2,7 @@ type Props = {
 	region: string,
 }
 
-export default function EbirdIBASummary({ region }: Props) {
+export default function EbirdBarcharts({ region }: Props) {
 	return (
 		<div className="mb-6">
 			<h3 className="font-bold">eBird Bar Charts</h3>
