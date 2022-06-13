@@ -83,6 +83,17 @@ export async function getIBAHotspots(ibaSlug: string) {
 	return result;
 }
 
+export async function getChildHotspots(locationId: string) {
+	await connect();
+	const result = await Hotspot
+		.find({ parentId: locationId }, ["-_id", "name", "url", "locationId"])
+		.sort({ name: 1 })
+		.lean()
+		.exec();
+
+	return result;
+}
+
 export async function getHotspotBySlug(countyCode: string, slug: string) {
 	await connect();
 	const result = await Hotspot
