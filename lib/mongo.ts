@@ -104,10 +104,30 @@ export async function getHotspotBySlug(countyCode: string, slug: string) {
 	return  result ? JSON.parse(JSON.stringify(result)) : null;
 }
 
+export async function getGroupBySlug(stateCode: string, slug: string) {
+	await connect();
+	const result = await Hotspot
+		.findOne({ stateCode, slug })
+		.lean()
+		.exec();
+
+	return  result ? JSON.parse(JSON.stringify(result)) : null;
+}
+
 export async function getHotspotByLocationId(locationId: string) {
 	await connect();
 	const result = await Hotspot
 		.findOne({ locationId })
+		.lean()
+		.exec();
+
+	return result ? JSON.parse(JSON.stringify(result)) : null;
+}
+
+export async function getHotspotById(id: string) {
+	await connect();
+	const result = await Hotspot
+		.findOne({ _id: id })
 		.lean()
 		.exec();
 

@@ -7,7 +7,7 @@ import Input from "components/Input";
 import Form from "components/Form";
 import Submit from "components/Submit";
 import { Editor } from "@tinymce/tinymce-react";
-import { getHotspotByLocationId } from "lib/mongo";
+import { getHotspotById } from "lib/mongo";
 import { slugify, tinyMceOptions } from "lib/helpers";
 import { getStateByCode, getCountyByCode } from "lib/localData";
 import InputLinks from "components/InputLinks";
@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const { id, state } = query as Params;
 	const isNew = id === "new";
 	
-	const data = isNew ? null : await getHotspotByLocationId(id);
+	const data = isNew ? null : await getHotspotById(id);
 	const stateCode = data?.stateCode || `US-${state?.replace("US-", "")}`;
 
 	return {
