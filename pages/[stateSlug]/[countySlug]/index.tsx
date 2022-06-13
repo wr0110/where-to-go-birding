@@ -55,7 +55,7 @@ export default function County({ state, slug, hotspots, name, ebirdCode, color }
 					<h3 className="text-lg mb-2 font-bold">Explore {name} County in eBird</h3>
 					<EbirdCountySummary label={name} code={`US-${state.code}-${ebirdCode}`} />
 					<h3 className="text-lg mb-2 font-bold" id="hotspots">All Hotspots in {name} County</h3>
-					<HotspotList stateSlug={state.slug} countySlug={slug} hotspots={hotspots} />
+					<HotspotList hotspots={hotspots} />
 				</div>
 				<div>
 					{state.code === "OH" &&
@@ -65,7 +65,7 @@ export default function County({ state, slug, hotspots, name, ebirdCode, color }
 					{hikes.length > 0 && (
 						<>
 							<h3 className="text-lg mb-2 font-bold mt-6" id="dayhikes">Birding Day Hikes</h3>
-							<HotspotList stateSlug={state.slug} countySlug={slug} hotspots={hikes} />
+							<HotspotList hotspots={hikes} />
 						</>
 					)}
 					{iba.length > 0 && (

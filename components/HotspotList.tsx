@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { Hotspot } from "lib/types";
 
 type Props = {
-	hotspots: Hotspot[],
-	countySlug: string,
-	stateSlug: string,
+	hotspots: {
+		name: string,
+		url: string,
+	}[],
 }
 
 export default function HotspotList({ hotspots }: Props) {
