@@ -18,18 +18,10 @@ const HotspotSchema = new Schema({
 		type: String,
 		required: true
 	},
-	countyCode: {
-		type: String,
-		required: true
-	},
-	lat: {
-		type: Number,
-		required: true
-	},
-	lng: {
-		type: Number,
-		required: true
-	},
+	countyCode:  String,
+	multiCounties:  Array,
+	lat: Number,
+	lng: Number,
 	locationId: String,
 	slug: {
 		type: String,
