@@ -66,6 +66,7 @@ function formatCounty(stateCode: string, county: County) {
 }
 
 export function getCounties(stateCode: string) {
+	stateCode = stateCode.replace("US-", "");
 	return formatCountyArray(countyArrays[stateCode]);
 }
 

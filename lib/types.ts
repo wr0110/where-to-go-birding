@@ -36,7 +36,8 @@ export type Hotspot = {
 	lng: number,
 	locationId: string,
 	stateCode: string,
-	countyCode: string,
+	countyCode?: string,
+	multiCounties?: string[],
 	countySlug: string,
 	about?:  string,
 	address?: {

@@ -9,7 +9,7 @@ import { getHotspotBySlug, getHotspotByLocationId, getChildHotspots } from "lib/
 import AboutSection from "components/AboutSection";
 import { getCountyBySlug, getState } from "lib/localData";
 import { County, Hotspot as HotspotType } from "lib/types";
-import SecureContent from "components/SecureContent";
+import EditorActions from "components/EditorActions";
 import HotspotList from "components/HotspotList";
 
 const getParent = async (hotspotId: string) => {
@@ -140,11 +140,9 @@ export default function Hotspot({ stateSlug, county, name, lat, lng, address, li
 					{(lat && lng) && <Map lat={lat} lng={lng} />}
 				</div>
 			</div>
-			<SecureContent>
-				<p className="mt-4">
-					<Link href={`/edit/${locationId}`}>Edit Location</Link>
-				</p>
-			</SecureContent>
+			<EditorActions>
+				<Link href={`/edit/${locationId}`}>Edit Location</Link>
+			</EditorActions>
 		</div>
 	)
 }

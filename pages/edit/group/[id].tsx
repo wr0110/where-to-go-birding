@@ -8,45 +8,49 @@ import Form from "components/Form";
 import Submit from "components/Submit";
 import { Editor } from "@tinymce/tinymce-react";
 import { getHotspotByLocationId } from "lib/mongo";
-import { slugify, tinyMceOptions, geocode, getEbirdHotspot } from "lib/helpers";
+import { slugify, tinyMceOptions } from "lib/helpers";
 import { getStateByCode, getCountyByCode } from "lib/localData";
 import InputLinks from "components/InputLinks";
 import Select from "components/Select";
 import IBAs from "data/oh-iba.json";
 import AdminPage from "components/AdminPage";
-import { Hotspot, EbirdHotspot } from "lib/types";
+import { Hotspot } from "lib/types";
 import RadioGroup from "components/RadioGroup";
 import Field from "components/Field";
 import AddressInput from "components/AddressInput";
+import CountySelect from "components/CountySelect";
+import FormError from "components/FormError";
 
 const ibaOptions = IBAs.map(({ slug, name }) => ({ value: slug, label: name }));
 
 interface Params extends ParsedUrlQuery {
-	locationId: string,
+	id: string,
+	state?: string,
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-	const { locationId } = query as Params;
-	const data = await getHotspotByLocationId(locationId);
-	const ebirdData: EbirdHotspot = await getEbirdHotspot(locationId);
+	const { id, state } = query as Params;
+	const isNew = id === "new";
+	
+	const data = isNew ? null : await getHotspotByLocationId(id);
+	const stateCode = data?.stateCode || `US-${state?.replace("US-", "")}`;
+
 	return {
     props: {
-			id: data?._id,
+			id: data?._id || null,
 			isNew: !data,
 			data: {
 				...data,
-				name: ebirdData?.name || data?.name,
-				slug: data?.slug || slugify(ebirdData?.name),
-				lat: ebirdData?.latitude ||  data?.lat,
-				lng: ebirdData?.longitude || data?.lng,
-				stateCode: data?.stateCode || ebirdData?.subnational1Code,
-				countyCode: data?.countyCode || ebirdData?.subnational2Code,
-				locationId: locationId,
+				name: data?.name || "",
+				slug: data?.slug || "",
+				stateCode: data?.stateCode || stateCode,
+				multiCounties: data?.multiCounties || [],
 				roadside: data?.roadside || "Unknown",
 				restrooms: data?.restrooms || "Unknown",
 				accessible: data?.accessible || "Unknown",
 				dayhike: data?.dayhike || "No",
-			}
+			},
+			stateCode,
 		},
   }
 }
@@ -55,9 +59,10 @@ type Props = {
 	id?: string,
 	isNew: boolean,
 	data: Hotspot,
+	stateCode: string,
 }
 
-export default function Edit({ id, isNew, data }: Props) {
+export default function Edit({ id, isNew, data, stateCode }: Props) {
 	const [saving, setSaving] = React.useState<boolean>(false);
 	const aboutRef = React.useRef<any>();
 
@@ -67,15 +72,15 @@ export default function Edit({ id, isNew, data }: Props) {
 
 	const handleSubmit: SubmitHandler<Hotspot> = async (data) => {
 		const state = getStateByCode(data?.stateCode);
-		const county = getCountyByCode(data?.countyCode || "");
 
-		if (!state || !county) {
-			alert("Error getting state and county data");
+		if (!state || !data?.multiCounties?.length) {
+			alert("Missing state and/or counties");
 			return;
 		}
 
 		setSaving(true);
-		const url = `/birding-in-${state?.slug}/${county?.slug}-county/${data?.slug}`;
+		const slug =  data.slug || slugify(data.name);
+		const url = `/birding-in-${state?.slug}/group/${slug}`;
 		const response = await fetch(`/api/hotspot/${isNew ? "add" : "update"}`, {
       method: "POST",
       headers: {
@@ -85,9 +90,10 @@ export default function Edit({ id, isNew, data }: Props) {
 				id,
 				data: {
 					...data,
-					url,
-					multiCounties: null,
+					countyCode: null,
 					iba: data.iba || null,
+					slug,
+					url,
 					about:  aboutRef.current.getContent(),
 				}
 			}),
@@ -95,28 +101,12 @@ export default function Edit({ id, isNew, data }: Props) {
 		setSaving(false);
 		const json = await response.json();
 		if (json.success) {
-			router.push(data.url);
+			router.push(url);
 		} else {
 			console.error(json.error);
 			alert("Error saving hotspot");
 		}
 	}
-
-	React.useEffect(() => {
-		const geocodeAddress = async () => {
-			if (isNew || !data?.address?.city || !data?.address?.state || !data?.address?.zip) {
-				const { road, city, state, zip } = await geocode(data?.lat, data?.lng);
-				form.setValue("address.city", city || "");
-				form.setValue("address.state", state || "");
-				form.setValue("address.zip", zip || "");
-				if (isNew) {
-					form.setValue("address.street", road || "");
-				}
-			}
-		}
-		geocodeAddress();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	return (
 		<AdminPage title="Edit Hotspot">
@@ -125,15 +115,17 @@ export default function Edit({ id, isNew, data }: Props) {
 					<div className="max-w-2xl mx-auto">
 						<div className="px-4 py-5 bg-white space-y-6 sm:p-6">
 
-							<h2 className="text-xl font-bold text-gray-600 border-b pb-4">{data?.name}</h2>
-							<Input type="hidden" name="slug" />
-							
-							<AddressInput />
+							<h2 className="text-xl font-bold text-gray-600 border-b pb-4">Add Group Hotspot</h2>
 
-							<Field label="Parent Hotspot ID">
-								<Input type="text" name="parentId" />
-								<span className="text-xs text-gray-500 font-normal">Example: L12345678</span>
-							</Field>
+							<div>
+								<label className="text-gray-500 font-bold">
+									Name<br/>
+									<Input type="text" name="name" required />
+								</label>
+								<FormError name="name" />
+							</div>
+
+							<Input type="hidden" name="slug" />
 
 							<Field label="Links">
 								<InputLinks />
@@ -143,6 +135,11 @@ export default function Edit({ id, isNew, data }: Props) {
 								<div className="mt-1">
 									<Editor id="about-editor" onInit={(e, editor) => aboutRef.current = editor} initialValue={data?.about} init={tinyMceOptions} />
 								</div>
+							</Field>
+
+							<Field label="Counties">
+								<CountySelect name="multiCounties" stateCode={stateCode} isMulti required />
+								<FormError name="multiCounties" />
 							</Field>
 
 							{isOH &&

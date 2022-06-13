@@ -13,6 +13,7 @@ import RareBirds from "components/RareBirds";
 import States from "data/states.json";
 import { StateLinks, State as StateType, County as CountyType } from "lib/types";
 import Heading from "components/Heading";
+import EditorActions from "components/EditorActions";
 
 interface Params extends ParsedUrlQuery {
 	stateSlug: string,
@@ -125,6 +126,9 @@ export default function State({label, code, slug, features, rareSid, needsSid, y
 				</div>
 			</div>
 			<RareBirds region={`US-${code}`} label={label} />
+			<EditorActions>
+				<Link href={`/edit/group/new?state=${code}`}>Add Group Hotspot</Link>
+			</EditorActions>
 		</div>
 	)
 }
