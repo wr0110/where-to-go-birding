@@ -45,7 +45,7 @@ export default function County({ state, slug, hotspots, name, ebirdCode, color }
 	return (
 		<div className="container pb-16">
 			<Heading color={color}>{name}</Heading>
-			<div className="grid grid-cols-2 gap-12">
+			<div className="md:grid grid-cols-2 gap-12">
 				<div>
 					<h3 className="text-lg mb-2 font-bold">Where to Go Birding in {name} County</h3>
 					<p className="mb-4">

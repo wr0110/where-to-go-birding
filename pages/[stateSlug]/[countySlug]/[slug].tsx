@@ -83,7 +83,7 @@ export default function Hotspot({ stateSlug, county, name, lat, lng, address, li
 	return (
 		<div className="container pb-16">
 			<Heading color={ county.color}>{name}</Heading>
-			<div className="grid grid-cols-2 gap-12">
+			<div className="md:grid grid-cols-2 gap-12">
 				<div>
 					<div className="mb-6">
 						{ name &&
@@ -94,7 +94,9 @@ export default function Hotspot({ stateSlug, county, name, lat, lng, address, li
 							/>
 						}
 						{links?.map(({ url, label }, index) => (
-							<a key={index} href={url} target="_blank" rel="noreferrer">{label}</a>
+							<>
+								<a key={index} href={url} target="_blank" rel="noreferrer">{label}</a><br />
+							</>
 						))}
 						{extraLinks.length > 0 &&
 							<p className="mt-4">

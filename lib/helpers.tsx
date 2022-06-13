@@ -63,42 +63,48 @@ export function restructureHotspotsByCounty(hotspots: Hotspot[]) {
 			countyName: county?.name,
 			hotspots,
 		}
-	});
+	}) || [];
 }
 
 export async function geocode(lat: number, lng: number) {
 	console.log("Geocoding", lat, lng);
-	const apiKey = process.env.NEXT_PUBLIC_GOOGLE_GEOCODE_KEY;
-	if (!apiKey) return {};
-	Geocode.setApiKey(apiKey);
-	Geocode.setRegion("us");
-	// @ts-expect-error
-	Geocode.setLocationType("ROOFTOP");
-	const response = await Geocode.fromLatLng(lat.toString(), lng.toString());
-	
-	let city = "";
-	let state = "";
-	let zip = "";
-	let road = "";
-	for (let i = 0; i < response.results[0].address_components.length; i++) {
-		for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
-			switch (response.results[0].address_components[i].types[j]) {
-				case "locality":
-					city = response.results[0].address_components[i].long_name;
-					break;
-				case "administrative_area_level_1":
-					state = response.results[0].address_components[i].long_name;
-					break;
-				case "postal_code":
-					zip = response.results[0].address_components[i].long_name;
-					break;
-				case "route":
-					road = response.results[0].address_components[i].long_name;
-					break;
+	try {
+		const apiKey = process.env.NEXT_PUBLIC_GOOGLE_GEOCODE_KEY;
+		if (!apiKey) return {};
+		Geocode.setApiKey(apiKey);
+		Geocode.setRegion("us");
+		// @ts-expect-error
+		Geocode.setLocationType("ROOFTOP");
+		const response = await Geocode.fromLatLng(lat.toString(), lng.toString());
+		
+		let city = "";
+		let state = "";
+		let zip = "";
+		let road = "";
+		for (let i = 0; i < response.results[0].address_components.length; i++) {
+			for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
+				switch (response.results[0].address_components[i].types[j]) {
+					case "locality":
+						city = response.results[0].address_components[i].long_name;
+						break;
+					case "administrative_area_level_1":
+						state = response.results[0].address_components[i].long_name;
+						break;
+					case "postal_code":
+						zip = response.results[0].address_components[i].long_name;
+						break;
+					case "route":
+						road = response.results[0].address_components[i].long_name;
+						break;
+				}
 			}
 		}
+		return { road, city, state, zip };
+	} catch (error) {
+		console.error(error);
+		return { road: "", city: "", state: "", zip: "" };
 	}
-	return { road, city, state, zip };
+	
 }
 
 export async function getEbirdHotspot(locationId: string) {
