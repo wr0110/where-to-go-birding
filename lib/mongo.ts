@@ -33,7 +33,7 @@ export async function getAccessibleHotspotsByState(stateCode: string) {
 		.find({
 			stateCode: `US-${stateCode}`,
 			accessible: { $in: ["ADA", "Birdability"] },
-		}, ["-_id", "name", "url", "countyCode"])
+		}, ["-_id", "name", "url", "countyCode", "multiCounties"])
 		.sort({ name: 1 })
 		.lean()
 		.exec();
@@ -47,7 +47,7 @@ export async function getHikeHotspotsByState(stateCode: string) {
 		.find({
 			stateCode: `US-${stateCode}`,
 			dayhike: "Yes",
-		}, ["-_id", "name", "url", "countyCode"])
+		}, ["-_id", "name", "url", "countyCode", "multiCounties"])
 		.sort({ name: 1 })
 		.lean()
 		.exec();
@@ -61,7 +61,7 @@ export async function getRoadsideHotspotsByState(stateCode: string) {
 		.find({
 			stateCode: `US-${stateCode}`,
 			roadside: "Yes",
-		}, ["-_id", "name", "url", "countyCode"])
+		}, ["-_id", "name", "url", "countyCode", "multiCounties"])
 		.sort({ name: 1 })
 		.lean()
 		.exec();
@@ -75,7 +75,7 @@ export async function getIBAHotspots(ibaSlug: string) {
 	const result = await Hotspot
 		.find({
 			"iba.value": ibaSlug,
-		}, ["-_id", "name", "url", "countyCode", "locationId"])
+		}, ["-_id", "name", "url", "countyCode", "multiCounties", "locationId"])
 		.sort({ name: 1 })
 		.lean()
 		.exec();
