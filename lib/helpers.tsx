@@ -14,7 +14,7 @@ export const tinyMceOptions = {
 	toolbar: "bold italic underline | link | cite",
 	content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px } cite { font-size: 0.75em; font-style: italic; color: #666; }',
 	branding: false,
-	//elementpath: false,
+	elementpath: false,
 	formats: {
 		potato: { inline: "cite" },
 	},

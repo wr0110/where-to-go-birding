@@ -6,6 +6,7 @@ import { getState } from "lib/localData";
 import Heading from "components/Heading";
 import { GetServerSideProps } from "next";
 import { HotspotsByCounty } from "lib/types";
+import ListHotspotsByCounty from "components/ListHotspotsByCounty";
 
 type Props = {
 	stateSlug: string,
@@ -52,19 +53,7 @@ Safety first
 			</div>
 			<h3 className="text-lg mb-8 font-bold">Roadside Birding Locations Listed by County</h3>
 			<div className="columns-1 sm:columns-3 mb-12">
-				{hotspots.map(({countySlug, countyName, hotspots}) => (
-					<p key={countySlug} className="mb-4 break-inside-avoid">
-						<Link href={`/birding-in-${stateSlug}/${countySlug}-county`}>{countyName}</Link><br/>
-						{hotspots.map(({name, url}) => (
-							<React.Fragment key={url}>
-								<Link href={url}>
-									<a className="font-bold">{name}</a>
-								</Link>
-								<br/>
-							</React.Fragment>
-						))}
-					</p>
-				))}
+				<ListHotspotsByCounty stateSlug={stateSlug} hotspots={hotspots} />
 			</div>
 		</div>
 	)

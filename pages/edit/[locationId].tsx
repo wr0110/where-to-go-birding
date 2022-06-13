@@ -37,7 +37,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 				slug: data?.slug || slugify(ebirdData?.name),
 				lat: data?.lat || ebirdData?.latitude,
 				lng: data?.lng || ebirdData?.longitude,
-				stateCode: data?.stateCode || ebirdData?.subnational1Code?.replace("US-", ""),
+				stateCode: data?.stateCode || ebirdData?.subnational1Code,
 				countyCode: data?.countyCode || ebirdData?.subnational2Code,
 				locationId: data?.locationId || ebirdData?.locationId,
 				roadside: data?.roadside || "Unknown",
@@ -62,7 +62,7 @@ export default function Edit({ id, isNew, data }: Props) {
 	const router = useRouter();
 	const locationId = router.query.locationId as string;
 	const form = useForm<Hotspot>({ defaultValues: data });
-	const isOH = data.stateCode === "OH";
+	const isOH = data.stateCode === "US-OH";
 
 	const handleSubmit: SubmitHandler<Hotspot> = async (data) => {
 		const state = getStateByCode(data?.stateCode);
@@ -74,14 +74,6 @@ export default function Edit({ id, isNew, data }: Props) {
 		}
 
 		setSaving(true);
-		console.log({
-			id,
-			data: {
-				...data,
-				iba: data.iba || null,
-				about:  aboutRef.current.getContent(),
-			}
-		});
 		const response = await fetch(`/api/hotspot/${isNew ? "add" : "update"}`, {
       method: "POST",
       headers: {
