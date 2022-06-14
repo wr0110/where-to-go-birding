@@ -18,7 +18,7 @@ const Select = ({ name, options, required, ...props}: InputProps) => {
         name={name}
         control={control}
 				rules={{ required: required ? "This field is required" : false }}
-        render={({ field }) => (
+        render={({ field: { ref, ...field } }) => (
 					<ReactSelectStyled options={options} {...field} {...props} />
 				)}
       />
