@@ -17,9 +17,9 @@ import AdminPage from "components/AdminPage";
 import { Hotspot } from "lib/types";
 import RadioGroup from "components/RadioGroup";
 import Field from "components/Field";
-import AddressInput from "components/AddressInput";
 import CountySelect from "components/CountySelect";
 import FormError from "components/FormError";
+import useSecureFetch from "hooks/useSecureFetch";
 
 const ibaOptions = IBAs.map(({ slug, name }) => ({ value: slug, label: name }));
 
@@ -65,6 +65,7 @@ type Props = {
 export default function Edit({ id, isNew, data, stateCode }: Props) {
 	const [saving, setSaving] = React.useState<boolean>(false);
 	const aboutRef = React.useRef<any>();
+	const secureFetch = useSecureFetch();
 
 	const router = useRouter();
 	const form = useForm<Hotspot>({ defaultValues: data });
@@ -81,25 +82,18 @@ export default function Edit({ id, isNew, data, stateCode }: Props) {
 		setSaving(true);
 		const slug =  data.slug || slugify(data.name);
 		const url = `/birding-in-${state?.slug}/group/${slug}`;
-		const response = await fetch(`/api/hotspot/${isNew ? "add" : "update"}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-				id,
-				data: {
-					...data,
-					countyCode: null,
-					iba: data.iba || null,
-					slug,
-					url,
-					about:  aboutRef.current.getContent(),
-				}
-			}),
+		const json = await secureFetch(`/api/hotspot/${isNew ? "add" : "update"}`, "POST", {
+			id,
+			data: {
+				...data,
+				countyCode: null,
+				iba: data.iba || null,
+				slug,
+				url,
+				about:  aboutRef.current.getContent(),
+			}
     });
 		setSaving(false);
-		const json = await response.json();
 		if (json.success) {
 			router.push(url);
 		} else {

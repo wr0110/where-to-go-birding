@@ -18,6 +18,7 @@ import { Hotspot, EbirdHotspot } from "lib/types";
 import RadioGroup from "components/RadioGroup";
 import Field from "components/Field";
 import AddressInput from "components/AddressInput";
+import useSecureFetch from "hooks/useSecureFetch";
 
 const ibaOptions = IBAs.map(({ slug, name }) => ({ value: slug, label: name }));
 
@@ -29,6 +30,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const { locationId } = query as Params;
 	const data = await getHotspotByLocationId(locationId);
 	const ebirdData: EbirdHotspot = await getEbirdHotspot(locationId);
+
 	return {
     props: {
 			id: data?._id || null,
@@ -60,6 +62,7 @@ type Props = {
 export default function Edit({ id, isNew, data }: Props) {
 	const [saving, setSaving] = React.useState<boolean>(false);
 	const aboutRef = React.useRef<any>();
+	const secureFetch = useSecureFetch();
 
 	const router = useRouter();
 	const form = useForm<Hotspot>({ defaultValues: data });
@@ -76,24 +79,17 @@ export default function Edit({ id, isNew, data }: Props) {
 
 		setSaving(true);
 		const url = `/birding-in-${state?.slug}/${county?.slug}-county/${data?.slug}`;
-		const response = await fetch(`/api/hotspot/${isNew ? "add" : "update"}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-				id,
-				data: {
-					...data,
-					url,
-					multiCounties: null,
-					iba: data.iba || null,
-					about:  aboutRef.current.getContent(),
-				}
-			}),
+		const json = await secureFetch(`/api/hotspot/${isNew ? "add" : "update"}`, "POST", {
+			id,
+			data: {
+				...data,
+				url,
+				multiCounties: null,
+				iba: data.iba || null,
+				about:  aboutRef.current.getContent(),
+			}
     });
 		setSaving(false);
-		const json = await response.json();
 		if (json.success) {
 			router.push(url);
 		} else {
