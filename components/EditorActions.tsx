@@ -12,7 +12,7 @@ export default function EditorActions({ children, className }: PropTypes) {
 	return (
 		<div className={`border my-6 border-[#92ad39] ${className || ""}`}>
 			<h3 className="p-2 font-bold pb-2 border-b bg-[#92ad39] text-white">Editor Actions</h3>
-			<div className="p-2">{children}</div>
+			<div className="p-2 flex gap-6">{children}</div>
 		</div>
 	)
 }

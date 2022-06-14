@@ -11,6 +11,7 @@ import Heading from "components/Heading";
 import EbirdBarcharts from "components/EbirdBarcharts";
 import { restructureHotspotsByCounty } from "lib/helpers";
 import ListHotspotsByCounty from "components/ListHotspotsByCounty";
+import DeleteBtn from "components/DeleteBtn";
 
 const getChildren = async (id: string) => {
 	if (!id) return null;
@@ -141,7 +142,8 @@ export default function GroupHotspot({ stateSlug, _id, name, links, iba, about, 
 				</div>
 			</div>
 			<EditorActions>
-				<Link href={`/edit/group/${_id}`}>Edit Location</Link>
+				<Link href={`/edit/group/${_id}`}>Edit Hotspot</Link>
+				<DeleteBtn id={_id || ""} className="ml-auto" />
 			</EditorActions>
 		</div>
 	)
