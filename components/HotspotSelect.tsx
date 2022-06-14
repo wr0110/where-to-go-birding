@@ -35,7 +35,7 @@ export default function HotspotSelect({ name, countyCode, self, required, ...pro
 						loadOptions={loadOptions}
 						cacheOptions
 						defaultOptions
-						noOptionsMessage={() => "Search for a hotspot..."}
+						noOptionsMessage={({inputValue}: any) => inputValue.length ? "No Results" : "Search for a hotspot..."}
 						{...field}
 						{...props}
 					/>
