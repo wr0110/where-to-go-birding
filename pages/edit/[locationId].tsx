@@ -36,17 +36,17 @@ const getParent = async (id: string) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-	const { locationId } = query as Params;
+	const { locationId, defaultParentId } = query as Params;
 	const data = await getHotspotByLocationId(locationId);
 	const ebirdData: EbirdHotspot = await getEbirdHotspot(locationId);
-
+	const parentId = data?.parentId || defaultParentId;
 	return {
     props: {
 			id: data?._id || null,
 			isNew: !data,
 			data: {
 				...data,
-				parent: data?.parentId ? await getParent(data.parentId) : null,
+				parent: parentId ? await getParent(parentId) : null,
 				name: ebirdData?.name || data?.name,
 				slug: data?.slug || slugify(ebirdData?.name),
 				lat: ebirdData?.latitude ||  data?.lat,

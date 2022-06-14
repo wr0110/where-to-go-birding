@@ -12,6 +12,7 @@ import { County, Hotspot as HotspotType } from "lib/types";
 import EditorActions from "components/EditorActions";
 import HotspotList from "components/HotspotList";
 import Heading from "components/Heading";
+import DeleteBtn from "components/DeleteBtn";
 
 const getParent = async (hotspotId: string) => {
 	if (!hotspotId) return null;
@@ -62,7 +63,7 @@ interface Props extends HotspotType {
 	locationIds: string[],
 }
 
-export default function Hotspot({ stateSlug, county, name, lat, lng, address, links, about, restrooms, roadside, accessible, locationId, parent, childLocations, locationIds }: Props) {	
+export default function Hotspot({ stateSlug, county, name, _id, lat, lng, address, links, about, restrooms, roadside, accessible, locationId, parent, childLocations, locationIds }: Props) {	
 	const nameParts = name?.split("--");
 	const nameShort = nameParts?.length === 2 ? nameParts[1] : name;
 
@@ -144,7 +145,11 @@ export default function Hotspot({ stateSlug, county, name, lat, lng, address, li
 				</div>
 			</div>
 			<EditorActions>
-				<Link href={`/edit/${locationId}`}>Edit Location</Link>
+				<Link href={`/edit/${locationId}`}>Edit Hotspot</Link>
+				{!parent &&
+					<Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>
+				}
+				<DeleteBtn id={_id || ""} className="ml-auto" />
 			</EditorActions>
 		</div>
 	)

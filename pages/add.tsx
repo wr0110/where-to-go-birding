@@ -11,9 +11,11 @@ type Inputs = {
 export default function Add() {
 	const form = useForm<Inputs>();
 	const router = useRouter();
+	const { defaultParentId } = router.query;
 
 	const handleSubmit: SubmitHandler<Inputs> = async ({locationId}) => {
-		router.push(`/edit/${locationId}`);
+		const url = defaultParentId ? `/edit/${locationId}?defaultParentId=${defaultParentId}` : `/edit/${locationId}`;
+		router.push(url);
 	}
 
 	return (
