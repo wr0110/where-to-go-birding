@@ -8,6 +8,7 @@ import Heading from "components/Heading";
 import { State, Hotspot, County as CountyType } from "lib/types";
 import EbirdCountySummary from "components/EbirdCountySummary";
 import HotspotList from "components/HotspotList";
+import RareBirds from "components/RareBirds";
 
 interface Params extends ParsedUrlQuery {
 	stateSlug: string,
@@ -82,6 +83,7 @@ export default function County({ state, slug, hotspots, name, ebirdCode, color }
 					)}
 				</div>
 			</div>
+			<RareBirds region={ebirdCode} label={`${name} County Notable Sightings`} />
 		</div>
 	)
 }
