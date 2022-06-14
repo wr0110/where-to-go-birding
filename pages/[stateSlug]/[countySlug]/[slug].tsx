@@ -22,9 +22,9 @@ const getParent = async (hotspotId: string) => {
 	return { name, about, slug };
 }
 
-const getChildren = async (locationId: string) => {
-	if (!locationId) return null;
-	const data = await getChildHotspots(locationId);
+const getChildren = async (id: string) => {
+	if (!id) return null;
+	const data = await getChildHotspots(id);
 	return data || [];
 }
 
@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	if (!data) return { notFound: true };
 	const parent = await getParent(data.parentId);
 
-	const childLocations = parent ? [] : await getChildren(data.locationId);
+	const childLocations = parent ? [] : await getChildren(data._id);
 	const childIds = childLocations?.map(item => item.locationId) || [];
 	const locationIds = childIds?.length > 0 ? [data?.locationId, ...childIds] : [data?.locationId];
 
@@ -117,7 +117,7 @@ export default function Hotspot({ stateSlug, county, name, _id, lat, lng, addres
 
 					{childLocations.length > 0 && 
 						<div className="mb-6">
-							<h3 className="mb-4 font-bold">Sub-locations</h3>
+							<h3 className="mb-4 font-bold">Locations</h3>
 							<HotspotList hotspots={childLocations} />
 						</div>
 					}

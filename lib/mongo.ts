@@ -94,10 +94,10 @@ export async function getGroupHotspots(id: string) {
 	return result;
 }
 
-export async function getChildHotspots(locationId: string) {
+export async function getChildHotspots(id: string) {
 	await connect();
 	const result = await Hotspot
-		.find({ parentId: locationId }, ["-_id", "name", "url", "locationId"])
+		.find({ parentId: id }, ["-_id", "name", "url", "locationId"])
 		.sort({ name: 1 })
 		.lean()
 		.exec();
