@@ -7,23 +7,32 @@ import Input from "components/Input";
 import Form from "components/Form";
 import Submit from "components/Submit";
 import { Editor } from "@tinymce/tinymce-react";
-import { getHotspotByLocationId } from "lib/mongo";
+import { getHotspotByLocationId, getHotspotById } from "lib/mongo";
 import { slugify, tinyMceOptions, geocode, getEbirdHotspot } from "lib/helpers";
 import { getStateByCode, getCountyByCode } from "lib/localData";
 import InputLinks from "components/InputLinks";
 import Select from "components/Select";
 import IBAs from "data/oh-iba.json";
 import AdminPage from "components/AdminPage";
-import { Hotspot, EbirdHotspot } from "lib/types";
+import { Hotspot, HotspotInputs, EbirdHotspot } from "lib/types";
 import RadioGroup from "components/RadioGroup";
 import Field from "components/Field";
 import AddressInput from "components/AddressInput";
 import useSecureFetch from "hooks/useSecureFetch";
+import HotspotSelect from "components/HotspotSelect";
 
 const ibaOptions = IBAs.map(({ slug, name }) => ({ value: slug, label: name }));
 
 interface Params extends ParsedUrlQuery {
 	locationId: string,
+}
+
+const getParent = async (id: string) => {
+	if (!id) return null;
+	const data = await getHotspotById(id, ["name"]);
+	if (!data) return null;
+	const { name, _id } = data;
+	return { label: name, value: _id };
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
@@ -37,6 +46,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 			isNew: !data,
 			data: {
 				...data,
+				parent: data?.parentId ? await getParent(data.parentId) : null,
 				name: ebirdData?.name || data?.name,
 				slug: data?.slug || slugify(ebirdData?.name),
 				lat: ebirdData?.latitude ||  data?.lat,
@@ -65,10 +75,10 @@ export default function Edit({ id, isNew, data }: Props) {
 	const secureFetch = useSecureFetch();
 
 	const router = useRouter();
-	const form = useForm<Hotspot>({ defaultValues: data });
+	const form = useForm<HotspotInputs>({ defaultValues: data });
 	const isOH = data.stateCode === "US-OH";
 
-	const handleSubmit: SubmitHandler<Hotspot> = async (data) => {
+	const handleSubmit: SubmitHandler<HotspotInputs> = async (data) => {
 		const state = getStateByCode(data?.stateCode);
 		const county = getCountyByCode(data?.countyCode || "");
 
@@ -84,9 +94,10 @@ export default function Edit({ id, isNew, data }: Props) {
 			data: {
 				...data,
 				url,
+				parentId: data.parent?.value || null,
 				multiCounties: null,
 				iba: data.iba || null,
-				about:  aboutRef.current.getContent(),
+				about:  aboutRef.current.getContent() || "",
 			}
     });
 		setSaving(false);
@@ -126,11 +137,6 @@ export default function Edit({ id, isNew, data }: Props) {
 							
 							<AddressInput />
 
-							<Field label="Parent Hotspot ID">
-								<Input type="text" name="parentId" />
-								<span className="text-xs text-gray-500 font-normal">Example: L12345678</span>
-							</Field>
-
 							<Field label="Links">
 								<InputLinks />
 							</Field>
@@ -141,9 +147,13 @@ export default function Edit({ id, isNew, data }: Props) {
 								</div>
 							</Field>
 
+							<Field label="Parent Hotspot">
+								<HotspotSelect self={id} countyCode={data.countyCode || ""} name="parent" isClearable />
+							</Field>
+
 							{isOH &&
 								<Field label="Important Bird Area">
-									<Select name="iba" options={ibaOptions} />
+									<Select name="iba" options={ibaOptions} isClearable />
 								</Field>
 							}
 

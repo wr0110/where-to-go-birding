@@ -86,11 +86,12 @@ export default function Edit({ id, isNew, data, stateCode }: Props) {
 			id,
 			data: {
 				...data,
+				parentId: null,
 				countyCode: null,
 				iba: data.iba || null,
 				slug,
 				url,
-				about:  aboutRef.current.getContent(),
+				about:  aboutRef.current.getContent() || "",
 			}
     });
 		setSaving(false);
@@ -138,7 +139,7 @@ export default function Edit({ id, isNew, data, stateCode }: Props) {
 
 							{isOH &&
 								<Field label="Important Bird Area">
-									<Select name="iba" options={ibaOptions} />
+									<Select name="iba" options={ibaOptions} isClearable />
 								</Field>
 							}
 

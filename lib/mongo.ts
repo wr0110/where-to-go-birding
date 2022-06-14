@@ -135,12 +135,16 @@ export async function getHotspotByLocationId(locationId: string) {
 	return result ? JSON.parse(JSON.stringify(result)) : null;
 }
 
-export async function getHotspotById(id: string) {
-	await connect();
-	const result = await Hotspot
-		.findOne({ _id: id })
-		.lean()
-		.exec();
-
-	return result ? JSON.parse(JSON.stringify(result)) : null;
+export async function getHotspotById(id: string, fields?: string[]) {
+	//Try/catch in case the id can't be converted to objectId
+	try {
+		await connect();
+		const result = await Hotspot
+			.findOne({ _id: id }, fields)
+			.lean()
+			.exec();
+		return result ? JSON.parse(JSON.stringify(result)) : null;
+	} catch (error) {
+		return null;
+	}
 }

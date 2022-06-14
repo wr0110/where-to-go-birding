@@ -5,7 +5,7 @@ import Address from "components/Address";
 import EbirdHotspotSummary from "components/EbirdHotspotSummary";
 import Map from "components/Map";
 import Link from "next/link";
-import { getHotspotBySlug, getHotspotByLocationId, getChildHotspots } from "lib/mongo";
+import { getHotspotBySlug, getHotspotById, getChildHotspots } from "lib/mongo";
 import AboutSection from "components/AboutSection";
 import { getCountyBySlug, getState } from "lib/localData";
 import { County, Hotspot as HotspotType } from "lib/types";
@@ -15,7 +15,7 @@ import Heading from "components/Heading";
 
 const getParent = async (hotspotId: string) => {
 	if (!hotspotId) return null;
-	const data = await getHotspotByLocationId(hotspotId);
+	const data = await getHotspotById(hotspotId);
 	if (!data) return null;
 	const { name, about, slug } = data;
 	return { name, about, slug };

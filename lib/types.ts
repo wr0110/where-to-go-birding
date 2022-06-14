@@ -61,6 +61,13 @@ export type Hotspot = {
 	},
 }
 
+export interface HotspotInputs extends Hotspot {
+	parent: {
+		label: string,
+		value: string,
+	}
+}
+
 export type HotspotsByCounty = [{
 	countySlug: string,
 	countyName: string,
