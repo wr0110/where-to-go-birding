@@ -140,7 +140,13 @@ export default function Hotspot({ stateSlug, county, name, _id, lat, lng, addres
 					</div>
 				</div>
 				<div>
-					{stateSlug === "ohio" && <img src={`/oh-maps/${county.slug}.jpg`} width="260" className="mx-auto mb-10" alt={`${county.name} county map`} />}
+					{stateSlug === "ohio" && (
+						<Link href={`/birding-in-${stateSlug}/${county.slug}-county`}>
+							<a>
+								<img src={`/oh-maps/${county.slug}.jpg`} width="260" className="mx-auto mb-10" alt={`${county.name} county map`} />
+							</a>
+						</Link>
+					)}
 					{(lat && lng) && <Map lat={lat} lng={lng} />}
 				</div>
 			</div>

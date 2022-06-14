@@ -136,7 +136,11 @@ export default function GroupHotspot({ stateSlug, _id, name, links, iba, about, 
 				<div>
 					<div className="xs:grid md:block lg:grid grid-cols-2 gap-12">
 						{stateSlug === "ohio" && countySlugs?.map(slug => (
-							<img key={slug} src={`/oh-maps/${slug}.jpg`} width="260" className="w-full" alt="County map" />
+							<Link key={slug} href={`/birding-in-${stateSlug}/${slug}-county`}>
+								<a>
+									<img src={`/oh-maps/${slug}.jpg`} width="260" className="w-full" alt="County map" />
+								</a>
+							</Link>
 						))}
 					</div>
 				</div>
