@@ -13,7 +13,7 @@ export default function EbirdStateSummary({ code, label, rareSid, needsSid, year
 	}
 
 	return (
-		<div className="mb-6">
+		<div className="mb-6 p-2 border-2 border-[#4a84b2] rounded">
 			{portal &&
 				<a href={portal} target="_blank" rel="noreferrer">
 					<strong>{label} eBird Portal</strong>
@@ -39,6 +39,8 @@ export default function EbirdStateSummary({ code, label, rareSid, needsSid, year
 			<a href={getUrl(8, 11)} target="_blank" rel="noreferrer">Fall</a>
 			&nbsp;–&nbsp;
 			<a href={getUrl(12, 2)} target="_blank" rel="noreferrer">Winter</a>
+			<br/>
+			<a href={`https://ebird.org/region/${code}/media?yr=all&m=`} target="_blank" rel="noreferrer">Illustrated Checklist</a>
 			<br/>
 			{rareSid &&
 				<p className="mb-1">

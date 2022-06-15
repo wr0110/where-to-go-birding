@@ -50,14 +50,11 @@ export default function ImportantBirdAreas({ state, name, slug, about, webpage, 
 						<Link href={`/birding-in-${state?.slug}/important-bird-areas`}><a>{state?.label} Important Bird Areas</a></Link>
 					</p>
 					<p className="mb-6">
-						<strong>{name}</strong>
-						<br />
-						<strong>Important Bird Area</strong>
-						<br />
+						<h3 className="font-bold text-lg">{name}<br/>Important Bird Area</h3>
 						<a href={webpage} target="_blank" rel="noreferrer">{name} Important Bird Area webpage</a>
 					</p>
 					<EbirdBarcharts region={region} />
-					<h3 className="font-bold mb-4">eBird Hotspots</h3>
+					<h3 className="font-bold mb-4 text-lg">Locations</h3>
 					<ListHotspotsByCounty stateSlug={state?.slug} hotspots={hotspots} />
 				</div>
 				<div>

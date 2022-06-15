@@ -84,7 +84,7 @@ export default function GroupHotspot({ stateSlug, _id, name, links, iba, about, 
 			<div className="md:grid grid-cols-2 gap-12">
 				<div>
 					<div className="mb-6">
-						<h3 className="font-bold">{name}</h3>
+						<h3 className="font-bold text-lg">{name}</h3>
 						{links?.map(({ url, label }, index) => (
 							<>
 								<a key={index} href={url} target="_blank" rel="noreferrer">{label}</a><br />
@@ -107,14 +107,14 @@ export default function GroupHotspot({ stateSlug, _id, name, links, iba, about, 
 
 					{childLocations.length > 0 && 
 						<div className="mb-6">
-							<h3 className="mb-4 font-bold">Locations</h3>
+							<h3 className="mb-4 font-bold text-lg">Locations</h3>
 							<ListHotspotsByCounty stateSlug={stateSlug} hotspots={childLocations} />
 						</div>
 					}
 
 					{hikes.length > 0 && 
 						<div className="mb-6">
-							<h3 className="mb-4 font-bold">Birding Day Hikes</h3>
+							<h3 className="mb-4 font-bold text-lg">Birding Day Hikes</h3>
 							<ListHotspotsByCounty stateSlug={stateSlug} hotspots={hikes} />
 						</div>
 					}
