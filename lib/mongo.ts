@@ -19,7 +19,12 @@ export async function getHotspotsByState(stateCode: string) {
 export async function getHotspotsByCounty(countyCode: string) {
 	await connect();
 	const result = await Hotspot
-		.find({ countyCode }, ["-_id", "name", "url"])
+		.find({
+			$or: [
+				{ countyCode },
+				{ multiCounties: countyCode },
+			],
+		}, ["-_id", "name", "url"])
 		.sort({ name: 1 })
 		.lean()
 		.exec();
