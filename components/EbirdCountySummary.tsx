@@ -4,15 +4,17 @@ type Props = {
 	needsSid?: string,
 	yearNeedsSid?: string,
 	label: string,
+	color?: string,
 }
 
-export default function EbirdCountySummary({ code, label, rareSid, needsSid, yearNeedsSid }: Props) {
+export default function EbirdCountySummary({ code, label, rareSid, needsSid, yearNeedsSid, color="#4a84b2" }: Props) {
 	const getUrl = (bMonth: number, eMonth: number) => {
 		return `https://ebird.org/barchart?byr=1900&eyr=2060&bmo=${bMonth}&emo=${eMonth}&r=${code}`;
 	}
 
 	return (
-		<div className="mb-6">
+		<div className={`mb-6 p-2 border-2 border-[${color}] rounded`}>
+			<h3 className="text-lg mb-2 font-bold">Explore {label} County in eBird</h3>
 			<p className="mb-1">
 				<a href={`https://ebird.org/region/${code}`} target="_blank" rel="noreferrer">Overview</a>
 				&nbsp;–&nbsp;
@@ -31,6 +33,8 @@ export default function EbirdCountySummary({ code, label, rareSid, needsSid, yea
 			<a href={getUrl(8, 11)} target="_blank" rel="noreferrer">Fall</a>
 			&nbsp;–&nbsp;
 			<a href={getUrl(12, 2)} target="_blank" rel="noreferrer">Winter</a>
+			<br/>
+			<a href={`https://ebird.org/region/${code}/media?yr=all&m=`} target="_blank" rel="noreferrer">Illustrated Checklist</a>
 			<br/>
 			{rareSid &&
 				<p className="mb-1">

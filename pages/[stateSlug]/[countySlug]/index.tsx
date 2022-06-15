@@ -54,8 +54,7 @@ export default function County({ state, slug, hotspots, name, ebirdCode, color }
 						<a href="#hotspots">Alphabetical List of Hotspots</a><br/>
 						<a href="#dayhikes">Birding Day Hikes</a><br/>
 					</p>
-					<h3 className="text-lg mb-2 font-bold">Explore {name} County in eBird</h3>
-					<EbirdCountySummary label={name} code={`US-${state.code}-${ebirdCode}`} />
+					<EbirdCountySummary color={color} label={name} code={ebirdCode} />
 					<h3 className="text-lg mb-2 font-bold" id="hotspots">All Hotspots in {name} County</h3>
 					<HotspotList hotspots={hotspots} />
 				</div>

@@ -83,7 +83,7 @@ export default function Hotspot({ stateSlug, county, name, _id, lat, lng, addres
 
 	return (
 		<div className="container pb-16">
-			<Heading color={ county.color}>{name}</Heading>
+			<Heading color={county.color}>{name}</Heading>
 			<div className="md:grid grid-cols-2 gap-12">
 				<div>
 					<div className="mb-6">
@@ -112,7 +112,17 @@ export default function Hotspot({ stateSlug, county, name, _id, lat, lng, addres
 						}
 					</div>
 					{name &&
-						<EbirdHotspotSummary stateSlug={stateSlug} countySlug={county.slug} countyName={county.name} name={name} locationId={locationId} locationIds={locationIds} lat={lat} lng={lng} />
+						<EbirdHotspotSummary
+							stateSlug={stateSlug}
+							countySlug={county.slug}
+							countyName={county.name}
+							name={name}
+							locationId={locationId}
+							locationIds={locationIds}
+							lat={lat}
+							lng={lng}
+							color={county.color}
+						/>
 					}
 
 					{childLocations.length > 0 && 

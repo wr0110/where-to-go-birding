@@ -4,8 +4,8 @@ type Props = {
 
 export default function EbirdBarcharts({ region }: Props) {
 	return (
-		<div className="mb-6">
-			<h3 className="font-bold">eBird Bar Charts</h3>
+		<div className="mb-6 p-2 border-2 border-[#4a84b2] rounded">
+			<h3 className="font-bold text-lg">eBird Bar Charts</h3>
 			<p>
 				<a href={`https://ebird.org/barchart?byr=1900&eyr=2060&bmo=1&emo=12&r=${region}`}>Entire Year</a>
 				&nbsp;–&nbsp;

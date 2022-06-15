@@ -10,7 +10,7 @@ type Props = {
 export default function Address({ line1, line2, street, city, state, zip }: Props) {
 	return (
 		<div>
-			<h3 className="font-bold">{line1}</h3>
+			<h3 className="font-bold text-lg">{line1}</h3>
 			{line2 && <h3 className="font-bold">{line2}</h3>}
 			{street &&
 				<>
