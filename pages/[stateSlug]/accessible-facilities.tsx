@@ -8,6 +8,7 @@ import { HotspotsByCounty } from "lib/types";
 import { ParsedUrlQuery } from "querystring";
 import Heading from "components/Heading";
 import ListHotspotsByCounty from "components/ListHotspotsByCounty";
+import Title from "components/Title";
 
 interface Params extends ParsedUrlQuery {
 	stateSlug: string,
@@ -34,6 +35,7 @@ type Props = {
 export default function AccessibleFacilities({ stateSlug, hotspots }: Props) {
 	return (
 		<div className="container pb-16 mt-12">
+			<Title isOhio={stateSlug === "ohio"}>Accessible Facilities</Title>
 			<Heading>Accessible Facilities</Heading>
 			<p className="mb-4">
 				<strong>Below are listed, alphabetically by county, eBird hotspots which have facilities which are ADA accessible.</strong><br/>

@@ -2,10 +2,12 @@ import Link from "next/link";
 import States from "data/states.json";
 import EbirdDescription from "components/EbirdDescription";
 import Heading from "components/Heading";
+import Title from "components/Title";
 
 export default function Home() {
 	return (
 		<div className="container pb-16 mt-12">
+			<Title/>
 			<Heading>Welcome to eBird Hotspots</Heading>
 			<h3 className="text-lg mb-4 font-bold">United States</h3>
 			<p className="mb-4">Links in plain text are to pages in the eBird website. Links in <strong>bold text</strong> are to pages in this website with additional information about hotspots.</p>

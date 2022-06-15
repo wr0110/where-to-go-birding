@@ -14,6 +14,7 @@ import States from "data/states.json";
 import { StateLinks, State as StateType, County as CountyType } from "lib/types";
 import Heading from "components/Heading";
 import EditorActions from "components/EditorActions";
+import Title from "components/Title";
 
 interface Params extends ParsedUrlQuery {
 	stateSlug: string,
@@ -49,6 +50,7 @@ export default function State({label, code, slug, features, rareSid, needsSid, y
 
 	return (
 		<div className="container pb-16 mt-12">
+			<Title isOhio={slug === "ohio"}>{slug === "ohio" ? "" : `Birding in ${label}`}</Title>
 			<Heading>
 				Welcome to Birding in {label}
 				{code === "OH" && <><br/><span className="text-sm">From the Ohio Ornithological Society</span></>}

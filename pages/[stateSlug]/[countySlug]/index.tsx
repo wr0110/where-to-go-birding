@@ -10,6 +10,7 @@ import EbirdCountySummary from "components/EbirdCountySummary";
 import HotspotList from "components/HotspotList";
 import RareBirds from "components/RareBirds";
 import EditorActions from "components/EditorActions";
+import Title from "components/Title";
 
 interface Params extends ParsedUrlQuery {
 	stateSlug: string,
@@ -46,6 +47,7 @@ export default function County({ state, slug, hotspots, name, ebirdCode, color }
 
 	return (
 		<div className="container pb-16">
+			<Title isOhio={state.slug === "ohio"}>{`${name} County, ${state.label}`}</Title>
 			<Heading color={color}>{name}</Heading>
 			<div className="md:grid grid-cols-2 gap-12">
 				<div>
