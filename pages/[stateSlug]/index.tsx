@@ -65,7 +65,6 @@ export default function State({label, code, slug, features, rareSid, needsSid, y
 					{features?.length > 0 &&
 						<StateFeatureLinks slug={slug} features={features} />
 					}
-					<h3 className="text-lg mb-2 font-bold">Explore {label} in eBird</h3>
 					<EbirdStateSummary
 						label={label}
 						code={`US-${code}`}
