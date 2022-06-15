@@ -92,7 +92,7 @@ export default function Hotspot({ stateSlug, portal, county, name, _id, lat, lng
 							<Address
 								line1={nameParts?.length === 2 ? nameParts[0] : name}
 								line2={nameParts?.length === 2 ? nameShort : ""}
-								{...address}
+								address={address}
 							/>
 						}
 						{links?.map(({ url, label }, index) => (
