@@ -159,6 +159,7 @@ export default function GroupHotspot({ stateSlug, portal, _id, name, links, iba,
 			</div>
 			<EditorActions>
 				<Link href={`/edit/group/${_id}`}>Edit Hotspot</Link>
+				<Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>
 				<DeleteBtn id={_id || ""} className="ml-auto" />
 			</EditorActions>
 		</div>
