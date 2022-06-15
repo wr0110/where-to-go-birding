@@ -4,6 +4,7 @@ import { ParsedUrlQuery } from "querystring";
 import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "components/Input";
+import Textarea from "components/Textarea";
 import Form from "components/Form";
 import Submit from "components/Submit";
 import { Editor } from "@tinymce/tinymce-react";
@@ -17,7 +18,6 @@ import AdminPage from "components/AdminPage";
 import { Hotspot, HotspotInputs, EbirdHotspot } from "lib/types";
 import RadioGroup from "components/RadioGroup";
 import Field from "components/Field";
-import AddressInput from "components/AddressInput";
 import useSecureFetch from "hooks/useSecureFetch";
 import HotspotSelect from "components/HotspotSelect";
 
@@ -113,21 +113,17 @@ export default function Edit({ id, isNew, data }: Props) {
 		}
 	}
 
+	const { address, lat, lng } = data;
+
 	React.useEffect(() => {
 		const geocodeAddress = async () => {
-			if (isNew || !data?.address?.city || !data?.address?.state || !data?.address?.zip) {
-				const { road, city, state, zip } = await geocode(data?.lat, data?.lng);
-				form.setValue("address.city", city || "");
-				form.setValue("address.state", state || "");
-				form.setValue("address.zip", zip || "");
-				if (isNew) {
-					form.setValue("address.street", road || "");
-				}
-			}
+			const { road, city, state, zip } = await geocode(data?.lat, data?.lng);
+			form.setValue("address", `${road}\r\n${city}, ${state} ${zip}`);
 		}
-		geocodeAddress();
+		if (!lat || !lng) return;
+		if (isNew || !data?.address) geocodeAddress();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [address, lat, lng]);
 
 	return (
 		<AdminPage title="Edit Hotspot">
@@ -139,7 +135,9 @@ export default function Edit({ id, isNew, data }: Props) {
 							<h2 className="text-xl font-bold text-gray-600 border-b pb-4">{data?.name}</h2>
 							<Input type="hidden" name="slug" />
 							
-							<AddressInput />
+							<Field label="Address">
+								<Textarea name="address" rows={2} />
+							</Field>
 
 							<Field label="Links">
 								<InputLinks />

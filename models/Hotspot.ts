@@ -31,12 +31,7 @@ const HotspotSchema = new Schema({
 	about: String,
 	tips: String,
 	birds: String,
-	address: {
-		street: String,
-		city: String,
-		state: String,
-		zip: String,
-	},
+	address: String,
 	links: [LinkSchema],
 	restrooms: {
 		type: String,

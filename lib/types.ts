@@ -42,12 +42,7 @@ export type Hotspot = {
 	about?:  string,
 	tips?: string,
 	birds?: string,
-	address?: {
-		street: string,
-		city: string,
-		state: string,
-		zip: string,
-	},
+	address?: string,
 	links?: {
 		label: string,
 		url: string,

@@ -30,6 +30,7 @@
 		@apply focus:ring;
 		@apply focus:ring-indigo-200;
 		@apply focus:ring-opacity-50;
+		@apply text-sm;
 	}
 
 	.form-input.input-error {
