@@ -45,6 +45,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   return {
     props: {
 			stateSlug: state.slug,
+			portal: state.portal || null,
 			childLocations,
 			hikes: hikesStructured,
 			childIds,
@@ -56,13 +57,14 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
 interface Props extends HotspotType {
 	stateSlug: string,
+	portal: string,
 	childLocations: HotspotsByCounty,
 	hikes: HotspotsByCounty,
 	childIds: string[],
 	countySlugs: string[],
 }
 
-export default function GroupHotspot({ stateSlug, _id, name, links, iba, about, restrooms, roadside, accessible, childLocations, hikes, countySlugs, childIds }: Props) {
+export default function GroupHotspot({ stateSlug, portal, _id, name, links, iba, about, restrooms, roadside, accessible, childLocations, hikes, countySlugs, childIds }: Props) {
 	let extraLinks = [];
 	if (roadside === "Yes") {
 		extraLinks.push({
@@ -103,7 +105,7 @@ export default function GroupHotspot({ stateSlug, _id, name, links, iba, about, 
 						}
 					</div>
 
-					<EbirdBarcharts region={childIds.join(",")} />
+					<EbirdBarcharts portal={portal} region={childIds.join(",")} />
 
 					{childLocations.length > 0 && 
 						<div className="mb-6">

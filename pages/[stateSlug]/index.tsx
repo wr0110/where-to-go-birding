@@ -39,7 +39,7 @@ interface Props extends StateType {
 	links: StateLinks,
 }
 
-export default function State({label, code, slug, features, rareSid, needsSid, yearNeedsSid, links, ebirdPortal, counties}: Props) {
+export default function State({label, code, slug, features, rareSid, needsSid, yearNeedsSid, links, portal, counties}: Props) {
 	const maps: any = {
 		"OH": <OhioMap />,
 		"AZ": <ArizonaMap />,
@@ -72,7 +72,7 @@ export default function State({label, code, slug, features, rareSid, needsSid, y
 						rareSid={rareSid}
 						needsSid={needsSid}
 						yearNeedsSid={yearNeedsSid}
-						portal={ebirdPortal}
+						portal={portal}
 					/>
 				</div>
 				<div className="flex justify-center items-start">
