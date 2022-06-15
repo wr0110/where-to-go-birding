@@ -4,7 +4,8 @@ import { getCountyByCode } from "lib/localData";
 
 export function slugify(title?: string) {
 	if (!title) return null;
-	return title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+	const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+	return slug.endsWith("-") ? slug.slice(0, -1) : slug;
 }
 
 export const tinyMceOptions = {
