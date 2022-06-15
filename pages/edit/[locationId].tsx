@@ -72,6 +72,8 @@ type Props = {
 export default function Edit({ id, isNew, data }: Props) {
 	const [saving, setSaving] = React.useState<boolean>(false);
 	const aboutRef = React.useRef<any>();
+	const birdsRef = React.useRef<any>();
+	const tipsRef = React.useRef<any>();
 	const secureFetch = useSecureFetch();
 
 	const router = useRouter();
@@ -98,6 +100,8 @@ export default function Edit({ id, isNew, data }: Props) {
 				multiCounties: null,
 				iba: data.iba || null,
 				about:  aboutRef.current.getContent() || "",
+				tips:  tipsRef.current.getContent() || "",
+				birds:  birdsRef.current.getContent() || "",
 			}
     });
 		setSaving(false);
@@ -141,7 +145,19 @@ export default function Edit({ id, isNew, data }: Props) {
 								<InputLinks />
 							</Field>
 
-							<Field label="About the location">
+							<Field label="Tips for Birding">
+								<div className="mt-1">
+									<Editor id="tips-editor" onInit={(e, editor) => tipsRef.current = editor} initialValue={data?.tips} init={tinyMceOptions} />
+								</div>
+							</Field>
+
+							<Field label="Birds of Interest">
+								<div className="mt-1">
+									<Editor id="birds-editor" onInit={(e, editor) => birdsRef.current = editor} initialValue={data?.birds} init={tinyMceOptions} />
+								</div>
+							</Field>
+
+							<Field label="About this location">
 								<div className="mt-1">
 									<Editor id="about-editor" onInit={(e, editor) => aboutRef.current = editor} initialValue={data?.about} init={tinyMceOptions} />
 								</div>
