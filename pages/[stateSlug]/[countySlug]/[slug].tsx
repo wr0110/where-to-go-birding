@@ -51,19 +51,20 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const locationIds = childIds?.length > 0 ? [data?.locationId, ...childIds] : [data?.locationId];
 
   return {
-    props: { stateSlug: state.slug, county, parent, childLocations, locationIds, ...data },
+    props: { stateSlug: state.slug, portal: state.portal || null, county, parent, childLocations, locationIds, ...data },
   }
 }
 
 interface Props extends HotspotType {
 	county: County,
 	stateSlug: string,
+	portal: string,
 	parent: HotspotType | null,
 	childLocations: HotspotType[],
 	locationIds: string[],
 }
 
-export default function Hotspot({ stateSlug, county, name, _id, lat, lng, address, links, about, restrooms, roadside, accessible, locationId, parent, childLocations, locationIds }: Props) {	
+export default function Hotspot({ stateSlug, portal, county, name, _id, lat, lng, address, links, about, restrooms, roadside, accessible, locationId, parent, childLocations, locationIds }: Props) {	
 	const nameParts = name?.split("--");
 	const nameShort = nameParts?.length === 2 ? nameParts[1] : name;
 
@@ -122,6 +123,7 @@ export default function Hotspot({ stateSlug, county, name, _id, lat, lng, addres
 							lat={lat}
 							lng={lng}
 							color={county.color}
+							portal={portal}
 						/>
 					}
 

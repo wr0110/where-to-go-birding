@@ -9,24 +9,26 @@ type Props = {
 
 export default function EbirdStateSummary({ code, label, rareSid, needsSid, yearNeedsSid, portal }: Props) {
 	const getUrl = (bMonth: number, eMonth: number) => {
-		return `https://ebird.org/barchart?byr=1900&eyr=2060&bmo=${bMonth}&emo=${eMonth}&r=${code}`;
+		return `${base}/barchart?byr=1900&eyr=2060&bmo=${bMonth}&emo=${eMonth}&r=${code}`;
 	}
+
+	const base = portal ? `https://ebird.org/${portal}` : "https://ebird.org";
 
 	return (
 		<div className="mb-6 p-2 border-2 border-[#4a84b2] rounded">
 			{portal &&
-				<a href={portal} target="_blank" rel="noreferrer">
+				<a href={`${base}/${portal}/about`} target="_blank" rel="noreferrer">
 					<strong>{label} eBird Portal</strong>
 				</a>
 			}
 			<p className="mb-1">
-				<a href={`https://ebird.org/ebird/subnational1/${code}?yr=all&m=&rank=mrec`} target="_blank" rel="noreferrer">Overview</a>
+				<a href={`${base}/region/${code}?yr=all&m=&rank=mrec`} target="_blank" rel="noreferrer">Overview</a>
 				&nbsp;–&nbsp;
-				<a href={`https://ebird.org/ebird/subnational1/${code}/regions?yr=all&m=&hsStats_sortBy=num_species&hsStats_o=desc`} target="_blank" rel="noreferrer">Counties</a>
+				<a href={`${base}/region/${code}/regions?yr=all&m=&hsStats_sortBy=num_species&hsStats_o=desc`} target="_blank" rel="noreferrer">Counties</a>
 				&nbsp;–&nbsp;
-				<a href={`https://ebird.org/ebird/subnational1/${code}/hotspots?yr=all&m=`} target="_blank" rel="noreferrer">Hotspots</a>
+				<a href={`${base}/region/${code}/hotspots?yr=all&m=`} target="_blank" rel="noreferrer">Hotspots</a>
 				&nbsp;–&nbsp;
-				<a href={`https://ebird.org/ebird/subnational1/${code}/activity?yr=all&m=`} target="_blank" rel="noreferrer">Recent Visits</a>
+				<a href={`${base}/region/${code}/activity?yr=all&m=`} target="_blank" rel="noreferrer">Recent Visits</a>
 			</p>
 			<strong>Statewide Bar Charts</strong>
 			<br />
@@ -40,34 +42,34 @@ export default function EbirdStateSummary({ code, label, rareSid, needsSid, year
 			&nbsp;–&nbsp;
 			<a href={getUrl(12, 2)} target="_blank" rel="noreferrer">Winter</a>
 			<br/>
-			<a href={`https://ebird.org/region/${code}/media?yr=all&m=`} target="_blank" rel="noreferrer">Illustrated Checklist</a>
+			<a href={`${base}/region/${code}/media?yr=all&m=`} target="_blank" rel="noreferrer">Illustrated Checklist</a>
 			<br/>
 			{rareSid &&
 				<p className="mb-1">
 					<strong>Rare Bird Alert</strong><br />
-					<a href={`https://ebird.org/alert/summary?sid=${rareSid}`}>{label}</a>
+					<a href={`${base}/alert/summary?sid=${rareSid}`}>{label}</a>
 				</p>
 			}
 			<p  className="mb-1">
 				<strong>Top eBirders</strong><br />
-				<a href={`https://ebird.org/ebird/top100?locInfo.regionType=subnational1&locInfo.regionCode=${code}&year=AAAA`} target="_blank" rel="noreferrer">All Time</a>
+				<a href={`${base}/top100?locInfo.regionType=subnational1&locInfo.regionCode=${code}&year=AAAA`} target="_blank" rel="noreferrer">All Time</a>
 				&nbsp;–&nbsp;
-				<a href={`https://ebird.org/ebird/top100?locInfo.regionType=subnational1&locInfo.regionCode=${code}&year=${(new Date()).getFullYear()}`} target="_blank" rel="noreferrer">Current Year</a>
+				<a href={`${base}/top100?locInfo.regionType=subnational1&locInfo.regionCode=${code}&year=${(new Date()).getFullYear()}`} target="_blank" rel="noreferrer">Current Year</a>
 			</p>
 			<p className="mb-1">
 				<strong>My eBird Links</strong><br />
-				<a href={`https://ebird.org/ebird/MyEBird?cmd=list&rtype=subnational1&r=${code}&time=life&sortKey=obs_dt&o=desc`} target="_blank" rel="noreferrer" >Life List</a>
+				<a href={`${base}/MyEBird?cmd=list&rtype=subnational1&r=${code}&time=life&sortKey=obs_dt&o=desc`} target="_blank" rel="noreferrer" >Life List</a>
 				&nbsp;–&nbsp;
-				<a href={`https://ebird.org/ebird/MyEBird?cmd=lifeList&listType=${code}&listCategory=allStates&time=year`} target="_blank" rel="noreferrer">Year List</a>
+				<a href={`${base}/MyEBird?cmd=lifeList&listType=${code}&listCategory=allStates&time=year`} target="_blank" rel="noreferrer">Year List</a>
 				&nbsp;–&nbsp;
-				<a href={`https://ebird.org/ebird/MyEBird?cmd=lifeList&listType=${code}&listCategory=allStates&time=month`} target="_blank" rel="noreferrer">Month List</a>
+				<a href={`${base}/MyEBird?cmd=lifeList&listType=${code}&listCategory=allStates&time=month`} target="_blank" rel="noreferrer">Month List</a>
 			</p>
 			{(needsSid && yearNeedsSid) &&
 				<p className="mb-1">
 					<strong>Needs Alerts (birds you have not seen in {label})</strong><br />
-					<a href={`https://ebird.org/alert/summary?sid=${needsSid}`} rel="noreferrer" target="_blank">Never Seen</a>
+					<a href={`${base}/alert/summary?sid=${needsSid}`} rel="noreferrer" target="_blank">Never Seen</a>
 					&nbsp;–&nbsp;
-					<a href={`https://ebird.org/alert/summary?sid=${yearNeedsSid}`}  rel="noreferrer" target="_blank">Not Seen This Year</a>
+					<a href={`${base}/alert/summary?sid=${yearNeedsSid}`}  rel="noreferrer" target="_blank">Not Seen This Year</a>
 				</p>
 			}
 		</div>

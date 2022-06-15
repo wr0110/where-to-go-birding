@@ -363,7 +363,7 @@
 		"label": "Vermont",
 		"slug": "vermont",
 		"code": "VT",
-		"ebirdPortal": "https://ebird.org/vt/about"
+		"portal": "vt"
 	},
 	{
 		"label": "Virginia",
