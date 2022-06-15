@@ -146,9 +146,18 @@ export default function Hotspot({ stateSlug, portal, county, name, _id, lat, lng
 						<AboutSection heading="About this Location" text={about} />
 					}
 
+					{(parent?.tips && parent?.name) &&
+						<AboutSection heading={`Tips for Birding ${parent.name}`} text={parent.tips} />
+					}
+
+					{(parent?.birds && parent?.name) &&
+						<AboutSection heading={`Birds of Interest at ${parent.name}`} text={parent.birds} />
+					}
+
 					{(parent?.about && parent?.name) &&
 						<AboutSection heading={`About ${parent.name}`} text={parent.about} />
 					}
+
 					<div className="space-y-1">
 						{restrooms === "Yes" && <p>Restrooms on site.</p>}
 						{restrooms === "No" && <p>No restrooms on site.</p>}
