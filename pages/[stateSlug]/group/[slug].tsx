@@ -64,7 +64,7 @@ interface Props extends HotspotType {
 	countySlugs: string[],
 }
 
-export default function GroupHotspot({ stateSlug, portal, _id, name, links, iba, about, restrooms, roadside, accessible, childLocations, hikes, countySlugs, childIds }: Props) {
+export default function GroupHotspot({ stateSlug, portal, _id, name, links, iba, about, tips, birds, restrooms, roadside, accessible, childLocations, hikes, countySlugs, childIds }: Props) {
 	let extraLinks = [];
 	if (roadside === "Yes") {
 		extraLinks.push({
@@ -121,8 +121,16 @@ export default function GroupHotspot({ stateSlug, portal, _id, name, links, iba,
 						</div>
 					}
 
+					{tips &&
+						<AboutSection heading="Tips for Birding" text={tips} />
+					}
+
+					{birds &&
+						<AboutSection heading="Birds of Interest" text={birds} />
+					}
+					
 					{about &&
-						<AboutSection heading={`About ${name}`} text={about} />
+						<AboutSection heading="About this Location" text={about} />
 					}
 
 					<div className="space-y-1">

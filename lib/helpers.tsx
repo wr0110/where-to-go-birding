@@ -8,7 +8,7 @@ export function slugify(title?: string) {
 }
 
 export const tinyMceOptions = {
-	height: 450,
+	height: 250,
 	menubar: false,
 	plugins: "link",
 	toolbar: "bold italic underline | link | cite",

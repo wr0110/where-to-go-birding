@@ -40,6 +40,8 @@ export type Hotspot = {
 	multiCounties?: string[],
 	countySlug: string,
 	about?:  string,
+	tips?: string,
+	birds?: string,
 	address?: {
 		street: string,
 		city: string,

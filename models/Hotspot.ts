@@ -29,6 +29,8 @@ const HotspotSchema = new Schema({
 		required: true
 	},
 	about: String,
+	tips: String,
+	birds: String,
 	address: {
 		street: String,
 		city: String,

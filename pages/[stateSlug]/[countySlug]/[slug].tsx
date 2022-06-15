@@ -64,7 +64,7 @@ interface Props extends HotspotType {
 	locationIds: string[],
 }
 
-export default function Hotspot({ stateSlug, portal, county, name, _id, lat, lng, address, links, about, restrooms, roadside, accessible, locationId, parent, childLocations, locationIds }: Props) {	
+export default function Hotspot({ stateSlug, portal, county, name, _id, lat, lng, address, links, about, tips, birds, restrooms, roadside, accessible, locationId, parent, childLocations, locationIds }: Props) {	
 	const nameParts = name?.split("--");
 	const nameShort = nameParts?.length === 2 ? nameParts[1] : name;
 
@@ -134,8 +134,16 @@ export default function Hotspot({ stateSlug, portal, county, name, _id, lat, lng
 						</div>
 					}
 
+					{tips &&
+						<AboutSection heading="Tips for Birding" text={tips} />
+					}
+
+					{birds &&
+						<AboutSection heading="Birds of Interest" text={birds} />
+					}
+					
 					{about &&
-						<AboutSection heading={`About ${nameShort}`} text={about} />
+						<AboutSection heading="About this Location" text={about} />
 					}
 
 					{(parent?.about && parent?.name) &&
