@@ -12,6 +12,7 @@ import EbirdBarcharts from "components/EbirdBarcharts";
 import { restructureHotspotsByCounty } from "lib/helpers";
 import ListHotspotsByCounty from "components/ListHotspotsByCounty";
 import DeleteBtn from "components/DeleteBtn";
+import Title from "components/Title";
 
 const getChildren = async (id: string) => {
 	if (!id) return null;
@@ -82,6 +83,7 @@ export default function GroupHotspot({ stateSlug, portal, _id, name, links, iba,
 
 	return (
 		<div className="container pb-16">
+			<Title isOhio={stateSlug === "ohio"}>{name}</Title>
 			<Heading>{name}</Heading>
 			<div className="md:grid grid-cols-2 gap-12">
 				<div>

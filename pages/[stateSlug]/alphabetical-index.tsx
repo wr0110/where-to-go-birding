@@ -5,6 +5,7 @@ import { getState } from "lib/localData";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Heading from "components/Heading";
+import Title from "components/Title";
 
 interface Params extends ParsedUrlQuery {
 	stateSlug: string,
@@ -37,6 +38,7 @@ export default function AlphabeticalIndex({ stateSlug, hotspots, activeLetters }
 	const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 	return (
 		<div className="container pb-16 mt-12">
+			<Title isOhio={stateSlug === "ohio"}>Alphabetical Index</Title>
 			<Heading>Alphabetical Index</Heading>
 			<p className="mb-4">
 				<i>Tip: Use your browser’s search function to search this page for all or part of the name of a hotspot.

@@ -13,6 +13,7 @@ import EditorActions from "components/EditorActions";
 import HotspotList from "components/HotspotList";
 import Heading from "components/Heading";
 import DeleteBtn from "components/DeleteBtn";
+import Title from "components/Title";
 
 const getParent = async (hotspotId: string) => {
 	if (!hotspotId) return null;
@@ -84,6 +85,7 @@ export default function Hotspot({ stateSlug, portal, county, name, _id, lat, lng
 
 	return (
 		<div className="container pb-16">
+			<Title isOhio={stateSlug === "ohio"}>{name}</Title>
 			<Heading color={county.color}>{name}</Heading>
 			<div className="md:grid grid-cols-2 gap-12">
 				<div>

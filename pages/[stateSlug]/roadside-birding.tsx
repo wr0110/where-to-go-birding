@@ -7,6 +7,7 @@ import Heading from "components/Heading";
 import { GetServerSideProps } from "next";
 import { HotspotsByCounty } from "lib/types";
 import ListHotspotsByCounty from "components/ListHotspotsByCounty";
+import Title from "components/Title";
 
 type Props = {
 	stateSlug: string,
@@ -30,6 +31,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 export default function RoadsideBirding({ stateSlug, hotspots }: Props) {
 	return (
 		<div className="container pb-16 mt-12">
+			<Title isOhio={stateSlug === "ohio"}>Roadside Birding</Title>
 			<Heading>Roadside Birding</Heading>
 			<div className="md:flex gap-8 items-start mb-8">
 				<figure className="border p-2 bg-gray-200 text-center text-xs mb-4">

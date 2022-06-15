@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "components/Input";
 import Form from "components/Form";
 import Submit from "components/Submit";
+import Title from "components/Title";
 
 type Inputs = {
 	locationId: string,
@@ -20,6 +21,7 @@ export default function Add() {
 
 	return (
 		<div className="container pb-16 my-12">
+			<Title>Add Hotspot</Title>
 			<Form form={form} onSubmit={handleSubmit}>
 				<div className="max-w-2xl mx-auto">
 					<div className="px-4 py-5 bg-white space-y-6 sm:p-6">
