@@ -18,9 +18,7 @@ import Title from "components/Title";
 const getParent = async (hotspotId: string) => {
 	if (!hotspotId) return null;
 	const data = await getHotspotById(hotspotId);
-	if (!data) return null;
-	const { name, about, slug } = data;
-	return { name, about, slug };
+	return data || null;
 }
 
 const getChildren = async (id: string) => {
@@ -79,7 +77,7 @@ export default function Hotspot({ stateSlug, portal, county, name, _id, lat, lng
 	if (parent) {
 		extraLinks.push({
 			label: parent.name,
-			url: `/birding-in-${stateSlug}/${county.slug}-county/${parent.slug}`
+			url: parent.url,
 		});
 	}
 
