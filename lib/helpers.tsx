@@ -13,7 +13,7 @@ export const tinyMceOptions = {
 	menubar: false,
 	plugins: "link",
 	toolbar: "bold italic underline | link | cite",
-	content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px } cite { font-size: 0.75em; font-style: italic; color: #666; }',
+	content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px } cite { font-size: 0.75em; font-style: normal; color: #666; }',
 	branding: false,
 	elementpath: false,
 	valid_elements: "p,a[href|rel|target=_blank],strong/b,em/i,u,strike,br,ul,ol,li,cite",
