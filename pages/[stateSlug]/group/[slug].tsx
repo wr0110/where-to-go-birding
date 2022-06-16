@@ -13,6 +13,7 @@ import { restructureHotspotsByCounty } from "lib/helpers";
 import ListHotspotsByCounty from "components/ListHotspotsByCounty";
 import DeleteBtn from "components/DeleteBtn";
 import Title from "components/Title";
+import Map from "components/Map";
 
 const getChildren = async (id: string) => {
 	if (!id) return null;
@@ -65,7 +66,7 @@ interface Props extends HotspotType {
 	countySlugs: string[],
 }
 
-export default function GroupHotspot({ stateSlug, portal, _id, name, links, iba, about, tips, birds, restrooms, roadside, accessible, childLocations, hikes, countySlugs, childIds }: Props) {
+export default function GroupHotspot({ stateSlug, portal, _id, name, lat, lng, links, iba, about, tips, birds, restrooms, roadside, accessible, childLocations, hikes, countySlugs, childIds }: Props) {
 	let extraLinks = [];
 	if (roadside === "Yes") {
 		extraLinks.push({
@@ -146,7 +147,7 @@ export default function GroupHotspot({ stateSlug, portal, _id, name, links, iba,
 					</div>
 				</div>
 				<div>
-					<div className="xs:grid md:block lg:grid grid-cols-2 gap-12">
+					<div className="xs:grid md:block lg:grid grid-cols-2 gap-12 mb-16">
 						{stateSlug === "ohio" && countySlugs?.map(slug => (
 							<Link key={slug} href={`/birding-in-${stateSlug}/${slug}-county`}>
 								<a>
@@ -155,6 +156,7 @@ export default function GroupHotspot({ stateSlug, portal, _id, name, links, iba,
 							</Link>
 						))}
 					</div>
+					{(lat && lng) && <Map lat={lat} lng={lng} />}
 				</div>
 			</div>
 			<EditorActions>

@@ -126,7 +126,7 @@ export default function State({label, code, slug, features, rareSid, needsSid, y
 					))}
 				</div>
 			</div>
-			<RareBirds region={`US-${code}`} label={label} />
+			<RareBirds region={`US-${code}`} label={label} className="mt-6" />
 			<EditorActions>
 				<Link href="/add">Add Hotspot</Link>
 				<Link href={`/edit/group/new?state=${code}`}>Add Group Hotspot</Link>
