@@ -16,14 +16,15 @@ export const tinyMceOptions = {
 	content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px } cite { font-size: 0.75em; font-style: italic; color: #666; }',
 	branding: false,
 	elementpath: false,
+	valid_elements: "p,a[href|target=_blank],strong/b,em/i,u,strike,br,ul,ol,li,cite",
 	formats: {
-		potato: { inline: "cite" },
+		citation: { inline: "cite" },
 	},
 	setup: (editor: any) => {
 		editor.ui.registry.addToggleButton("cite", {
 			text: "Cite",
 			onAction: (api: any) => {
-				editor.formatter.toggle("potato");
+				editor.formatter.toggle("citation");
 				api.setActive(!api.isActive());
 			},
 		});
