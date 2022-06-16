@@ -8,7 +8,7 @@ export default connect;
 export async function getHotspotsByState(stateCode: string) {
 	await connect();
 	const result = await Hotspot
-		.find({ stateCode: `US-${stateCode}` }, ["-_id", "name", "url", "dayhike", "iba"])
+		.find({ stateCode }, ["-_id", "name", "url", "dayhike", "iba"])
 		.sort({ name: 1 })
 		.lean()
 		.exec();
@@ -36,7 +36,7 @@ export async function getAccessibleHotspotsByState(stateCode: string) {
 	await connect();
 	const result = await Hotspot
 		.find({
-			stateCode: `US-${stateCode}`,
+			stateCode,
 			accessible: { $in: ["ADA", "Birdability"] },
 		}, ["-_id", "name", "url", "countyCode", "multiCounties"])
 		.sort({ name: 1 })
@@ -50,7 +50,7 @@ export async function getHikeHotspotsByState(stateCode: string) {
 	await connect();
 	const result = await Hotspot
 		.find({
-			stateCode: `US-${stateCode}`,
+			stateCode,
 			dayhike: "Yes",
 		}, ["-_id", "name", "url", "countyCode", "multiCounties"])
 		.sort({ name: 1 })
@@ -64,7 +64,7 @@ export async function getRoadsideHotspotsByState(stateCode: string) {
 	await connect();
 	const result = await Hotspot
 		.find({
-			stateCode: `US-${stateCode}`,
+			stateCode,
 			roadside: "Yes",
 		}, ["-_id", "name", "url", "countyCode", "multiCounties"])
 		.sort({ name: 1 })

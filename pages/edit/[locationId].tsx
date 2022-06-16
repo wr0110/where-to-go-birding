@@ -51,7 +51,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 				slug: data?.slug || slugify(ebirdData?.name),
 				lat: ebirdData?.latitude ||  data?.lat,
 				lng: ebirdData?.longitude || data?.lng,
-				stateCode: data?.stateCode || ebirdData?.subnational1Code,
+				stateCode: data?.stateCode || ebirdData?.subnational1Code?.replace("US-", ""),
 				countyCode: data?.countyCode || ebirdData?.subnational2Code,
 				locationId: locationId,
 				roadside: data?.roadside || "Unknown",
@@ -78,7 +78,7 @@ export default function Edit({ id, isNew, data }: Props) {
 
 	const router = useRouter();
 	const form = useForm<HotspotInputs>({ defaultValues: data });
-	const isOH = data.stateCode === "US-OH";
+	const isOH = data.stateCode === "OH";
 
 	const handleSubmit: SubmitHandler<HotspotInputs> = async (data) => {
 		const state = getStateByCode(data?.stateCode);

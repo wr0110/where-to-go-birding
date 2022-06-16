@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const state = getState(stateSlug);
 	if (!state) return { notFound: true };
 
-	const data = await getGroupBySlug(`US-${state.code}`, slug);
+	const data = await getGroupBySlug(state.code, slug);
 	if (!data) return { notFound: true };
 
 	const children = await getChildren(data._id);

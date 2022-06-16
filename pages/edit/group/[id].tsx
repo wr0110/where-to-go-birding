@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const isNew = id === "new";
 	
 	const data = isNew ? null : await getHotspotById(id);
-	const stateCode = data?.stateCode || `US-${state?.replace("US-", "")}`;
+	const stateCode = data?.stateCode || state;
 
 	return {
     props: {
@@ -71,7 +71,7 @@ export default function Edit({ id, isNew, data, stateCode }: Props) {
 
 	const router = useRouter();
 	const form = useForm<Hotspot>({ defaultValues: data });
-	const isOH = data.stateCode === "US-OH";
+	const isOH = data.stateCode === "OH";
 
 	const handleSubmit: SubmitHandler<Hotspot> = async (data) => {
 		const state = getStateByCode(data?.stateCode);
