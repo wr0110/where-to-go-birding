@@ -17,6 +17,8 @@
 		"rareSid": "SN35601",
 		"needsSid": "SN10347",
 		"yearNeedsSid": "SN35168",
+		"coordinates": "34.5, -111.8",
+		"mapZoom": 6,
 		"active": true,
 		"links": [
 			{
@@ -312,6 +314,8 @@
 		"yearNeedsSid": "SN33836",
 		"email": "hotspots@ohiobirds.org",
 		"features": [ "roadside", "accessible", "iba", "hikes" ],
+		"coordinates": "40.2, -82.7",
+		"mapZoom": 7,
 		"active": true
 	},
 	{
