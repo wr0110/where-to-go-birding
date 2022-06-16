@@ -69,7 +69,7 @@ export default function State({label, code, slug, features, rareSid, needsSid, y
 					}
 					<EbirdStateSummary
 						label={label}
-						code={`US-${code}`}
+						code={code}
 						rareSid={rareSid}
 						needsSid={needsSid}
 						yearNeedsSid={yearNeedsSid}
@@ -87,7 +87,7 @@ export default function State({label, code, slug, features, rareSid, needsSid, y
 						{active ? (
 							<Link href={`/birding-in-${slug}/${countySlug}-county`}><a className="font-bold">{name}</a></Link>
 						) : (
-							<a href={`https://ebird.org/region/US-${code}-${ebirdCode}?yr=all`} target="_blank" rel="noreferrer">{name}</a>
+							<a href={`https://ebird.org/region/${ebirdCode}?yr=all`} target="_blank" rel="noreferrer">{name}</a>
 						)}
 					</p>
 				))}

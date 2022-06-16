@@ -27,7 +27,6 @@ export function getState(param: string) {
 }
 
 export function getStateByCode(code: string) {
-	code = code.replace("US-", "");
 	const data = States.find(state => state.code === code);
 	return data;
 }
@@ -66,7 +65,6 @@ function formatCounty(stateCode: string, county: County) {
 }
 
 export function getCounties(stateCode: string) {
-	stateCode = stateCode.replace("US-", "");
 	return formatCountyArray(countyArrays[stateCode]);
 }
 
