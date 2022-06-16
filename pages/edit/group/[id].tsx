@@ -88,7 +88,7 @@ export default function Edit({ id, isNew, data, stateCode }: Props) {
 			id,
 			data: {
 				...data,
-				parentId: null,
+				parent: null,
 				countyCode: null,
 				iba: data.iba || null,
 				slug,

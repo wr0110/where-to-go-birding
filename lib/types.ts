@@ -51,7 +51,7 @@ export type Hotspot = {
 	roadside?: string,
 	accessible?: string,
 	dayhike?: string,
-	parentId?: string,
+	parent?: any,
 	iba?: {
 		value: string,
 		label: string,
@@ -59,7 +59,7 @@ export type Hotspot = {
 }
 
 export interface HotspotInputs extends Hotspot {
-	parent: {
+	parentSelect: {
 		label: string,
 		value: string,
 	}
