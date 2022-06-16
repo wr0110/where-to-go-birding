@@ -56,7 +56,7 @@ export default function State({ label, code, slug, features, rareSid, needsSid, 
 				Welcome to Birding in {label}
 				{code === "OH" && <><br/><span className="text-sm">From the Ohio Ornithological Society</span></>}
 			</Heading>
-			<div className="lg:grid grid-cols-2 gap-16">
+			<div className="grid lg:grid-cols-2 gap-16">
 				<div>
 					<h3 className="text-lg mb-4 font-bold">Where to Go Birding in {label}</h3>
 					<p className="mb-4">

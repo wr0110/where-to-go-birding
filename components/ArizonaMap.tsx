@@ -1,7 +1,7 @@
 export default function OhioMap() {
 	return (
 		<>
-			<img src="/state-maps/az.jpg" className="w-full" useMap="#Map" alt="Map of Arizona counties" />
+			<img src="/state-maps/az.jpg" className="pointer-events-none sm:pointer-events-auto" useMap="#Map" alt="Map of Arizona counties" />
 			<map name="Map" id="Map">
 				<area shape="poly" coords="294,3,293,99,302,101,301,248,307,255,335,233,353,232,353,3,249,4" href="/birding-in-arizona/apache-county" alt="Apache" />
 				<area shape="poly" coords="98,106,98,71,141,46,146,4,246,5,248,199,202,191,203,160,192,160,190,151,160,151,149,130,123,126,100,107" href="/birding-in-arizona/coconino-county" alt="Coconino" />

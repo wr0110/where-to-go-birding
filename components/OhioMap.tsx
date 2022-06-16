@@ -1,7 +1,7 @@
 export default function OhioMap() {
 	return (
 		<>
-			<img src="/state-maps/oh.gif" useMap="#CountyMap" alt="Map of Ohio counties" />
+			<img src="/state-maps/oh.gif" useMap="#CountyMap" alt="Map of Ohio counties" className="pointer-events-none sm:pointer-events-auto" />
 			<map id="CountyMap" name="CountyMap">
 				<area alt="Gallia County" coords="251, 377, 249, 401, 241, 401, 237, 410, 248, 411, 250, 423, 256, 423, 260, 427, 260, 434, 267, 437, 277, 433, 278, 417, 276, 411, 273, 407, 282, 403, 286, 384, 251, 377" shape="polygon" href="/birding-in-ohio/gallia-county" target="_top"/>
 				<area alt="Lawrence County" coords="230, 401, 224, 420, 218, 420, 222, 431, 214, 437, 233, 448, 236, 457, 248, 457, 263, 453, 266, 435, 259, 433, 259, 427, 254, 423, 249, 423, 247, 410, 238, 409, 241, 401, 230, 401" shape="polygon" href="/birding-in-ohio/lawrence-county" target="_top"/>
