@@ -44,6 +44,7 @@
 
 .formatted cite {
 	font-size: 0.75em;
+	@apply not-italic;
 	@apply -mt-4;
 	@apply block;
 }
