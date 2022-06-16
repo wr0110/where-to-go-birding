@@ -16,7 +16,7 @@ export const tinyMceOptions = {
 	content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px } cite { font-size: 0.75em; font-style: italic; color: #666; }',
 	branding: false,
 	elementpath: false,
-	valid_elements: "p,a[href|target=_blank],strong/b,em/i,u,strike,br,ul,ol,li,cite",
+	valid_elements: "p,a[href|rel|target=_blank],strong/b,em/i,u,strike,br,ul,ol,li,cite",
 	formats: {
 		citation: { inline: "cite" },
 	},
