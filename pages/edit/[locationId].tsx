@@ -20,6 +20,7 @@ import RadioGroup from "components/RadioGroup";
 import Field from "components/Field";
 import useSecureFetch from "hooks/useSecureFetch";
 import HotspotSelect from "components/HotspotSelect";
+import Error from "next/error";
 
 const ibaOptions = IBAs.map(({ slug, name }) => ({ value: slug, label: name }));
 
@@ -39,6 +40,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const { locationId, defaultParentId } = query as Params;
 	const data = await getHotspotByLocationId(locationId);
 	const ebirdData: EbirdHotspot = await getEbirdHotspot(locationId);
+	if (!ebirdData?.name) {
+		return {
+			props: { error: `Hotspot "${locationId}" not found in eBird` },
+		}
+	}
 	const parentId = data?.parent || defaultParentId;
 	return {
     props: {
@@ -67,9 +73,10 @@ type Props = {
 	id?: string,
 	isNew: boolean,
 	data: Hotspot,
+	error?: string,
 }
 
-export default function Edit({ id, isNew, data }: Props) {
+export default function Edit({ id, isNew, data, error }: Props) {
 	const [saving, setSaving] = React.useState<boolean>(false);
 	const aboutRef = React.useRef<any>();
 	const birdsRef = React.useRef<any>();
@@ -78,7 +85,7 @@ export default function Edit({ id, isNew, data }: Props) {
 
 	const router = useRouter();
 	const form = useForm<HotspotInputs>({ defaultValues: data });
-	const isOH = data.stateCode === "OH";
+	const isOH = data?.stateCode === "OH";
 
 	const handleSubmit: SubmitHandler<HotspotInputs> = async (data) => {
 		const state = getStateByCode(data?.stateCode);
@@ -113,7 +120,7 @@ export default function Edit({ id, isNew, data }: Props) {
 		}
 	}
 
-	const { address, lat, lng } = data;
+	const { address, lat, lng } = data || {};
 
 	React.useEffect(() => {
 		const geocodeAddress = async () => {
@@ -124,6 +131,8 @@ export default function Edit({ id, isNew, data }: Props) {
 		if (isNew || !data?.address) geocodeAddress();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [address, lat, lng]);
+
+	if (error) return <Error statusCode={404} title={error} />;
 
 	return (
 		<AdminPage title="Edit Hotspot">

@@ -8,7 +8,7 @@ type PropTypes = {
 	children: React.ReactNode,
 }
 
-export default function AdminPage({ title, children}: PropTypes) {
+export default function AdminPage({ title, children }: PropTypes) {
 	return (
 		<div className="min-h-[600px]">
 			<AuthGuard>
