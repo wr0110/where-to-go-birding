@@ -17,7 +17,7 @@ export default function EbirdHotspotSummary({ stateSlug, countySlug, countyName,
 	const region = locationIds.length > 1 ? locationIds.join(",") : locationId;
 	const base = portal ? `https://ebird.org/${portal}` : "https://ebird.org";
 	return (
-		<div className={`mb-6 p-2 border-2 border-[${color}] rounded`}>
+		<div className={`mb-6 p-2 border-2 rounded`} style={{ borderColor: color }}>
 			<h3 className="mb-4 font-bold text-lg">eBird Hotspot</h3>
 			<h3 className="my-4 font-bold"><Link href={`/birding-in-${stateSlug}/${countySlug}-county`}>{`${countyName} County`}</Link></h3>
 			<h3 className="font-bold">{name}</h3>
