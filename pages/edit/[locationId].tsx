@@ -39,14 +39,14 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const { locationId, defaultParentId } = query as Params;
 	const data = await getHotspotByLocationId(locationId);
 	const ebirdData: EbirdHotspot = await getEbirdHotspot(locationId);
-	const parentId = data?.parentId || defaultParentId;
+	const parentId = data?.parent || defaultParentId;
 	return {
     props: {
 			id: data?._id || null,
 			isNew: !data,
 			data: {
 				...data,
-				parent: parentId ? await getParent(parentId) : null,
+				parentSelect: parentId ? await getParent(parentId) : null,
 				name: ebirdData?.name || data?.name,
 				slug: data?.slug || slugify(ebirdData?.name),
 				lat: ebirdData?.latitude ||  data?.lat,
@@ -96,7 +96,7 @@ export default function Edit({ id, isNew, data }: Props) {
 			data: {
 				...data,
 				url,
-				parentId: data.parent?.value || null,
+				parent: data.parentSelect?.value || null,
 				multiCounties: null,
 				iba: data.iba || null,
 				about:  aboutRef.current.getContent() || "",
@@ -162,7 +162,7 @@ export default function Edit({ id, isNew, data }: Props) {
 							</Field>
 
 							<Field label="Parent Hotspot">
-								<HotspotSelect self={id} countyCode={data.countyCode || ""} name="parent" isClearable />
+								<HotspotSelect self={id} countyCode={data.countyCode || ""} name="parentSelect" isClearable />
 							</Field>
 
 							{isOH &&

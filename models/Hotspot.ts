@@ -53,7 +53,11 @@ const HotspotSchema = new Schema({
 		enum: ["Yes", "No", "Unknown"],
 		default: "Unknown",
 	},
-	parentId: String,
+	parent: {
+		type: Schema.Types.ObjectId,
+		ref: "Hotspot",
+		default: null
+	},
 	iba: {
 		value: String,
 		label: String,

@@ -15,12 +15,6 @@ import Heading from "components/Heading";
 import DeleteBtn from "components/DeleteBtn";
 import Title from "components/Title";
 
-const getParent = async (hotspotId: string) => {
-	if (!hotspotId) return null;
-	const data = await getHotspotById(hotspotId);
-	return data || null;
-}
-
 const getChildren = async (id: string) => {
 	if (!id) return null;
 	const data = await getChildHotspots(id);
@@ -43,14 +37,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
 	const data = await getHotspotBySlug(county.ebirdCode, slug);
 	if (!data) return { notFound: true };
-	const parent = await getParent(data.parentId);
 
-	const childLocations = parent ? [] : await getChildren(data._id);
+	const childLocations = data?.parent ? [] : await getChildren(data._id);
 	const childIds = childLocations?.map(item => item.locationId) || [];
 	const locationIds = childIds?.length > 0 ? [data?.locationId, ...childIds] : [data?.locationId];
 
   return {
-    props: { stateSlug: state.slug, portal: state.portal || null, county, parent, childLocations, locationIds, ...data },
+    props: { stateSlug: state.slug, portal: state.portal || null, county, childLocations, locationIds, ...data },
   }
 }
 
@@ -58,7 +51,6 @@ interface Props extends HotspotType {
 	county: County,
 	stateSlug: string,
 	portal: string,
-	parent: HotspotType | null,
 	childLocations: HotspotType[],
 	locationIds: string[],
 }

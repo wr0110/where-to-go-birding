@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
 	let query: any = {
 		name: { $regex: new RegExp(q), $options: "i" },
-		parentId: null,
+		parent: null,
 		$or: [
 			{ countyCode },
 			{ multiCounties: countyCode },

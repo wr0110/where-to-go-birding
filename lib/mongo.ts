@@ -91,7 +91,7 @@ export async function getIBAHotspots(ibaSlug: string) {
 export async function getGroupHotspots(id: string) {
 	await connect();
 	const result = await Hotspot
-		.find({ parentId: id }, ["-_id", "name", "url", "locationId", "dayhike", "countyCode"])
+		.find({ parent: id }, ["-_id", "name", "url", "locationId", "dayhike", "countyCode"])
 		.sort({ name: 1 })
 		.lean()
 		.exec();
@@ -102,7 +102,7 @@ export async function getGroupHotspots(id: string) {
 export async function getChildHotspots(id: string) {
 	await connect();
 	const result = await Hotspot
-		.find({ parentId: id }, ["-_id", "name", "url", "locationId"])
+		.find({ parent: id }, ["-_id", "name", "url", "locationId"])
 		.sort({ name: 1 })
 		.lean()
 		.exec();
@@ -114,6 +114,7 @@ export async function getHotspotBySlug(countyCode: string, slug: string) {
 	await connect();
 	const result = await Hotspot
 		.findOne({ countyCode, slug })
+		.populate("parent")
 		.lean()
 		.exec();
 
