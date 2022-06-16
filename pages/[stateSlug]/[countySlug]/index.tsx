@@ -85,7 +85,7 @@ export default function County({ state, slug, hotspots, name, ebirdCode, color }
 					)}
 				</div>
 			</div>
-			<RareBirds region={ebirdCode} label={`${name} County Notable Sightings`} />
+			<RareBirds region={ebirdCode} label={`${name} County Notable Sightings`} className="mt-16" />
 			<EditorActions>
 				<Link href="/add">Add Hotspot</Link>
 			</EditorActions>

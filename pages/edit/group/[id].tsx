@@ -116,15 +116,21 @@ export default function Edit({ id, isNew, data, stateCode }: Props) {
 
 							<h2 className="text-xl font-bold text-gray-600 border-b pb-4">Add Group Hotspot</h2>
 
-							<div>
-								<label className="text-gray-500 font-bold">
-									Name<br/>
-									<Input type="text" name="name" required />
-								</label>
+							<Field label="Name">
+								<Input type="text" name="name" required />
 								<FormError name="name" />
-							</div>
+							</Field>
 
 							<Input type="hidden" name="slug" />
+
+							<div className="grid grid-cols-2 gap-4">
+								<Field label="Latitude">
+										<Input type="text" name="lat" />
+								</Field>
+								<Field label="Longitude">
+									<Input type="text" name="lng" />
+								</Field>
+							</div>
 
 							<Field label="Links">
 								<InputLinks />
