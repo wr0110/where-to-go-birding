@@ -15,7 +15,7 @@ export default function EbirdStateSummary({ code, label, rareSid, needsSid, year
 	const base = portal ? `https://ebird.org/${portal}` : "https://ebird.org";
 
 	return (
-		<div className="mb-6 p-2 border-2 border-[#4a84b2] rounded">
+		<div className="mb-12 p-2 border-2 border-[#4a84b2] rounded">
 			<h3 className="text-lg mb-2 font-bold">Explore {label} in eBird</h3>
 			{portal &&
 				<a href={`${base}/${portal}/about`} target="_blank" rel="noreferrer">

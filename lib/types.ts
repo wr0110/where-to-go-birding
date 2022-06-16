@@ -7,6 +7,8 @@ export type State = {
 	needsSid: string,
 	yearNeedsSid: string,
 	portal?: string,
+	coordinates: string,
+	mapZoom: number,
 }
 
 export type StateLinks = {
