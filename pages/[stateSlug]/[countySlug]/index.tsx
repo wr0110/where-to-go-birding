@@ -49,7 +49,7 @@ export default function County({ state, slug, hotspots, name, ebirdCode, color }
 		<div className="container pb-16">
 			<Title isOhio={state.slug === "ohio"}>{`${name} County, ${state.label}`}</Title>
 			<Heading color={color}>{name}</Heading>
-			<div className="md:grid grid-cols-2 gap-12">
+			<div className="grid md:grid-cols-2 gap-12">
 				<div>
 					<h3 className="text-lg mb-2 font-bold">Where to Go Birding in {name} County</h3>
 					<p className="mb-4">
