@@ -30,10 +30,8 @@ interface Params extends ParsedUrlQuery {
 
 const getParent = async (id: string) => {
 	if (!id) return null;
-	const data = await getHotspotById(id, ["name"]);
-	if (!data) return null;
-	const { name, _id } = data;
-	return { label: name, value: _id };
+	const data = await getHotspotById(id);
+	return data || null;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
@@ -46,13 +44,16 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 		}
 	}
 	const parentId = data?.parent || defaultParentId;
+	const parent = parentId ? await getParent(parentId) : null;
 	return {
     props: {
 			id: data?._id || null,
 			isNew: !data,
 			data: {
 				...data,
-				parentSelect: parentId ? await getParent(parentId) : null,
+				iba: data?.iba || parent?.iba || null,
+				links: data?.links || parent?.links || null,
+				parentSelect: parent ? { label: parent.name, value: parent._id } : null,
 				name: ebirdData?.name || data?.name,
 				slug: data?.slug || slugify(ebirdData?.name),
 				lat: ebirdData?.latitude ||  data?.lat,
