@@ -20,6 +20,7 @@
 		"coordinates": "34.5, -111.8",
 		"mapZoom": 6,
 		"active": true,
+		"color": "#e57700",
 		"links": [
 			{
 				"section": "Arizona Organizations and Bird Clubs",
@@ -316,7 +317,8 @@
 		"features": [ "roadside", "accessible", "iba", "hikes" ],
 		"coordinates": "40.2, -82.7",
 		"mapZoom": 7,
-		"active": true
+		"active": true,
+		"color": "#4a84b2"
 	},
 	{
 		"label": "Oklahoma",

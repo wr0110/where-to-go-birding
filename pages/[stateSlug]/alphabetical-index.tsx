@@ -6,6 +6,7 @@ import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Heading from "components/Heading";
 import Title from "components/Title";
+import { State } from "lib/types";
 
 interface Params extends ParsedUrlQuery {
 	stateSlug: string,
@@ -21,12 +22,12 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	activeLetters = [...new Set(activeLetters)];
 
   return {
-    props: { stateSlug: state.slug, hotspots, activeLetters },
+    props: { state, hotspots, activeLetters },
   }
 }
 
 type Props = {
-	stateSlug: string,
+	state: State,
 	activeLetters: string[],
 	hotspots: {
 		name: string,
@@ -34,18 +35,18 @@ type Props = {
 	}[],
 }
 
-export default function AlphabeticalIndex({ stateSlug, hotspots, activeLetters }: Props) {
+export default function AlphabeticalIndex({ state, hotspots, activeLetters }: Props) {
 	const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 	return (
 		<div className="container pb-16 mt-12">
-			<Title isOhio={stateSlug === "ohio"}>Alphabetical Index</Title>
-			<Heading>Alphabetical Index</Heading>
+			<Title isOhio={state.code === "OH"}>Alphabetical Index</Title>
+			<Heading state={state}>Alphabetical Index</Heading>
 			<p className="mb-4">
 				<i>Tip: Use your browser’s search function to search this page for all or part of the name of a hotspot.
 Or click on a letter below to move to that portion of the alphabetical index.</i>
 			</p>
 			<p className="my-8">
-				Also, see <Link href={`/${stateSlug}/roadside-birding`}>Roadside Birding</Link> for hotspots where you may view birds from your vehicle.
+				Also, see <Link href={`/${state.slug}/roadside-birding`}>Roadside Birding</Link> for hotspots where you may view birds from your vehicle.
 			</p>
 			<p>
 				{alphabet.map(letter => {
