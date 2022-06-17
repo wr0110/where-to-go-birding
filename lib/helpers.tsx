@@ -126,3 +126,16 @@ export async function getEbirdHotspot(locationId: string) {
 		return await response.json();
 	}
 }
+
+export function scrollToAnchor(e: React.MouseEvent<HTMLAnchorElement>) {
+	e.preventDefault();
+	const anchor = e.currentTarget.getAttribute("href");
+	if (!anchor) return;
+	const element = document.querySelector(anchor);
+	if (element) {
+		element.scrollIntoView({
+			behavior: "smooth",
+			block: "start",
+		});
+	}
+}
