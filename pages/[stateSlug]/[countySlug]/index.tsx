@@ -11,6 +11,7 @@ import HotspotList from "components/HotspotList";
 import RareBirds from "components/RareBirds";
 import EditorActions from "components/EditorActions";
 import Title from "components/Title";
+import { scrollToAnchor } from "lib/helpers";
 
 interface Params extends ParsedUrlQuery {
 	stateSlug: string,
@@ -53,8 +54,8 @@ export default function County({ state, slug, hotspots, name, ebirdCode, color }
 				<div>
 					<h3 className="text-lg mb-2 font-bold">Where to Go Birding in {name} County</h3>
 					<p className="mb-4">
-						<a href="#hotspots">Alphabetical List of Hotspots</a><br/>
-						<a href="#dayhikes">Birding Day Hikes</a><br/>
+						<a href="#hotspots" onClick={scrollToAnchor}>Alphabetical List of Hotspots</a><br/>
+						<a href="#dayhikes" onClick={scrollToAnchor}>Birding Day Hikes</a><br/>
 					</p>
 					<EbirdCountySummary color={color} label={name} code={ebirdCode} portal={state.portal} />
 					<h3 className="text-lg mb-2 font-bold" id="hotspots">All Hotspots in {name} County</h3>

@@ -16,6 +16,7 @@ import Heading from "components/Heading";
 import EditorActions from "components/EditorActions";
 import Title from "components/Title";
 import StateMap from "components/StateMap";
+import { scrollToAnchor } from "lib/helpers";
 
 interface Params extends ParsedUrlQuery {
 	stateSlug: string,
@@ -60,10 +61,10 @@ export default function State({ label, code, slug, features, rareSid, needsSid, 
 				<div>
 					<h3 className="text-lg mb-4 font-bold">Where to Go Birding in {label}</h3>
 					<p className="mb-4">
-						<a href="#counties">Alphabetical list of {label} Counties</a><br/>
+						<a href="#counties" onClick={scrollToAnchor}>Alphabetical list of {label} Counties</a><br/>
 						<Link href={`/birding-in-${slug}/alphabetical-index`}>{`Alphabetical list of ${label} Hotspots`}</Link><br/>
-						<a href="#top-locations">Top Birding Locations in {label}</a><br/>
-						<a href="#notable">{label} Notable Bird Sightings</a>
+						<a href="#top-locations" onClick={scrollToAnchor}>Top Birding Locations in {label}</a><br/>
+						<a href="#notable" onClick={scrollToAnchor}>{label} Notable Bird Sightings</a>
 					</p>
 					{features?.length > 0 &&
 						<StateFeatureLinks slug={slug} features={features} />
@@ -105,7 +106,7 @@ export default function State({ label, code, slug, features, rareSid, needsSid, 
 					</p>
 
 					<p className="mb-4">
-						Hotspots are organized by county. If you know the county of a location, click on the county name in the <a href="#counties">Alphabetical list of {label} Counties</a> to access information about birds and all the eBird hotspots in that county.
+						Hotspots are organized by county. If you know the county of a location, click on the county name in the <a href="#counties" onClick={scrollToAnchor}>Alphabetical list of {label} Counties</a> to access information about birds and all the eBird hotspots in that county.
 					</p>
 
 					<p className="mb-4">
