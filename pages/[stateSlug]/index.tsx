@@ -34,15 +34,17 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 	const counties = getCounties(state.code);
 	const links = getStateLinks(state.code);
 
-  return { props: { counties, links, ...state }, }
+  return { props: { counties, links, state }, }
 }
 
-interface Props extends StateType {
+type Props = {
+	state: StateType,
 	counties: CountyType[],
 	links: StateLinks,
 }
 
-export default function State({ label, code, slug, features, rareSid, needsSid, yearNeedsSid, links, portal, counties, coordinates, mapZoom }: Props) {
+export default function State({ state, counties, links }: Props) {
+	const { label, code, slug, features, rareSid, needsSid, yearNeedsSid, portal, coordinates, mapZoom } = state || {} as StateType;
 	const maps: any = {
 		"OH": <OhioMap />,
 		"AZ": <ArizonaMap />,
@@ -53,7 +55,7 @@ export default function State({ label, code, slug, features, rareSid, needsSid, 
 	return (
 		<div className="container pb-16 mt-12">
 			<Title isOhio={slug === "ohio"}>{slug === "ohio" ? "" : `Birding in ${label}`}</Title>
-			<Heading>
+			<Heading state={state} hideState>
 				Welcome to Birding in {label}
 				{code === "OH" && <><br/><span className="text-sm">From the Ohio Ornithological Society</span></>}
 			</Heading>

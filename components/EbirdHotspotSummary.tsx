@@ -1,25 +1,24 @@
 import Link from "next/link";
+import { State, County } from "lib/types";
 
 type Props = {
+	state: State,
+	county: County,
 	name: string,
 	locationId: string,
 	lat: number,
 	lng: number,
-	countySlug: string,
-	stateSlug: string,
-	countyName: string,
 	locationIds: string[],
-	color?: string,
-	portal?: string,
 }
 
-export default function EbirdHotspotSummary({ stateSlug, countySlug, countyName, name, locationId, locationIds, lat, lng, color="#4a84b2", portal }: Props) {
+export default function EbirdHotspotSummary({ state, county, name, locationId, locationIds, lat, lng }: Props) {
+	const color = state.color || "#4a84b2";
 	const region = locationIds.length > 1 ? locationIds.join(",") : locationId;
-	const base = portal ? `https://ebird.org/${portal}` : "https://ebird.org";
+	const base = state.portal ? `https://ebird.org/${state.portal}` : "https://ebird.org";
 	return (
 		<div className={`mb-6 p-2 border-2 rounded`} style={{ borderColor: color }}>
 			<h3 className="mb-4 font-bold text-lg">Explore in eBird</h3>
-			<h3 className="my-4 font-bold"><Link href={`/birding-in-${stateSlug}/${countySlug}-county`}>{`${countyName} County`}</Link></h3>
+			<h3 className="my-4 font-bold"><Link href={`/birding-in-${state.slug}/${county.slug}-county`}>{`${county.name} County`}</Link></h3>
 			<h3 className="font-bold">{name}</h3>
 			Coordinates: {lat}, {lng}<br/>
 			<strong>eBird links</strong><br/>

@@ -1,5 +1,4 @@
 import * as React from "react";
-import Link from "next/link";
 import { getHikeHotspotsByState } from "lib/mongo";
 import { restructureHotspotsByCounty } from "lib/helpers";
 import { getState } from "lib/localData";
@@ -8,12 +7,7 @@ import { GetServerSideProps } from "next";
 import { HotspotsByCounty } from "lib/types";
 import ListHotspotsByCounty from "components/ListHotspotsByCounty";
 import Title from "components/Title";
-
-type Props = {
-	stateSlug: string,
-	stateLabel: string,
-	hotspots: HotspotsByCounty,
-}
+import { State } from "lib/types";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const stateSlug = query.stateSlug as string;
@@ -24,19 +18,24 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const hotspotsByCounty = restructureHotspotsByCounty(hotspots as any);
 
   return {
-    props: { stateSlug: state.slug, stateLabel: state.label, hotspots: hotspotsByCounty },
+    props: { state, hotspots: hotspotsByCounty },
   }
 }
 
-export default function BirdingDayHikes({ stateSlug, stateLabel, hotspots }: Props) {
+type Props = {
+	state: State,
+	hotspots: HotspotsByCounty,
+}
+
+export default function BirdingDayHikes({ state, hotspots }: Props) {
 	return (
 		<div className="container pb-16 mt-12">
-			<Title isOhio={stateSlug === "ohio"}>Birding Day Hikes</Title>
-			<Heading>Birding Day Hikes</Heading>
+			<Title isOhio={state.code === "OH"}>Birding Day Hikes</Title>
+			<Heading state={state}>Birding Day Hikes</Heading>
 			<div className="md:flex gap-8 items-start mb-8">
 				<div>
 					<p className="mb-4">
-						<strong>{stateLabel} Birding Day Hikes</strong> are designed to help birders discover places to walk and see bird life. Often when we visit a park for the first time it is a challenge to know where to start. These hikes, recommended by birders and hikers in {stateLabel}, are a way to begin to explore new territory.
+						<strong>{state.label} Birding Day Hikes</strong> are designed to help birders discover places to walk and see bird life. Often when we visit a park for the first time it is a challenge to know where to start. These hikes, recommended by birders and hikers in {state.label}, are a way to begin to explore new territory.
 Safety first
 					</p>
 					<p className="mb-4">
@@ -53,7 +52,7 @@ Safety first
 			</div>
 			<h3 className="text-lg mb-8 font-bold">Day Hikes listed by County</h3>
 			<div className="columns-1 sm:columns-3 mb-12">
-				<ListHotspotsByCounty stateSlug={stateSlug} hotspots={hotspots} />
+				<ListHotspotsByCounty stateSlug={state.slug} hotspots={hotspots} />
 			</div>
 		</div>
 	)

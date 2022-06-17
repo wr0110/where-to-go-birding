@@ -8,7 +8,7 @@ export default function Home() {
 	return (
 		<div className="container pb-16 mt-12">
 			<Title/>
-			<Heading>Welcome to eBird Hotspots</Heading>
+			<Heading breadcrumbs={false}>Welcome to eBird Hotspots</Heading>
 			<h3 className="text-lg mb-4 font-bold">United States</h3>
 			<p className="mb-4">Links in plain text are to pages in the eBird website. Links in <strong>bold text</strong> are to pages in this website with additional information about hotspots.</p>
 			<div className="columns-2 xs:columns-3 sm:columns-5 mb-12">

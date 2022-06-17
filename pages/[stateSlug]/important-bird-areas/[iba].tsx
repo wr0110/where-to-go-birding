@@ -43,7 +43,7 @@ export default function ImportantBirdAreas({ state, name, slug, about, webpage, 
 	const region = ebirdCode || locationIds.join(",");
 	return (
 		<div className="container pb-16 mt-12">
-			<Heading>{name} Important Bird Area</Heading>
+			<Heading state={state}>{name} Important Bird Area</Heading>
 			<div className="md:grid grid-cols-2 gap-12">
 				<div>
 					<p className="font-bold mb-6">

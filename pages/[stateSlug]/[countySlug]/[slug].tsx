@@ -5,10 +5,10 @@ import Address from "components/Address";
 import EbirdHotspotSummary from "components/EbirdHotspotSummary";
 import Map from "components/Map";
 import Link from "next/link";
-import { getHotspotBySlug, getHotspotById, getChildHotspots } from "lib/mongo";
+import { getHotspotBySlug, getChildHotspots } from "lib/mongo";
 import AboutSection from "components/AboutSection";
 import { getCountyBySlug, getState } from "lib/localData";
-import { County, Hotspot as HotspotType } from "lib/types";
+import { County, State, Hotspot as HotspotType } from "lib/types";
 import EditorActions from "components/EditorActions";
 import HotspotList from "components/HotspotList";
 import Heading from "components/Heading";
@@ -43,19 +43,18 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const locationIds = childIds?.length > 0 ? [data?.locationId, ...childIds] : [data?.locationId];
 
   return {
-    props: { stateSlug: state.slug, portal: state.portal || null, county, childLocations, locationIds, ...data },
+    props: { state, county, childLocations, locationIds, ...data },
   }
 }
 
 interface Props extends HotspotType {
 	county: County,
-	stateSlug: string,
-	portal: string,
+	state: State,
 	childLocations: HotspotType[],
 	locationIds: string[],
 }
 
-export default function Hotspot({ stateSlug, portal, county, name, _id, lat, lng, address, links, about, tips, birds, restrooms, roadside, accessible, locationId, parent, childLocations, locationIds }: Props) {	
+export default function Hotspot({ state, county, name, _id, lat, lng, address, links, about, tips, birds, restrooms, roadside, accessible, locationId, parent, childLocations, locationIds }: Props) {	
 	const nameParts = name?.split("--");
 	const nameShort = nameParts?.length === 2 ? nameParts[1] : name;
 
@@ -63,7 +62,7 @@ export default function Hotspot({ stateSlug, portal, county, name, _id, lat, lng
 	if (roadside === "Yes") {
 		extraLinks.push({
 			label: "Roadside Birding",
-			url: `/birding-in-${stateSlug}/roadside-birding`
+			url: `/birding-in-${state.slug}/roadside-birding`
 		});
 	}
 	if (parent) {
@@ -75,8 +74,8 @@ export default function Hotspot({ stateSlug, portal, county, name, _id, lat, lng
 
 	return (
 		<div className="container pb-16">
-			<Title isOhio={stateSlug === "ohio"}>{name}</Title>
-			<Heading color={county.color}>{name}</Heading>
+			<Title isOhio={state.code === "OH"}>{name}</Title>
+			<Heading state={state} county={county}>{name}</Heading>
 			<div className="md:grid grid-cols-2 gap-12">
 				<div>
 					<div className="mb-6">
@@ -105,18 +104,7 @@ export default function Hotspot({ stateSlug, portal, county, name, _id, lat, lng
 						}
 					</div>
 					{name &&
-						<EbirdHotspotSummary
-							stateSlug={stateSlug}
-							countySlug={county.slug}
-							countyName={county.name}
-							name={name}
-							locationId={locationId}
-							locationIds={locationIds}
-							lat={lat}
-							lng={lng}
-							color={county.color}
-							portal={portal}
-						/>
+						<EbirdHotspotSummary {...{ state, county, name, locationId, locationIds, lat, lng }} />
 					}
 
 					{childLocations.length > 0 && 
@@ -152,8 +140,8 @@ export default function Hotspot({ stateSlug, portal, county, name, _id, lat, lng
 					</div>
 				</div>
 				<div>
-					{stateSlug === "ohio" && (
-						<Link href={`/birding-in-${stateSlug}/${county.slug}-county`}>
+					{state.code === "OH" && (
+						<Link href={`/birding-in-${state.slug}/${county.slug}-county`}>
 							<a>
 								<img src={`/oh-maps/${county.slug}.jpg`} width="260" className="mx-auto mb-10" alt={`${county.name} county map`} />
 							</a>

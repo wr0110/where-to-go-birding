@@ -5,15 +5,9 @@ import { restructureHotspotsByCounty } from "lib/helpers";
 import { getState } from "lib/localData";
 import Heading from "components/Heading";
 import { GetServerSideProps } from "next";
-import { HotspotsByCounty } from "lib/types";
+import { HotspotsByCounty, State } from "lib/types";
 import ListHotspotsByCounty from "components/ListHotspotsByCounty";
 import Title from "components/Title";
-
-type Props = {
-	stateSlug: string,
-	stateLabel: string,
-	hotspots: HotspotsByCounty,
-}
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const stateSlug = query.stateSlug as string;
@@ -24,15 +18,20 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const hotspotsByCounty = restructureHotspotsByCounty(hotspots as any);
 
   return {
-    props: { stateSlug: state.slug, hotspots: hotspotsByCounty },
+    props: { state, hotspots: hotspotsByCounty },
   }
 }
 
-export default function RoadsideBirding({ stateSlug, hotspots }: Props) {
+type Props = {
+	state: State,
+	hotspots: HotspotsByCounty,
+}
+
+export default function RoadsideBirding({ state, hotspots }: Props) {
 	return (
 		<div className="container pb-16 mt-12">
-			<Title isOhio={stateSlug === "ohio"}>Roadside Birding</Title>
-			<Heading>Roadside Birding</Heading>
+			<Title isOhio={state.code === "OH"}>Roadside Birding</Title>
+			<Heading state={state}>Roadside Birding</Heading>
 			<div className="md:flex gap-8 items-start mb-8">
 				<figure className="border p-2 bg-gray-200 text-center text-xs mb-4">
 					<img src="/riddle-rd.jpg" className="md:min-w-[400px] mx-auto" />
@@ -49,13 +48,13 @@ Safety first
 						Please use care when birding these locations. When you stop, pull off as far as you are able. Use flashers when there is traffic. If you park to get out of your vehicle, park at a pull off or on the berm completely off the pavement. Many of these locations are on roads that traverse privately owned land. Do not enter a private property without permission.
 					</p>
 					<p className="mb-4">
-						Also, see the list of hotspot locations which have <Link href={`/birding-in-${stateSlug}/accessible-facilities`}>handicap accessible facilities</Link>.
+						Also, see the list of hotspot locations which have <Link href={`/birding-in-${state.slug}/accessible-facilities`}>handicap accessible facilities</Link>.
 					</p>
 				</div>
 			</div>
 			<h3 className="text-lg mb-8 font-bold">Roadside Birding Locations Listed by County</h3>
 			<div className="columns-1 sm:columns-3 mb-12">
-				<ListHotspotsByCounty stateSlug={stateSlug} hotspots={hotspots} />
+				<ListHotspotsByCounty stateSlug={state.slug} hotspots={hotspots} />
 			</div>
 		</div>
 	)

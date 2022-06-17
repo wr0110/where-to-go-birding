@@ -28,16 +28,18 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	
 	const hotspots = await getHotspotsByCounty(county.ebirdCode) || [];
   return {
-    props: { state, hotspots, ...county },
+    props: { state, county, hotspots },
   }
 }
 
-interface Props extends CountyType {
+type Props = {
+	county: CountyType,
 	state: State,
 	hotspots: Hotspot[],
 }
 
-export default function County({ state, slug, hotspots, name, ebirdCode, color }: Props) {
+export default function County({ state, county, hotspots }: Props) {
+	const { slug, name, ebirdCode } = county;
 	const hikes = hotspots.filter(({ dayhike }) => dayhike === "Yes");
 	const hotspotIBA = hotspots.filter(({ iba }) => iba?.value).map(({ iba }) => iba);
 
@@ -49,7 +51,7 @@ export default function County({ state, slug, hotspots, name, ebirdCode, color }
 	return (
 		<div className="container pb-16">
 			<Title isOhio={state.slug === "ohio"}>{`${name} County, ${state.label}`}</Title>
-			<Heading color={color}>{name}</Heading>
+			<Heading state={state}>{name} County</Heading>
 			<div className="grid md:grid-cols-2 gap-12">
 				<div>
 					<h3 className="text-lg mb-2 font-bold">Where to Go Birding in {name} County</h3>
@@ -57,7 +59,7 @@ export default function County({ state, slug, hotspots, name, ebirdCode, color }
 						<a href="#hotspots" onClick={scrollToAnchor}>Alphabetical List of Hotspots</a><br/>
 						<a href="#dayhikes" onClick={scrollToAnchor}>Birding Day Hikes</a><br/>
 					</p>
-					<EbirdCountySummary color={color} label={name} code={ebirdCode} portal={state.portal} />
+					<EbirdCountySummary {...{ state, county }} />
 					<h3 className="text-lg mb-2 font-bold" id="hotspots">All Hotspots in {name} County</h3>
 					<HotspotList hotspots={hotspots} />
 				</div>

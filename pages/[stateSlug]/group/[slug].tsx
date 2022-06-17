@@ -5,7 +5,7 @@ import Link from "next/link";
 import { getGroupBySlug, getGroupHotspots } from "lib/mongo";
 import AboutSection from "components/AboutSection";
 import { getCountyByCode, getState } from "lib/localData";
-import { HotspotsByCounty, Hotspot as HotspotType } from "lib/types";
+import { State, HotspotsByCounty, Hotspot as HotspotType } from "lib/types";
 import EditorActions from "components/EditorActions";
 import Heading from "components/Heading";
 import EbirdBarcharts from "components/EbirdBarcharts";
@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   return {
     props: {
-			stateSlug: state.slug,
+			state,
 			portal: state.portal || null,
 			childLocations,
 			hikes: hikesStructured,
@@ -58,7 +58,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 }
 
 interface Props extends HotspotType {
-	stateSlug: string,
+	state: State,
 	portal: string,
 	childLocations: HotspotsByCounty,
 	hikes: HotspotsByCounty,
@@ -66,26 +66,26 @@ interface Props extends HotspotType {
 	countySlugs: string[],
 }
 
-export default function GroupHotspot({ stateSlug, portal, _id, name, lat, lng, links, iba, about, tips, birds, restrooms, roadside, accessible, childLocations, hikes, countySlugs, childIds }: Props) {
+export default function GroupHotspot({ state, portal, _id, name, lat, lng, links, iba, about, tips, birds, restrooms, roadside, accessible, childLocations, hikes, countySlugs, childIds }: Props) {
 	let extraLinks = [];
 	if (roadside === "Yes") {
 		extraLinks.push({
 			label: "Roadside Birding",
-			url: `/birding-in-${stateSlug}/roadside-birding`
+			url: `/birding-in-${state.slug}/roadside-birding`
 		});
 	}
 
 	if (iba) {
 		extraLinks.push({
 			label: `${iba.label} Important Bird Area`,
-			url: `/birding-in-${stateSlug}/important-birding-areas/${iba.value}`
+			url: `/birding-in-${state.slug}/important-birding-areas/${iba.value}`
 		});
 	}
 
 	return (
 		<div className="container pb-16">
-			<Title isOhio={stateSlug === "ohio"}>{name}</Title>
-			<Heading>{name}</Heading>
+			<Title isOhio={state.slug === "ohio"}>{name}</Title>
+			<Heading state={state}>{name}</Heading>
 			<div className="md:grid grid-cols-2 gap-12">
 				<div>
 					<div className="mb-6">
@@ -113,14 +113,14 @@ export default function GroupHotspot({ stateSlug, portal, _id, name, lat, lng, l
 					{childLocations.length > 0 && 
 						<div className="mb-6">
 							<h3 className="mb-1.5 font-bold text-lg">Locations</h3>
-							<ListHotspotsByCounty stateSlug={stateSlug} hotspots={childLocations} />
+							<ListHotspotsByCounty stateSlug={state.slug} hotspots={childLocations} />
 						</div>
 					}
 
 					{hikes.length > 0 && 
 						<div className="mb-6">
 							<h3 className="mb-1.5 font-bold text-lg">Birding Day Hikes</h3>
-							<ListHotspotsByCounty stateSlug={stateSlug} hotspots={hikes} />
+							<ListHotspotsByCounty stateSlug={state.slug} hotspots={hikes} />
 						</div>
 					}
 
@@ -148,8 +148,8 @@ export default function GroupHotspot({ stateSlug, portal, _id, name, lat, lng, l
 				</div>
 				<div>
 					<div className="xs:grid md:block lg:grid grid-cols-2 gap-12 mb-16">
-						{stateSlug === "ohio" && countySlugs?.map(slug => (
-							<Link key={slug} href={`/birding-in-${stateSlug}/${slug}-county`}>
+						{state.slug === "ohio" && countySlugs?.map(slug => (
+							<Link key={slug} href={`/birding-in-${state.slug}/${slug}-county`}>
 								<a>
 									<img src={`/oh-maps/${slug}.jpg`} width="260" className="w-full" alt="County map" />
 								</a>

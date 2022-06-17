@@ -9,6 +9,7 @@ export type State = {
 	portal?: string,
 	coordinates: string,
 	mapZoom: number,
+	color: string,
 }
 
 export type StateLinks = {
@@ -25,7 +26,6 @@ export type County = {
 	region: string | null,
 	ebirdCode: string,
 	regionLabel: string | null,
-	color: string,
 	active: boolean,
 }
 
