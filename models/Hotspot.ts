@@ -1,4 +1,5 @@
 import { Schema, model, models } from "mongoose";
+import dayjs from "dayjs";
 
 const LinkSchema = new Schema({
 	label: String,
@@ -61,6 +62,11 @@ const HotspotSchema = new Schema({
 	iba: {
 		value: String,
 		label: String,
+	},
+	createdAt: {
+		type: "string",
+		default: dayjs().format("YYYY-MM-DD"),
+		required: true
 	},
 });
 

@@ -88,9 +88,9 @@ export default function Hotspot({ stateSlug, portal, county, name, _id, lat, lng
 							/>
 						}
 						{links?.map(({ url, label }, index) => (
-							<>
+							<React.Fragment key={label}>
 								<a key={index} href={url} target="_blank" rel="noreferrer">{label}</a><br />
-							</>
+							</React.Fragment>
 						))}
 						{extraLinks.length > 0 &&
 							<p className="mt-4">
