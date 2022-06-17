@@ -14,6 +14,7 @@
     "@hookform/error-message": "^2.0.0",
     "@tinymce/tinymce-react": "^4.1.0",
     "@types/react-geocode": "^0.2.0",
+    "dayjs": "^1.11.3",
     "firebase": "^9.8.2",
     "firebase-admin": "^10.3.0",
     "mongoose": "^6.3.5",
