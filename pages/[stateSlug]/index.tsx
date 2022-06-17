@@ -71,14 +71,7 @@ export default function State({ state, counties, links }: Props) {
 					{features?.length > 0 &&
 						<StateFeatureLinks slug={slug} features={features} />
 					}
-					<EbirdStateSummary
-						label={label}
-						code={code}
-						rareSid={rareSid}
-						needsSid={needsSid}
-						yearNeedsSid={yearNeedsSid}
-						portal={portal}
-					/>
+					<EbirdStateSummary {...state} />
 					<h3 id="counties" className="text-lg mb-4 font-bold">{label} Counties</h3>
 					<div className="columns-3 sm:columns-4">
 						{counties?.map(({name, slug: countySlug, ebirdCode, active}) => (
