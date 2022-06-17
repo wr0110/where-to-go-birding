@@ -9,12 +9,12 @@ import Submit from "components/Submit";
 import { Editor } from "@tinymce/tinymce-react";
 import { getHotspotById } from "lib/mongo";
 import { slugify, tinyMceOptions } from "lib/helpers";
-import { getStateByCode, getCountyByCode } from "lib/localData";
+import { getStateByCode } from "lib/localData";
 import InputLinks from "components/InputLinks";
 import Select from "components/Select";
 import IBAs from "data/oh-iba.json";
 import AdminPage from "components/AdminPage";
-import { Hotspot } from "lib/types";
+import { Hotspot, State } from "lib/types";
 import RadioGroup from "components/RadioGroup";
 import Field from "components/Field";
 import CountySelect from "components/CountySelect";
@@ -29,21 +29,23 @@ interface Params extends ParsedUrlQuery {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-	const { id, state } = query as Params;
+	const { id, state: stateParam } = query as Params;
 	const isNew = id === "new";
 	
 	const data = isNew ? null : await getHotspotById(id);
-	const stateCode = data?.stateCode || state;
+
+	const stateCode = data?.stateCode || stateParam;
+	const state = getStateByCode(stateCode);
 
 	return {
     props: {
 			id: data?._id || null,
 			isNew: !data,
+			state,
 			data: {
 				...data,
 				name: data?.name || "",
 				slug: data?.slug || "",
-				stateCode: data?.stateCode || stateCode,
 				multiCounties: data?.multiCounties || [],
 				roadside: data?.roadside || "Unknown",
 				restrooms: data?.restrooms || "Unknown",
@@ -59,10 +61,10 @@ type Props = {
 	id?: string,
 	isNew: boolean,
 	data: Hotspot,
-	stateCode: string,
+	state: State,
 }
 
-export default function Edit({ id, isNew, data, stateCode }: Props) {
+export default function Edit({ id, isNew, data, state }: Props) {
 	const [saving, setSaving] = React.useState<boolean>(false);
 	const aboutRef = React.useRef<any>();
 	const birdsRef = React.useRef<any>();
@@ -73,21 +75,24 @@ export default function Edit({ id, isNew, data, stateCode }: Props) {
 	const form = useForm<Hotspot>({ defaultValues: data });
 	const isOH = data.stateCode === "OH";
 
-	const handleSubmit: SubmitHandler<Hotspot> = async (data) => {
-		const state = getStateByCode(data?.stateCode);
-
-		if (!state || !data?.multiCounties?.length) {
+	const handleSubmit: SubmitHandler<Hotspot> = async (formData) => {
+		if (!state || !formData?.multiCounties?.length) {
 			alert("Missing state and/or counties");
 			return;
 		}
 
 		setSaving(true);
-		const slug =  data.slug || slugify(data.name);
+		const nameChanged =  formData?.name && formData?.name !== data.name;
+		let slug = formData?.slug || null;
+		if (!slug || nameChanged) {
+			slug = slugify(formData.name);
+		}
+
 		const url = `/birding-in-${state?.slug}/group/${slug}`;
 		const json = await secureFetch(`/api/hotspot/${isNew ? "add" : "update"}`, "POST", {
 			id,
 			data: {
-				...data,
+				...formData,
 				parent: null,
 				countyCode: null,
 				iba: data.iba || null,
@@ -155,7 +160,7 @@ export default function Edit({ id, isNew, data, stateCode }: Props) {
 							</Field>
 
 							<Field label="Counties">
-								<CountySelect name="multiCounties" stateCode={stateCode} isMulti required />
+								<CountySelect name="multiCounties" stateCode={state.code} isMulti required />
 								<FormError name="multiCounties" />
 							</Field>
 

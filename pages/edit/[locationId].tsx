@@ -45,17 +45,24 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	}
 	const parentId = data?.parent || defaultParentId;
 	const parent = parentId ? await getParent(parentId) : null;
+	const nameChanged =  data?.name && data?.name !== ebirdData.name;
+
+	let slug = data?.slug;
+	if (!slug || nameChanged) {
+		slug = slugify(ebirdData.name);
+	}
+
 	return {
     props: {
 			id: data?._id || null,
 			isNew: !data,
 			data: {
 				...data,
+				slug,
 				iba: data?.iba || parent?.iba || null,
 				links: data?.links || parent?.links || null,
 				parentSelect: parent ? { label: parent.name, value: parent._id } : null,
 				name: ebirdData?.name || data?.name,
-				slug: data?.slug || slugify(ebirdData?.name),
 				lat: ebirdData?.latitude ||  data?.lat,
 				lng: ebirdData?.longitude || data?.lng,
 				stateCode: data?.stateCode || ebirdData?.subnational1Code?.replace("US-", ""),
