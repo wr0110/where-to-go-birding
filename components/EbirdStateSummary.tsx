@@ -1,13 +1,6 @@
-type Props = {
-	code: string,
-	rareSid: string,
-	needsSid: string,
-	yearNeedsSid: string,
-	label: string,
-	portal?: string,
-}
+import { State } from "lib/types";
 
-export default function EbirdStateSummary({ code, label, rareSid, needsSid, yearNeedsSid, portal }: Props) {
+export default function EbirdStateSummary({ code, color, label, rareSid, needsSid, yearNeedsSid, portal }: State) {
 	const getUrl = (bMonth: number, eMonth: number) => {
 		return `${base}/barchart?byr=1900&eyr=2060&bmo=${bMonth}&emo=${eMonth}&r=${code}`;
 	}
@@ -15,7 +8,7 @@ export default function EbirdStateSummary({ code, label, rareSid, needsSid, year
 	const base = portal ? `https://ebird.org/${portal}` : "https://ebird.org";
 
 	return (
-		<div className="mb-12 p-2 border-2 border-[#4a84b2] rounded">
+		<div className="mb-12 p-2 border-2 rounded" style={{borderColor: color || "#4a84b2" }}>
 			<h3 className="text-lg mb-2 font-bold">Explore {label} in eBird</h3>
 			{portal &&
 				<a href={`${base}/${portal}/about`} target="_blank" rel="noreferrer">

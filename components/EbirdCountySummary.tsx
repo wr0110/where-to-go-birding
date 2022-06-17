@@ -16,7 +16,7 @@ export default function EbirdCountySummary({ state, county }: Props) {
 	const base = portal ? `https://ebird.org/${portal}` : "https://ebird.org";
 
 	return (
-		<div className={`mb-6 p-2 border-2 border-[${color}] rounded`}>
+		<div className={`mb-6 p-2 border-2 rounded`} style={{borderColor: color || "#4a84b2" }}>
 			<h3 className="text-lg mb-2 font-bold">Explore {name} County in eBird</h3>
 			<p className="mb-1">
 				<a href={`${base}/region/${ebirdCode}`} target="_blank" rel="noreferrer">Overview</a>
