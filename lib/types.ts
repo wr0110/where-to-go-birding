@@ -29,6 +29,14 @@ export type County = {
 	active: boolean,
 }
 
+export type Image = {
+	smUrl: string,
+	lgUrl: string,
+	by?: string,
+	isMap?: boolean,
+	preview?: string,
+}
+
 export type Hotspot = {
 	name: string,
 	_id?: string,
@@ -58,6 +66,7 @@ export type Hotspot = {
 		value: string,
 		label: string,
 	},
+	images?: Image[],
 }
 
 export interface HotspotInputs extends Hotspot {

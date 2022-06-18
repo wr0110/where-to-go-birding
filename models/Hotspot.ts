@@ -63,6 +63,12 @@ const HotspotSchema = new Schema({
 		value: String,
 		label: String,
 	},
+	images: [{
+		smUrl: String,
+		lgUrl: String,
+		by: String,
+		isMap: Boolean,
+	}],
 	createdAt: {
 		type: "string",
 		default: dayjs().format("YYYY-MM-DD"),
