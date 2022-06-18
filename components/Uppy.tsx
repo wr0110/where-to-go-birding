@@ -9,7 +9,6 @@ import "@uppy/core/dist/style.css";
 import "@uppy/drag-drop/dist/style.css";
 
 const uppy = new Uppy({
-  restrictions: { maxNumberOfFiles: 1 },
   autoProceed: true,
 });
 
