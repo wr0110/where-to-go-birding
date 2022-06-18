@@ -4,11 +4,12 @@ import { ParsedUrlQuery } from "querystring";
 import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "components/Input";
+import Textarea from "components/Textarea";
 import Form from "components/Form";
 import Submit from "components/Submit";
 import { Editor } from "@tinymce/tinymce-react";
 import { getHotspotById } from "lib/mongo";
-import { slugify, tinyMceOptions } from "lib/helpers";
+import { slugify, geocode, tinyMceOptions } from "lib/helpers";
 import { getStateByCode } from "lib/localData";
 import InputLinks from "components/InputLinks";
 import Select from "components/Select";
@@ -99,9 +100,9 @@ export default function Edit({ id, isNew, data, state }: Props) {
 				iba: data.iba || null,
 				slug,
 				url,
-				about:  aboutRef.current.getContent() || "",
-				tips:  tipsRef.current.getContent() || "",
-				birds:  birdsRef.current.getContent() || "",
+				about: aboutRef.current.getContent() || "",
+				tips: tipsRef.current.getContent() || "",
+				birds: birdsRef.current.getContent() || "",
 			}
     });
 		setSaving(false);
@@ -110,6 +111,36 @@ export default function Edit({ id, isNew, data, state }: Props) {
 		} else {
 			console.error(json.error);
 			alert("Error saving hotspot");
+		}
+	}
+
+	const address = form.watch("address");
+	const lat = form.watch("lat");
+	const lng = form.watch("lng");
+
+	const geocodeCoorinates = async (lat: number, lng: number) => {
+		if (address) return;
+		const { road, city, state, zip } = await geocode(lat, lng);
+		if (road) {
+			form.setValue("address", `${road}\r\n${city}, ${state} ${zip}`);
+			return;
+		}
+		if (city && state && zip) {
+			form.setValue("address", `${city}, ${state} ${zip}`);
+		}
+	}
+
+	const handleLatChange = (e:  React.ChangeEvent<HTMLInputElement>) => {
+		const lat = Number(e.target.value);
+		if (lat && lng) {
+			geocodeCoorinates(lat, lng);
+		}
+	}
+
+	const handleLngChange = (e:  React.ChangeEvent<HTMLInputElement>) => {
+		const lng = Number(e.target.value);
+		if (lat && lng) {
+			geocodeCoorinates(lat, lng);
 		}
 	}
 
@@ -131,12 +162,16 @@ export default function Edit({ id, isNew, data, state }: Props) {
 
 							<div className="grid grid-cols-2 gap-4">
 								<Field label="Latitude">
-										<Input type="text" name="lat" />
+										<Input type="text" name="lat" onChange={handleLatChange} />
 								</Field>
 								<Field label="Longitude">
-									<Input type="text" name="lng" />
+									<Input type="text" name="lng" onChange={handleLngChange} />
 								</Field>
 							</div>
+
+							<Field label="Address">
+								<Textarea name="address" rows={2} />
+							</Field>
 
 							<Field label="Links">
 								<InputLinks />

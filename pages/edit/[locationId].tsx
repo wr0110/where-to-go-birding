@@ -133,7 +133,7 @@ export default function Edit({ id, isNew, data, error }: Props) {
 
 	React.useEffect(() => {
 		const geocodeAddress = async () => {
-			const { road, city, state, zip } = await geocode(data?.lat, data?.lng);
+			const { road, city, state, zip } = await geocode(lat, lng);
 			if (road) {
 				form.setValue("address", `${road}\r\n${city}, ${state} ${zip}`);
 				return;
