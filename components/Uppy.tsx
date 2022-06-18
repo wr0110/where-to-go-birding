@@ -46,6 +46,7 @@ export default function ImageInput({ onSuccess }: Props) {
 					preview: preview,
 					by: null,
 					isMap: false,
+					isNew: true,
 				}
 			});
 			onSuccess(images || []);
@@ -55,7 +56,11 @@ export default function ImageInput({ onSuccess }: Props) {
 
 	uppy.on("thumbnail:generated", (file, preview) => {
 		setPreviews({...previews, [file.id]: preview });
-	})
+	});
+
+	uppy.on("file-added", (file) => {
+		console.log("FILE", file);
+	});
 
 	return (
 		<>
