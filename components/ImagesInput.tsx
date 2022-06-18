@@ -1,19 +1,14 @@
 import { useFormContext, useFieldArray } from "react-hook-form";
 import { TrashIcon } from "@heroicons/react/outline";
 import Uppy from "components/Uppy";
-import useSecureFetch from "hooks/useSecureFetch";
 
 export default function ImagesInput() {
-	const secureFetch = useSecureFetch();
 	const { control, register } = useFormContext();
 	const { fields, append, remove } = useFieldArray({ name: "images", control });
 
-	const handleDelete = async (i:number, url: string) => {
-		const filename = url.split("/").pop();
-		const fileId = filename?.split("_")[0];
+	const handleDelete = async (i:number) => {
 		if (!confirm("Are you sure you want to delete this image?")) return;
 		remove(i);
-		secureFetch(`/api/file/delete?fileId=${fileId}`, "GET");
 	}
 
 	return (
@@ -36,7 +31,7 @@ export default function ImagesInput() {
 								</div>
 								<button
 									type="button" className="opacity-0 group-hover:opacity-100 transition-opacity bg-red-700/90 p-1.5 rounded-full flex items-center justify-center absolute -left-2 -top-2 shadow"
-									onClick={() => handleDelete(i, field.smUrl)}
+									onClick={() => handleDelete(i)}
 								>
 									<TrashIcon className="h-4 w-4 text-white opacity-80"/> 
 								</button>
