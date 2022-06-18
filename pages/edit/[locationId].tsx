@@ -21,6 +21,7 @@ import Field from "components/Field";
 import useSecureFetch from "hooks/useSecureFetch";
 import HotspotSelect from "components/HotspotSelect";
 import Error from "next/error";
+import ImagesInput from "components/ImagesInput";
 
 const ibaOptions = IBAs.map(({ slug, name }) => ({ value: slug, label: name }));
 
@@ -184,20 +185,27 @@ export default function Edit({ id, isNew, data, error }: Props) {
 								</div>
 							</Field>
 
-							<Field label="Parent Hotspot">
-								<HotspotSelect self={id} countyCode={data.countyCode || ""} name="parentSelect" isClearable />
-							</Field>
-
-							{isOH &&
-								<Field label="Important Bird Area">
-									<Select name="iba" options={ibaOptions} isClearable />
+							<div className="grid md:grid-cols-2 gap-4">
+								<Field label="Parent Hotspot">
+									<HotspotSelect self={id} countyCode={data.countyCode || ""} name="parentSelect" isClearable />
 								</Field>
-							}
+
+								{isOH &&
+									<Field label="Important Bird Area">
+										<Select name="iba" options={ibaOptions} isClearable />
+									</Field>
+								}
+							</div>
 
 							<RadioGroup name="restrooms" label="Restrooms on site" options={["Yes", "No", "Unknown"]} />
 							<RadioGroup name="accessible" label="Accessible facilities" options={["ADA", "Birdability", "No", "Unknown"]} />
 							<RadioGroup name="roadside" label="Roadside accessible" options={["Yes", "No", "Unknown"]} />
 							<RadioGroup name="dayhike" label="Day Hike" options={["Yes", "No"]} />
+
+							
+							<Field label="Images">
+								<ImagesInput />
+							</Field>
 
 						</div>
 						<div className="px-4 py-3 bg-gray-100 text-right sm:px-6 rounded">

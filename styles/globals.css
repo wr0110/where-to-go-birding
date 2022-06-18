@@ -81,3 +81,7 @@ svg.icon {
 	@apply shadow-sm !important;
 	border-width: 1px !important;
 }
+
+.uppy-DragDrop-container {
+	@apply border-gray-300/90 !important;
+}

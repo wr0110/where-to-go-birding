@@ -17,8 +17,7 @@ export default function EbirdHotspotSummary({ state, county, name, locationId, l
 	const base = state.portal ? `https://ebird.org/${state.portal}` : "https://ebird.org";
 	return (
 		<div className={`mb-6 p-2 border-2 rounded`} style={{ borderColor: color }}>
-			<h3 className="mb-4 font-bold text-lg">Explore in eBird</h3>
-			<h3 className="font-bold">{name}</h3>
+			<h3 className="mb-2 font-bold text-lg">Explore in eBird</h3>
 			Coordinates: {lat}, {lng}<br/>
 			<a href={`${base}/hotspots?hs=${locationId}&yr=all&m=`} target="_blank" rel="noreferrer">Hotspot map</a>
 			&nbsp;–&nbsp;
