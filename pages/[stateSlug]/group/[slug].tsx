@@ -66,7 +66,7 @@ interface Props extends HotspotType {
 	countySlugs: string[],
 }
 
-export default function GroupHotspot({ state, portal, _id, name, lat, lng, links, iba, about, tips, birds, restrooms, roadside, accessible, childLocations, hikes, countySlugs, childIds }: Props) {
+export default function GroupHotspot({ state, portal, _id, name, lat, lng, address, links, iba, about, tips, birds, restrooms, roadside, accessible, childLocations, hikes, countySlugs, childIds }: Props) {
 	let extraLinks = [];
 	if (roadside === "Yes") {
 		extraLinks.push({
@@ -89,7 +89,8 @@ export default function GroupHotspot({ state, portal, _id, name, lat, lng, links
 			<div className="md:grid grid-cols-2 gap-12">
 				<div>
 					<div className="mb-6">
-						<h3 className="font-bold text-lg mb-1.5">{name}</h3>
+						<h3 className="font-bold text-lg">{name}</h3>
+						{address && <p className="whitespace-pre-line mb-2" dangerouslySetInnerHTML={{__html: address}} />}
 						{links?.map(({ url, label }, index) => (
 							<>
 								<a key={index} href={url} target="_blank" rel="noreferrer">{label}</a><br />

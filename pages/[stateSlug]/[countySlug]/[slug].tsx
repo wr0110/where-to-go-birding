@@ -79,7 +79,7 @@ export default function Hotspot({ state, county, name, _id, lat, lng, address, l
 			<div className="md:grid grid-cols-2 gap-12">
 				<div>
 					<div className="mb-6">
-						{ name &&
+						{name &&
 							<Address
 								line1={nameParts?.length === 2 ? nameParts[0] : name}
 								line2={nameParts?.length === 2 ? nameShort : ""}
