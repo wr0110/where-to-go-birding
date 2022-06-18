@@ -44,9 +44,10 @@ export default function ImageInput({ onSuccess }: Props) {
 					smUrl: `https://storage.googleapis.com/birding-hotspots.appspot.com/${file.transloadit.assembly}_small.jpg`,
 					lgUrl: `https://storage.googleapis.com/birding-hotspots.appspot.com/${file.transloadit.assembly}_large.jpg`,
 					preview: preview,
+					by: null,
+					isMap: false,
 				}
 			});
-			console.log(images);
 			onSuccess(images || []);
 		});
 	// eslint-disable-next-line react-hooks/exhaustive-deps
