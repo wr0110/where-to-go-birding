@@ -15,7 +15,6 @@ import { StateLinks, State as StateType, County as CountyType } from "lib/types"
 import Heading from "components/Heading";
 import EditorActions from "components/EditorActions";
 import Title from "components/Title";
-import StateMap from "components/StateMap";
 import { scrollToAnchor } from "lib/helpers";
 
 interface Params extends ParsedUrlQuery {
@@ -86,7 +85,6 @@ export default function State({ state, counties, links }: Props) {
 					</div>
 				</div>
 				<div>
-					<StateMap location={coordinates} zoom={mapZoom} />
 					<div className="flex justify-center items-start mt-12">
 						{map}
 					</div>
