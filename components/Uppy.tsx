@@ -45,22 +45,32 @@ export default function ImageInput({ onSuccess }: Props) {
 					lgUrl: `https://storage.googleapis.com/birding-hotspots.appspot.com/${file.transloadit.assembly}_large.jpg`,
 					preview: preview,
 					by: null,
+					width: file.meta.width || null,
+					height: file.meta.height || null,
 					isMap: false,
-					isNew: true,
+					isNew: true, //Because isNew isn't in the Mongoose schema it gets filtered out on save
 				}
 			});
 			onSuccess(images || []);
 		});
+
+		uppy.on("thumbnail:generated", (file, preview) => {
+			setPreviews({...previews, [file.id]: preview });
+		});
+	
+		uppy.on("file-added", (file) => {
+			const data = file.data;
+			const url = URL.createObjectURL(data);
+			const image = new Image();
+			image.src = url;
+			image.onload = () => {
+				uppy.setFileMeta(file.id, { width: image.width, height: image.height })
+				URL.revokeObjectURL(url);
+			}
+		});
+
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
-	uppy.on("thumbnail:generated", (file, preview) => {
-		setPreviews({...previews, [file.id]: preview });
-	});
-
-	uppy.on("file-added", (file) => {
-		console.log("FILE", file);
-	});
 
 	return (
 		<>

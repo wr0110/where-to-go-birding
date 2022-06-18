@@ -34,6 +34,8 @@ export type Image = {
 	lgUrl: string,
 	by?: string,
 	isMap?: boolean,
+	width?: number,
+	height?: number,
 	preview?: string,
 }
 

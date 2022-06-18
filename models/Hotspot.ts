@@ -68,6 +68,8 @@ const HotspotSchema = new Schema({
 		lgUrl: String,
 		by: String,
 		isMap: Boolean,
+		width: Number,
+		height: Number,
 	}],
 	createdAt: {
 		type: "string",
