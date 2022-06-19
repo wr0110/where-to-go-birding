@@ -4,6 +4,7 @@ We use the following tools and technologies:
 
 - Next.js/React
 - TypeScript
+- Tailwind CSS
 - MongoDB
 - Firebase for authentication
 - Google Cloud Storage for images
