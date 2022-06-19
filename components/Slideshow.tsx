@@ -42,7 +42,7 @@ export default function Slideshow({ images }: Props) {
 				lazyLoad
 				autoPlay
 				renderFullscreenButton={(onClick, isFullscreen) => isFullscreen && (
-					<XIcon onClick={(e:any) => onClick(e)} className="h-8 w-8 absolute top-2 right-4 cursor-pointer opacity-40 transition-opacity text-white hover:opacity-80"/>
+					<XIcon onClick={(e:any) => onClick(e)} className="h-8 w-8 absolute top-2 right-4 cursor-pointer opacity-70 transition-opacity text-white hover:opacity-100 drop-shadow-sm"/>
 				)}
 			/>
 			{!! uniquePhotographers.length && (
