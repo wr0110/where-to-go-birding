@@ -54,6 +54,7 @@ export type Hotspot = {
 	about?:  string,
 	tips?: string,
 	birds?: string,
+	hikes?: string,
 	address?: string,
 	links?: {
 		label: string,

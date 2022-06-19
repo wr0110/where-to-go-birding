@@ -9,7 +9,7 @@ import Form from "components/Form";
 import Submit from "components/Submit";
 import { Editor } from "@tinymce/tinymce-react";
 import { getHotspotById } from "lib/mongo";
-import { slugify, geocode, tinyMceOptions } from "lib/helpers";
+import { slugify, geocode, getTinyConfig } from "lib/helpers";
 import { getStateByCode } from "lib/localData";
 import InputLinks from "components/InputLinks";
 import Select from "components/Select";
@@ -71,6 +71,7 @@ export default function Edit({ id, isNew, data, state }: Props) {
 	const aboutRef = React.useRef<any>();
 	const birdsRef = React.useRef<any>();
 	const tipsRef = React.useRef<any>();
+	const hikesRef = React.useRef<any>();
 	const secureFetch = useSecureFetch();
 
 	const router = useRouter();
@@ -104,6 +105,7 @@ export default function Edit({ id, isNew, data, state }: Props) {
 				about: aboutRef.current.getContent() || "",
 				tips: tipsRef.current.getContent() || "",
 				birds: birdsRef.current.getContent() || "",
+				hikes: hikesRef.current.getContent() || "",
 			}
     });
 		setSaving(false);
@@ -180,19 +182,25 @@ export default function Edit({ id, isNew, data, state }: Props) {
 
 							<Field label="Tips for Birding">
 								<div className="mt-1">
-									<Editor id="tips-editor" onInit={(e, editor) => tipsRef.current = editor} initialValue={data?.tips} init={tinyMceOptions} />
+									<Editor id="tips-editor" onInit={(e, editor) => tipsRef.current = editor} initialValue={data?.tips} init={getTinyConfig(350)} />
+								</div>
+							</Field>
+
+							<Field label="Birding Day Hikes">
+								<div className="mt-1">
+									<Editor id="hikes-editor" onInit={(e, editor) => hikesRef.current = editor} initialValue={data?.hikes} init={getTinyConfig()} />
 								</div>
 							</Field>
 
 							<Field label="Birds of Interest">
 								<div className="mt-1">
-									<Editor id="birds-editor" onInit={(e, editor) => birdsRef.current = editor} initialValue={data?.birds} init={tinyMceOptions} />
+									<Editor id="birds-editor" onInit={(e, editor) => birdsRef.current = editor} initialValue={data?.birds} init={getTinyConfig()} />
 								</div>
 							</Field>
 
 							<Field label="About this location">
 								<div className="mt-1">
-									<Editor id="about-editor" onInit={(e, editor) => aboutRef.current = editor} initialValue={data?.about} init={tinyMceOptions} />
+									<Editor id="about-editor" onInit={(e, editor) => aboutRef.current = editor} initialValue={data?.about} init={getTinyConfig(350)} />
 								</div>
 							</Field>
 

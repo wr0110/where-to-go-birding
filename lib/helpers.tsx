@@ -8,26 +8,28 @@ export function slugify(title?: string) {
 	return slug.endsWith("-") ? slug.slice(0, -1) : slug;
 }
 
-export const tinyMceOptions = {
-	height: 250,
-	menubar: false,
-	plugins: "link",
-	toolbar: "bold italic underline | link | cite",
-	content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px } cite { font-size: 0.75em; font-style: normal; color: #666; }',
-	branding: false,
-	elementpath: false,
-	valid_elements: "p,a[href|rel|target=_blank],strong/b,em/i,u,strike,br,ul,ol,li,cite",
-	formats: {
-		citation: { inline: "cite" },
-	},
-	setup: (editor: any) => {
-		editor.ui.registry.addToggleButton("cite", {
-			text: "Cite",
-			onAction: (api: any) => {
-				editor.formatter.toggle("citation");
-				api.setActive(!api.isActive());
-			},
-		});
+export function getTinyConfig(height?: number) {
+	return {
+		height: height || 200,
+		menubar: false,
+		plugins: "link",
+		toolbar: "bold italic underline | link | cite",
+		content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px } cite { font-size: 0.75em; font-style: normal; color: #666; }',
+		branding: false,
+		elementpath: false,
+		valid_elements: "p,a[href|rel|target=_blank],strong/b,em/i,u,strike,br,ul,ol,li,cite",
+		formats: {
+			citation: { inline: "cite" },
+		},
+		setup: (editor: any) => {
+			editor.ui.registry.addToggleButton("cite", {
+				text: "Cite",
+				onAction: (api: any) => {
+					editor.formatter.toggle("citation");
+					api.setActive(!api.isActive());
+				},
+			});
+		}
 	}
 }
 

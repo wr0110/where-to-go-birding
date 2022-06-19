@@ -36,9 +36,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	if (!data) return { notFound: true };
 
 	const children = await getChildren(data._id);
-	const hikes = children?.filter(item => item.dayhike === "Yes");
+	const hikeHotspots = children?.filter(item => item.dayhike === "Yes");
 	const childLocations = restructureHotspotsByCounty(children as any);
-	const hikesStructured = restructureHotspotsByCounty(hikes as any);
+	const hikeHotspotsStructured = restructureHotspotsByCounty(hikeHotspots as any);
 	const childIds = children?.map((item: any) => item.locationId) || [];
 
 	const countySlugs = data.multiCounties?.map((item: string) => {
@@ -51,7 +51,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 			state,
 			portal: state.portal || null,
 			childLocations,
-			hikes: hikesStructured,
+			hikeHotspots: hikeHotspotsStructured,
 			childIds,
 			countySlugs,
 			...data,
@@ -63,12 +63,12 @@ interface Props extends HotspotType {
 	state: State,
 	portal: string,
 	childLocations: HotspotsByCounty,
-	hikes: HotspotsByCounty,
+	hikeHotspots: HotspotsByCounty,
 	childIds: string[],
 	countySlugs: string[],
 }
 
-export default function GroupHotspot({ state, portal, _id, name, lat, lng, address, links, iba, about, tips, birds, restrooms, roadside, accessible, childLocations, hikes, countySlugs, images, childIds }: Props) {
+export default function GroupHotspot({ state, portal, _id, name, lat, lng, address, links, iba, about, tips, birds, hikes, restrooms, roadside, accessible, childLocations, hikeHotspots, countySlugs, images, childIds }: Props) {
 	let extraLinks = [];
 	if (roadside === "Yes") {
 		extraLinks.push({
@@ -120,15 +120,19 @@ export default function GroupHotspot({ state, portal, _id, name, lat, lng, addre
 						</div>
 					}
 
-					{hikes.length > 0 && 
+					{hikeHotspots.length > 0 && 
 						<div className="mb-6">
 							<h3 className="mb-1.5 font-bold text-lg">Birding Day Hikes</h3>
-							<ListHotspotsByCounty stateSlug={state.slug} hotspots={hikes} />
+							<ListHotspotsByCounty stateSlug={state.slug} hotspots={hikeHotspots} />
 						</div>
 					}
 
 					{tips &&
 						<AboutSection heading="Tips for Birding" text={tips} />
+					}
+
+					{hikes &&
+						<AboutSection heading="Birding Day Hikes" text={hikes} />
 					}
 
 					{birds &&
