@@ -2,7 +2,7 @@ This is the Next.js project that will eventually replace https://ebirdhotspots.c
 
 We use the following tools and technologies:
 
-- Next.js/React
+- React/Next.js
 - TypeScript
 - Tailwind CSS
 - MongoDB
