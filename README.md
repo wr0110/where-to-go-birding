@@ -3,6 +3,7 @@ This is the Next.js project that will eventually replace https://ebirdhotspots.c
 We use the following tools and technologies:
 
 - Next.js/React
+- TypeScript
 - MongoDB
 - Firebase for authentication
 - Google Cloud Storage for images
