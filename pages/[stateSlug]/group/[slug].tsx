@@ -15,6 +15,7 @@ import DeleteBtn from "components/DeleteBtn";
 import Title from "components/Title";
 import Map from "components/Map";
 import Slideshow from "components/Slideshow";
+import MapList from "components/MapList";
 
 const getChildren = async (id: string) => {
 	if (!id) return null;
@@ -147,11 +148,6 @@ export default function GroupHotspot({ state, portal, _id, name, lat, lng, addre
 						)}
 						{roadside === "Yes" && <p>Roadside accessible.</p>}
 					</div>
-					{!! images?.length && 
-						<div className="mt-6">
-							<Slideshow images={images} />
-						</div>
-					}
 				</div>
 				<div>
 					<div className="xs:grid md:block lg:grid grid-cols-2 gap-12 mb-16">
@@ -164,6 +160,12 @@ export default function GroupHotspot({ state, portal, _id, name, lat, lng, addre
 						))}
 					</div>
 					{(lat && lng) && <Map lat={lat} lng={lng} />}
+					{!! images?.length && <MapList images={images} />}
+					{!! images?.length && 
+						<div className="mt-6">
+							<Slideshow images={images} />
+						</div>
+					}
 				</div>
 			</div>
 			<EditorActions>

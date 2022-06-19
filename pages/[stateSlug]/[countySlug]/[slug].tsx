@@ -15,6 +15,7 @@ import Heading from "components/Heading";
 import DeleteBtn from "components/DeleteBtn";
 import Title from "components/Title";
 import Slideshow from "components/Slideshow";
+import MapList from "components/MapList";
 
 const getChildren = async (id: string) => {
 	if (!id) return null;
@@ -139,11 +140,6 @@ export default function Hotspot({ state, county, name, _id, lat, lng, address, l
 						)}
 						{roadside === "Yes" && <p>Roadside accessible.</p>}
 					</div>
-					{!! images?.length && 
-						<div className="mt-6">
-							<Slideshow images={images} />
-						</div>
-					}
 				</div>
 				<div>
 					{state.code === "OH" && (
@@ -154,6 +150,12 @@ export default function Hotspot({ state, county, name, _id, lat, lng, address, l
 						</Link>
 					)}
 					{(lat && lng) && <Map lat={lat} lng={lng} />}
+					{!! images?.length && <MapList images={images} />}
+					{!! images?.length && 
+						<div className="mt-6">
+							<Slideshow images={images} />
+						</div>
+					}
 				</div>
 			</div>
 			<EditorActions>

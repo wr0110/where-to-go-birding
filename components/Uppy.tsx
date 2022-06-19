@@ -3,6 +3,7 @@ import Uppy from "@uppy/core";
 import { DragDrop, StatusBar } from "@uppy/react";
 import Transloadit from "@uppy/transloadit";
 import ThumbnailGenerator from "@uppy/thumbnail-generator";
+import { v4 as uuidv4 } from "uuid";
 import "@uppy/core/dist/style.css";
 import "@uppy/status-bar/dist/style.css";
 import "@uppy/core/dist/style.css";
@@ -10,6 +11,14 @@ import "@uppy/drag-drop/dist/style.css";
 
 const uppy = new Uppy({
   autoProceed: true,
+	onBeforeFileAdded: (file) => {
+		const name = `${uuidv4()}.${file.extension}`;
+		return {
+			...file,
+			name,
+			meta: { ...file.meta, name }
+		}
+	}
 });
 
 uppy.use(Transloadit, {
@@ -40,9 +49,10 @@ export default function ImageInput({ onSuccess }: Props) {
 		uppy.on("complete", (result) => {
 			const images = result.successful.map((file: any) => {
 				const preview = previewsRef.current ? previewsRef.current[file.id] : null;
+				const baseName = file.name.split(".")[0];
 				return {
-					smUrl: `https://storage.googleapis.com/birding-hotspots.appspot.com/${file.transloadit.assembly}_small.jpg`,
-					lgUrl: `https://storage.googleapis.com/birding-hotspots.appspot.com/${file.transloadit.assembly}_large.jpg`,
+					smUrl: `https://storage.googleapis.com/birding-hotspots.appspot.com/${baseName}_small.jpg`,
+					lgUrl: `https://storage.googleapis.com/birding-hotspots.appspot.com/${baseName}_large.jpg`,
 					preview: preview,
 					by: null,
 					width: file.meta.width || null,
@@ -55,7 +65,7 @@ export default function ImageInput({ onSuccess }: Props) {
 		});
 
 		uppy.on("thumbnail:generated", (file, preview) => {
-			setPreviews({...previews, [file.id]: preview });
+			setPreviews((current: any) => ({...current, [file.id]: preview }));
 		});
 	
 		uppy.on("file-added", (file) => {
