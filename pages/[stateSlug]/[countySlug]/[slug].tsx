@@ -14,6 +14,7 @@ import HotspotList from "components/HotspotList";
 import Heading from "components/Heading";
 import DeleteBtn from "components/DeleteBtn";
 import Title from "components/Title";
+import Slideshow from "components/Slideshow";
 
 const getChildren = async (id: string) => {
 	if (!id) return null;
@@ -54,7 +55,7 @@ interface Props extends HotspotType {
 	locationIds: string[],
 }
 
-export default function Hotspot({ state, county, name, _id, lat, lng, address, links, about, tips, birds, restrooms, roadside, accessible, locationId, parent, childLocations, locationIds }: Props) {	
+export default function Hotspot({ state, county, name, _id, lat, lng, address, links, about, tips, birds, restrooms, roadside, accessible, locationId, parent, childLocations, locationIds, images }: Props) {	
 	const nameParts = name?.split("--");
 	const nameShort = nameParts?.length === 2 ? nameParts[1] : name;
 
@@ -76,7 +77,7 @@ export default function Hotspot({ state, county, name, _id, lat, lng, address, l
 		<div className="container pb-16">
 			<Title isOhio={state.code === "OH"}>{name}</Title>
 			<Heading state={state} county={county}>{name}</Heading>
-			<div className="md:grid grid-cols-2 gap-12">
+			<div className="grid md:grid-cols-2 gap-12">
 				<div>
 					<div className="mb-6">
 						{name &&
@@ -138,6 +139,11 @@ export default function Hotspot({ state, county, name, _id, lat, lng, address, l
 						)}
 						{roadside === "Yes" && <p>Roadside accessible.</p>}
 					</div>
+					{!! images?.length && 
+						<div className="mt-6">
+							<Slideshow images={images} />
+						</div>
+					}
 				</div>
 				<div>
 					{state.code === "OH" && (

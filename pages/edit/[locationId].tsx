@@ -201,7 +201,6 @@ export default function Edit({ id, isNew, data, error }: Props) {
 							<RadioGroup name="accessible" label="Accessible facilities" options={["ADA", "Birdability", "No", "Unknown"]} />
 							<RadioGroup name="roadside" label="Roadside accessible" options={["Yes", "No", "Unknown"]} />
 							<RadioGroup name="dayhike" label="Day Hike" options={["Yes", "No"]} />
-
 							
 							<Field label="Images">
 								<ImagesInput />

@@ -14,6 +14,7 @@ import ListHotspotsByCounty from "components/ListHotspotsByCounty";
 import DeleteBtn from "components/DeleteBtn";
 import Title from "components/Title";
 import Map from "components/Map";
+import Slideshow from "components/Slideshow";
 
 const getChildren = async (id: string) => {
 	if (!id) return null;
@@ -66,7 +67,7 @@ interface Props extends HotspotType {
 	countySlugs: string[],
 }
 
-export default function GroupHotspot({ state, portal, _id, name, lat, lng, address, links, iba, about, tips, birds, restrooms, roadside, accessible, childLocations, hikes, countySlugs, childIds }: Props) {
+export default function GroupHotspot({ state, portal, _id, name, lat, lng, address, links, iba, about, tips, birds, restrooms, roadside, accessible, childLocations, hikes, countySlugs, images, childIds }: Props) {
 	let extraLinks = [];
 	if (roadside === "Yes") {
 		extraLinks.push({
@@ -86,7 +87,7 @@ export default function GroupHotspot({ state, portal, _id, name, lat, lng, addre
 		<div className="container pb-16">
 			<Title isOhio={state.slug === "ohio"}>{name}</Title>
 			<Heading state={state}>{name}</Heading>
-			<div className="md:grid grid-cols-2 gap-12">
+			<div className="grid md:grid-cols-2 gap-12">
 				<div>
 					<div className="mb-6">
 						<h3 className="font-bold text-lg">{name}</h3>
@@ -146,6 +147,11 @@ export default function GroupHotspot({ state, portal, _id, name, lat, lng, addre
 						)}
 						{roadside === "Yes" && <p>Roadside accessible.</p>}
 					</div>
+					{!! images?.length && 
+						<div className="mt-6">
+							<Slideshow images={images} />
+						</div>
+					}
 				</div>
 				<div>
 					<div className="xs:grid md:block lg:grid grid-cols-2 gap-12 mb-16">

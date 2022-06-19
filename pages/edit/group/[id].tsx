@@ -21,6 +21,7 @@ import Field from "components/Field";
 import CountySelect from "components/CountySelect";
 import FormError from "components/FormError";
 import useSecureFetch from "hooks/useSecureFetch";
+import ImagesInput from "components/ImagesInput";
 
 const ibaOptions = IBAs.map(({ slug, name }) => ({ value: slug, label: name }));
 
@@ -210,6 +211,10 @@ export default function Edit({ id, isNew, data, state }: Props) {
 							<RadioGroup name="accessible" label="Accessible facilities" options={["ADA", "Birdability", "No", "Unknown"]} />
 							<RadioGroup name="roadside" label="Roadside accessible" options={["Yes", "No", "Unknown"]} />
 							<RadioGroup name="dayhike" label="Day Hike" options={["Yes", "No"]} />
+
+							<Field label="Images">
+								<ImagesInput />
+							</Field>
 
 						</div>
 						<div className="px-4 py-3 bg-gray-100 text-right sm:px-6 rounded">
