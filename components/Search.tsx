@@ -54,7 +54,7 @@ export default function HotspotSelect({ onClose, ...props}: Props) {
 	return (
 		<>
 			<div className={`fixed top-0 bottom-0 left-0 right-0 transition-opacity bg-black z-20 ${isMounted ? "opacity-40" : "opacity-0"}`} onClick={onClose}/>
-			<div className="absolute top-[20%] max-w-lg left-0 right-0 mx-auto z-30 p-8">
+			<div className="absolute top-[10%] max-w-lg left-0 right-0 mx-auto z-30 p-8">
 				<div className="">
 				<AsyncSelect
 						styles={{
