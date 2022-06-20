@@ -33,7 +33,7 @@ export default function Header() {
 						</Link>
 						<nav className="mt-2 md:mt-0">
 							<ul className="flex gap-7">
-								<li>
+								<li className="flex items-center justify-center">
 									<button type="button" onClick={() => setShowSearch(true)}>
 										<SearchIcon className="h-5 w-5" />
 									</button>
