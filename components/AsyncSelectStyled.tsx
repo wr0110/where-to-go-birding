@@ -1,8 +1,8 @@
-import ReactSelect from "react-select";
+import AsyncSelect from "react-select/async";
 
-const ReactSelectStyled = (props: any) => {
+const AsyncSelectStyled = (props: any) => {
 	return (
-		<ReactSelect
+		<AsyncSelect
 			styles={{
 				input: (base) => ({
 					...base,
@@ -25,4 +25,4 @@ const ReactSelectStyled = (props: any) => {
 	);
 }
 
-export default ReactSelectStyled
+export default AsyncSelectStyled;
