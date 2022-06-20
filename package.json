@@ -2,11 +2,13 @@
   "name": "birdinghotspots",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "top10": "node --experimental-json-modules ./fetchTop10.js"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.4",
@@ -38,8 +40,11 @@
     "@types/react-image-gallery": "^1.0.5",
     "@types/uuid": "^8.3.4",
     "autoprefixer": "^10.4.7",
+    "dotenv": "^16.0.1",
     "eslint": "8.16.0",
     "eslint-config-next": "12.1.6",
+    "fs": "^0.0.1-security",
+    "node-fetch": "^3.2.6",
     "postcss": "^8.4.14",
     "tailwindcss": "^3.0.24"
   }
