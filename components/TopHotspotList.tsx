@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 type Props = {
+  className?: string;
   hotspots: {
     name: string;
     url?: string;
@@ -8,9 +9,9 @@ type Props = {
   }[];
 };
 
-export default function TopHotspotList({ hotspots }: Props) {
+export default function TopHotspotList({ hotspots, className }: Props) {
   return (
-    <ul>
+    <ul className={className || ""}>
       {hotspots?.map(({ name, url, total }) => (
         <li key={name}>
           {url ? <Link href={url}>{name}</Link> : <span>{name}</span>}
