@@ -31,3 +31,5 @@ yarn-error.log*
 # vercel
 .vercel
 .env
+
+top10/*.json
