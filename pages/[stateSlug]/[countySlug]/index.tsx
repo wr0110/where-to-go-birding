@@ -45,7 +45,6 @@ type Props = {
     name: string;
     total: number;
     url?: string;
-    id?: string;
   }[];
 };
 
@@ -94,11 +93,11 @@ export default function County({
           <h3 className="text-lg mb-2 font-bold" id="hotspots">
             Top Hotspots in {name} County
           </h3>
-          <HotspotList hotspots={hotspots} />
+          <TopHotspotList hotspots={topHotspots} />
           <h3 className="text-lg mb-2 font-bold" id="hotspots">
             All Hotspots in {name} County
           </h3>
-          <TopHotspotList hotspots={topHotspots} />
+          <HotspotList hotspots={hotspots} />
         </div>
         <div>
           {state.code === "OH" && (

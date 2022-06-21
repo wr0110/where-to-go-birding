@@ -1,3 +1,4 @@
+//NOTE: .mjs extension and import syntax required for compatibility with fetchTop10.mjs
 import mongoose from "mongoose";
 import dayjs from "dayjs";
 const { Schema, model, models } = mongoose;

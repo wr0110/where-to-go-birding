@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import fs from "fs";
 import mongoose from "mongoose";
-import Hotspot from "./models/Hotspot.js";
+import Hotspot from "./models/Hotspot.mjs";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -45,7 +45,11 @@ activeStates.forEach(async (state) => {
 	const hotspotsFiltered = hotspots.filter(hotspot => hotspot.total > 100);
 	const hotspotsWithUrl = hotspotsFiltered.map(hotspot => {
 		const dbHotspot = dbHotspots.find(dbHotspot => dbHotspot.locationId === hotspot.id) || null;
-		if (!dbHotspot) return hotspot;
+		if (!dbHotspot) return {
+			county: hotspot.county,
+			name: hotspot.name,
+			total: hotspot.total,
+		};
 		return {
 			county: hotspot.county,
 			name: hotspot.name,
@@ -59,10 +63,10 @@ activeStates.forEach(async (state) => {
 		console.log(`Processing top hotspots for ${county.ebirdCode}`);
 		const countyHotspots = hotspotsSorted.filter(item => item.county === county.ebirdCode);
 		const topHotspots = countyHotspots.slice(0, 10).map(({county, ...rest}) => rest);
-		fs.writeFileSync(`./public/top10/${county.ebirdCode}.json`, JSON.stringify(topHotspots));
+		fs.writeFileSync(`./top10/${county.ebirdCode}.json`, JSON.stringify(topHotspots));
 	});
 	const topStateHotspots = hotspotsSorted.slice(0, 10).map(({county, ...rest}) => rest);
-	fs.writeFileSync(`./public/top10/US-${state.code}.json`, JSON.stringify(topStateHotspots));
+	fs.writeFileSync(`./top10/US-${state.code}.json`, JSON.stringify(topStateHotspots));
 });
 
 mongoose.connection.close()
