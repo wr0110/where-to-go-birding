@@ -1,6 +1,5 @@
-import mongoose from "mongoose";
+import { Schema, model, models } from "mongoose";
 import dayjs from "dayjs";
-const { Schema, model, models } = mongoose;
 
 const LinkSchema = new Schema({
 	label: String,
