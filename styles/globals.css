@@ -108,8 +108,8 @@ svg.icon {
 	@apply object-cover;
 }
 
-.image-gallery-thumbnails-wrapper {
-	max-width: 300px;
+.image-gallery.fullscreen-modal .image-gallery-thumbnails-wrapper {
+	max-width: 500px;
 	@apply mx-auto;
 }
 
