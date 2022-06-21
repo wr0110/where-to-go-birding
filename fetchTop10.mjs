@@ -65,7 +65,7 @@ activeStates.forEach(async (state) => {
 		const topHotspots = countyHotspots.slice(0, 10).map(({county, ...rest}) => rest);
 		fs.writeFileSync(`./public/top10/${county.ebirdCode}.json`, JSON.stringify(topHotspots));
 	});
-	const topStateHotspots = hotspotsSorted.slice(0, 10).map(({county, ...rest}) => rest);
+	const topStateHotspots = hotspotsSorted.slice(0, 20).map(({county, ...rest}) => rest);
 	fs.writeFileSync(`./public/top10/US-${state.code}.json`, JSON.stringify(topStateHotspots));
 });
 
