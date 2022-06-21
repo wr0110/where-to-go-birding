@@ -29,12 +29,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const county = getCountyBySlug(state.code, countySlug);
   if (!county?.name) return { notFound: true };
 
-  const file = path.join(
-    process.cwd(),
-    "public",
-    "top10",
-    `${county.ebirdCode}.json`
-  );
+  const file = path.join(process.cwd(), "public", "top10", `${county.ebirdCode}.json`);
   const topHotspotFile = fs.readFileSync(file);
   const topHotspots = JSON.parse(topHotspotFile.toString());
 
@@ -55,17 +50,9 @@ type Props = {
   }[];
 };
 
-export default function County({
-  state,
-  county,
-  hotspots,
-  topHotspots,
-}: Props) {
+export default function County({ state, county, hotspots, topHotspots }: Props) {
   const { slug, name, ebirdCode } = county;
-  const hikes = hotspots.filter(({ dayhike }) => dayhike === "Yes");
-  const hotspotIBA = hotspots
-    .filter(({ iba }) => iba?.value)
-    .map(({ iba }) => iba);
+  const hotspotIBA = hotspots.filter(({ iba }) => iba?.value).map(({ iba }) => iba);
 
   //Removes duplicate objects from IBA array
   const iba = hotspotIBA.filter(
@@ -77,22 +64,14 @@ export default function County({
 
   return (
     <div className="container pb-16">
-      <Title
-        isOhio={state.slug === "ohio"}
-      >{`${name} County, ${state.label}`}</Title>
+      <Title isOhio={state.slug === "ohio"}>{`${name} County, ${state.label}`}</Title>
       <Heading state={state}>{name} County</Heading>
       <div className="grid md:grid-cols-2 gap-12">
         <div>
-          <h3 className="text-lg mb-2 font-bold">
-            Where to Go Birding in {name} County
-          </h3>
+          <h3 className="text-lg mb-2 font-bold">Where to Go Birding in {name} County</h3>
           <p className="mb-4">
             <a href="#hotspots" onClick={scrollToAnchor}>
               Alphabetical List of Hotspots
-            </a>
-            <br />
-            <a href="#dayhikes" onClick={scrollToAnchor}>
-              Birding Day Hikes
             </a>
             <br />
           </p>
@@ -108,22 +87,9 @@ export default function County({
         </div>
         <div>
           {state.code === "OH" && (
-            <img
-              src={`/oh-maps/${slug}.jpg`}
-              width="260"
-              className="mx-auto mb-10"
-              alt={`${name} county map`}
-            />
+            <img src={`/oh-maps/${slug}.jpg`} width="260" className="mx-auto mb-10" alt={`${name} county map`} />
           )}
           {name && <RegionMap location={`${name} County, ${state.label}`} />}
-          {hikes.length > 0 && (
-            <>
-              <h3 className="text-lg mb-2 font-bold mt-6" id="dayhikes">
-                Birding Day Hikes
-              </h3>
-              <HotspotList hotspots={hikes} />
-            </>
-          )}
           {iba.length > 0 && (
             <>
               <h3 className="text-lg mb-2 font-bold mt-6" id="dayhikes">
@@ -132,11 +98,7 @@ export default function County({
               <ul>
                 {iba?.map(({ label, value }: any) => (
                   <li key={value}>
-                    <Link
-                      href={`/birding-in-${state.slug}/important-bird-areas/${value}`}
-                    >
-                      {label}
-                    </Link>
+                    <Link href={`/birding-in-${state.slug}/important-bird-areas/${value}`}>{label}</Link>
                   </li>
                 ))}
               </ul>
@@ -144,11 +106,7 @@ export default function County({
           )}
         </div>
       </div>
-      <RareBirds
-        region={ebirdCode}
-        label={`${name} County Notable Sightings`}
-        className="mt-16"
-      />
+      <RareBirds region={ebirdCode} label={`${name} County Notable Sightings`} className="mt-16" />
       <EditorActions>
         <Link href="/add">Add Hotspot</Link>
       </EditorActions>

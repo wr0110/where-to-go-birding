@@ -1,4 +1,3 @@
-import * as React from "react";
 import { getLatestHotspots } from "lib/mongo";
 import Heading from "components/Heading";
 import { GetServerSideProps } from "next";
@@ -6,7 +5,6 @@ import Title from "components/Title";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { getCountyByCode, getStateByCode } from "lib/localData";
-import { restructureHotspotsByCounty } from "lib/helpers";
 
 type HotspotMap = {
   [x: string]: {
