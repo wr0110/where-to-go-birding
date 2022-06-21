@@ -6,7 +6,6 @@
     "dev": "next dev",
     "build": "next build",
     "prebuild": "npm run top10",
-    "predev": "npm run top10",
     "start": "next start",
     "lint": "next lint",
     "top10": "node --experimental-json-modules ./fetchTop10.mjs"

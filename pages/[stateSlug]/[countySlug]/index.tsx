@@ -28,7 +28,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const county = getCountyBySlug(state.code, countySlug);
   if (!county?.name) return { notFound: true };
 
-  const topHotspotFile = fs.readFileSync(`./top10/${county.ebirdCode}.json`);
+  const topHotspotFile = fs.readFileSync(
+    `./public/top10/${county.ebirdCode}.json`
+  );
   const topHotspots = JSON.parse(topHotspotFile.toString());
 
   const hotspots = (await getHotspotsByCounty(county.ebirdCode)) || [];

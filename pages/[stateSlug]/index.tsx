@@ -42,7 +42,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const links = getStateLinks(state.code);
 
   const topHotspotFile = fs.readFileSync(
-    `./top10/US-${state.code.toUpperCase()}.json`
+    `./public/top10/US-${state.code.toUpperCase()}.json`
   );
   const topHotspots = JSON.parse(topHotspotFile.toString());
 

@@ -32,4 +32,4 @@ yarn-error.log*
 .vercel
 .env
 
-top10/*.json
+public/top10/*.json

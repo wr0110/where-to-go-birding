@@ -63,10 +63,10 @@ activeStates.forEach(async (state) => {
 		console.log(`Processing top hotspots for ${county.ebirdCode}`);
 		const countyHotspots = hotspotsSorted.filter(item => item.county === county.ebirdCode);
 		const topHotspots = countyHotspots.slice(0, 10).map(({county, ...rest}) => rest);
-		fs.writeFileSync(`./top10/${county.ebirdCode}.json`, JSON.stringify(topHotspots));
+		fs.writeFileSync(`./public/top10/${county.ebirdCode}.json`, JSON.stringify(topHotspots));
 	});
 	const topStateHotspots = hotspotsSorted.slice(0, 10).map(({county, ...rest}) => rest);
-	fs.writeFileSync(`./top10/US-${state.code}.json`, JSON.stringify(topStateHotspots));
+	fs.writeFileSync(`./public/top10/US-${state.code}.json`, JSON.stringify(topStateHotspots));
 });
 
 mongoose.connection.close()
