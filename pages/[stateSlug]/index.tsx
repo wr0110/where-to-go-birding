@@ -22,6 +22,7 @@ import Title from "components/Title";
 import { scrollToAnchor } from "lib/helpers";
 import TopHotspotList from "components/TopHotspotList";
 import fs from "fs";
+import path from "path";
 
 interface Params extends ParsedUrlQuery {
   stateSlug: string;
@@ -41,9 +42,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const counties = getCounties(state.code);
   const links = getStateLinks(state.code);
 
-  const topHotspotFile = fs.readFileSync(
-    `./public/top10/US-${state.code.toUpperCase()}.json`
+  const file = path.join(
+    process.cwd(),
+    "public",
+    "top10",
+    `US-${state.code}.json`
   );
+  const topHotspotFile = fs.readFileSync(file);
   const topHotspots = JSON.parse(topHotspotFile.toString());
 
   return { props: { counties, links, state, topHotspots } };
