@@ -67,31 +67,30 @@ export default function County({ state, county, hotspots, topHotspots }: Props) 
       <Title isOhio={state.slug === "ohio"}>{`${name} County, ${state.label}`}</Title>
       <Heading state={state}>{name} County</Heading>
       <div className="grid md:grid-cols-2 gap-12">
-        <div>
-          <h3 className="text-lg mb-2 font-bold">Where to Go Birding in {name} County</h3>
-          <p className="mb-4">
-            <a href="#hotspots" onClick={scrollToAnchor}>
-              Alphabetical List of Hotspots
-            </a>
-            <br />
-          </p>
+        <div className="flex flex-col gap-8">
+          <section>
+            <h3 className="text-lg mb-2 font-bold">Where to Go Birding in {name} County</h3>
+            <p>
+              <a href="#hotspots" onClick={scrollToAnchor}>
+                Alphabetical List of Hotspots
+              </a>
+            </p>
+          </section>
           <EbirdCountySummary {...{ state, county }} />
-          <h3 className="text-lg mb-2 font-bold" id="hotspots">
-            Top Hotspots in {name} County
-          </h3>
-          <TopHotspotList hotspots={topHotspots} />
-          <h3 className="text-lg mb-2 font-bold" id="hotspots">
-            All Hotspots in {name} County
-          </h3>
-          <HotspotList hotspots={hotspots} />
+          <section>
+            <h3 className="text-lg mb-2 font-bold" id="hotspots">
+              Top Hotspots in {name} County
+            </h3>
+            <TopHotspotList hotspots={topHotspots} />
+          </section>
         </div>
-        <div>
+        <div className="flex flex-col gap-8">
           {state.code === "OH" && (
-            <img src={`/oh-maps/${slug}.jpg`} width="260" className="mx-auto mb-10" alt={`${name} county map`} />
+            <img src={`/oh-maps/${slug}.jpg`} width="260" className="mx-auto" alt={`${name} county map`} />
           )}
           {name && <RegionMap location={`${name} County, ${state.label}`} />}
           {iba.length > 0 && (
-            <>
+            <section>
               <h3 className="text-lg mb-2 font-bold mt-6" id="dayhikes">
                 Important Bird Areas
               </h3>
@@ -102,8 +101,14 @@ export default function County({ state, county, hotspots, topHotspots }: Props) 
                   </li>
                 ))}
               </ul>
-            </>
+            </section>
           )}
+          <section>
+            <h3 className="text-lg mb-2 font-bold" id="hotspots">
+              All Hotspots in {name} County
+            </h3>
+            <HotspotList hotspots={hotspots} />
+          </section>
         </div>
       </div>
       <RareBirds region={ebirdCode} label={`${name} County Notable Sightings`} className="mt-16" />

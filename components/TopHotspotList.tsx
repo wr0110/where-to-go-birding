@@ -10,7 +10,7 @@ type Props = {
 
 export default function TopHotspotList({ hotspots }: Props) {
   return (
-    <ul className="mb-6">
+    <ul>
       {hotspots?.map(({ name, url, total }) => (
         <li key={name}>
           {url ? <Link href={url}>{name}</Link> : <span>{name}</span>}
