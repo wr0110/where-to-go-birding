@@ -74,6 +74,18 @@ export async function getRoadsideHotspotsByState(stateCode: string) {
 	return result;
 }
 
+export async function getLatestHotspots() {
+	await connect();
+	const result = await Hotspot
+		.find({}, ["-_id", "name", "url", "countyCode", "multiCounties", "stateCode", "createdAt"])
+		.sort({ createdAt: 1 })
+		.limit(200)
+		.lean()
+		.exec();
+
+	return result;
+}
+
 export async function getIBAHotspots(ibaSlug: string) {
 	if (!ibaSlug) return [];
 	await connect();

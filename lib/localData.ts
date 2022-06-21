@@ -32,6 +32,7 @@ export function getStateByCode(code: string) {
 }
 
 export function getCountyByCode(code: string) {
+	if (!code) return null;
 	const stateCode = code.split("-")[1];
 	const array = countyArrays[stateCode];
 	if (!array) return null;

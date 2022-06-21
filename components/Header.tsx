@@ -11,9 +11,7 @@ export default function Header() {
 
   React.useEffect(() => {
     const onScroll = () => {
-      setCollapsed(
-        document.body.scrollTop > 50 || document.documentElement.scrollTop > 50
-      );
+      setCollapsed(document.body.scrollTop > 50 || document.documentElement.scrollTop > 50);
     };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
@@ -28,21 +26,15 @@ export default function Header() {
               <a className="flex gap-2 items-center">
                 <img
                   src="/logo.jpg"
-                  className={`w-[50px] ${
-                    !collapsed ? "md:w-[100px]" : ""
-                  } transition-all duration-300 h-auto`}
+                  className={`w-[50px] ${!collapsed ? "md:w-[100px]" : ""} transition-all duration-300 h-auto`}
                 />
                 <div className="flex flex-col justify-center">
                   <h1
-                    className={`text-lg ${
-                      !collapsed ? "md:text-3xl" : ""
-                    } text-gray-900 transition-all duration-300`}
+                    className={`text-lg ${!collapsed ? "md:text-3xl" : ""} text-gray-900 transition-all duration-300`}
                   >
                     eBird Hotspots
                   </h1>
-                  <em className="text-[0.8em] leading-4 text-gray-500">
-                    Where to Go Birding
-                  </em>
+                  <em className="text-[0.8em] leading-4 text-gray-500">Where to Go Birding</em>
                 </div>
               </a>
             </Link>
