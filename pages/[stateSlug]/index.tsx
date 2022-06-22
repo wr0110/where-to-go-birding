@@ -106,6 +106,12 @@ export default function State({ state, counties, links, topHotspots }: Props) {
       </div>
 
       <div className={counties?.length > 20 ? "block" : `grid md:grid-cols-2 gap-12`}>
+        <section>
+          <h3 className="text-lg mb-2 font-bold" id="hotspots">
+            Top Hotspots in {label}
+          </h3>
+          <TopHotspotList hotspots={topHotspots} className={counties?.length > 20 ? "md:columns-2" : ""} />
+        </section>
         <section className="mb-8">
           <h3 id="counties" className="text-lg mb-4 font-bold">
             {label} Counties
@@ -125,12 +131,6 @@ export default function State({ state, counties, links, topHotspots }: Props) {
               </p>
             ))}
           </div>
-        </section>
-        <section>
-          <h3 className="text-lg mb-2 font-bold" id="hotspots">
-            Top Hotspots in {label}
-          </h3>
-          <TopHotspotList hotspots={topHotspots} className={counties?.length > 20 ? "md:columns-2" : ""} />
         </section>
       </div>
 
