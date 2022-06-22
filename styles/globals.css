@@ -73,7 +73,7 @@ svg.icon {
 }
 
 .tox-statusbar {
-	border: none !important;
+	display: none !important;
 }
 
 .tox-tinymce {
