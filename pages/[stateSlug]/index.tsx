@@ -65,7 +65,7 @@ export default function State({ state, counties, links, topHotspots }: Props) {
 
   const map = maps[code];
 
-  const countyListCols = counties.length > 20 ? "columns-2 xs:columns-3 sm:columns-5" : "columns-3 sm:columns-4";
+  const countyListCols = counties?.length > 20 ? "columns-2 xs:columns-3 sm:columns-5" : "columns-3 sm:columns-4";
 
   return (
     <div className="container pb-16 mt-12">
@@ -130,7 +130,7 @@ export default function State({ state, counties, links, topHotspots }: Props) {
           <h3 className="text-lg mb-2 font-bold" id="hotspots">
             Top Hotspots in {label}
           </h3>
-          <TopHotspotList hotspots={topHotspots} className={counties.length > 20 ? "md:columns-2" : ""} />
+          <TopHotspotList hotspots={topHotspots} className={counties?.length > 20 ? "md:columns-2" : ""} />
         </section>
       </div>
 
