@@ -36,9 +36,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   if (!data) return { notFound: true };
 
   const children = await getChildren(data._id);
-  const hikeHotspots = children?.filter((item) => item.dayhike === "Yes");
   const childLocations = restructureHotspotsByCounty(children as any);
-  const hikeHotspotsStructured = restructureHotspotsByCounty(hikeHotspots as any);
   const childIds = children?.map((item: any) => item.locationId) || [];
 
   const countySlugs = data.multiCounties?.map((item: string) => {
@@ -51,7 +49,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       state,
       portal: state.portal || null,
       childLocations,
-      hikeHotspots: hikeHotspotsStructured,
       childIds,
       countySlugs,
       ...data,
@@ -63,7 +60,6 @@ interface Props extends HotspotType {
   state: State;
   portal: string;
   childLocations: HotspotsByCounty;
-  hikeHotspots: HotspotsByCounty;
   childIds: string[];
   countySlugs: string[];
 }
@@ -86,7 +82,6 @@ export default function GroupHotspot({
   roadside,
   accessible,
   childLocations,
-  hikeHotspots,
   countySlugs,
   images,
   childIds,
@@ -148,13 +143,6 @@ export default function GroupHotspot({
             <div className="mb-6">
               <h3 className="mb-1.5 font-bold text-lg">Locations</h3>
               <ListHotspotsByCounty stateSlug={state.slug} hotspots={childLocations} />
-            </div>
-          )}
-
-          {hikeHotspots.length > 0 && (
-            <div className="mb-6">
-              <h3 className="mb-1.5 font-bold text-lg">Birding Day Hike</h3>
-              <ListHotspotsByCounty stateSlug={state.slug} hotspots={hikeHotspots} />
             </div>
           )}
 
