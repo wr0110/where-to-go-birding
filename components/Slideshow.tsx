@@ -5,49 +5,53 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import { XIcon } from "@heroicons/react/outline";
 
 type Props = {
-	images: Image[],
-}
+  images: Image[];
+};
 
 export default function Slideshow({ images }: Props) {
-	const ref = React.useRef<any>();
-	const filtered = images.filter(item => item.smUrl && !item.isMap);
-	const photographers = filtered.map(item => item.by).filter(item => item);
-	const uniquePhotographers = [...new Set(photographers)];
+  const ref = React.useRef<any>();
+  const filtered = images.filter((item) => item.smUrl && !item.isMap);
+  const photographers = filtered.map((item) => item.by).filter((item) => item);
+  const uniquePhotographers = [...new Set(photographers)];
 
-	const slides = filtered.map(image => ({
-		original: image.lgUrl || image.smUrl,
-		thumbnail: image.smUrl,
-		originalHeight: image.height,
-		originalWidth: image.width,
-	}));
+  const slides = filtered.map((image) => ({
+    fullscreen: image.lgUrl || image.smUrl,
+    original: image.smUrl,
+    thumbnail: image.smUrl,
+    originalHeight: image.height,
+    originalWidth: image.width,
+  }));
 
-	const handleClick = () => {
-		if (!ref.current) return;
-		ref.current.fullScreen();
-	}
+  const handleClick = () => {
+    if (!ref.current) return;
+    ref.current.fullScreen();
+  };
 
-	if (slides.length === 0) return null;
+  if (slides.length === 0) return null;
 
-	return (
-		<>
-			<ImageGallery
-				ref={ref}
-				items={slides}
-				useBrowserFullscreen={false}
-				showThumbnails={filtered.length > 1}
-				showPlayButton={false}
-				onClick={handleClick}
-				slideDuration={1000}
-				slideInterval={5000}
-				lazyLoad
-				autoPlay
-				renderFullscreenButton={(onClick, isFullscreen) => isFullscreen && (
-					<XIcon onClick={(e:any) => onClick(e)} className="h-8 w-8 absolute top-2 right-4 cursor-pointer opacity-70 transition-opacity text-white hover:opacity-100 drop-shadow-sm"/>
-				)}
-			/>
-			{!! uniquePhotographers.length && (
-				<p className="mt-2 text-xs">Photos by {uniquePhotographers.join(", ")}</p>
-			)}
-		</>
-	);
+  return (
+    <>
+      <ImageGallery
+        ref={ref}
+        items={slides}
+        useBrowserFullscreen={false}
+        showThumbnails={filtered.length > 1}
+        showPlayButton={false}
+        onClick={handleClick}
+        slideDuration={1000}
+        slideInterval={5000}
+        lazyLoad
+        autoPlay
+        renderFullscreenButton={(onClick, isFullscreen) =>
+          isFullscreen && (
+            <XIcon
+              onClick={(e: any) => onClick(e)}
+              className="h-8 w-8 absolute top-2 right-4 cursor-pointer opacity-70 transition-opacity text-white hover:opacity-100 drop-shadow-sm"
+            />
+          )
+        }
+      />
+      {!!uniquePhotographers.length && <p className="mt-2 text-xs">Photos by {uniquePhotographers.join(", ")}</p>}
+    </>
+  );
 }

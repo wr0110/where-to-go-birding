@@ -11,7 +11,7 @@ export default function MapList({ images }: Props) {
 
   const items = filtered.map((image) => ({
     original: image.lgUrl || image.smUrl,
-    thumbnail: image.smUrl,
+    thumbnail: image.height && image.width && image.height > image.width ? image.lgUrl : image.smUrl,
     width: image.width,
     height: image.height,
     by: image.by,
