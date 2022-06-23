@@ -147,6 +147,12 @@ export default function Edit({ id, isNew, data, state }: Props) {
     }
   };
 
+  const handleHikeBlur = () => {
+    if (isNew && hikesRef.current.getContent()) {
+      form.setValue("dayhike", "Yes");
+    }
+  };
+
   return (
     <AdminPage title="Edit Hotspot">
       <div className="container pb-16 my-12">
@@ -197,6 +203,7 @@ export default function Edit({ id, isNew, data, state }: Props) {
                     onInit={(e, editor) => (hikesRef.current = editor)}
                     initialValue={data?.hikes}
                     init={tinyConfig}
+                    onBlur={handleHikeBlur}
                   />
                 </div>
               </Field>

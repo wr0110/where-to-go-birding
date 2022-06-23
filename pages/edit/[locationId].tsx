@@ -149,6 +149,12 @@ export default function Edit({ id, isNew, data, error }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, lat, lng]);
 
+  const handleHikeBlur = () => {
+    if (isNew && hikesRef.current.getContent()) {
+      form.setValue("dayhike", "Yes");
+    }
+  };
+
   if (error) return <Error statusCode={404} title={error} />;
 
   return (
@@ -186,6 +192,7 @@ export default function Edit({ id, isNew, data, error }: Props) {
                     onInit={(e, editor) => (hikesRef.current = editor)}
                     initialValue={data?.hikes}
                     init={tinyConfig}
+                    onBlur={handleHikeBlur}
                   />
                 </div>
               </Field>
