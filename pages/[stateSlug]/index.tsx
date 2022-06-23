@@ -79,6 +79,10 @@ export default function State({ state, counties, links, topHotspots }: Props) {
           </>
         )}
       </Heading>
+      <EditorActions>
+        <Link href="/add">Add Hotspot</Link>
+        <Link href={`/edit/group/new?state=${code}`}>Add Group Hotspot</Link>
+      </EditorActions>
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
         <div>
           <h3 className="text-lg mb-4 font-bold">Where to Go Birding in {label}</h3>
@@ -179,10 +183,6 @@ export default function State({ state, counties, links, topHotspots }: Props) {
         </div>
       </div>
       <RareBirds region={`US-${code}`} label={label} className="mt-6" />
-      <EditorActions>
-        <Link href="/add">Add Hotspot</Link>
-        <Link href={`/edit/group/new?state=${code}`}>Add Group Hotspot</Link>
-      </EditorActions>
     </div>
   );
 }

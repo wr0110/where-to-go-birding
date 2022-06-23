@@ -110,6 +110,11 @@ export default function GroupHotspot({
     <div className="container pb-16">
       <Title isOhio={state.slug === "ohio"}>{name}</Title>
       <Heading state={state}>{name}</Heading>
+      <EditorActions>
+        <Link href={`/edit/group/${_id}`}>Edit Hotspot</Link>
+        <Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>
+        <DeleteBtn id={_id || ""} className="ml-auto" />
+      </EditorActions>
       <div className="grid md:grid-cols-2 gap-12">
         <div>
           <div className="mb-6">
@@ -197,11 +202,6 @@ export default function GroupHotspot({
           )}
         </div>
       </div>
-      <EditorActions>
-        <Link href={`/edit/group/${_id}`}>Edit Hotspot</Link>
-        <Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>
-        <DeleteBtn id={_id || ""} className="ml-auto" />
-      </EditorActions>
     </div>
   );
 }

@@ -101,6 +101,11 @@ export default function Hotspot({
       <Heading state={state} county={county}>
         {name}
       </Heading>
+      <EditorActions>
+        <Link href={`/edit/${locationId}`}>Edit Hotspot</Link>
+        {!parent && <Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>}
+        <DeleteBtn id={_id || ""} className="ml-auto" />
+      </EditorActions>
       <div className="grid md:grid-cols-2 gap-12">
         <div>
           <div className="mb-6">
@@ -188,11 +193,6 @@ export default function Hotspot({
           )}
         </div>
       </div>
-      <EditorActions>
-        <Link href={`/edit/${locationId}`}>Edit Hotspot</Link>
-        {!parent && <Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>}
-        <DeleteBtn id={_id || ""} className="ml-auto" />
-      </EditorActions>
     </div>
   );
 }

@@ -66,6 +66,9 @@ export default function County({ state, county, hotspots, topHotspots }: Props) 
     <div className="container pb-16">
       <Title isOhio={state.slug === "ohio"}>{`${name} County, ${state.label}`}</Title>
       <Heading state={state}>{name} County</Heading>
+      <EditorActions>
+        <Link href="/add">Add Hotspot</Link>
+      </EditorActions>
       <div className="grid md:grid-cols-2 gap-12">
         <div className="flex flex-col gap-8">
           <section>
@@ -112,9 +115,6 @@ export default function County({ state, county, hotspots, topHotspots }: Props) 
         </div>
       </div>
       <RareBirds region={ebirdCode} label={`${name} County Notable Sightings`} className="mt-16" />
-      <EditorActions>
-        <Link href="/add">Add Hotspot</Link>
-      </EditorActions>
     </div>
   );
 }
