@@ -9,7 +9,7 @@ import Form from "components/Form";
 import Submit from "components/Submit";
 import { Editor } from "@tinymce/tinymce-react";
 import { getHotspotById } from "lib/mongo";
-import { slugify, geocode, getTinyConfig } from "lib/helpers";
+import { slugify, geocode, tinyConfig } from "lib/helpers";
 import { getStateByCode } from "lib/localData";
 import InputLinks from "components/InputLinks";
 import Select from "components/Select";
@@ -185,7 +185,7 @@ export default function Edit({ id, isNew, data, state }: Props) {
                     id="tips-editor"
                     onInit={(e, editor) => (tipsRef.current = editor)}
                     initialValue={data?.tips}
-                    init={getTinyConfig(350)}
+                    init={tinyConfig}
                   />
                 </div>
               </Field>
@@ -196,7 +196,7 @@ export default function Edit({ id, isNew, data, state }: Props) {
                     id="hikes-editor"
                     onInit={(e, editor) => (hikesRef.current = editor)}
                     initialValue={data?.hikes}
-                    init={getTinyConfig()}
+                    init={tinyConfig}
                   />
                 </div>
               </Field>
@@ -207,7 +207,7 @@ export default function Edit({ id, isNew, data, state }: Props) {
                     id="birds-editor"
                     onInit={(e, editor) => (birdsRef.current = editor)}
                     initialValue={data?.birds}
-                    init={getTinyConfig()}
+                    init={tinyConfig}
                   />
                 </div>
               </Field>
@@ -218,7 +218,7 @@ export default function Edit({ id, isNew, data, state }: Props) {
                     id="about-editor"
                     onInit={(e, editor) => (aboutRef.current = editor)}
                     initialValue={data?.about}
-                    init={getTinyConfig(350)}
+                    init={tinyConfig}
                   />
                 </div>
               </Field>
