@@ -78,9 +78,6 @@ export default function Hotspot({
   locationIds,
   images,
 }: Props) {
-  const nameParts = name?.split("--");
-  const nameShort = nameParts?.length === 2 ? nameParts[1] : name;
-
   let extraLinks = [];
   if (roadside === "Yes") {
     extraLinks.push({
@@ -109,13 +106,7 @@ export default function Hotspot({
       <div className="grid md:grid-cols-2 gap-12">
         <div>
           <div className="mb-6">
-            {name && (
-              <Address
-                line1={nameParts?.length === 2 ? nameParts[0] : name}
-                line2={nameParts?.length === 2 ? nameShort : ""}
-                address={address}
-              />
-            )}
+            {name && <Address name={name} address={address} />}
             {links?.map(({ url, label }, index) => (
               <React.Fragment key={label}>
                 <a key={index} href={url} target="_blank" rel="noreferrer">
