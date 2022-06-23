@@ -13,7 +13,7 @@ export default function ListHotspotsByCounty({ stateSlug, hotspots }: Props) {
       {hotspots.map(({ countySlug, countyName, hotspots }) => (
         <p key={countySlug} className="mb-4 break-inside-avoid">
           {stateSlug ? (
-            <Link href={`/birding-in-${stateSlug}/${countySlug}-county`}>
+            <Link href={`/${stateSlug}/${countySlug}-county`}>
               <a>{countyName} County</a>
             </Link>
           ) : (

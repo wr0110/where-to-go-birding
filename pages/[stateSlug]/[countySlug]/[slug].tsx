@@ -82,7 +82,7 @@ export default function Hotspot({
   if (roadside === "Yes") {
     extraLinks.push({
       label: "Roadside Birding",
-      url: `/birding-in-${state.slug}/roadside-birding`,
+      url: `/${state.slug}/roadside-birding`,
     });
   }
   if (parent) {
@@ -164,7 +164,7 @@ export default function Hotspot({
         </div>
         <div>
           {state.code === "OH" && (
-            <Link href={`/birding-in-${state.slug}/${county.slug}-county`}>
+            <Link href={`/${state.slug}/${county.slug}-county`}>
               <a>
                 <img
                   src={`/oh-maps/${county.slug}.jpg`}

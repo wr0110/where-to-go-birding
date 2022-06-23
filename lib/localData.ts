@@ -7,72 +7,71 @@ import { capitalize } from "./helpers";
 import { County, StateLinks as StateLinksType } from "lib/types";
 
 const countyArrays: any = {
-	"OH": OhioCounties,
-	"AZ": ArizonaCounties,
-}
+  OH: OhioCounties,
+  AZ: ArizonaCounties,
+};
 
 type StateLinksMap = {
-	[x:string]: StateLinksType,
-}
+  [x: string]: StateLinksType;
+};
 
 export function getStateLinks(code: string) {
-	const map = StateLinks as StateLinksMap;
-	return map[code] || [];
+  const map = StateLinks as StateLinksMap;
+  return map[code] || [];
 }
 
 export function getState(param: string) {
-	const slug = param.replace("birding-in-", "");
-	const data = States.find(state => state.slug === slug);
-	return data;
+  const data = States.find((state) => state.slug === param);
+  return data;
 }
 
 export function getStateByCode(code: string) {
-	const data = States.find(state => state.code === code);
-	return data;
+  const data = States.find((state) => state.code === code);
+  return data;
 }
 
 export function getCountyByCode(code: string) {
-	if (!code) return null;
-	const stateCode = code.split("-")[1];
-	const array = countyArrays[stateCode];
-	if (!array) return null;
-	const county = array.find((county: County) => county.ebirdCode === code);
-	if (!county) return null;
+  if (!code) return null;
+  const stateCode = code.split("-")[1];
+  const array = countyArrays[stateCode];
+  if (!array) return null;
+  const county = array.find((county: County) => county.ebirdCode === code);
+  if (!county) return null;
 
-	return formatCounty(stateCode, county);
+  return formatCounty(stateCode, county);
 }
 
 export function getCountyBySlug(stateCode: string, countySlug: string) {
-	const slug = countySlug.replace("-county", "");
-	const array = countyArrays[stateCode];
-	if (!array) return null;
-	const county = array.find((county: County) => county.slug === slug);
-	if (!county) return null;
-	
-	return formatCounty(stateCode, county);
+  const slug = countySlug.replace("-county", "");
+  const array = countyArrays[stateCode];
+  if (!array) return null;
+  const county = array.find((county: County) => county.slug === slug);
+  if (!county) return null;
+
+  return formatCounty(stateCode, county);
 }
 
 function formatCounty(stateCode: string, county: County) {
-	const { region: regionCode, ebirdCode, slug } = county;
-	const region = (regionCode && stateCode === "OH") ? (OhioRegions as any)[regionCode] : {};
-	return {
-		slug,
-		name: capitalize(slug.replaceAll("-", " ")),
-		region: region || null,
-		ebirdCode,
-		regionLabel: region?.label || null,
-		color: region?.color || "#4a84b2",
-	}
+  const { region: regionCode, ebirdCode, slug } = county;
+  const region = regionCode && stateCode === "OH" ? (OhioRegions as any)[regionCode] : {};
+  return {
+    slug,
+    name: capitalize(slug.replaceAll("-", " ")),
+    region: region || null,
+    ebirdCode,
+    regionLabel: region?.label || null,
+    color: region?.color || "#4a84b2",
+  };
 }
 
 export function getCounties(stateCode: string) {
-	return formatCountyArray(countyArrays[stateCode]);
+  return formatCountyArray(countyArrays[stateCode]);
 }
 
 export function formatCountyArray(counties: County[]) {
-	if (!counties) return null;
-	return counties.map(county => ({
-		...county,
-		name: capitalize(county.slug.replaceAll("-", " ")),
-	}))
+  if (!counties) return null;
+  return counties.map((county) => ({
+    ...county,
+    name: capitalize(county.slug.replaceAll("-", " ")),
+  }));
 }

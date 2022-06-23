@@ -91,7 +91,7 @@ export default function State({ state, counties, links, topHotspots }: Props) {
               Alphabetical list of {label} Counties
             </a>
             <br />
-            <Link href={`/birding-in-${slug}/alphabetical-index`}>{`Alphabetical list of ${label} Hotspots`}</Link>
+            <Link href={`/${slug}/alphabetical-index`}>{`Alphabetical list of ${label} Hotspots`}</Link>
             <br />
             <a href="#top-locations" onClick={scrollToAnchor}>
               Top Birding Locations in {label}
@@ -124,7 +124,7 @@ export default function State({ state, counties, links, topHotspots }: Props) {
             {counties?.map(({ name, slug: countySlug, ebirdCode, active }) => (
               <p key={name}>
                 {active ? (
-                  <Link href={`/birding-in-${slug}/${countySlug}-county`}>
+                  <Link href={`/${slug}/${countySlug}-county`}>
                     <a className="font-bold">{name}</a>
                   </Link>
                 ) : (

@@ -91,7 +91,7 @@ export default function Edit({ id, isNew, data, state }: Props) {
       slug = slugify(formData.name);
     }
 
-    const url = `/birding-in-${state?.slug}/group/${slug}`;
+    const url = `/${state?.slug}/group/${slug}`;
     const json = await secureFetch(`/api/hotspot/${isNew ? "add" : "update"}`, "POST", {
       id,
       data: {

@@ -107,7 +107,7 @@ export default function Edit({ id, isNew, data, error }: Props) {
     }
 
     setSaving(true);
-    const url = `/birding-in-${state?.slug}/${county?.slug}-county/${data?.slug}`;
+    const url = `/${state?.slug}/${county?.slug}-county/${data?.slug}`;
     const json = await secureFetch(`/api/hotspot/${isNew ? "add" : "update"}`, "POST", {
       id,
       data: {

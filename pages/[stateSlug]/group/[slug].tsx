@@ -90,14 +90,14 @@ export default function GroupHotspot({
   if (roadside === "Yes") {
     extraLinks.push({
       label: "Roadside Birding",
-      url: `/birding-in-${state.slug}/roadside-birding`,
+      url: `/${state.slug}/roadside-birding`,
     });
   }
 
   if (iba) {
     extraLinks.push({
       label: `${iba.label} Important Bird Area`,
-      url: `/birding-in-${state.slug}/important-birding-areas/${iba.value}`,
+      url: `/${state.slug}/important-birding-areas/${iba.value}`,
     });
   }
 
@@ -174,7 +174,7 @@ export default function GroupHotspot({
           <div className="xs:grid md:block lg:grid grid-cols-2 gap-12 mb-16">
             {state.slug === "ohio" &&
               countySlugs?.map((slug) => (
-                <Link key={slug} href={`/birding-in-${state.slug}/${slug}-county`}>
+                <Link key={slug} href={`/${state.slug}/${slug}-county`}>
                   <a>
                     <img src={`/oh-maps/${slug}.jpg`} width="260" className="w-full" alt="County map" />
                   </a>

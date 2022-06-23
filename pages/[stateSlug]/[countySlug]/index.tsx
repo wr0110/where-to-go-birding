@@ -100,7 +100,7 @@ export default function County({ state, county, hotspots, topHotspots }: Props) 
               <ul>
                 {iba?.map(({ label, value }: any) => (
                   <li key={value}>
-                    <Link href={`/birding-in-${state.slug}/important-bird-areas/${value}`}>{label}</Link>
+                    <Link href={`/${state.slug}/important-bird-areas/${value}`}>{label}</Link>
                   </li>
                 ))}
               </ul>
