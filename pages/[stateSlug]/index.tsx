@@ -121,7 +121,7 @@ export default function State({ state, counties, topHotspots, info }: Props) {
           <Heading id="hotspots" color="green" className="mt-12 mb-8">
             {label} Counties
           </Heading>
-          <div className="columns-3 sm:columns-4 flex-grow" style={{ columnFill: "auto" }}>
+          <div className="columns-3 sm:columns-4 flex-grow">
             {counties?.map(({ name, slug: countySlug, ebirdCode, active }) => (
               <p key={name}>
                 {active ? (
