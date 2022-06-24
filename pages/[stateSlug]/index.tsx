@@ -5,20 +5,22 @@ import Link from "next/link";
 import EbirdStateSummary from "components/EbirdStateSummary";
 import OhioMap from "components/OhioMap";
 import ArizonaMap from "components/ArizonaMap";
-import { getState, getCounties, getStateLinks } from "lib/localData";
+import { getState, getCounties } from "lib/localData";
 import EbirdDescription from "components/EbirdDescription";
 import EbirdHelpLinks from "components/EbirdHelpLinks";
 import StateFeatureLinks from "components/StateFeatureLinks";
 import RareBirds from "components/RareBirds";
 import States from "data/states.json";
-import { StateLinks, State as StateType, County as CountyType } from "lib/types";
+import { State as StateType, County as CountyType } from "lib/types";
 import Heading from "components/Heading";
+import PageHeading from "components/PageHeading";
 import EditorActions from "components/EditorActions";
 import Title from "components/Title";
 import { scrollToAnchor } from "lib/helpers";
 import TopHotspotList from "components/TopHotspotList";
 import fs from "fs";
 import path from "path";
+import ReactMarkdown from "react-markdown";
 
 interface Params extends ParsedUrlQuery {
   stateSlug: string;
@@ -36,19 +38,21 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const state = getState(stateSlug);
   if (!state) return { notFound: true };
   const counties = getCounties(state.code);
-  const links = getStateLinks(state.code);
 
-  const file = path.join(process.cwd(), "public", "top10", `US-${state.code}.json`);
-  const topHotspotFile = fs.readFileSync(file);
+  const top10File = path.join(process.cwd(), "public", "top10", `US-${state.code}.json`);
+  const topHotspotFile = fs.readFileSync(top10File);
   const topHotspots = JSON.parse(topHotspotFile.toString());
 
-  return { props: { counties, links, state, topHotspots } };
+  const infoFile = path.join(process.cwd(), "data", "state-info", `${state.code.toLowerCase()}.md`);
+  const info = fs.readFileSync(infoFile.toString(), "utf8");
+
+  return { props: { counties, state, topHotspots, info } };
 };
 
 type Props = {
   state: StateType;
   counties: CountyType[];
-  links: StateLinks;
+  info: string;
   topHotspots: {
     name: string;
     total: number;
@@ -56,7 +60,7 @@ type Props = {
   }[];
 };
 
-export default function State({ state, counties, links, topHotspots }: Props) {
+export default function State({ state, counties, topHotspots, info }: Props) {
   const { label, code, slug, features } = state || ({} as StateType);
   const maps: any = {
     OH: <OhioMap />,
@@ -70,7 +74,7 @@ export default function State({ state, counties, links, topHotspots }: Props) {
   return (
     <div className="container pb-16 mt-12">
       <Title isOhio={slug === "ohio"}>{slug === "ohio" ? "" : `Birding in ${label}`}</Title>
-      <Heading state={state} hideState>
+      <PageHeading state={state} hideState>
         Welcome to Birding in {label}
         {code === "OH" && (
           <>
@@ -78,7 +82,7 @@ export default function State({ state, counties, links, topHotspots }: Props) {
             <span className="text-sm">From the Ohio Ornithological Society</span>
           </>
         )}
-      </Heading>
+      </PageHeading>
       <EditorActions>
         <Link href="/add">Add Hotspot</Link>
         <Link href={`/edit/group/new?state=${code}`}>Add Group Hotspot</Link>
@@ -111,16 +115,16 @@ export default function State({ state, counties, links, topHotspots }: Props) {
 
       <div className={counties?.length > 20 ? "block" : `grid md:grid-cols-2 gap-12`}>
         <section>
-          <h3 className="text-lg mb-2 font-bold" id="hotspots">
+          <Heading id="hotspots" color="green" className="mt-12 mb-8">
             Top Hotspots in {label}
-          </h3>
+          </Heading>
           <TopHotspotList hotspots={topHotspots} className={counties?.length > 20 ? "md:columns-2" : ""} />
         </section>
         <section className="mb-8">
-          <h3 id="counties" className="text-lg mb-4 font-bold">
+          <Heading id="hotspots" color="green" className="mt-12 mb-8">
             {label} Counties
-          </h3>
-          <div className={`${countyListCols}`}>
+          </Heading>
+          <div className={`${countyListCols} h-full`} style={{ columnFill: "auto" }}>
             {counties?.map(({ name, slug: countySlug, ebirdCode, active }) => (
               <p key={name}>
                 {active ? (
@@ -138,49 +142,33 @@ export default function State({ state, counties, links, topHotspots }: Props) {
         </section>
       </div>
 
-      <hr className="mt-12" />
+      <Heading id="hotspots" color="yellow" className="mt-12 mb-8">
+        More Information
+      </Heading>
 
-      <div className="md:grid grid-cols-2 gap-16 mt-12">
-        <div>
-          <EbirdDescription />
-          <h3 className="text-lg mb-4 font-bold">Finding Birding Locations in {label}</h3>
-          <p className="mb-4">
-            This website provides descriptions and maps of eBird Hotspots in {label}. In eBird, Hotspots are shared
-            locations where birders may report their bird sightings to eBird. Hotspots provide birders with information
-            about birding locations where birds are being seen.
-          </p>
+      <div className="md:columns-2 gap-16 formatted">
+        <EbirdDescription />
+        <h3 className="text-lg mb-4 font-bold">Finding Birding Locations in {label}</h3>
+        <p className="mb-4">
+          This website provides descriptions and maps of eBird Hotspots in {label}. In eBird, Hotspots are shared
+          locations where birders may report their bird sightings to eBird. Hotspots provide birders with information
+          about birding locations where birds are being seen.
+        </p>
 
-          <p className="mb-4">
-            Hotspots are organized by county. If you know the county of a location, click on the county name in the{" "}
-            <a href="#counties" onClick={scrollToAnchor}>
-              Alphabetical list of {label} Counties
-            </a>{" "}
-            to access information about birds and all the eBird hotspots in that county.
-          </p>
+        <p className="mb-4">
+          Hotspots are organized by county. If you know the county of a location, click on the county name in the{" "}
+          <a href="#counties" onClick={scrollToAnchor}>
+            Alphabetical list of {label} Counties
+          </a>{" "}
+          to access information about birds and all the eBird hotspots in that county.
+        </p>
 
-          <p className="mb-4">
-            If you do not know the county, select a hotspot from the Alphabetical list of {label} Hotspots. Or use the
-            “magnifying glass” search icon on the upper right to find a hotspot. Enter all or part of a hotspot name.
-          </p>
-        </div>
-        <div>
-          <EbirdHelpLinks />
-          {links?.map(({ section, links }) => (
-            <React.Fragment key={section}>
-              <h3 className="text-lg mb-4 font-bold">{section}</h3>
-              <p className="mb-4">
-                {links.map(({ label, url }) => (
-                  <React.Fragment key={label}>
-                    <a key={label} href={url} target="_blank" rel="noreferrer">
-                      {label}
-                    </a>
-                    <br />
-                  </React.Fragment>
-                ))}
-              </p>
-            </React.Fragment>
-          ))}
-        </div>
+        <p className="mb-4">
+          If you do not know the county, select a hotspot from the Alphabetical list of {label} Hotspots. Or use the
+          “magnifying glass” search icon on the upper right to find a hotspot. Enter all or part of a hotspot name.
+        </p>
+        <EbirdHelpLinks />
+        <ReactMarkdown>{info}</ReactMarkdown>
       </div>
       <RareBirds region={`US-${code}`} label={label} className="mt-6" />
     </div>

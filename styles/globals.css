@@ -42,11 +42,25 @@
 	@apply mb-4;
 }
 
+.formatted h3 {
+	@apply mb-4;
+	@apply text-lg;
+	@apply font-bold;
+}
+
 .formatted cite {
 	font-size: 0.75em;
 	@apply not-italic;
 	@apply -mt-4;
 	@apply block;
+}
+
+.formatted p {
+	break-inside: avoid;
+}
+
+.formatted h3 {
+	break-after: avoid;
 }
 
 .formatted br + cite {

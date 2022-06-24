@@ -4,7 +4,7 @@ import { ParsedUrlQuery } from "querystring";
 import { getHotspotsByCounty } from "lib/mongo";
 import { getState, getCountyBySlug } from "lib/localData";
 import RegionMap from "components/RegionMap";
-import Heading from "components/Heading";
+import PageHeading from "components/PageHeading";
 import { State, Hotspot, County as CountyType } from "lib/types";
 import EbirdCountySummary from "components/EbirdCountySummary";
 import HotspotList from "components/HotspotList";
@@ -65,7 +65,7 @@ export default function County({ state, county, hotspots, topHotspots }: Props) 
   return (
     <div className="container pb-16">
       <Title isOhio={state.slug === "ohio"}>{`${name} County, ${state.label}`}</Title>
-      <Heading state={state}>{name} County</Heading>
+      <PageHeading state={state}>{name} County</PageHeading>
       <EditorActions>
         <Link href="/add">Add Hotspot</Link>
       </EditorActions>

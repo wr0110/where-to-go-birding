@@ -4,7 +4,7 @@ import { getState } from "lib/localData";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import OhioIBA from "data/oh-iba.json";
-import Heading from "components/Heading";
+import PageHeading from "components/PageHeading";
 import { State } from "lib/types";
 
 interface Params extends ParsedUrlQuery {
@@ -31,7 +31,7 @@ type Props = {
 export default function ImportantBirdAreas({ areas, state }: Props) {
   return (
     <div className="container pb-16 mt-12">
-      <Heading state={state}>Important Bird Areas</Heading>
+      <PageHeading state={state}>Important Bird Areas</PageHeading>
       <div className="md:flex gap-8 items-start mb-8">
         <div>
           <p className="mb-4">

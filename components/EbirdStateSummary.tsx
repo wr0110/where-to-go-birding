@@ -1,6 +1,6 @@
 import { State } from "lib/types";
 
-export default function EbirdStateSummary({ code, color, label, rareSid, needsSid, yearNeedsSid, portal }: State) {
+export default function EbirdStateSummary({ code, color, label, portal }: State) {
   const getUrl = (bMonth: number, eMonth: number) => {
     return `${base}/barchart?byr=1900&eyr=2060&bmo=${bMonth}&emo=${eMonth}&r=${code}`;
   };
@@ -61,14 +61,6 @@ export default function EbirdStateSummary({ code, color, label, rareSid, needsSi
       <a href={`${base}/region/${code}/media?yr=all&m=`} target="_blank" rel="noreferrer">
         Illustrated Checklist
       </a>
-      <br />
-      {rareSid && (
-        <p className="mb-1">
-          <strong>Rare Bird Alert</strong>
-          <br />
-          <a href={`${base}/alert/summary?sid=${rareSid}`}>{label}</a>
-        </p>
-      )}
       <p className="mb-1">
         <strong>Top eBirders</strong>
         <br />
@@ -115,19 +107,6 @@ export default function EbirdStateSummary({ code, color, label, rareSid, needsSi
           Month List
         </a>
       </p>
-      {needsSid && yearNeedsSid && (
-        <p className="mb-1">
-          <strong>Needs Alerts (birds you have not seen in {label})</strong>
-          <br />
-          <a href={`${base}/alert/summary?sid=${needsSid}`} rel="noreferrer" target="_blank">
-            Never Seen
-          </a>
-          &nbsp;–&nbsp;
-          <a href={`${base}/alert/summary?sid=${yearNeedsSid}`} rel="noreferrer" target="_blank">
-            Not Seen This Year
-          </a>
-        </p>
-      )}
     </section>
   );
 }

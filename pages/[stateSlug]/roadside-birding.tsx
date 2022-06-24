@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getRoadsideHotspotsByState } from "lib/mongo";
 import { restructureHotspotsByCounty } from "lib/helpers";
 import { getState } from "lib/localData";
-import Heading from "components/Heading";
+import PageHeading from "components/PageHeading";
 import { GetServerSideProps } from "next";
 import { HotspotsByCounty, State } from "lib/types";
 import ListHotspotsByCounty from "components/ListHotspotsByCounty";
@@ -31,7 +31,7 @@ export default function RoadsideBirding({ state, hotspots }: Props) {
   return (
     <div className="container pb-16 mt-12">
       <Title isOhio={state.code === "OH"}>Roadside Birding</Title>
-      <Heading state={state}>Roadside Birding</Heading>
+      <PageHeading state={state}>Roadside Birding</PageHeading>
       <div className="md:flex gap-8 items-start mb-8">
         <figure className="border p-2 bg-gray-200 text-center text-xs mb-4">
           <img src="/riddle-rd.jpg" className="md:min-w-[400px] mx-auto" />

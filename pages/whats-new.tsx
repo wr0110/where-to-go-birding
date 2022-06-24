@@ -1,5 +1,5 @@
 import { getLatestHotspots } from "lib/mongo";
-import Heading from "components/Heading";
+import PageHeading from "components/PageHeading";
 import { GetServerSideProps } from "next";
 import Title from "components/Title";
 import dayjs from "dayjs";
@@ -57,7 +57,7 @@ export default function WhatsNew({ hotspots }: Props) {
   return (
     <div className="container pb-16 mt-12">
       <Title>What&apos;s New</Title>
-      <Heading breadcrumbs={false}>What&apos;s New</Heading>
+      <PageHeading breadcrumbs={false}>What&apos;s New</PageHeading>
       <div>
         {hotspots.map(({ date, hotspots }) => (
           <div key={date}>

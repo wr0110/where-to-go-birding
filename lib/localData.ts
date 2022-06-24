@@ -1,24 +1,14 @@
 import States from "data/states.json";
-import StateLinks from "data/state-links.json";
 import OhioRegions from "data/oh-regions.json";
 import ArizonaCounties from "data/az-counties.json";
 import OhioCounties from "data/oh-counties.json";
 import { capitalize } from "./helpers";
-import { County, StateLinks as StateLinksType } from "lib/types";
+import { County } from "lib/types";
 
 const countyArrays: any = {
   OH: OhioCounties,
   AZ: ArizonaCounties,
 };
-
-type StateLinksMap = {
-  [x: string]: StateLinksType;
-};
-
-export function getStateLinks(code: string) {
-  const map = StateLinks as StateLinksMap;
-  return map[code] || [];
-}
 
 export function getState(param: string) {
   const data = States.find((state) => state.slug === param);

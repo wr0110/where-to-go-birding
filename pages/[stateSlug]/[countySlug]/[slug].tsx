@@ -11,7 +11,7 @@ import { getCountyBySlug, getState } from "lib/localData";
 import { County, State, Hotspot as HotspotType } from "lib/types";
 import EditorActions from "components/EditorActions";
 import HotspotList from "components/HotspotList";
-import Heading from "components/Heading";
+import PageHeading from "components/PageHeading";
 import DeleteBtn from "components/DeleteBtn";
 import Title from "components/Title";
 import Slideshow from "components/Slideshow";
@@ -95,9 +95,9 @@ export default function Hotspot({
   return (
     <div className="container pb-16">
       <Title isOhio={state.code === "OH"}>{name}</Title>
-      <Heading state={state} county={county}>
+      <PageHeading state={state} county={county}>
         {name}
-      </Heading>
+      </PageHeading>
       <EditorActions>
         <Link href={`/edit/${locationId}`}>Edit Hotspot</Link>
         {!parent && <Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>}

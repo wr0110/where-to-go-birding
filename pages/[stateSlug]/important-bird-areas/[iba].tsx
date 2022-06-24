@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getState } from "lib/localData";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
-import Heading from "components/Heading";
+import PageHeading from "components/PageHeading";
 import OhioIBA from "data/oh-iba.json";
 import { State, IBA, HotspotsByCounty } from "lib/types";
 import { getIBAHotspots } from "lib/mongo";
@@ -51,7 +51,7 @@ export default function ImportantBirdAreas({
   const region = ebirdCode || locationIds.join(",");
   return (
     <div className="container pb-16 mt-12">
-      <Heading state={state}>{name} Important Bird Area</Heading>
+      <PageHeading state={state}>{name} Important Bird Area</PageHeading>
       <div className="md:grid grid-cols-2 gap-12">
         <div>
           <p className="font-bold mb-6">

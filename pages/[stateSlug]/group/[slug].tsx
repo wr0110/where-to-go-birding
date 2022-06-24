@@ -7,7 +7,7 @@ import AboutSection from "components/AboutSection";
 import { getCountyByCode, getState } from "lib/localData";
 import { State, HotspotsByCounty, Hotspot as HotspotType } from "lib/types";
 import EditorActions from "components/EditorActions";
-import Heading from "components/Heading";
+import PageHeading from "components/PageHeading";
 import EbirdBarcharts from "components/EbirdBarcharts";
 import { restructureHotspotsByCounty } from "lib/helpers";
 import ListHotspotsByCounty from "components/ListHotspotsByCounty";
@@ -104,7 +104,7 @@ export default function GroupHotspot({
   return (
     <div className="container pb-16">
       <Title isOhio={state.slug === "ohio"}>{name}</Title>
-      <Heading state={state}>{name}</Heading>
+      <PageHeading state={state}>{name}</PageHeading>
       <EditorActions>
         <Link href={`/edit/group/${_id}`}>Edit Hotspot</Link>
         <Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>
