@@ -45,7 +45,9 @@ export default function Contact() {
   const handleSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true);
     setSuccess(false);
+    // @ts-ignore
     window.grecaptcha.ready(() => {
+      // @ts-ignore
       window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_KEY, { action: "submit" }).then((token: string) => {
         console.log("TOKEN", token);
         post({ ...data, token });
