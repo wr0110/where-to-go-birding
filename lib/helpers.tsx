@@ -84,7 +84,7 @@ export function restructureHotspotsByCounty(hotspots: Hotspot[]) {
 export async function geocode(lat: number, lng: number) {
   console.log("Geocoding", lat, lng);
   try {
-    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_GEOCODE_KEY;
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_KEY;
     if (!apiKey) return {};
     Geocode.setApiKey(apiKey);
     Geocode.setRegion("us");

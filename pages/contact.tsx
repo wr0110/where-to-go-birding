@@ -8,6 +8,7 @@ import Submit from "components/Submit";
 import Title from "components/Title";
 import Field from "components/Field";
 import { CheckCircleIcon } from "@heroicons/react/outline";
+import useRecaptcha from "hooks/useRecaptcha";
 
 type Inputs = {
   locationId: string;
@@ -17,10 +18,9 @@ export default function Contact() {
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const form = useForm<Inputs>();
+  useRecaptcha();
 
-  const handleSubmit: SubmitHandler<Inputs> = async (data) => {
-    setLoading(true);
-    setSuccess(false);
+  const post = async (data: any) => {
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -41,6 +41,18 @@ export default function Contact() {
       alert("Error submitting form");
     }
   };
+
+  const handleSubmit: SubmitHandler<Inputs> = async (data) => {
+    setLoading(true);
+    setSuccess(false);
+    window.grecaptcha.ready(() => {
+      window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_KEY, { action: "submit" }).then((token: string) => {
+        console.log("TOKEN", token);
+        post({ ...data, token });
+      });
+    });
+  };
+
   return (
     <div className="container pb-16 mt-12">
       <Title>How to Help</Title>
