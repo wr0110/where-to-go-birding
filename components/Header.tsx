@@ -4,6 +4,7 @@ import NavItem from "components/NavItem";
 import Link from "next/link";
 import Search from "components/Search";
 import { SearchIcon } from "@heroicons/react/outline";
+import Logo from "components/Logo";
 
 export default function Header() {
   const [collapsed, setCollapsed] = React.useState<boolean>(false);
@@ -24,17 +25,14 @@ export default function Header() {
           <div className="sm:flex justify-between py-2 items-center">
             <Link href="/">
               <a className="flex gap-2 items-center">
-                <img
-                  src="/logo.jpg"
-                  className={`w-[50px] ${!collapsed ? "md:w-[100px]" : ""} transition-all duration-300 h-auto`}
-                />
+                <Logo className={`w-[50px] ${!collapsed ? "md:w-[85px]" : ""} transition-all duration-300 h-auto`} />
                 <div className="flex flex-col justify-center">
                   <h1
                     className={`text-lg ${!collapsed ? "md:text-3xl" : ""} text-gray-900 transition-all duration-300`}
                   >
-                    eBird Hotspots
+                    Birding Hotspots
                   </h1>
-                  <em className="text-[0.8em] leading-4 text-gray-500">Where to Go Birding</em>
+                  <em className="text-[0.8em] leading-4 text-[#92ad39] font-medium">Where to Go Birding</em>
                 </div>
               </a>
             </Link>

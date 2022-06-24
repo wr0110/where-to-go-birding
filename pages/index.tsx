@@ -56,7 +56,7 @@ export default function Home() {
           </p>
           <h3 className="text-lg font-bold mb-4">Links to eBird website</h3>
           <p className="mb-4">
-            <a href="https://ohio.com/about-ebird" target="_blank" rel="noreferrer">
+            <a href="https://birding-in-ohio.com/about-ebird" target="_blank" rel="noreferrer">
               About eBird
             </a>
             <br />
@@ -82,11 +82,15 @@ export default function Home() {
           </p>
           <h3 className="text-lg font-bold mb-4">Links to eBird website</h3>
           <p className="mb-4">
-            <a href="https://ohio.com/change-location-of-a-checklist/" target="_blank" rel="noreferrer">
+            <a href="https://birding-in-ohio.com/change-location-of-a-checklist/" target="_blank" rel="noreferrer">
               How to change the location of a checklist
             </a>
             <br />
-            <a href="https://ohio.com/merge-personal-location-with-a-hotspot/" target="_blank" rel="noreferrer">
+            <a
+              href="https://birding-in-ohio.com/merge-personal-location-with-a-hotspot/"
+              target="_blank"
+              rel="noreferrer"
+            >
               How to merge a personal location with an eBird Hotspot
             </a>
             <br />
@@ -98,11 +102,15 @@ export default function Home() {
               How to share a checklist with other birders
             </a>
             <br />
-            <a href="https://ohio.com/suggest-personal-location-as-a-hotspot/" target="_blank" rel="noreferrer">
+            <a
+              href="https://birding-in-ohio.com/suggest-personal-location-as-a-hotspot/"
+              target="_blank"
+              rel="noreferrer"
+            >
               How to suggest a personal location as a new eBird Hotspot
             </a>
             <br />
-            <a href="https://ohio.com/life-list-personal-location/">
+            <a href="https://birding-in-ohio.com/life-list-personal-location/">
               How to get a “life list” of bird species at a personal location
             </a>
           </p>

@@ -47,7 +47,7 @@ export default function EbirdDescription() {
           How to suggest a personal location as a new eBird Hotspot
         </a>
         <br />
-        <a href="https://ohio.com/life-list-personal-location/" target="_blank" rel="noreferrer">
+        <a href="https://birding-in-ohio.com/life-list-personal-location/" target="_blank" rel="noreferrer">
           How to get a “life list” of bird species at a personal location
         </a>
         <br />

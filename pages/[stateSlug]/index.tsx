@@ -1,4 +1,3 @@
-import * as React from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Link from "next/link";
@@ -69,8 +68,6 @@ export default function State({ state, counties, topHotspots, info }: Props) {
 
   const map = maps[code];
 
-  const countyListCols = counties?.length > 20 ? "columns-2 xs:columns-3 sm:columns-5" : "columns-3 sm:columns-4";
-
   return (
     <div className="container pb-16 mt-12">
       <Title isOhio={slug === "ohio"}>{slug === "ohio" ? "" : `Birding in ${label}`}</Title>
@@ -113,18 +110,18 @@ export default function State({ state, counties, topHotspots, info }: Props) {
         </div>
       </div>
 
-      <div className={counties?.length > 20 ? "block" : `grid md:grid-cols-2 gap-12`}>
+      <div className="grid md:grid-cols-2 gap-12">
         <section>
           <Heading id="hotspots" color="green" className="mt-12 mb-8">
             Top Hotspots in {label}
           </Heading>
-          <TopHotspotList hotspots={topHotspots} className={counties?.length > 20 ? "md:columns-2" : ""} />
+          <TopHotspotList hotspots={topHotspots} />
         </section>
-        <section className="mb-8">
+        <section className="mb-8 flex flex-col">
           <Heading id="hotspots" color="green" className="mt-12 mb-8">
             {label} Counties
           </Heading>
-          <div className={`${countyListCols} h-full`} style={{ columnFill: "auto" }}>
+          <div className="columns-3 sm:columns-4 flex-grow" style={{ columnFill: "auto" }}>
             {counties?.map(({ name, slug: countySlug, ebirdCode, active }) => (
               <p key={name}>
                 {active ? (
@@ -147,30 +144,53 @@ export default function State({ state, counties, topHotspots, info }: Props) {
       </Heading>
 
       <div className="md:columns-2 gap-16 formatted">
-        <EbirdDescription />
-        <h3 className="text-lg mb-4 font-bold">Finding Birding Locations in {label}</h3>
-        <p className="mb-4">
-          This website provides descriptions and maps of eBird Hotspots in {label}. In eBird, Hotspots are shared
-          locations where birders may report their bird sightings to eBird. Hotspots provide birders with information
-          about birding locations where birds are being seen.
-        </p>
-
-        <p className="mb-4">
-          Hotspots are organized by county. If you know the county of a location, click on the county name in the{" "}
-          <a href="#counties" onClick={scrollToAnchor}>
-            Alphabetical list of {label} Counties
-          </a>{" "}
-          to access information about birds and all the eBird hotspots in that county.
-        </p>
-
-        <p className="mb-4">
-          If you do not know the county, select a hotspot from the Alphabetical list of {label} Hotspots. Or use the
-          “magnifying glass” search icon on the upper right to find a hotspot. Enter all or part of a hotspot name.
-        </p>
-        <EbirdHelpLinks />
         <ReactMarkdown>{info}</ReactMarkdown>
       </div>
-      <RareBirds region={`US-${code}`} label={label} className="mt-6" />
+      <hr className="my-8 opacity-70" />
+      <div className="grid md:grid-cols-2 gap-12">
+        <div>
+          <h3 className="text-lg mb-4 font-bold">Finding Birding Locations in {label}</h3>
+          <p className="mb-4">
+            This website provides descriptions and maps of eBird Hotspots in {label}. In eBird, Hotspots are shared
+            locations where birders may report their bird sightings to eBird. Hotspots provide birders with information
+            about birding locations where birds are being seen.
+          </p>
+          <p className="mb-4">
+            Hotspots are organized by county. If you know the county of a location, click on the county name in the{" "}
+            <a href="#counties" onClick={scrollToAnchor}>
+              Alphabetical list of {label} Counties
+            </a>{" "}
+            to access information about birds and all the eBird hotspots in that county.
+          </p>
+          <p className="mb-4">
+            If you do not know the county, select a hotspot from the Alphabetical list of {label} Hotspots. Or use the
+            “magnifying glass” search icon on the upper right to find a hotspot. Enter all or part of a hotspot name.
+          </p>
+          <h3 className="text-lg mb-4 font-bold">Resources</h3>
+          <a href="https://www.allaboutbirds.org/" target="_blank" rel="noreferrer">
+            All About Birds
+          </a>{" "}
+          – online bird guide
+          <br />
+          <a href="https://birdsoftheworld.org/bow/home" target="_blank" rel="noreferrer">
+            Birds of the World
+          </a>
+          <br />
+          <a href="http://www.pwrc.usgs.gov/BBL/MANUAL/speclist.cfm" target="_blank" rel="noreferrer">
+            Alpha Codes (4-letter)
+          </a>
+          <br />
+          <a href="http://www.aba.org/about/ethics.html" target="_blank" rel="noreferrer">
+            Code of Birding Ethics
+          </a>
+          <br />
+        </div>
+        <div>
+          <EbirdDescription />
+          <EbirdHelpLinks />
+        </div>
+      </div>
+      <RareBirds region={`US-${code}`} label={label} className="mt-12" />
     </div>
   );
 }

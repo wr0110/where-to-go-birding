@@ -1,11 +1,3 @@
-### Resources
-
-[Books on Birding in Ohio](/books-on-birding-in-ohio)  
-[All About Birds](https://www.allaboutbirds.org) – online bird guide  
-[Birds of the World](https://birdsoftheworld.org/bow/home)  
-[Alpha Codes (4-letter)](http://www.pwrc.usgs.gov/BBL/MANUAL/speclist.cfm)  
-[Code of Birding Ethics](http://www.aba.org/about/ethics.html)
-
 ### Websites about Birding in Ohio
 
 [Ohio Ornithological Society](https://ohiobirds.org/)  
@@ -17,6 +9,10 @@
 [A Birder’s Guide to the Biggest Week by Greg Miller](http://www.gregmillerbirding.com/2013/04/a-birders-guide-to-the-biggest-week/)  
 [Best Bets for Birding Crane Creek/Magee Marsh](http://cranecreekbirding.blogspot.com/)  
 [Ohio-birds email list (Ohio Ornithological Society)](https://ohiobirds.org/birding-discussion-mailing-list/)
+
+### Books
+
+[Books on Birding in Ohio](/books-on-birding-in-ohio)
 
 ### Facebook and Other Groups
 
