@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="container pb-16 mt-12">
       <Title />
-      <PageHeading breadcrumbs={false}>Welcome to eBird Hotspots</PageHeading>
+      <PageHeading breadcrumbs={false}>Welcome to Birding Hotspots</PageHeading>
       <h3 className="text-lg mb-4 font-bold">United States</h3>
       <p className="mb-4">
         Links in plain text are to pages in the eBird website. Links in <strong>bold text</strong> are to pages in this
