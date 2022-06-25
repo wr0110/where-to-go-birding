@@ -4,7 +4,7 @@ export default function OhioFooter() {
       <div className="container grid md:grid-cols-4 gap-8">
         <div className="flex gap-2 flex-col">
           <a href="https://ohiobirds.org/" className="text-white" target="_blank" rel="noreferrer">
-            <img src="/oh-logo.jpg" width={200} className="bpx-2 py-1 rounded bg-white" />
+            <img src="/oh-logo.jpg" width={200} className="px-2 py-1 rounded bg-white" />
           </a>
           <p>
             The Ohio section of this site is provided by the&nbsp;
