@@ -8,7 +8,8 @@
     "prebuild": "npm run top10",
     "start": "next start",
     "lint": "next lint",
-    "top10": "node --experimental-json-modules ./fetchTop10.mjs"
+    "top10": "node --experimental-json-modules ./fetchTop10.mjs",
+    "migrate": "node --experimental-json-modules ./migrate.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.4",
@@ -21,6 +22,7 @@
     "dayjs": "^1.11.3",
     "firebase": "^9.8.2",
     "firebase-admin": "^10.3.0",
+    "jsdom": "^20.0.0",
     "mongoose": "^6.3.5",
     "next": "12.1.6",
     "nodemailer": "^6.7.5",

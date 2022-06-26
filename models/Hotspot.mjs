@@ -66,6 +66,10 @@ const HotspotSchema = new Schema({
 		value: String,
 		label: String,
 	},
+	drive: {
+		value: String,
+		label: String,
+	},
 	images: [{
 		smUrl: String,
 		lgUrl: String,
@@ -73,12 +77,15 @@ const HotspotSchema = new Schema({
 		isMap: Boolean,
 		width: Number,
 		height: Number,
+		legacy: Boolean,
 	}],
 	createdAt: {
 		type: "string",
 		default: dayjs().format("YYYY-MM-DD"),
 		required: true
 	},
+	migrateParentSlug: String, //TODO remove
+	reviewed: Boolean, //TODO remove
 });
 
 const Hotspot = models.Hotspot || model("Hotspot", HotspotSchema);

@@ -85,6 +85,7 @@ export default function GroupHotspot({
   countySlugs,
   images,
   childIds,
+  slug,
 }: Props) {
   let extraLinks = [];
   if (roadside === "Yes") {
@@ -108,6 +109,9 @@ export default function GroupHotspot({
       <EditorActions>
         <Link href={`/edit/group/${_id}`}>Edit Hotspot</Link>
         <Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>
+        <a href={`https://birding-in-ohio.com/${slug}`} target="_blank" rel="noreferrer">
+          Old Website
+        </a>
         <DeleteBtn id={_id || ""} className="ml-auto" />
       </EditorActions>
       <div className="grid md:grid-cols-2 gap-12">
