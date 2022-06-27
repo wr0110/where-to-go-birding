@@ -106,6 +106,7 @@ export default function Edit({ id, isNew, data, state }: Props) {
         tips: tipsRef.current.getContent() || "",
         birds: birdsRef.current.getContent() || "",
         hikes: hikesRef.current.getContent() || "",
+        reviewed: true, //TODO: Remove after migration
       },
     });
     setSaving(false);

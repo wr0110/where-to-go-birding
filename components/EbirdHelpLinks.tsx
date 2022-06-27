@@ -1,7 +1,7 @@
 export default function EbirdDescription() {
   return (
     <>
-      <h3 className="text-lg mb-4 font-bold">Tips and How to Help</h3>
+      <h3 className="text-lg mb-1.5 font-bold">Tips and How to Help</h3>
       <p className="mb-4">
         <a href="https://ebird.org/about" target="_blank" rel="noreferrer">
           About eBird

@@ -120,6 +120,7 @@ export default function Edit({ id, isNew, data, error }: Props) {
         tips: tipsRef.current.getContent() || "",
         birds: birdsRef.current.getContent() || "",
         hikes: hikesRef.current.getContent() || "",
+        reviewed: true, //TODO: Remove after migration
       },
     });
     setSaving(false);
@@ -234,8 +235,8 @@ export default function Edit({ id, isNew, data, error }: Props) {
               <RadioGroup name="restrooms" label="Restrooms on site" options={["Yes", "No", "Unknown"]} />
               <RadioGroup
                 name="accessible"
-                label="Accessible facilities"
-                options={["ADA", "Birdability", "No", "Unknown"]}
+                label="Has wheelchair accessible trails"
+                options={["Yes", "No", "Unknown"]}
               />
               <RadioGroup name="roadside" label="Roadside accessible" options={["Yes", "No", "Unknown"]} />
               <RadioGroup name="dayhike" label="Show in Day Hike index" options={["Yes", "No"]} />

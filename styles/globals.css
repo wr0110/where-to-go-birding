@@ -44,7 +44,7 @@
 }
 
 .formatted h3 {
-	@apply mb-4;
+	@apply mb-1.5;
 	@apply text-lg;
 	@apply font-bold;
 }

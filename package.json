@@ -9,7 +9,9 @@
     "start": "next start",
     "lint": "next lint",
     "top10": "node --experimental-json-modules ./fetchTop10.mjs",
-    "migrate": "node --experimental-json-modules ./migrate.mjs"
+    "migrate": "node --experimental-json-modules ./migrate.mjs",
+    "migrate-indexes": "node --experimental-json-modules ./migrateIndexes.mjs",
+    "migrate-parents": "node --experimental-json-modules ./migrateParents.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.4",

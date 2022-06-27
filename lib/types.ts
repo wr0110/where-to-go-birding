@@ -63,6 +63,7 @@ export type Hotspot = {
     label: string;
   };
   images?: Image[];
+  reviewed: boolean; //TODO: remove after migration
 };
 
 export interface HotspotInputs extends Hotspot {

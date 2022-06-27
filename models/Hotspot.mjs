@@ -49,13 +49,13 @@ const HotspotSchema = new Schema({
 	},
 	accessible: {
 		type: String,
-		enum: ["ADA", "Birdability", "No", "Unknown"],
+		enum: ["Yes", "No", "Unknown"],
 		default: "Unknown",
 	},
 	dayhike: {
 		type: String,
-		enum: ["Yes", "No", "Unknown"],
-		default: "Unknown",
+		enum: ["Yes", "No"],
+		default: "No",
 	},
 	parent: {
 		type: Schema.Types.ObjectId,
@@ -85,6 +85,7 @@ const HotspotSchema = new Schema({
 		required: true
 	},
 	migrateParentSlug: String, //TODO remove
+	migrateParentGroupSlug: String, //TODO remove
 	reviewed: Boolean, //TODO remove
 });
 

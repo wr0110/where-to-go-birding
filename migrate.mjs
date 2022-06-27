@@ -1,6 +1,5 @@
 import { JSDOM } from "jsdom";
 import fetch from "node-fetch";
-import fs from "fs";
 import mongoose from "mongoose";
 import Hotspot from "./models/Hotspot.mjs";
 import dotenv from "dotenv";
@@ -12,9 +11,9 @@ import IBA from "./data/oh-iba.json" assert {type: "json"};
 const URI = process.env.MONGO_URI;
 mongoose.connect(URI);
 
+const county = "mercer";
 const state = "ohio";
 const stateCode = "OH";
-const county = "mercer";
 const base = "https://birding-in-ohio.com";
 
 async function getEbirdHotspot(locationId) {
@@ -34,7 +33,7 @@ const getHotspots = async () => {
 	return Array.from(links).map(link => link.href.replace(/\/$/, ""));
 }
 
-const hotspots = await Hotspot.find({ state: stateCode }, ["slug"]);
+const hotspots = await Hotspot.find({ state: stateCode }, ["slug", "locationId"]);
 console.log(`Fetched ${hotspots.length} hotspots from DB`);
 
 const links = await getHotspots();
@@ -44,8 +43,6 @@ let filteredLinks = links.filter(link => {
 	const slug = link.split("/").pop();
 	return !hotspots.find(hotspot => hotspot.slug === slug);
 });
-
-//filteredLinks = filteredLinks.slice(0, 1);
 
 console.log(`Filtered out ${links.length - filteredLinks.length} links`);
 
@@ -153,6 +150,11 @@ await Promise.all(filteredLinks.map(async (link) => {
 	let multiCounties = null;
 
 	if (locationId) {
+		const alreadyExists = hotspots.find(hotspot => hotspot.locationId === locationId);
+		if (alreadyExists) {
+			console.log(`${counter}. Skipping, "${slug}" with eBird ID "${locationId}" already exists`);
+			return;
+		}
 		const ebirdData = await getEbirdHotspot(locationId);
 		if (!ebirdData) {
 			console.log("No ebird data found");
@@ -164,6 +166,13 @@ await Promise.all(filteredLinks.map(async (link) => {
 	} else {
 		if (!locationId) console.log("No locID");
 		name = doc.querySelector("h1")?.textContent?.trim() || null;
+
+		const countyImages = doc.querySelectorAll("img[src$='-county-map.jpg']");
+		multiCounties = Array.from(countyImages).map(img => {
+			const slug = img.src.split("/").pop()?.replace("-county-map.jpg", "");
+			if (!slug) return;
+			return Counties.find(it => it.slug === slug);
+		}).filter(item => item);
 	}
 
 	const intro = doc.querySelector(".et_pb_text_inner");
@@ -251,13 +260,14 @@ await Promise.all(filteredLinks.map(async (link) => {
 		migrateParentGroupSlug: migrateParentGroupSlug || null,
 		reviewed: false,
 	}
-	//await Hotspot.create(data);
+	await Hotspot.create(data);
 	console.log(`${counter}. Saved`, name);
 	counter++;
 }));
 
-mongoose.connection.close()
+mongoose.connection.close();
 
 //TODO sync with index pages
 //TODO assign multiCounties
 //TODO verify that all smUrls are actually small
+//TODO: Don't allow "Unknown" in day hike radio button

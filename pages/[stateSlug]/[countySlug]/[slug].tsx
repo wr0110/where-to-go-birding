@@ -136,7 +136,7 @@ export default function Hotspot({
 
           {childLocations.length > 0 && (
             <div className="mb-6">
-              <h3 className="mb-4 font-bold">Locations</h3>
+              <h3 className="mb-1.5 font-bold text-lg">Locations</h3>
               <HotspotList hotspots={childLocations} />
             </div>
           )}

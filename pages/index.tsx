@@ -41,7 +41,7 @@ export default function Home() {
             Ken Ostermiller, a volunteer hotspot reviewer for eBird, created and manages the website.
           </p>
           <EbirdDescription />
-          <h3 className="text-lg font-bold mb-4">eBird can help you</h3>
+          <h3 className="text-lg font-bold mb-1.5">eBird can help you</h3>
           <p className="mb-4">
             + Record the birds you see+ Keep track of your bird lists
             <br />+ Explore dynamic maps and graphs
@@ -54,7 +54,7 @@ export default function Home() {
             In eBird, Hotspots are shared locations where birders may report their bird sightings to eBird. Hotspots
             provide birders with information about birding locations where birds are being seen.
           </p>
-          <h3 className="text-lg font-bold mb-4">Links to eBird website</h3>
+          <h3 className="text-lg font-bold mb-1.5">Links to eBird website</h3>
           <p className="mb-4">
             <a href="https://birding-in-ohio.com/about-ebird" target="_blank" rel="noreferrer">
               About eBird
@@ -80,7 +80,7 @@ export default function Home() {
               eBird Facebook page
             </a>
           </p>
-          <h3 className="text-lg font-bold mb-4">Links to eBird website</h3>
+          <h3 className="text-lg font-bold mb-1.5">Links to eBird website</h3>
           <p className="mb-4">
             <a href="https://birding-in-ohio.com/change-location-of-a-checklist/" target="_blank" rel="noreferrer">
               How to change the location of a checklist

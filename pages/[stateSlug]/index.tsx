@@ -86,7 +86,7 @@ export default function State({ state, counties, topHotspots, info }: Props) {
       </EditorActions>
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
         <div>
-          <h3 className="text-lg mb-4 font-bold">Where to Go Birding in {label}</h3>
+          <h3 className="text-lg mb-1.5 font-bold">Where to Go Birding in {label}</h3>
           <p className="mb-4">
             <a href="#counties" onClick={scrollToAnchor}>
               Alphabetical list of {label} Counties
@@ -149,7 +149,7 @@ export default function State({ state, counties, topHotspots, info }: Props) {
       <hr className="my-8 opacity-70" />
       <div className="grid md:grid-cols-2 gap-12">
         <div>
-          <h3 className="text-lg mb-4 font-bold">Finding Birding Locations in {label}</h3>
+          <h3 className="text-lg mb-1.5 font-bold">Finding Birding Locations in {label}</h3>
           <p className="mb-4">
             This website provides descriptions and maps of eBird Hotspots in {label}. In eBird, Hotspots are shared
             locations where birders may report their bird sightings to eBird. Hotspots provide birders with information
@@ -166,7 +166,7 @@ export default function State({ state, counties, topHotspots, info }: Props) {
             If you do not know the county, select a hotspot from the Alphabetical list of {label} Hotspots. Or use the
             “magnifying glass” search icon on the upper right to find a hotspot. Enter all or part of a hotspot name.
           </p>
-          <h3 className="text-lg mb-4 font-bold">Resources</h3>
+          <h3 className="text-lg mb-1.5 font-bold">Resources</h3>
           <a href="https://www.allaboutbirds.org/" target="_blank" rel="noreferrer">
             All About Birds
           </a>{" "}

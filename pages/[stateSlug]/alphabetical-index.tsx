@@ -7,6 +7,7 @@ import { ParsedUrlQuery } from "querystring";
 import PageHeading from "components/PageHeading";
 import Title from "components/Title";
 import { State } from "lib/types";
+import { useUser } from "providers/user";
 
 interface Params extends ParsedUrlQuery {
   stateSlug: string;
@@ -32,11 +33,13 @@ type Props = {
   hotspots: {
     name: string;
     url: string;
+    reviewed: boolean;
   }[];
 };
 
 export default function AlphabeticalIndex({ state, hotspots, activeLetters }: Props) {
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  const { user } = useUser(); //TODO: Remove after migration
   return (
     <div className="container pb-16 mt-12">
       <Title isOhio={state.code === "OH"}>Alphabetical Index</Title>
@@ -67,7 +70,7 @@ export default function AlphabeticalIndex({ state, hotspots, activeLetters }: Pr
           );
         })}
       </p>
-      {hotspots.map(({ name, url }, i, array) => {
+      {hotspots.map(({ name, url, reviewed }, i, array) => {
         const prev = i === 0 ? null : array[i - 1];
         const showLetter = prev ? name.charAt(0) !== prev.name.charAt(0) : true;
         return (
@@ -78,6 +81,15 @@ export default function AlphabeticalIndex({ state, hotspots, activeLetters }: Pr
               </h2>
             )}
             <Link href={url}>{name}</Link>
+            {reviewed === false &&
+              user && ( //TODO: Remove after migration
+                <span
+                  className="bg-yellow-500 rounded-full text-xs w-4 h-4 text-white font-bold inline-flex justify-center items-center ml-2"
+                  title="Not Reviewed"
+                >
+                  !
+                </span>
+              )}
             <br />
           </React.Fragment>
         );
