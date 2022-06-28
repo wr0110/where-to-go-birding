@@ -98,7 +98,7 @@ export default function GroupHotspot({
   if (iba) {
     extraLinks.push({
       label: `${iba.label} Important Bird Area`,
-      url: `/${state.slug}/important-birding-areas/${iba.value}`,
+      url: `/${state.slug}/important-bird-areas/${iba.value}`,
     });
   }
 
@@ -175,7 +175,9 @@ export default function GroupHotspot({
           </div>
         </div>
         <div>
-          <div className="xs:grid md:block lg:grid grid-cols-2 gap-12 mb-16">
+          <div
+            className={`xs:grid md:block lg:grid ${countySlugs?.length > 1 ? "grid-cols-2" : "px-[25%]"} gap-12 mb-16`}
+          >
             {state.slug === "ohio" &&
               countySlugs?.map((slug) => (
                 <Link key={slug} href={`/${state.slug}/${slug}-county`}>

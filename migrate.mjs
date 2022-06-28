@@ -11,10 +11,16 @@ import IBA from "./data/oh-iba.json" assert {type: "json"};
 const URI = process.env.MONGO_URI;
 mongoose.connect(URI);
 
-const county = "mercer";
+const county = "allen";
+const dryRun = false;
+const nameExceptions = [];
 const state = "ohio";
 const stateCode = "OH";
 const base = "https://birding-in-ohio.com";
+
+if (dryRun) {
+	console.log("--------------------Dry run--------------------");
+}
 
 async function getEbirdHotspot(locationId) {
   const key = process.env.NEXT_PUBLIC_EBIRD_API;
@@ -98,6 +104,8 @@ const processAbout = (html) => {
 		content = content.replaceAll('href="/', `href="/${state}/`);
 		content = content.replaceAll('&lt;', "<");
 		content = content.replaceAll('&gt;', ">");
+		content = content.replaceAll('<small>', "");
+		content = content.replaceAll('</small>', "");
 		if (!p.textContent.includes("restroom facilities") && !p.textContent.includes("handicap accessible facilities")) {
 			data[current] += content?.trim() || "";
 		}
@@ -107,7 +115,7 @@ const processAbout = (html) => {
 }
 
 const processImages = (maps, images, photographer) => {
-	const mapArray = maps ? Array.from(maps).filter(img => !img.src.includes(`${county}-county-map.jpg`)).map(map => ({
+	const mapArray = maps ? Array.from(maps).filter(img => !img.src.includes(`-county-map.jpg`) && !img.src.includes(`-county-map-g.jpg`)).map(map => ({
 		smUrl: map.src,
 		lgUrl: null,
 		by: null,
@@ -130,18 +138,35 @@ const processImages = (maps, images, photographer) => {
 	return [...mapArray, ...imgArray];
 }
 
+const checkIfNamesMatch = (ebird, h1) => {
+	if (!ebird || !h1) return false;
+	if (ebird === h1) return true;
+	h1 = h1.replaceAll("Road", "Rd.");
+	if (ebird === h1) return true;
+	h1 = h1.replaceAll("-", "--");
+	if (ebird === h1) return true;
+	h1 = h1.replaceAll("–", "--"); //en dash
+	if (ebird === h1) return true;
+	if (nameExceptions.includes(ebird) || nameExceptions.includes(h1)) return true;
+	return false;
+}
+
 let counter = 1;
 
 await Promise.all(filteredLinks.map(async (link) => {
-	console.log(`${counter}. Scraping`, link);
 	const request = await fetch(`${base}/${link}`);
+	console.log(`${counter}. Scraping`, link);
 	const html = await request.text();
 	const dom = new JSDOM(html);
 	const doc = dom.window.document;
 	const slug = link.split("/").pop();
 	const locLink = doc.querySelector(`a[href*='submit/effort?locID']`);
 	const isGroup = !link.startsWith(`/${county}-county/`);
-	const locationId = isGroup ? null : getLocationId(locLink.href);
+	if (isGroup && !locLink) {
+		throw new Error(`No locID found for ${link}`);
+	}
+	const h1Name = doc.querySelector("h1")?.textContent?.trim()?.replace("National Park", "NP") || null;
+	let locationId = isGroup ? null : getLocationId(locLink.href);
 
 	let name = null;
 	let lat = null;
@@ -150,28 +175,34 @@ await Promise.all(filteredLinks.map(async (link) => {
 	let multiCounties = null;
 
 	if (locationId) {
-		const alreadyExists = hotspots.find(hotspot => hotspot.locationId === locationId);
-		if (alreadyExists) {
-			console.log(`${counter}. Skipping, "${slug}" with eBird ID "${locationId}" already exists`);
-			return;
-		}
 		const ebirdData = await getEbirdHotspot(locationId);
 		if (!ebirdData) {
-			console.log("No ebird data found");
+			console.log(`WARNING: No ebird data found for ${slug}`);
 		}
-		name = ebirdData?.name || null;
-		lat = ebirdData?.latitude || null
-		lng = ebirdData?.longitude || null;
-		countyCode = ebirdData?.subnational2Code || null;
-	} else {
+		if (!checkIfNamesMatch(ebirdData?.name, h1Name)) {
+			console.log(`WARNING: mismatch: ${h1Name} vs ${ebirdData.name}. Setting locationId to null`);
+			locationId = null;
+		} else {
+			const alreadyExists = await Hotspot.findOne({ locationId });
+			if (alreadyExists) {
+				console.log(`WARNING: Skipping "${slug}" with eBird ID "${locationId}" already exists`);
+				return;
+			}
+			name = ebirdData?.name || null;
+			lat = ebirdData?.latitude || null
+			lng = ebirdData?.longitude || null;
+			countyCode = ebirdData?.subnational2Code || null;
+		}
+	}
+	if (!locationId) {
 		if (!locationId) console.log("No locID");
-		name = doc.querySelector("h1")?.textContent?.trim() || null;
+		name = h1Name;
 
 		const countyImages = doc.querySelectorAll("img[src$='-county-map.jpg']");
 		multiCounties = Array.from(countyImages).map(img => {
 			const slug = img.src.split("/").pop()?.replace("-county-map.jpg", "");
 			if (!slug) return;
-			return Counties.find(it => it.slug === slug);
+			return Counties.find(it => it.slug === slug)?.ebirdCode;
 		}).filter(item => item);
 	}
 
@@ -201,10 +232,6 @@ await Promise.all(filteredLinks.map(async (link) => {
 	const ibaName = IBA.find(iba => iba.slug === ibaSlug)?.name;
 	if (ibaSlug && !ibaName) console.error(`No IBA match: ${ibaSlug}`);
 
-	const driveLink = intro.querySelector(`a[href*='ohio-birding-drives/']`);
-	let driveSlug = driveLink?.href?.split("ohio-birding-drives/")?.pop();
-	driveSlug = driveSlug?.replace("/", "");
-
 	const strongs = intro.querySelectorAll("strong");
 	for (const strong of strongs) {
 		strong.remove();
@@ -219,14 +246,53 @@ await Promise.all(filteredLinks.map(async (link) => {
 	}
 	const address = intro.textContent.trim();
 
-	const aboutHtml = doc.querySelector(".et_pb_column_2 .et_pb_text_9 .et_pb_text_inner");
-	if (!aboutHtml) console.log("No about");
-	const { tips, birds, about, hikes } = processAbout(aboutHtml);
+	const aboutHtmlAttempt1 = doc.querySelector(".et_pb_column_2 .et_pb_text_9 .et_pb_text_inner");
+	const aboutHtmlAttempt2 = doc.querySelector(".et_pb_column_2 .et_pb_text_10 .et_pb_text_inner");
+	const aboutHtmlAttempt3 = doc.querySelector(".et_pb_column_2 .et_pb_text_11 .et_pb_text_inner");
+	const aboutHtml = aboutHtmlAttempt1 || aboutHtmlAttempt2 || aboutHtmlAttempt3;
+	if (!aboutHtml) console.log(`WARNING: No about for ${slug}`);
+	const { tips, birds, about, hikes } = aboutHtml ? processAbout(aboutHtml) : {};
 
 	const maps = doc.querySelectorAll(".et_pb_column_2 img");
 	const galleryImages = doc.querySelectorAll(".et_pb_column_1 .et_pb_gallery_0 img");
-	const photographer = doc.querySelector(".et_pb_column_1 .et_pb_gallery_0 + div")?.textContent?.trim()?.replace("Photos by ", "")?.replace("Photo by ", "");
-	const images = processImages(maps, galleryImages, photographer);
+
+	let photographerAttempt = doc.querySelector(".et_pb_column_1 .et_pb_gallery_0 + div")?.textContent?.trim();
+	if (!photographerAttempt?.includes("Photo")) {
+		photographerAttempt = null;
+	}
+	const photographer = photographerAttempt?.replace("Photos by ", "")?.replace("Photo by ", "");
+	let images = processImages(maps, galleryImages, photographer);
+
+	const extraImage1 = doc.querySelector(".et_pb_column_1 .et_pb_image_0");
+	const extraImage1By = doc.querySelector(".et_pb_column_1 .et_pb_image_0 + div")?.textContent?.trim();
+	const extraImage2 = doc.querySelector(".et_pb_column_1 .et_pb_image_1");
+	const extraImage2By = doc.querySelector(".et_pb_column_1 .et_pb_image_1 + div")?.textContent?.trim();
+
+	if (extraImage1) {
+		const image = extraImage1.querySelector("img");
+		images.push({
+			smUrl: image.src,
+			lgUrl: null,
+			by: extraImage1By?.includes("Photo") ? extraImage1By?.replace("Photos by ", "")?.replace("Photo by ", "") : null,
+			width: image?.getAttribute("width") || null,
+			height: image?.getAttribute("height") || null,
+			legacy: true,
+			isMap: false,
+		});
+	}
+
+	if (extraImage2) {
+		const image = extraImage1.querySelector("img");
+		images.push({
+			smUrl: image.src,
+			lgUrl: null,
+			by: extraImage2By?.includes("Photo") ? extraImage2By?.replace("Photos by ", "")?.replace("Photo by ", "") : null,
+			width: image.getAttribute("width") || null,
+			height: image.getAttribute("height") || null,
+			legacy: true,
+			isMap: false,
+		});
+	}
 
 	const url = locationId ? `/${state}/${county}-county/${slug}` : `/${state}/group/${slug}`;
 
@@ -240,10 +306,10 @@ await Promise.all(filteredLinks.map(async (link) => {
 		multiCounties,
 		countyCode,
 		address: address || "",
-		tips,
-		birds,
-		about,
-		hikes,
+		tips: tips || "",
+		birds: birds || "",
+		about: about || "",
+		hikes: hikes || "",
 		slug,
 		images: images || [],
 		links: links.length > 0 ? links : [],
@@ -252,22 +318,18 @@ await Promise.all(filteredLinks.map(async (link) => {
 			label: ibaName,
 			value: ibaSlug,
 		} : null,
-		drive: driveLink && driveSlug ? {
-			label: driveLink.textContent.trim(),
-			value: driveSlug,
-		} : null,
 		migrateParentSlug: parentSlug || null,
 		migrateParentGroupSlug: migrateParentGroupSlug || null,
 		reviewed: false,
 	}
-	await Hotspot.create(data);
-	console.log(`${counter}. Saved`, name);
+	if (!dryRun) await Hotspot.create(data);
+	if (!dryRun) console.log(`${counter}. Saved`, name);
 	counter++;
 }));
 
 mongoose.connection.close();
 
-//TODO sync with index pages
-//TODO assign multiCounties
 //TODO verify that all smUrls are actually small
 //TODO: Don't allow "Unknown" in day hike radio button
+//TODO: Run scrip to find all hotspots with "--" that don't have a parent assigned
+//TODO: search for About headings that match the parent hotspot name
