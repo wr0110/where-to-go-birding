@@ -159,9 +159,7 @@ export default function Hotspot({
 
           {parent?.about && parent?.name && <AboutSection heading={`About ${parent.name}`} text={parent.about} />}
           <div className="space-y-1">
-            {![null, "no"].includes(restrooms || null) && (
-              <p>{restroomOptions.find((it) => it.value === restrooms)?.label}</p>
-            )}
+            {restrooms !== null && <p>{restroomOptions.find((it) => it.value === restrooms)?.label}</p>}
             {accessible?.map((option) => (
               <p key={option}>{accessibleOptions.find((it) => it.value === option)?.label}</p>
             ))}

@@ -160,9 +160,7 @@ export default function GroupHotspot({
           {about && <AboutSection heading="About this Location" text={about} />}
 
           <div className="space-y-1">
-            {![null, "no"].includes(restrooms || null) && (
-              <p>{restroomOptions.find((it) => it.value === restrooms)?.label}</p>
-            )}
+            {restrooms !== null && <p>{restroomOptions.find((it) => it.value === restrooms)?.label}</p>}
             {accessible?.map((option) => (
               <p key={option}>{accessibleOptions.find((it) => it.value === option)?.label}</p>
             ))}
