@@ -9,7 +9,7 @@ import Form from "components/Form";
 import Submit from "components/Submit";
 import { Editor } from "@tinymce/tinymce-react";
 import { getHotspotByLocationId, getHotspotById } from "lib/mongo";
-import { slugify, tinyConfig, geocode, getEbirdHotspot } from "lib/helpers";
+import { slugify, tinyConfig, geocode, getEbirdHotspot, accessibleOptions, restroomOptions } from "lib/helpers";
 import { getStateByCode, getCountyByCode } from "lib/localData";
 import InputLinks from "components/InputLinks";
 import Select from "components/Select";
@@ -17,6 +17,7 @@ import IBAs from "data/oh-iba.json";
 import AdminPage from "components/AdminPage";
 import { Hotspot, HotspotInputs, EbirdHotspot } from "lib/types";
 import RadioGroup from "components/RadioGroup";
+import CheckboxGroup from "components/CheckboxGroup";
 import Field from "components/Field";
 import useSecureFetch from "hooks/useSecureFetch";
 import HotspotSelect from "components/HotspotSelect";
@@ -70,8 +71,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         countyCode: data?.countyCode || ebirdData?.subnational2Code,
         locationId: locationId,
         roadside: data?.roadside || "Unknown",
-        restrooms: data?.restrooms || "Unknown",
-        accessible: data?.accessible || "Unknown",
+        restrooms: restroomOptions.find((it) => it.value === data?.restrooms) || null,
+        accessible: data?.accessible || null,
         dayhike: data?.dayhike || "No",
       },
     },
@@ -120,6 +121,8 @@ export default function Edit({ id, isNew, data, error }: Props) {
         tips: tipsRef.current.getContent() || "",
         birds: birdsRef.current.getContent() || "",
         hikes: hikesRef.current.getContent() || "",
+        restrooms: (data.restrooms as any)?.value || null,
+        accessible: data.accessible && data.accessible?.length > 0 ? data.accessible : null,
         reviewed: true, //TODO: Remove after migration
       },
     });
@@ -231,13 +234,10 @@ export default function Edit({ id, isNew, data, error }: Props) {
                   </Field>
                 )}
               </div>
-
-              <RadioGroup name="restrooms" label="Restrooms on site" options={["Yes", "No", "Unknown"]} />
-              <RadioGroup
-                name="accessible"
-                label="Has wheelchair accessible trails"
-                options={["Yes", "No", "Unknown"]}
-              />
+              <Field label="Restrooms">
+                <Select name="restrooms" options={restroomOptions} isClearable />
+              </Field>
+              <CheckboxGroup name="accessible" label="Accessible Facilities" options={accessibleOptions} />
               <RadioGroup name="roadside" label="Roadside accessible" options={["Yes", "No", "Unknown"]} />
               <RadioGroup name="dayhike" label="Show in Day Hike index" options={["Yes", "No"]} />
 

@@ -141,3 +141,21 @@ export function scrollToAnchor(e: React.MouseEvent<HTMLAnchorElement>) {
     });
   }
 }
+
+export const restroomOptions = [
+  { value: "no", label: "No restroom facilities" },
+  { value: "yes", label: "Restroom on site" },
+  { value: "nearby", label: "Restrooms at nearby restaurants or businesses" },
+  { value: "portable", label: "Restroom on site, portable toilet" },
+  { value: "vault", label: "Restroom on site, vault toilet" },
+  { value: "flush", label: "Restroom on site, flush toilet" },
+  { value: "map", label: "Restrooms at locations identified on park map" },
+];
+
+export const accessibleOptions = [
+  { value: "trail", label: "Wheelchair accessible trail" },
+  { value: "ada", label: "ADA accessible facilities on site" },
+  { value: "map", label: "ADA accessible facilities at locations identified on park map" },
+  { value: "pier", label: "ADA accessible fishing pier" },
+  { value: "blind", label: "ADA accessible bird blind" },
+];

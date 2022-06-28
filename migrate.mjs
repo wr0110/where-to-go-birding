@@ -11,9 +11,9 @@ import IBA from "./data/oh-iba.json" assert {type: "json"};
 const URI = process.env.MONGO_URI;
 mongoose.connect(URI);
 
-const county = "allen";
-const dryRun = false;
-const nameExceptions = [];
+const county = "ashland";
+const dryRun = true;
+const nameExceptions = ["Artesian Lake", "Charles Mill Lake--OH-430 Boat Ramp"];
 const state = "ohio";
 const stateCode = "OH";
 const base = "https://birding-in-ohio.com";
@@ -141,11 +141,15 @@ const processImages = (maps, images, photographer) => {
 const checkIfNamesMatch = (ebird, h1) => {
 	if (!ebird || !h1) return false;
 	if (ebird === h1) return true;
+	h1 = h1.replaceAll(" State Park", " SP");
+	if (ebird === h1) return true;
 	h1 = h1.replaceAll("Road", "Rd.");
 	if (ebird === h1) return true;
 	h1 = h1.replaceAll("-", "--");
 	if (ebird === h1) return true;
 	h1 = h1.replaceAll("–", "--"); //en dash
+	if (ebird === h1) return true;
+	h1 = h1.replaceAll("County", "Co.");
 	if (ebird === h1) return true;
 	if (nameExceptions.includes(ebird) || nameExceptions.includes(h1)) return true;
 	return false;
@@ -270,28 +274,32 @@ await Promise.all(filteredLinks.map(async (link) => {
 
 	if (extraImage1) {
 		const image = extraImage1.querySelector("img");
-		images.push({
-			smUrl: image.src,
-			lgUrl: null,
-			by: extraImage1By?.includes("Photo") ? extraImage1By?.replace("Photos by ", "")?.replace("Photo by ", "") : null,
-			width: image?.getAttribute("width") || null,
-			height: image?.getAttribute("height") || null,
-			legacy: true,
-			isMap: false,
-		});
+		if (image) {
+			images.push({
+				smUrl: image.src,
+				lgUrl: null,
+				by: extraImage1By?.includes("Photo") ? extraImage1By?.replace("Photos by ", "")?.replace("Photo by ", "") : null,
+				width: image?.getAttribute("width") || null,
+				height: image?.getAttribute("height") || null,
+				legacy: true,
+				isMap: false,
+			});
+		}
 	}
 
 	if (extraImage2) {
 		const image = extraImage1.querySelector("img");
-		images.push({
-			smUrl: image.src,
-			lgUrl: null,
-			by: extraImage2By?.includes("Photo") ? extraImage2By?.replace("Photos by ", "")?.replace("Photo by ", "") : null,
-			width: image.getAttribute("width") || null,
-			height: image.getAttribute("height") || null,
-			legacy: true,
-			isMap: false,
-		});
+		if (image) {
+			images.push({
+				smUrl: image.src,
+				lgUrl: null,
+				by: extraImage2By?.includes("Photo") ? extraImage2By?.replace("Photos by ", "")?.replace("Photo by ", "") : null,
+				width: image.getAttribute("width") || null,
+				height: image.getAttribute("height") || null,
+				legacy: true,
+				isMap: false,
+			});
+		}
 	}
 
 	const url = locationId ? `/${state}/${county}-county/${slug}` : `/${state}/group/${slug}`;

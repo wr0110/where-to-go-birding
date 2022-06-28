@@ -35,7 +35,7 @@ export async function getAccessibleHotspotsByState(stateCode: string) {
   const result = await Hotspot.find(
     {
       stateCode,
-      accessible: { $in: ["ADA", "Birdability"] },
+      accessible: { $ne: null },
     },
     ["-_id", "name", "url", "countyCode", "multiCounties"]
   )

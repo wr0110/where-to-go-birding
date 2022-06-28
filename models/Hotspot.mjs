@@ -22,7 +22,7 @@ const HotspotSchema = new Schema({
 		required: true
 	},
 	countyCode:  String,
-	multiCounties:  Array,
+	multiCounties: Array,
 	lat: Number,
 	lng: Number,
 	locationId: String,
@@ -39,8 +39,7 @@ const HotspotSchema = new Schema({
 	links: [LinkSchema],
 	restrooms: {
 		type: String,
-		enum: ["Yes", "No", "Unknown"],
-		default: "Unknown",
+		default: null,
 	},
 	roadside: {
 		type: String,
@@ -48,9 +47,8 @@ const HotspotSchema = new Schema({
 		default: "Unknown",
 	},
 	accessible: {
-		type: String,
-		enum: ["Yes", "No", "Unknown"],
-		default: "Unknown",
+		type: Array,
+		default: null,
 	},
 	dayhike: {
 		type: String,

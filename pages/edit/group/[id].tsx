@@ -9,7 +9,7 @@ import Form from "components/Form";
 import Submit from "components/Submit";
 import { Editor } from "@tinymce/tinymce-react";
 import { getHotspotById } from "lib/mongo";
-import { slugify, geocode, tinyConfig } from "lib/helpers";
+import { slugify, geocode, tinyConfig, accessibleOptions, restroomOptions } from "lib/helpers";
 import { getStateByCode } from "lib/localData";
 import InputLinks from "components/InputLinks";
 import Select from "components/Select";
@@ -17,6 +17,7 @@ import IBAs from "data/oh-iba.json";
 import AdminPage from "components/AdminPage";
 import { Hotspot, State } from "lib/types";
 import RadioGroup from "components/RadioGroup";
+import CheckboxGroup from "components/CheckboxGroup";
 import Field from "components/Field";
 import CountySelect from "components/CountySelect";
 import FormError from "components/FormError";
@@ -50,8 +51,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         slug: data?.slug || "",
         multiCounties: data?.multiCounties || [],
         roadside: data?.roadside || "Unknown",
-        restrooms: data?.restrooms || "Unknown",
-        accessible: data?.accessible || "Unknown",
+        restrooms: restroomOptions.find((it) => it.value === data?.restrooms) || null,
+        accessible: data?.accessible || null,
         dayhike: data?.dayhike || "No",
       },
       stateCode,
@@ -106,6 +107,8 @@ export default function Edit({ id, isNew, data, state }: Props) {
         tips: tipsRef.current.getContent() || "",
         birds: birdsRef.current.getContent() || "",
         hikes: hikesRef.current.getContent() || "",
+        restrooms: (formData.restrooms as any)?.value || null,
+        accessible: formData.accessible && formData.accessible?.length > 0 ? formData.accessible : null,
         reviewed: true, //TODO: Remove after migration
       },
     });
@@ -242,12 +245,10 @@ export default function Edit({ id, isNew, data, state }: Props) {
                 </Field>
               )}
 
-              <RadioGroup name="restrooms" label="Restrooms on site" options={["Yes", "No", "Unknown"]} />
-              <RadioGroup
-                name="accessible"
-                label="Accessible facilities"
-                options={["ADA", "Birdability", "No", "Unknown"]}
-              />
+              <Field label="Restrooms">
+                <Select name="restrooms" options={restroomOptions} isClearable />
+              </Field>
+              <CheckboxGroup name="accessible" label="Accessible Facilities" options={accessibleOptions} />
               <RadioGroup name="roadside" label="Roadside accessible" options={["Yes", "No", "Unknown"]} />
               <RadioGroup name="dayhike" label="Show in Day Hike index" options={["Yes", "No"]} />
 

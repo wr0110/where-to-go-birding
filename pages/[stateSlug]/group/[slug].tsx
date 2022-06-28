@@ -16,6 +16,7 @@ import Title from "components/Title";
 import Map from "components/Map";
 import Slideshow from "components/Slideshow";
 import MapList from "components/MapList";
+import { accessibleOptions, restroomOptions } from "lib/helpers";
 
 const getChildren = async (id: string) => {
   if (!id) return null;
@@ -159,18 +160,12 @@ export default function GroupHotspot({
           {about && <AboutSection heading="About this Location" text={about} />}
 
           <div className="space-y-1">
-            {restrooms === "Yes" && <p>Restrooms on site.</p>}
-            {restrooms === "No" && <p>No restrooms on site.</p>}
-            {accessible === "ADA" && <p>ADA accessible facilities on site.</p>}
-            {accessible === "Birdability" && (
-              <p>
-                Accessible facilities on site, listed as a{" "}
-                <a href="https://www.birdability.org/" target="_blank" rel="noreferrer">
-                  Birdability
-                </a>{" "}
-                location.
-              </p>
+            {![null, "no"].includes(restrooms || null) && (
+              <p>{restroomOptions.find((it) => it.value === restrooms)?.label}</p>
             )}
+            {accessible?.map((option) => (
+              <p key={option}>{accessibleOptions.find((it) => it.value === option)?.label}</p>
+            ))}
             {roadside === "Yes" && <p>Roadside accessible.</p>}
           </div>
         </div>
