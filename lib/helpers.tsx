@@ -7,6 +7,7 @@ export function slugify(title?: string) {
   const slug = title
     .toLowerCase()
     .replace("’s", "s")
+    .replace("'s", "s")
     .replace(/[^a-z0-9]+/g, "-");
   return slug.endsWith("-") ? slug.slice(0, -1) : slug;
 }
