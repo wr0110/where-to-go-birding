@@ -50,9 +50,12 @@ export default function AlphabeticalIndex({ state, hotspots, activeLetters }: Pr
           on a letter below to move to that portion of the alphabetical index.
         </i>
       </p>
-      <p className="my-8">
+      <p className="my-4">
         Also, see <Link href={`/${state.slug}/roadside-birding`}>Roadside Birding</Link> for hotspots where you may view
         birds from your vehicle.
+      </p>
+      <p className="mb-8">
+        Total hotspots: <strong>{hotspots?.length}</strong>
       </p>
       <p>
         {alphabet.map((letter) => {

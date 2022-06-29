@@ -11,9 +11,11 @@ import IBA from "./data/oh-iba.json" assert {type: "json"};
 const URI = process.env.MONGO_URI;
 mongoose.connect(URI);
 
-const county = "ashland";
-const dryRun = true;
-const nameExceptions = ["Artesian Lake", "Charles Mill Lake--OH-430 Boat Ramp"];
+const county = "clermont";
+const dryRun = false;
+const nameExceptions = ["Sherman Ave. Park, Buck Creek Trail"];
+const processWithoutLocationId = ["Clark County Fairground", "Buck Creek Trail"];
+const skip = ["piedmont-lake-piedmont-lake-road"];
 const state = "ohio";
 const stateCode = "OH";
 const base = "https://birding-in-ohio.com";
@@ -47,7 +49,7 @@ console.log(`Found ${links.length} hotspot links`);
 
 let filteredLinks = links.filter(link => {
 	const slug = link.split("/").pop();
-	return !hotspots.find(hotspot => hotspot.slug === slug);
+	return !hotspots.find(hotspot => hotspot.slug === slug) && !skip.includes(slug);
 });
 
 console.log(`Filtered out ${links.length - filteredLinks.length} links`);
@@ -106,9 +108,7 @@ const processAbout = (html) => {
 		content = content.replaceAll('&gt;', ">");
 		content = content.replaceAll('<small>', "");
 		content = content.replaceAll('</small>', "");
-		if (!p.textContent.includes("restroom facilities") && !p.textContent.includes("handicap accessible facilities")) {
-			data[current] += content?.trim() || "";
-		}
+		data[current] += content?.trim() || "";
 	}
 
 	return { tips: data.tips, birds: data.birds, about: data.about, hikes: data.hikes }
@@ -145,12 +145,19 @@ const checkIfNamesMatch = (ebird, h1) => {
 	if (ebird === h1) return true;
 	h1 = h1.replaceAll("Road", "Rd.");
 	if (ebird === h1) return true;
+	h1 = h1.replaceAll("Street", "St.");
+	if (ebird === h1) return true;
 	h1 = h1.replaceAll("-", "--");
 	if (ebird === h1) return true;
 	h1 = h1.replaceAll("–", "--"); //en dash
 	if (ebird === h1) return true;
 	h1 = h1.replaceAll("County", "Co.");
 	if (ebird === h1) return true;
+	const newH1 = `${h1} (view from roadside only)`;
+	if (ebird === newH1) return true;
+	const newH1Again = `${h1} (restricted access)`;
+	if (ebird === newH1Again) return true;
+	if (ebird.replace(/[^\w\s]/gi, "") === h1.replace(/[^\w\s]/gi, "")) return true;
 	if (nameExceptions.includes(ebird) || nameExceptions.includes(h1)) return true;
 	return false;
 }
@@ -184,8 +191,13 @@ await Promise.all(filteredLinks.map(async (link) => {
 			console.log(`WARNING: No ebird data found for ${slug}`);
 		}
 		if (!checkIfNamesMatch(ebirdData?.name, h1Name)) {
-			console.log(`WARNING: mismatch: ${h1Name} vs ${ebirdData.name}. Setting locationId to null`);
-			locationId = null;
+			console.log(`WARNING: mismatch: ${h1Name} vs ${ebirdData.name}`);
+			if (processWithoutLocationId.includes(h1Name)) {
+				console.log("Setting locationId to null");
+				locationId = null;
+			} else {
+				throw new Error("Couldn't resolve mismatch");
+			}
 		} else {
 			const alreadyExists = await Hotspot.findOne({ locationId });
 			if (alreadyExists) {
@@ -326,8 +338,8 @@ await Promise.all(filteredLinks.map(async (link) => {
 			label: ibaName,
 			value: ibaSlug,
 		} : null,
-		migrateParentSlug: parentSlug || null,
-		migrateParentGroupSlug: migrateParentGroupSlug || null,
+		migrateParentSlug: name.includes("--") ? parentSlug || null : null,
+		migrateParentGroupSlug: name.includes("--") ? migrateParentGroupSlug || null : null,
 		reviewed: false,
 	}
 	if (!dryRun) await Hotspot.create(data);
