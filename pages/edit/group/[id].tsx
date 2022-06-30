@@ -100,7 +100,7 @@ export default function Edit({ id, isNew, data, state }: Props) {
         stateCode: state.code,
         parent: null,
         countyCode: null,
-        iba: data.iba || null,
+        iba: formData.iba || null,
         slug,
         url,
         about: aboutRef.current.getContent() || "",

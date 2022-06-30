@@ -11,10 +11,10 @@ import IBA from "./data/oh-iba.json" assert {type: "json"};
 const URI = process.env.MONGO_URI;
 mongoose.connect(URI);
 
-const county = "clermont";
+const county = "coshocton";
 const dryRun = false;
-const nameExceptions = ["Sherman Ave. Park, Buck Creek Trail"];
-const processWithoutLocationId = ["Clark County Fairground", "Buck Creek Trail"];
+const nameExceptions = ["Woodbury Wildlife Area--Bedford Township Roads 56 and 58", "Kokosing River--Newcastle Township Rd. 423 Access", "Woodbury Wildlife Area--Jackson Township Rd. 403", "Woodbury Wildlife Area--Jackson Township Rd. 302"];
+const processWithoutLocationId = ["Little Beaver Creek Greenway Trail"];
 const skip = ["piedmont-lake-piedmont-lake-road"];
 const state = "ohio";
 const stateCode = "OH";
@@ -37,7 +37,7 @@ const getHotspots = async () => {
 	const html = await request.text();
 	const dom = new JSDOM(html);
 	const doc = dom.window.document;
-	const links = doc.querySelectorAll(".et_pb_column_2 a");
+	const links = doc.querySelectorAll(".et_pb_column_2 a:not(a[href^='https://ebird.org'])");
 	return Array.from(links).map(link => link.href.replace(/\/$/, ""));
 }
 
@@ -146,6 +146,8 @@ const checkIfNamesMatch = (ebird, h1) => {
 	h1 = h1.replaceAll("Road", "Rd.");
 	if (ebird === h1) return true;
 	h1 = h1.replaceAll("Street", "St.");
+	if (ebird === h1) return true;
+	h1 = h1.replaceAll("Township", "Twp.");
 	if (ebird === h1) return true;
 	h1 = h1.replaceAll("-", "--");
 	if (ebird === h1) return true;
