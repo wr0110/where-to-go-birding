@@ -10,9 +10,7 @@
     "lint": "next lint",
     "top10": "node --experimental-json-modules ./fetchTop10.mjs",
     "migrate": "node --experimental-json-modules ./migrate.mjs",
-    "migrate-indexes": "node --experimental-json-modules ./migrateIndexes.mjs",
-    "migrate-parents": "node --experimental-json-modules ./migrateParents.mjs",
-    "migrate-restrooms": "node --experimental-json-modules ./migrateRestrooms.mjs"
+    "migrate-clean": "node --experimental-json-modules ./migrateClean.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.4",

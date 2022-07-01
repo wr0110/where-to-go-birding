@@ -33,6 +33,7 @@ export type Hotspot = {
   _id?: string;
   url: string;
   slug: string;
+  oldSlug?: string;
   lat: number;
   lng: number;
   locationId: string;

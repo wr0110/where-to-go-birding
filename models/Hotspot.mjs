@@ -31,6 +31,7 @@ const HotspotSchema = new Schema({
 		unique: true,
 		required: true
 	},
+	oldSlug: String,
 	about: String,
 	tips: String,
 	birds: String,

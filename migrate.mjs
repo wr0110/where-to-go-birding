@@ -11,11 +11,11 @@ import IBA from "./data/oh-iba.json" assert {type: "json"};
 const URI = process.env.MONGO_URI;
 mongoose.connect(URI);
 
-const county = "coshocton";
+const county = "ottawa";
 const dryRun = false;
-const nameExceptions = ["Woodbury Wildlife Area--Bedford Township Roads 56 and 58", "Kokosing River--Newcastle Township Rd. 423 Access", "Woodbury Wildlife Area--Jackson Township Rd. 403", "Woodbury Wildlife Area--Jackson Township Rd. 302"];
-const processWithoutLocationId = ["Little Beaver Creek Greenway Trail"];
-const skip = ["piedmont-lake-piedmont-lake-road"];
+const nameExceptions = ["Magee Marsh--Entrance Road", "Ottawa NWR--Two Rivers Unit, O'Neal Rd. (restricted access)", "Great Egret Marsh Preserve (TNC)", "Ottawa NWR--Kontz Unit, Bodi and Lemon Roads"];
+const processWithoutLocationId = ["Toussaint River", "Turtle Creek Estuary"];
+const skip = ["winous-point"];
 const state = "ohio";
 const stateCode = "OH";
 const base = "https://birding-in-ohio.com";
@@ -139,11 +139,21 @@ const processImages = (maps, images, photographer) => {
 }
 
 const checkIfNamesMatch = (ebird, h1) => {
+	ebird = ebird.trim();
+	h1 = h1.trim();
 	if (!ebird || !h1) return false;
 	if (ebird === h1) return true;
 	h1 = h1.replaceAll(" State Park", " SP");
 	if (ebird === h1) return true;
+	h1 = h1.replaceAll(" National Wildlife Refuge", " NWR");
+	if (ebird === h1) return true;
 	h1 = h1.replaceAll("Road", "Rd.");
+	if (ebird === h1) return true;
+	h1 = h1.replaceAll("Drive", "Dr.");
+	if (ebird === h1) return true;
+	h1 = h1.replaceAll("Avenue", "Ave.");
+	if (ebird === h1) return true;
+	h1 = h1.replaceAll("Boulevard", "Blvd.");
 	if (ebird === h1) return true;
 	h1 = h1.replaceAll("Street", "St.");
 	if (ebird === h1) return true;
@@ -248,7 +258,7 @@ await Promise.all(filteredLinks.map(async (link) => {
 	ibaSlug = ibaSlug?.replace("/", "")?.replace("-important-bird-area", "");
 	ibaSlug = ibaSlug?.replaceAll(".", "");
 	const ibaName = IBA.find(iba => iba.slug === ibaSlug)?.name;
-	if (ibaSlug && !ibaName) console.error(`No IBA match: ${ibaSlug}`);
+	if (ibaSlug && !ibaName) console.error(`WARNING: No IBA match: ${ibaSlug}`);
 
 	const strongs = intro.querySelectorAll("strong");
 	for (const strong of strongs) {
@@ -333,6 +343,7 @@ await Promise.all(filteredLinks.map(async (link) => {
 		about: about || "",
 		hikes: hikes || "",
 		slug,
+		oldSlug: slug,
 		images: images || [],
 		links: links.length > 0 ? links : [],
 		locationId: locationId || null,
@@ -355,3 +366,4 @@ mongoose.connection.close();
 //TODO: Don't allow "Unknown" in day hike radio button
 //TODO: Run scrip to find all hotspots with "--" that don't have a parent assigned
 //TODO: search for About headings that match the parent hotspot name
+//TODO: Refetch old slugs up to Coshocton county

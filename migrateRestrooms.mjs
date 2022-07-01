@@ -23,23 +23,19 @@ await Promise.all(allHotspots.map(async ({_id, restrooms, accessible}) => {
 		if (restrooms === "Unknown") {
 			newRestrooms = null;
 		}
-		if (accessible === "Yes") {
+		if (accessible?.includes("Yes")) {
 			newAccessible = "ada";
 		}
-		if (accessible === "ADA") {
+		if (accessible?.includes("ADA")) {
 			newAccessible = "ada";
 		}
-		if (accessible === "Unknown") {
+		if (accessible?.includes("Unknown")) {
 			newAccessible = null;
 		}
-		console.log({
+		await Hotspot.updateOne({ _id }, {
 			accessible: newAccessible,
 			restrooms: newRestrooms,
 		});
-		/*await Hotspot.updateOne({ _id }, {
-			accessible: newAccessible,
-			restrooms: newRestrooms,
-		});*/
 	}
 ));
 
