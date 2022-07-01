@@ -40,6 +40,9 @@ const hotspots = await Hotspot.find({ stateCode }, ["slug", "locationId"]);
 console.log(`Fetched ${hotspots.length} hotspots from DB`);
 
 let filteredLinks = links.filter(link => {
+	if (link.includes("/")) {
+		return false;
+	}
 	const slug = cleanSlug(link.split("/").pop());
 	return !hotspots.find(hotspot => hotspot.slug === slug) && !skip.includes(slug);
 });
@@ -334,7 +337,9 @@ await Promise.all(filteredLinks.map(async (link) => {
 		migrateParentSlug: parentSlug ? cleanSlug(parentSlug) : null,
 		reviewed: false,
 	}
-	console.log(data);
+	if (!dryRun) await Hotspot.create(data);
+	if (!dryRun) console.log(`${counter}. Saved`, name);
+	counter++;
 }));
 
 mongoose.connection.close();
