@@ -82,6 +82,7 @@ const HotspotSchema = new Schema({
 	migrateParentSlug: String, //TODO remove
 	migrateParentGroupSlug: String, //TODO remove
 	reviewed: Boolean, //TODO remove
+	nameMismatch: Boolean, //TODO remove
 });
 
 const Hotspot = models.Hotspot || model("Hotspot", HotspotSchema);

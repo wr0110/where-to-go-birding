@@ -2,12 +2,14 @@ import States from "data/states.json";
 import OhioRegions from "data/oh-regions.json";
 import ArizonaCounties from "data/az-counties.json";
 import OhioCounties from "data/oh-counties.json";
+import VermontCounties from "data/vt-counties.json";
 import { capitalize } from "./helpers";
 import { County } from "lib/types";
 
 const countyArrays: any = {
   OH: OhioCounties,
   AZ: ArizonaCounties,
+  VT: VermontCounties,
 };
 
 export function getState(param: string) {

@@ -4,6 +4,7 @@ import Link from "next/link";
 import EbirdStateSummary from "components/EbirdStateSummary";
 import OhioMap from "components/OhioMap";
 import ArizonaMap from "components/ArizonaMap";
+import VermontMap from "components/VermontMap";
 import { getState, getCounties } from "lib/localData";
 import EbirdDescription from "components/EbirdDescription";
 import EbirdHelpLinks from "components/EbirdHelpLinks";
@@ -64,6 +65,7 @@ export default function State({ state, counties, topHotspots, info }: Props) {
   const maps: any = {
     OH: <OhioMap />,
     AZ: <ArizonaMap />,
+    VT: <VermontMap />,
   };
 
   const map = maps[code];

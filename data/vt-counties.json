@@ -1,0 +1,87 @@
+
+[
+	{
+		"slug": "addison",
+		"region": null,
+		"ebirdCode": "US-VT-001",
+		"active": true
+	},
+	{
+		"slug": "bennington",
+		"region": null,
+		"ebirdCode": "US-VT-003",
+		"active": true
+	},
+	{
+		"slug": "caledonia",
+		"region": null,
+		"ebirdCode": "US-VT-005",
+		"active": true
+	},
+	{
+		"slug": "chittenden",
+		"region": null,
+		"ebirdCode": "US-VT-007",
+		"active": true
+	},
+	{
+		"slug": "essex",
+		"region": null,
+		"ebirdCode": "US-VT-009",
+		"active": true
+	},
+	{
+		"slug": "franklin",
+		"region": null,
+		"ebirdCode": "US-VT-011",
+		"active": true
+	},
+	{
+		"slug": "grand-isle",
+		"region": null,
+		"ebirdCode": "US-VT-013",
+		"active": true
+	},
+	{
+		"slug": "lamoille",
+		"region": null,
+		"ebirdCode": "US-VT-015",
+		"active": true
+	},
+	{
+		"slug": "orange",
+		"region": null,
+		"ebirdCode": "US-VT-017",
+		"active": true
+	},
+	{
+		"slug": "orleans",
+		"region": null,
+		"ebirdCode": "US-VT-019",
+		"active": true
+	},
+	{
+		"slug": "rutland",
+		"region": null,
+		"ebirdCode": "US-VT-021",
+		"active": true
+	},
+	{
+		"slug": "washington",
+		"region": null,
+		"ebirdCode": "US-VT-023",
+		"active": true
+	},
+	{
+		"slug": "windham",
+		"region": null,
+		"ebirdCode": "US-VT-025",
+		"active": true
+	},
+	{
+		"slug": "Windsor",
+		"region": null,
+		"ebirdCode": "US-VT-027",
+		"active": true
+	}
+]

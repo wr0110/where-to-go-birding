@@ -1,4 +1,4 @@
-export default function OhioMap() {
+export default function ArizonaMap() {
   return (
     <>
       <img

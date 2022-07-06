@@ -88,6 +88,7 @@ type Props = {
 
 export default function Edit({ id, isNew, data, error }: Props) {
   const [saving, setSaving] = React.useState<boolean>(false);
+  const [isGeocoded, setIsGeocoded] = React.useState(false);
   const aboutRef = React.useRef<any>();
   const birdsRef = React.useRef<any>();
   const tipsRef = React.useRef<any>();
@@ -141,11 +142,13 @@ export default function Edit({ id, isNew, data, error }: Props) {
     const geocodeAddress = async () => {
       const { road, city, state, zip } = await geocode(lat, lng);
       if (road) {
+        setIsGeocoded(true);
         form.setValue("address", `${road}\r\n${city}, ${state} ${zip}`);
         return;
       }
       if (city && state && zip) {
         form.setValue("address", `${city}, ${state} ${zip}`);
+        setIsGeocoded(true);
       }
     };
     if (!lat || !lng) return;
@@ -172,6 +175,11 @@ export default function Edit({ id, isNew, data, error }: Props) {
 
               <Field label="Address">
                 <Textarea name="address" rows={2} />
+                {isGeocoded && (
+                  <small>
+                    <span className="text-orange-700">Note</span>: Address is estimated, confirm it is correct.
+                  </small>
+                )}
               </Field>
 
               <Field label="Links">

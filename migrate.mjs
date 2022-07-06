@@ -3,21 +3,30 @@ import fetch from "node-fetch";
 import mongoose from "mongoose";
 import Hotspot from "./models/Hotspot.mjs";
 import dotenv from "dotenv";
-import Counties from "./data/az-counties.json" assert {type: "json"}; // IMPORTANT: ------------------------------------------------- Update for each state
+import Counties from "./data/vt-counties.json" assert {type: "json"}; // IMPORTANT: ------------------------------------------------- Update for each state
 dotenv.config();
 
-import { links } from "./migrate-az.mjs";
-//const links = ["usaz-apache-county/usaz-canyon-de-chelly-national-monument"];
+import { links } from "./migrate-vt.mjs";
+//const links = ["usvt-addison-county/usvt-adams-mountain"];
 
 const URI = process.env.MONGO_URI;
 mongoose.connect(URI);
 
 const dryRun = false;
-const slice = 10;
-const nameExceptions = ["3 Canyons Blvd grasslands"];
+const slice = 20;
+const nameExceptions = [
+	"Bald Hill WMA (Caledonia Co.)",
+	"Bailey Pond - Marshfield (17 acres)",
+	"Andover Pond - Andover (11 acres)",
+	"Austin Pond - Hubbardton (28 acres)",
+	"Abijah Prince Pond", "Amherst Lake - Plymouth (81 acres)",
+	"Arrowhead Mountain Lake - Milton (760 acres)",
+	"Bald Hill Pond - Westmore (108 acres)",
+	"Baker Pond - Brookfield (35 acres)",
+];
 const skip = [];
-const state = "arizona";
-const stateCode = "AZ";
+const state = "vermont";
+const stateCode = "VT";
 const base = `https://ebirdhotspots.com/birding-in-${state}`;
 
 if (dryRun) {
@@ -40,7 +49,7 @@ const hotspots = await Hotspot.find({ stateCode }, ["slug", "locationId"]);
 console.log(`Fetched ${hotspots.length} hotspots from DB`);
 
 let filteredLinks = links.filter(link => {
-	if (link.includes("/")) {
+	if (!link.includes("/")) {
 		return false;
 	}
 	const slug = cleanSlug(link.split("/").pop());
@@ -54,6 +63,7 @@ if (filteredLinks?.length === 0) {
 }
 
 filteredLinks = filteredLinks.slice(0, slice);
+filteredLinks = filteredLinks.reverse();
 
 console.log(`Scraping ${filteredLinks.length} links`);
 
@@ -61,6 +71,7 @@ const processAbout = (html, parentName) => {
 	let data = {
 		trash: "",
 		tips: "",
+		birds: "",
 		about: ""
 	}
 	let current = "about";
@@ -81,13 +92,19 @@ const processAbout = (html, parentName) => {
 			current = "tips";
 		}
 
+		if (strong?.textContent?.toLowerCase()?.includes("birds of interest")) {
+			current = "birds";
+		}
+
 		let content = "";
 		let done = false;
 
 		slicedChildren.forEach((child) => {
-			if ((child.nodeName === "BR" || child.nodeName === "#text" || child.nodeName === "SPAN" || child.nodeName === "STRONG") && !done) {
+			if ((child.nodeName === "BR" || child.nodeName === "#text" || child.nodeName === "SPAN" || child.nodeName === "STRONG" || child.nodeName === "A") && !done) {
 				if (child.nodeName === "BR") {
 					content += "\n";
+				} else if (child.nodeName === "A") {
+					content += ` ${child.outerHTML} `;
 				} else if (child.nodeName === "STRONG" && (child.textContent?.trim()?.startsWith("About ") || child.textContent?.trim()?.startsWith("Tips"))) {
 					// do nothing
 				} else if (child.nodeName === "SPAN") {
@@ -115,11 +132,11 @@ const processAbout = (html, parentName) => {
 		}
 		const iframe = p.querySelector("iframe");
 		if (iframe) {
-			return { tips: data.tips, about: data.about }
+			return { tips: data.tips, birds: data.birds, about: data.about }
 		}
 		const strong = p.querySelector("strong");
 		if (strong?.textContent?.trim()?.startsWith("About ") && aboutStarted === true) {
-			return { tips: data.tips, about: data.about }
+			return { tips: data.tips, birds: data.birds, about: data.about }
 		}
 		if (strong?.textContent?.trim() === `About ${parentName}`.trim()) {
 			current = "trash";
@@ -132,11 +149,16 @@ const processAbout = (html, parentName) => {
 			strong.remove();
 			current = "tips";
 		}
+		if (strong?.textContent?.toLowerCase()?.includes("birds of interest")) {
+			strong.remove();
+			current = "birds";
+		}
 		let content = p.outerHTML;
 		if (content.startsWith("<p><br>")) {
 			content = content.replace("<p><br>", "<p>");
 		}
 		content = content.replaceAll("<p></p>", "");
+		content = content.replaceAll("<p>\n", "<p>");
 		content = content.replaceAll('&lt;', "<");
 		content = content.replaceAll('&gt;', ">");
 		content = content.replaceAll('<small>', "");
@@ -144,7 +166,7 @@ const processAbout = (html, parentName) => {
 		data[current] += content?.trim() || "";
 	}
 
-	return { tips: data.tips, about: data.about }
+	return { tips: data.tips, birds: data.birds, about: data.about }
 }
 
 const processImages = (maps, images, photographer) => {
@@ -188,7 +210,11 @@ const checkIfNamesMatch = (ebird, h1) => {
 	if (softCompare(ebird, h1)) return true;
 	h1 = h1.replaceAll(" National Monument", " NM");
 	if (softCompare(ebird, h1)) return true;
+	h1 = h1.replaceAll("Wildlife Management Area", "WMA");
+	if (softCompare(ebird, h1)) return true;
 	h1 = h1.replaceAll(" National Park", " NP");
+	if (softCompare(ebird, h1)) return true;
+	h1 = h1.replaceAll(" Wildlife Area", " WA");
 	if (softCompare(ebird, h1)) return true;
 	h1 = h1.replaceAll("Road", "Rd.");
 	if (softCompare(ebird, h1)) return true;
@@ -204,6 +230,8 @@ const checkIfNamesMatch = (ebird, h1) => {
 	if (softCompare(ebird, h1)) return true;
 	h1 = h1.replaceAll("Wastewater Treatment Plant", "WTP");
 	if (softCompare(ebird, h1)) return true;
+	h1 = h1.replaceAll("Sewer Treatment Plant", "STP");
+	if (softCompare(ebird, h1)) return true;
 	h1 = h1.replaceAll("-", "--");
 	if (softCompare(ebird, h1)) return true;
 	h1 = h1.replaceAll("–", "--"); //en dash
@@ -214,6 +242,8 @@ const checkIfNamesMatch = (ebird, h1) => {
 	if (ebird === newH1) return true;
 	const newH1Again = `${h1} (restricted access)`;
 	if (ebird === newH1Again) return true;
+	if (softCompare(ebird, h1)) return true;
+	h1 = h1.replaceAll("Campground", "CG");
 	if (ebird.replace(/[^\w\s]/gi, "") === h1.replace(/[^\w\s]/gi, "")) return true;
 	if (nameExceptions.includes(ebird) || nameExceptions.includes(h1)) return true;
 	return false;
@@ -223,7 +253,7 @@ let counter = 1;
 
 await Promise.all(filteredLinks.map(async (link) => {
 	const request = await fetch(`${base}/${link}`);
-	console.log(`${counter}. Scraping`, link);
+	//console.log(`${counter}. Scraping`, link);
 	const html = await request.text();
 	const dom = new JSDOM(html);
 	const doc = dom.window.document;
@@ -277,7 +307,7 @@ await Promise.all(filteredLinks.map(async (link) => {
 	const maps = rightCol.querySelectorAll("img");
 	const images = processImages(maps);
 
-	const { tips, about } = rightCol ? processAbout(rightCol, parentName) : {};
+	const { tips, about, birds } = rightCol ? processAbout(rightCol, parentName) : {};
 
 	const locationLink = leftCol.querySelector(`table a[href*='ebird.org']`)?.href;
 	const locationId = locationLink?.split("hotspots=")?.[1]?.split("&")?.[0]?.split(",")?.[0] || null;
@@ -289,24 +319,30 @@ await Promise.all(filteredLinks.map(async (link) => {
 	let lat = null;
 	let lng = null;
 	let countyCode = null;
+	let nameMismatch = false;
 
 	const ebirdData = await getEbirdHotspot(locationId);
 	if (!ebirdData) {
-		throw new Error(`No ebird data found for ${slug}`);
+		throw new Error(`No ebird data found for ${link}`);
 	}
 	if (!checkIfNamesMatch(ebirdData?.name, h1Name)) {
-		throw new Error(`Name mismatch: ${h1Name} vs ${ebirdData.name}`);
-	} else {
-		const alreadyExists = await Hotspot.findOne({ locationId });
-		if (alreadyExists) {
-			console.log(`WARNING: Skipping "${slug}" with eBird ID "${locationId}" already exists`);
-			return;
+		if (ebirdData?.name?.endsWith(" acres)")) {
+			console.log(`\x1b[33mWARNING  \x1b[31m${h1Name}\x1b[30m vs \x1b[32m${ebirdData.name}\x1b[30m`);
+			nameMismatch = true;
+		} else {
+			throw new Error(`MISMATCH: \x1b[31m${h1Name}\x1b[30m vs \x1b[32m${ebirdData.name}\x1b[34m\nhttps://ebirdhotspots.com/birding-in-${state}/${link}\x1b[30m`);
 		}
-		name = ebirdData?.name || null;
-		lat = ebirdData?.latitude || null
-		lng = ebirdData?.longitude || null;
-		countyCode = ebirdData?.subnational2Code || null;
+		//process.stdout.write(`\nMISMATCH: '${h1Name}' vs '${ebirdData.name}'`);
 	}
+	const alreadyExists = await Hotspot.findOne({ locationId });
+	if (alreadyExists) {
+		//console.log(`WARNING: Skipping "${slug}" with eBird ID "${locationId}" already exists`);
+		return;
+	}
+	name = ebirdData?.name || null;
+	lat = ebirdData?.latitude || null
+	lng = ebirdData?.longitude || null;
+	countyCode = ebirdData?.subnational2Code || null;
 
 	const county = Counties.find(it => it.ebirdCode === countyCode)?.slug;
 	if (!county) {
@@ -326,7 +362,7 @@ await Promise.all(filteredLinks.map(async (link) => {
 		countyCode,
 		address: address.trim() || "",
 		tips: tips.trim() || "",
-		birds: "",
+		birds: birds.trim() || "",
 		about: about.trim() || "",
 		hikes: "",
 		oldSlug: slug,
@@ -336,9 +372,12 @@ await Promise.all(filteredLinks.map(async (link) => {
 		iba: null,
 		migrateParentSlug: parentSlug ? cleanSlug(parentSlug) : null,
 		reviewed: false,
+		nameMismatch,
 	}
 	if (!dryRun) await Hotspot.create(data);
-	if (!dryRun) console.log(`${counter}. Saved`, name);
+	if (dryRun) console.log(data);
+	process.stdout.write(".");
+	//console.log(`${counter}. Saved`, name);
 	counter++;
 }));
 
@@ -349,3 +388,4 @@ mongoose.connection.close();
 //TODO: Run scrip to find all hotspots with "--" that don't have a parent assigned
 //TODO: search for About headings that match the parent hotspot name
 //TODO: Refetch old slugs up to Coshocton county
+//TODO: Remove Tips that just have a citation: https://birdinghotspots.org/arizona/coconino-county/grand-canyon-national-park-bright-angel-lodge

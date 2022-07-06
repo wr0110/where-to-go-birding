@@ -180,8 +180,6 @@
 		"code": "OH",
 		"email": "hotspots@ohiobirds.org",
 		"features": [ "roadside", "accessible", "iba", "hikes" ],
-		"coordinates": "40.2, -82.7",
-		"mapZoom": 7,
 		"active": true,
 		"color": "#4a84b2"
 	},
@@ -234,7 +232,9 @@
 		"label": "Vermont",
 		"slug": "vermont",
 		"code": "VT",
-		"portal": "vt"
+		"portal": "vt",
+		"features": [],
+		"active": true
 	},
 	{
 		"label": "Virginia",

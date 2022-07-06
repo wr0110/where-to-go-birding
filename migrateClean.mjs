@@ -6,7 +6,7 @@ dotenv.config();
 const URI = process.env.MONGO_URI;
 mongoose.connect(URI);
 
-const stateCode = "AZ";
+const stateCode = "VT";
 
 const allHotspots = await Hotspot.find({ state: stateCode }, ["slug", "name"]);
 console.log(`Fetched ${allHotspots.length} hotspots from DB`);
@@ -14,9 +14,10 @@ console.log(`Fetched ${allHotspots.length} hotspots from DB`);
 const needsParent = await Hotspot.find({
 	state: stateCode,
 	migrateParentSlug: { $ne: null },
-}, ["slug", "name", "migrateParentSlug"]).lean().exec();
+}, ["slug", "name", "migrateParentSlug", "parent"]).lean().exec();
 
-await Promise.all(needsParent.map(async ({_id, migrateParentSlug, slug, name}) => {
+await Promise.all(needsParent.map(async ({_id, migrateParentSlug, slug, name, parent}) => {
+	if (parent) return;
 	const parentUrl = migrateParentSlug;
 	const parentSlug = parentUrl?.replace(/\/$/, "")?.split("/")?.pop()
 	if (slug === parentSlug) {
@@ -27,7 +28,7 @@ await Promise.all(needsParent.map(async ({_id, migrateParentSlug, slug, name}) =
 	}
 	const parentId = allHotspots.find(it => it.slug === parentSlug)?._id;
 	if (!parentId) {
-		throw new Error(`Can't find parent for ${name}`);
+		throw new Error(`Can't find parent for ${name}: ${parentSlug}`);
 	}
 		console.log(`Saving ${name}`);
 		await Hotspot.updateOne({ _id }, {
