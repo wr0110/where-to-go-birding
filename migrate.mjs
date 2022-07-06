@@ -3,6 +3,8 @@ import fetch from "node-fetch";
 import mongoose from "mongoose";
 import Hotspot from "./models/Hotspot.mjs";
 import dotenv from "dotenv";
+import * as readline from 'node:readline/promises';
+import { stdin as input, stdout as output } from 'node:process';
 import Counties from "./data/vt-counties.json" assert {type: "json"}; // IMPORTANT: ------------------------------------------------- Update for each state
 dotenv.config();
 
@@ -13,7 +15,7 @@ const URI = process.env.MONGO_URI;
 mongoose.connect(URI);
 
 const dryRun = false;
-const slice = 20;
+const slice = 50;
 const nameExceptions = [
 	"Bald Hill WMA (Caledonia Co.)",
 	"Bailey Pond - Marshfield (17 acres)",
@@ -23,8 +25,9 @@ const nameExceptions = [
 	"Arrowhead Mountain Lake - Milton (760 acres)",
 	"Bald Hill Pond - Westmore (108 acres)",
 	"Baker Pond - Brookfield (35 acres)",
+	"Abraham's Knees (restricted access)",
 ];
-const skip = [];
+const skip = ["deer-leap", "dow-pond", "doughty-pond", "donahue-sea-caves", "dead-creek-wildlife-management-area-iba-stone-bridge-dam"];
 const state = "vermont";
 const stateCode = "VT";
 const base = `https://ebirdhotspots.com/birding-in-${state}`;
@@ -246,12 +249,13 @@ const checkIfNamesMatch = (ebird, h1) => {
 	h1 = h1.replaceAll("Campground", "CG");
 	if (ebird.replace(/[^\w\s]/gi, "") === h1.replace(/[^\w\s]/gi, "")) return true;
 	if (nameExceptions.includes(ebird) || nameExceptions.includes(h1)) return true;
+	//if (ebird.endsWith(" acres)")) return true;
 	return false;
 }
 
 let counter = 1;
 
-await Promise.all(filteredLinks.map(async (link) => {
+for (const link of filteredLinks) {
 	const request = await fetch(`${base}/${link}`);
 	//console.log(`${counter}. Scraping`, link);
 	const html = await request.text();
@@ -326,18 +330,20 @@ await Promise.all(filteredLinks.map(async (link) => {
 		throw new Error(`No ebird data found for ${link}`);
 	}
 	if (!checkIfNamesMatch(ebirdData?.name, h1Name)) {
-		if (ebirdData?.name?.endsWith(" acres)")) {
-			console.log(`\x1b[33mWARNING  \x1b[31m${h1Name}\x1b[30m vs \x1b[32m${ebirdData.name}\x1b[30m`);
-			nameMismatch = true;
-		} else {
-			throw new Error(`MISMATCH: \x1b[31m${h1Name}\x1b[30m vs \x1b[32m${ebirdData.name}\x1b[34m\nhttps://ebirdhotspots.com/birding-in-${state}/${link}\x1b[30m`);
+		console.log(`\n\x1b[31m${h1Name}\x1b[30m vs \x1b[32m${ebirdData.name}\x1b[34m\nhttps://ebirdhotspots.com/birding-in-${state}/${link}\x1b[30m`);
+		const rl = readline.createInterface({ input, output });
+		const answer = await rl.question("Mismatch ok (y/n)? ");
+		if (answer !== "y") {
+			throw new Error("Exiting...");
 		}
+		nameMismatch = true;
+		rl.close();
 		//process.stdout.write(`\nMISMATCH: '${h1Name}' vs '${ebirdData.name}'`);
 	}
 	const alreadyExists = await Hotspot.findOne({ locationId });
 	if (alreadyExists) {
 		//console.log(`WARNING: Skipping "${slug}" with eBird ID "${locationId}" already exists`);
-		return;
+		break;
 	}
 	name = ebirdData?.name || null;
 	lat = ebirdData?.latitude || null
@@ -379,7 +385,7 @@ await Promise.all(filteredLinks.map(async (link) => {
 	process.stdout.write(".");
 	//console.log(`${counter}. Saved`, name);
 	counter++;
-}));
+};
 
 mongoose.connection.close();
 
