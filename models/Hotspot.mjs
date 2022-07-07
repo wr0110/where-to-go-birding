@@ -28,7 +28,6 @@ const HotspotSchema = new Schema({
 	locationId: String,
 	slug: {
 		type: String,
-		unique: true,
 		required: true
 	},
 	oldSlug: String,
@@ -84,6 +83,8 @@ const HotspotSchema = new Schema({
 	reviewed: Boolean, //TODO remove
 	nameMismatch: Boolean, //TODO remove
 });
+
+HotspotSchema.index({ stateCode: 1, slug: -1 }, { unique: true });
 
 const Hotspot = models.Hotspot || model("Hotspot", HotspotSchema);
 

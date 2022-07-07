@@ -5,10 +5,10 @@ import Hotspot from "./models/Hotspot.mjs";
 import dotenv from "dotenv";
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
-import Counties from "./data/ri-counties.json" assert {type: "json"}; // IMPORTANT: ------------------------------------------------- Update for each state
+import Counties from "./data/nm-counties.json" assert {type: "json"}; // IMPORTANT: ------------------------------------------------- Update for each state
 dotenv.config();
 
-import { links } from "./migrate-ri.mjs";
+import { links } from "./migrate-links.mjs";
 //const links = ["usvt-addison-county/usvt-adams-mountain"];
 
 const URI = process.env.MONGO_URI;
@@ -20,8 +20,8 @@ const nameExceptions = [
 
 ];
 const skip = [];
-const state = "rhode-island";
-const stateCode = "RI";
+const state = "new-mexico";
+const stateCode = "NM";
 const base = `https://ebirdhotspots.com/birding-in-${state}`;
 
 if (dryRun) {

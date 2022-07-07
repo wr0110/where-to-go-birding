@@ -14,8 +14,6 @@
 		"slug": "arizona",
 		"code": "AZ",
 		"features": [],
-		"coordinates": "34.5, -111.8",
-		"mapZoom": 6,
 		"active": true,
 		"color": "#e57700"
 	},
@@ -157,7 +155,9 @@
 	{
 		"label": "New Mexico",
 		"slug": "new-mexico",
-		"code": "NM"
+		"code": "NM",
+		"features": [],
+		"active": true
 	},
 	{
 		"label": "New York",

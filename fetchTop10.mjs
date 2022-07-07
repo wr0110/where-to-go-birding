@@ -9,6 +9,7 @@ import ArizonaCounties from "./data/az-counties.json" assert {type: "json"};
 import OhioCounties from "./data/oh-counties.json" assert {type: "json"};
 import VermontCounties from "./data/vt-counties.json" assert {type: "json"};
 import RhodeIslandCounties from "./data/ri-counties.json" assert {type: "json"};
+import NewMexicoCounties from "./data/nm-counties.json" assert {type: "json"};
 import states from "./data/states.json" assert {type: "json"};
 
 const countyArrays = {
@@ -16,6 +17,7 @@ const countyArrays = {
 	"AZ": ArizonaCounties,
 	"VT": VermontCounties,
 	"RI": RhodeIslandCounties,
+	"NM": NewMexicoCounties,
 }
 
 const activeStates = states.filter(state => state.active);
