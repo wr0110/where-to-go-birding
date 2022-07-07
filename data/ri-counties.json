@@ -1,0 +1,32 @@
+[
+	{
+		"slug": "bristol",
+		"region": null,
+		"ebirdCode": "US-RI-001",
+		"active": true
+	},
+	{
+		"slug": "kent",
+		"region": null,
+		"ebirdCode": "US-RI-003",
+		"active": true
+	},
+	{
+		"slug": "newport",
+		"region": null,
+		"ebirdCode": "US-RI-005",
+		"active": true
+	},
+	{
+		"slug": "providence",
+		"region": null,
+		"ebirdCode": "US-RI-007",
+		"active": true
+	},
+	{
+		"slug": "washington",
+		"region": null,
+		"ebirdCode": "US-RI-009",
+		"active": true
+	}
+]

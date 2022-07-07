@@ -5,10 +5,10 @@ import Hotspot from "./models/Hotspot.mjs";
 import dotenv from "dotenv";
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
-import Counties from "./data/vt-counties.json" assert {type: "json"}; // IMPORTANT: ------------------------------------------------- Update for each state
+import Counties from "./data/ri-counties.json" assert {type: "json"}; // IMPORTANT: ------------------------------------------------- Update for each state
 dotenv.config();
 
-import { links } from "./migrate-vt.mjs";
+import { links } from "./migrate-ri.mjs";
 //const links = ["usvt-addison-county/usvt-adams-mountain"];
 
 const URI = process.env.MONGO_URI;
@@ -17,19 +17,11 @@ mongoose.connect(URI);
 const dryRun = false;
 const slice = 50;
 const nameExceptions = [
-	"Bald Hill WMA (Caledonia Co.)",
-	"Bailey Pond - Marshfield (17 acres)",
-	"Andover Pond - Andover (11 acres)",
-	"Austin Pond - Hubbardton (28 acres)",
-	"Abijah Prince Pond", "Amherst Lake - Plymouth (81 acres)",
-	"Arrowhead Mountain Lake - Milton (760 acres)",
-	"Bald Hill Pond - Westmore (108 acres)",
-	"Baker Pond - Brookfield (35 acres)",
-	"Abraham's Knees (restricted access)",
+
 ];
-const skip = ["deer-leap", "dow-pond", "doughty-pond", "donahue-sea-caves", "dead-creek-wildlife-management-area-iba-stone-bridge-dam"];
-const state = "vermont";
-const stateCode = "VT";
+const skip = [];
+const state = "rhode-island";
+const stateCode = "RI";
 const base = `https://ebirdhotspots.com/birding-in-${state}`;
 
 if (dryRun) {
@@ -231,6 +223,8 @@ const checkIfNamesMatch = (ebird, h1) => {
 	if (softCompare(ebird, h1)) return true;
 	h1 = h1.replaceAll("Township", "Twp.");
 	if (softCompare(ebird, h1)) return true;
+	h1 = h1.replaceAll("Mount ", " Mt.");
+	if (softCompare(ebird, h1)) return true;
 	h1 = h1.replaceAll("Wastewater Treatment Plant", "WTP");
 	if (softCompare(ebird, h1)) return true;
 	h1 = h1.replaceAll("Sewer Treatment Plant", "STP");
@@ -249,7 +243,7 @@ const checkIfNamesMatch = (ebird, h1) => {
 	h1 = h1.replaceAll("Campground", "CG");
 	if (ebird.replace(/[^\w\s]/gi, "") === h1.replace(/[^\w\s]/gi, "")) return true;
 	if (nameExceptions.includes(ebird) || nameExceptions.includes(h1)) return true;
-	//if (ebird.endsWith(" acres)")) return true;
+	if (ebird.endsWith(" acres)")) return true;
 	return false;
 }
 
@@ -342,7 +336,7 @@ for (const link of filteredLinks) {
 	}
 	const alreadyExists = await Hotspot.findOne({ locationId });
 	if (alreadyExists) {
-		//console.log(`WARNING: Skipping "${slug}" with eBird ID "${locationId}" already exists`);
+		console.log(`\nWARNING: Skipping "${slug}" with eBird ID "${locationId}" already exists`);
 		break;
 	}
 	name = ebirdData?.name || null;

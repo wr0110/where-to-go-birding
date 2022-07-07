@@ -201,7 +201,9 @@
 	{
 		"label": "Rhode Island",
 		"slug": "rhode-island",
-		"code": "RI"
+		"code": "RI",
+		"features": [],
+		"active": true
 	},
 	{
 		"label": "South Carolina",
