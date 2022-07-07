@@ -7,11 +7,15 @@ dotenv.config();
 
 import ArizonaCounties from "./data/az-counties.json" assert {type: "json"};
 import OhioCounties from "./data/oh-counties.json" assert {type: "json"};
+import VermontCounties from "./data/vt-counties.json" assert {type: "json"};
+import RhodeIslandCounties from "./data/ri-counties.json" assert {type: "json"};
 import states from "./data/states.json" assert {type: "json"};
 
 const countyArrays = {
 	"OH": OhioCounties,
 	"AZ": ArizonaCounties,
+	"VT": VermontCounties,
+	"RI": RhodeIslandCounties,
 }
 
 const activeStates = states.filter(state => state.active);
