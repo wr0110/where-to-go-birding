@@ -1,0 +1,72 @@
+[
+  {
+    "ebirdCode": "US-MA-001",
+    "slug": "barnstable",
+		"active": true
+  },
+  {
+    "ebirdCode": "US-MA-003",
+    "slug": "berkshire",
+		"active": true
+  },
+  {
+    "ebirdCode": "US-MA-005",
+    "slug": "bristol",
+		"active": true
+  },
+  {
+    "ebirdCode": "US-MA-007",
+    "slug": "dukes",
+		"active": true
+  },
+  {
+    "ebirdCode": "US-MA-009",
+    "slug": "essex",
+		"active": true
+  },
+  {
+    "ebirdCode": "US-MA-011",
+    "slug": "franklin",
+		"active": true
+  },
+  {
+    "ebirdCode": "US-MA-013",
+    "slug": "hampden",
+		"active": true
+  },
+  {
+    "ebirdCode": "US-MA-015",
+    "slug": "hampshire",
+		"active": true
+  },
+  {
+    "ebirdCode": "US-MA-017",
+    "slug": "middlesex",
+		"active": true
+  },
+  {
+    "ebirdCode": "US-MA-019",
+    "slug": "nantucket",
+		"active": true
+  },
+  {
+    "ebirdCode": "US-MA-021",
+    "slug": "norfolk",
+		"active": true
+  },
+  {
+    "ebirdCode": "US-MA-023",
+    "slug": "plymouth",
+		"active": true
+  },
+  {
+    "ebirdCode": "US-MA-025",
+    "slug": "suffolk",
+		"active": true
+  },
+  {
+    "ebirdCode": "US-MA-027",
+    "slug": "worcester",
+		"active": true
+  }
+]

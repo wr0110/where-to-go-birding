@@ -5,6 +5,8 @@ import OhioCounties from "data/oh-counties.json";
 import VermontCounties from "data/vt-counties.json";
 import RhodeIslandCounties from "data/ri-counties.json";
 import NewMexicoCounties from "data/nm-counties.json";
+import MichiganCounties from "data/mi-counties.json";
+import MassachusettsCounties from "data/ma-counties.json";
 import { capitalize } from "./helpers";
 import { County } from "lib/types";
 
@@ -14,6 +16,8 @@ const countyArrays: any = {
   VT: VermontCounties,
   RI: RhodeIslandCounties,
   NM: NewMexicoCounties,
+  MI: MichiganCounties,
+  MA: MassachusettsCounties,
 };
 
 export function getState(param: string) {

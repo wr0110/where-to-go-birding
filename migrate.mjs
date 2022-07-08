@@ -5,7 +5,7 @@ import Hotspot from "./models/Hotspot.mjs";
 import dotenv from "dotenv";
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
-import Counties from "./data/nm-counties.json" assert {type: "json"}; // IMPORTANT: ------------------------------------------------- Update for each state
+import Counties from "./data/mi-counties.json" assert {type: "json"}; // IMPORTANT: ------------------------------------------------- Update for each state
 dotenv.config();
 
 import { links } from "./migrate-links.mjs";
@@ -16,13 +16,25 @@ mongoose.connect(URI);
 
 const dryRun = false;
 const slice = 50;
-const nameExceptions = [
-
-];
-const skip = [];
-const state = "new-mexico";
-const stateCode = "NM";
+const nameExceptions = [];
+const skip = ["green-meadow-lake-and-red-arsbon-park"];
+const state = "michigan";
+const stateCode = "MI";
 const base = `https://ebirdhotspots.com/birding-in-${state}`;
+const locationIds = [
+	{
+		slug: "aguirre-spring-recreation-area",
+		locationId: "L274845",
+	},
+	{
+		slug: "rio-chama-recreation-area",
+		locationId: "L2341348",
+	},
+	{
+		slug: "stateline-road",
+		locationId: "L2039718",
+	},
+];
 
 if (dryRun) {
 	console.log("--------------------Dry run--------------------");
@@ -308,7 +320,8 @@ for (const link of filteredLinks) {
 	const { tips, about, birds } = rightCol ? processAbout(rightCol, parentName) : {};
 
 	const locationLink = leftCol.querySelector(`table a[href*='ebird.org']`)?.href;
-	const locationId = locationLink?.split("hotspots=")?.[1]?.split("&")?.[0]?.split(",")?.[0] || null;
+	let locationId = null;
+	locationId = locationIds.find(it => it.slug === cleanSlug(slug))?.locationId || locationLink?.split("hotspots=")?.[1]?.split("&")?.[0]?.split(",")?.[0] || null;
 	if (!locationId) {
 		throw new Error(`No location link found for ${link}`);
 	}
@@ -321,7 +334,7 @@ for (const link of filteredLinks) {
 
 	const ebirdData = await getEbirdHotspot(locationId);
 	if (!ebirdData) {
-		throw new Error(`No ebird data found for ${link}`);
+		throw new Error(`No ebird data found for link: ${link} and locationId: ${locationId}`);
 	}
 	if (!checkIfNamesMatch(ebirdData?.name, h1Name)) {
 		console.log(`\n\x1b[31m${h1Name}\x1b[30m vs \x1b[32m${ebirdData.name}\x1b[34m\nhttps://ebirdhotspots.com/birding-in-${state}/${link}\x1b[30m`);

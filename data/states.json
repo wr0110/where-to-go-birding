@@ -105,12 +105,16 @@
 	{
 		"label": "Massachusetts",
 		"slug": "massachusetts",
-		"code": "MA"
+		"code": "MA",
+		"features": [],
+		"active": true
 	},
 	{
 		"label": "Michigan",
 		"slug": "michigan",
-		"code": "MI"
+		"code": "MI",
+		"active": true,
+		"features": []
 	},
 	{
 		"label": "Minnesota",

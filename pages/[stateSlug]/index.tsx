@@ -7,6 +7,8 @@ import ArizonaMap from "components/ArizonaMap";
 import VermontMap from "components/VermontMap";
 import NewMexicoMap from "components/NewMexicoMap";
 import RhodeIslandMap from "components/RhodeIslandMap";
+import MichiganMap from "components/MichiganMap";
+import MassachusettsMap from "components/MassachusettsMap";
 import { getState, getCounties } from "lib/localData";
 import EbirdDescription from "components/EbirdDescription";
 import EbirdHelpLinks from "components/EbirdHelpLinks";
@@ -70,6 +72,8 @@ export default function State({ state, counties, topHotspots, info }: Props) {
     VT: <VermontMap />,
     RI: <RhodeIslandMap />,
     NM: <NewMexicoMap />,
+    MI: <MichiganMap />,
+    MA: <MassachusettsMap />,
   };
 
   const map = maps[code];
