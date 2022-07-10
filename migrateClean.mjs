@@ -6,9 +6,9 @@ dotenv.config();
 const URI = process.env.MONGO_URI;
 mongoose.connect(URI);
 
-const stateCode = "MA";
+const stateCode = "GA";
 
-const allHotspots = await Hotspot.find({ state: stateCode }, ["slug", "name"]);
+const allHotspots = await Hotspot.find({ stateCode }, ["slug", "name"]);
 console.log(`Fetched ${allHotspots.length} hotspots from DB`);
 
 const needsParent = await Hotspot.find({

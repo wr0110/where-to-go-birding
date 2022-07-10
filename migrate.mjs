@@ -5,7 +5,7 @@ import Hotspot from "./models/Hotspot.mjs";
 import dotenv from "dotenv";
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
-import Counties from "./data/ky-counties.json" assert {type: "json"}; // IMPORTANT: ------------------------------------------------- Update for each state
+import Counties from "./data/nh-counties.json" assert {type: "json"}; // IMPORTANT: ------------------------------------------------- Update for each state
 dotenv.config();
 
 import { links } from "./migrate-links.mjs";
@@ -18,8 +18,8 @@ const dryRun = false;
 const slice = 50;
 const nameExceptions = [];
 const skip = [];
-const state = "kentucky";
-const stateCode = "KY";
+const state = "new-hampshire";
+const stateCode = "NH";
 const base = `https://ebirdhotspots.com/birding-in-${state}`;
 const locationIds = [
 ];
@@ -266,6 +266,11 @@ for (const link of filteredLinks) {
 	const leftCol = doc.querySelector(".csColumn");
 	if (!leftCol) {
 		throw new Error(`No left column found for ${link}`);
+	}
+
+	const img = leftCol.querySelector("img");
+	if (img) {
+		throw new Error (`Image found in left column for ${link}`);
 	}
 
 	const children = Array.from(leftCol.childNodes);

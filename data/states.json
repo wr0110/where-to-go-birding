@@ -154,7 +154,9 @@
 	{
 		"label": "New Hampshire",
 		"slug": "new-hampshire",
-		"code": "NH"
+		"code": "NH",
+		"features": [],
+		"active": true
 	},
 	{
 		"label": "New Jersey",

@@ -9,6 +9,7 @@ import MichiganCounties from "data/mi-counties.json";
 import MassachusettsCounties from "data/ma-counties.json";
 import KentuckyCounties from "data/ky-counties.json";
 import GeorgiaCounties from "data/ga-counties.json";
+import NewHampshireCounties from "data/nh-counties.json";
 import { capitalize } from "./helpers";
 import { County } from "lib/types";
 
@@ -22,6 +23,7 @@ const countyArrays: any = {
   MA: MassachusettsCounties,
   KY: KentuckyCounties,
   GA: GeorgiaCounties,
+  NH: NewHampshireCounties,
 };
 
 export function getState(param: string) {
