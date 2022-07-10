@@ -7,6 +7,8 @@ import RhodeIslandCounties from "data/ri-counties.json";
 import NewMexicoCounties from "data/nm-counties.json";
 import MichiganCounties from "data/mi-counties.json";
 import MassachusettsCounties from "data/ma-counties.json";
+import KentuckyCounties from "data/ky-counties.json";
+import GeorgiaCounties from "data/ga-counties.json";
 import { capitalize } from "./helpers";
 import { County } from "lib/types";
 
@@ -18,6 +20,8 @@ const countyArrays: any = {
   NM: NewMexicoCounties,
   MI: MichiganCounties,
   MA: MassachusettsCounties,
+  KY: KentuckyCounties,
+  GA: GeorgiaCounties,
 };
 
 export function getState(param: string) {

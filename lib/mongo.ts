@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Hotspot from "models/Hotspot";
+import Hotspot from "models/Hotspot.mjs";
 
 const URI = process.env.MONGO_URI;
 const connect = async () => (URI ? mongoose.connect(URI) : null);

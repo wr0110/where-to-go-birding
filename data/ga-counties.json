@@ -1,0 +1,797 @@
+[
+  {
+    "ebirdCode": "US-GA-001",
+    "slug": "appling",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-003",
+    "slug": "atkinson",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-005",
+    "slug": "bacon",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-007",
+    "slug": "baker",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-009",
+    "slug": "baldwin",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-011",
+    "slug": "banks",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-013",
+    "slug": "barrow",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-015",
+    "slug": "bartow",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-017",
+    "slug": "ben-hill",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-019",
+    "slug": "berrien",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-021",
+    "slug": "bibb",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-023",
+    "slug": "bleckley",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-025",
+    "slug": "brantley",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-027",
+    "slug": "brooks",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-029",
+    "slug": "bryan",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-031",
+    "slug": "bulloch",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-033",
+    "slug": "burke",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-035",
+    "slug": "butts",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-037",
+    "slug": "calhoun",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-039",
+    "slug": "camden",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-043",
+    "slug": "candler",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-045",
+    "slug": "carroll",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-047",
+    "slug": "catoosa",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-049",
+    "slug": "charlton",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-051",
+    "slug": "chatham",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-053",
+    "slug": "chattahoochee",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-055",
+    "slug": "chattooga",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-057",
+    "slug": "cherokee",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-059",
+    "slug": "clarke",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-061",
+    "slug": "clay",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-063",
+    "slug": "clayton",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-065",
+    "slug": "clinch",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-067",
+    "slug": "cobb",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-069",
+    "slug": "coffee",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-071",
+    "slug": "colquitt",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-073",
+    "slug": "columbia",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-075",
+    "slug": "cook",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-077",
+    "slug": "coweta",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-079",
+    "slug": "crawford",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-081",
+    "slug": "crisp",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-083",
+    "slug": "dade",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-085",
+    "slug": "dawson",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-089",
+    "slug": "dekalb",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-087",
+    "slug": "decatur",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-091",
+    "slug": "dodge",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-093",
+    "slug": "dooly",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-095",
+    "slug": "dougherty",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-097",
+    "slug": "douglas",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-099",
+    "slug": "early",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-101",
+    "slug": "echols",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-103",
+    "slug": "effingham",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-105",
+    "slug": "elbert",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-107",
+    "slug": "emanuel",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-109",
+    "slug": "evans",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-111",
+    "slug": "fannin",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-113",
+    "slug": "fayette",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-115",
+    "slug": "floyd",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-117",
+    "slug": "forsyth",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-119",
+    "slug": "franklin",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-121",
+    "slug": "fulton",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-123",
+    "slug": "gilmer",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-125",
+    "slug": "glascock",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-127",
+    "slug": "glynn",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-129",
+    "slug": "gordon",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-131",
+    "slug": "grady",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-133",
+    "slug": "greene",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-135",
+    "slug": "gwinnett",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-137",
+    "slug": "habersham",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-139",
+    "slug": "hall",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-141",
+    "slug": "hancock",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-143",
+    "slug": "haralson",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-145",
+    "slug": "harris",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-147",
+    "slug": "hart",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-149",
+    "slug": "heard",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-151",
+    "slug": "henry",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-153",
+    "slug": "houston",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-155",
+    "slug": "irwin",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-157",
+    "slug": "jackson",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-159",
+    "slug": "jasper",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-161",
+    "slug": "jeff-davis",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-163",
+    "slug": "jefferson",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-165",
+    "slug": "jenkins",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-167",
+    "slug": "johnson",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-169",
+    "slug": "jones",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-171",
+    "slug": "lamar",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-173",
+    "slug": "lanier",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-175",
+    "slug": "laurens",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-177",
+    "slug": "lee",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-179",
+    "slug": "liberty",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-181",
+    "slug": "lincoln",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-183",
+    "slug": "long",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-185",
+    "slug": "lowndes",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-187",
+    "slug": "lumpkin",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-193",
+    "slug": "macon",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-195",
+    "slug": "madison",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-197",
+    "slug": "marion",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-189",
+    "slug": "mcduffie",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-191",
+    "slug": "mcintosh",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-199",
+    "slug": "meriwether",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-201",
+    "slug": "miller",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-205",
+    "slug": "mitchell",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-207",
+    "slug": "monroe",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-209",
+    "slug": "montgomery",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-211",
+    "slug": "morgan",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-213",
+    "slug": "murray",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-215",
+    "slug": "muscogee",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-217",
+    "slug": "newton",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-219",
+    "slug": "oconee",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-221",
+    "slug": "oglethorpe",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-223",
+    "slug": "paulding",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-225",
+    "slug": "peach",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-227",
+    "slug": "pickens",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-229",
+    "slug": "pierce",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-231",
+    "slug": "pike",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-233",
+    "slug": "polk",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-235",
+    "slug": "pulaski",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-237",
+    "slug": "putnam",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-239",
+    "slug": "quitman",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-241",
+    "slug": "rabun",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-243",
+    "slug": "randolph",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-245",
+    "slug": "richmond",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-247",
+    "slug": "rockdale",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-249",
+    "slug": "schley",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-251",
+    "slug": "screven",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-253",
+    "slug": "seminole",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-255",
+    "slug": "spalding",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-257",
+    "slug": "stephens",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-259",
+    "slug": "stewart",
+    "active": true
+  },
+  {
+    "ebirdCode": "US-GA-261",
+    "slug": "sumter",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-263",
+    "slug": "talbot",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-265",
+    "slug": "taliaferro",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-267",
+    "slug": "tattnall",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-269",
+    "slug": "taylor",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-271",
+    "slug": "telfair",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-273",
+    "slug": "terrell",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-275",
+    "slug": "thomas",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-277",
+    "slug": "tift",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-279",
+    "slug": "toombs",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-281",
+    "slug": "towns",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-283",
+    "slug": "treutlen",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-285",
+    "slug": "troup",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-287",
+    "slug": "turner",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-289",
+    "slug": "twiggs",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-291",
+    "slug": "union",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-293",
+    "slug": "upson",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-295",
+    "slug": "walker",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-297",
+    "slug": "walton",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-299",
+    "slug": "ware",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-301",
+    "slug": "warren",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-303",
+    "slug": "washington",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-305",
+    "slug": "wayne",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-307",
+    "slug": "webster",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-309",
+    "slug": "wheeler",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-311",
+    "slug": "white",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-313",
+    "slug": "whitfield",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-315",
+    "slug": "wilcox",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-317",
+    "slug": "wilkes",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-319",
+    "slug": "wilkinson",
+    "active": false
+  },
+  {
+    "ebirdCode": "US-GA-321",
+    "slug": "worth",
+    "active": false
+  }
+]

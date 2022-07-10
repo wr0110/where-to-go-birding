@@ -50,7 +50,9 @@
 	{
 		"label": "Georgia",
 		"slug": "georgia",
-		"code": "GA"
+		"code": "GA",
+		"features": [],
+		"active": true
 	},
 	{
 		"label": "Hawaii",
@@ -85,7 +87,9 @@
 	{
 		"label": "Kentucky",
 		"slug": "kentucky",
-		"code": "KY"
+		"code": "KY",
+		"features": [],
+		"active": true
 	},
 	{
 		"label": "Louisiana",
@@ -107,7 +111,8 @@
 		"slug": "massachusetts",
 		"code": "MA",
 		"features": [],
-		"active": true
+		"active": true,
+		"portal": "massaudubon"
 	},
 	{
 		"label": "Michigan",

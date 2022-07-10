@@ -5,7 +5,7 @@ import Hotspot from "./models/Hotspot.mjs";
 import dotenv from "dotenv";
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
-import Counties from "./data/mi-counties.json" assert {type: "json"}; // IMPORTANT: ------------------------------------------------- Update for each state
+import Counties from "./data/ky-counties.json" assert {type: "json"}; // IMPORTANT: ------------------------------------------------- Update for each state
 dotenv.config();
 
 import { links } from "./migrate-links.mjs";
@@ -17,23 +17,11 @@ mongoose.connect(URI);
 const dryRun = false;
 const slice = 50;
 const nameExceptions = [];
-const skip = ["green-meadow-lake-and-red-arsbon-park"];
-const state = "michigan";
-const stateCode = "MI";
+const skip = [];
+const state = "kentucky";
+const stateCode = "KY";
 const base = `https://ebirdhotspots.com/birding-in-${state}`;
 const locationIds = [
-	{
-		slug: "aguirre-spring-recreation-area",
-		locationId: "L274845",
-	},
-	{
-		slug: "rio-chama-recreation-area",
-		locationId: "L2341348",
-	},
-	{
-		slug: "stateline-road",
-		locationId: "L2039718",
-	},
 ];
 
 if (dryRun) {
@@ -253,6 +241,8 @@ const checkIfNamesMatch = (ebird, h1) => {
 	if (ebird === newH1Again) return true;
 	if (softCompare(ebird, h1)) return true;
 	h1 = h1.replaceAll("Campground", "CG");
+	if (softCompare(ebird, h1)) return true;
+	h1 = h1.replaceAll("Boston Harbor Islands", "BHI");
 	if (ebird.replace(/[^\w\s]/gi, "") === h1.replace(/[^\w\s]/gi, "")) return true;
 	if (nameExceptions.includes(ebird) || nameExceptions.includes(h1)) return true;
 	if (ebird.endsWith(" acres)")) return true;

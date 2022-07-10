@@ -9,6 +9,8 @@ import NewMexicoMap from "components/NewMexicoMap";
 import RhodeIslandMap from "components/RhodeIslandMap";
 import MichiganMap from "components/MichiganMap";
 import MassachusettsMap from "components/MassachusettsMap";
+import KentuckyMap from "components/KentuckyMap";
+import GeorgiaMap from "components/GeorgiaMap";
 import { getState, getCounties } from "lib/localData";
 import EbirdDescription from "components/EbirdDescription";
 import EbirdHelpLinks from "components/EbirdHelpLinks";
@@ -74,6 +76,8 @@ export default function State({ state, counties, topHotspots, info }: Props) {
     NM: <NewMexicoMap />,
     MI: <MichiganMap />,
     MA: <MassachusettsMap />,
+    KY: <KentuckyMap />,
+    GA: <GeorgiaMap />,
   };
 
   const map = maps[code];
