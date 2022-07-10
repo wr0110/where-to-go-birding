@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import connect from "lib/mongo";
 import admin from "lib/firebaseAdmin";
-import Hotspot from "models/Hotspot";
+import Hotspot from "models/Hotspot.mjs";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   const token = req.headers.authorization;
