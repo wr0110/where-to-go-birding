@@ -32,31 +32,38 @@ interface Params extends ParsedUrlQuery {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const start = new Date();
   const { id, state: stateParam } = query as Params;
+  console.log("one", new Date().getTime() - start.getTime());
   const isNew = id === "new";
-
   const data = isNew ? null : await getHotspotById(id);
+  console.log("two", new Date().getTime() - start.getTime());
 
   const stateCode = data?.stateCode || stateParam;
+  console.log("three", new Date().getTime() - start.getTime());
   const state = getStateByCode(stateCode);
+  console.log("four", new Date().getTime() - start.getTime());
+
+  const props = {
+    id: data?._id || null,
+    isNew: !data,
+    state,
+    data: {
+      ...data,
+      name: data?.name || "",
+      slug: data?.slug || "",
+      multiCounties: data?.multiCounties || [],
+      roadside: data?.roadside || "Unknown",
+      restrooms: restroomOptions.find((it) => it.value === data?.restrooms) || null,
+      accessible: data?.accessible || null,
+      dayhike: data?.dayhike || "No",
+    },
+    stateCode,
+  };
+  console.log("five", new Date().getTime() - start.getTime());
 
   return {
-    props: {
-      id: data?._id || null,
-      isNew: !data,
-      state,
-      data: {
-        ...data,
-        name: data?.name || "",
-        slug: data?.slug || "",
-        multiCounties: data?.multiCounties || [],
-        roadside: data?.roadside || "Unknown",
-        restrooms: restroomOptions.find((it) => it.value === data?.restrooms) || null,
-        accessible: data?.accessible || null,
-        dayhike: data?.dayhike || "No",
-      },
-      stateCode,
-    },
+    props,
   };
 };
 
