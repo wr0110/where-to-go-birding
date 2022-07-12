@@ -5,11 +5,11 @@ import Hotspot from "./models/Hotspot.mjs";
 import dotenv from "dotenv";
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
-import Counties from "./data/nh-counties.json" assert {type: "json"}; // IMPORTANT: ------------------------------------------------- Update for each state
+import Counties from "./data/nh-counties.json" assert {type: "json"};
 dotenv.config();
 
 import { links } from "./migrate-links.mjs";
-//const links = ["usvt-addison-county/usvt-adams-mountain"];
+//const links = ["usnh-hillsborough-county/usnh-beaver-brook-association-hollis"];
 
 const URI = process.env.MONGO_URI;
 mongoose.connect(URI);
@@ -17,11 +17,23 @@ mongoose.connect(URI);
 const dryRun = false;
 const slice = 50;
 const nameExceptions = [];
-const skip = [];
+const skip = ["wilder-dam-reservoir-lebanon", "william-h-champlin-forest-reservation-rochester", "route-11b-fields-at-old-lake-shore-road-gilford", "white-mountain-national-forest-dolly-copp-pinkham-b-road-closed-winter", "overlook-below-amoskeag-dam-manchester", "pancake-hill", "neal-mill-road-newmarket", "moeckel-pond-windham", "clark-reserve-tamworth"];
 const state = "new-hampshire";
 const stateCode = "NH";
 const base = `https://ebirdhotspots.com/birding-in-${state}`;
 const locationIds = [
+	{
+	slug: "clark-pond-auburn",
+	locationId: "L16259909",
+},
+{
+	slug: "silver-lake-belknap-county",
+	locationId: "L1055704",
+},
+{ 
+	slug: "umbagog-national-wildlife-refuge",
+	locationId: "L589001",
+},
 ];
 
 if (dryRun) {
@@ -268,11 +280,6 @@ for (const link of filteredLinks) {
 		throw new Error(`No left column found for ${link}`);
 	}
 
-	const img = leftCol.querySelector("img");
-	if (img) {
-		throw new Error (`Image found in left column for ${link}`);
-	}
-
 	const children = Array.from(leftCol.childNodes);
 
 	children.forEach((child) => {
@@ -310,7 +317,15 @@ for (const link of filteredLinks) {
 	}
 
 	const maps = rightCol.querySelectorAll("img");
-	const images = processImages(maps);
+	const leftImages = leftCol.querySelectorAll("img");
+
+	let photographerAttempt = doc.querySelector("img:last-of-type + span")?.textContent?.trim();
+	if (!photographerAttempt?.includes("Photo")) {
+		photographerAttempt = null;
+	}
+	const photographer = photographerAttempt?.replace("Photos by ", "")?.replace("Photo by ", "");
+	
+	const images = processImages(maps, leftImages, photographer);
 
 	const { tips, about, birds } = rightCol ? processAbout(rightCol, parentName) : {};
 

@@ -1,6 +1,3 @@
-import Link from "next/link";
-import { State, County } from "lib/types";
-
 type Props = {
   children: React.ReactNode;
   color?: "red" | "blue" | "green" | "yellow" | "orange" | "purple" | "turquoise";

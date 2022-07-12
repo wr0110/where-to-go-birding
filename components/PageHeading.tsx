@@ -30,11 +30,11 @@ export default function PageHeading({
     >
       <h1 className="p-3">{children}</h1>
       {breadcrumbs && (
-        <nav className="text-[13px] leading-5 flex items-stretch">
+        <nav className="text-xs sm:text-[13px] leading-4 sm:leading-5 flex items-stretch">
           {county && state && (
             <>
               <Link href={`/${state.slug}/${county.slug}-county`}>
-                <a className="text-white/90 px-5 py-1.5 bg-white/10">{county.name} County</a>
+                <a className="text-white/90 px-5 py-1.5 bg-white/10 flex items-center">{county.name} County</a>
               </Link>
               <Icon />
             </>
@@ -42,13 +42,15 @@ export default function PageHeading({
           {state && !hideState && (
             <>
               <Link href={`/${state.slug}`}>
-                <a className="text-white/90 px-5 py-1.5 bg-white/10">{state.label}</a>
+                <a className="text-white/90 px-5 py-1.5 bg-white/10 flex items-center">{state.label}</a>
               </Link>
               <Icon />
             </>
           )}
           <Link href="/">
-            <a className="text-white/90 pl-5 pr-8 py-1.5 rounded-r-lg breadcrumb-gradient">United States</a>
+            <a className="text-white/90 pl-5 pr-8 py-1.5 rounded-r-lg breadcrumb-gradient flex items-center">
+              United States
+            </a>
           </Link>
         </nav>
       )}

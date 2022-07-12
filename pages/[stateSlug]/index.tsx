@@ -110,7 +110,7 @@ export default function State({ state, counties, topHotspots, info }: Props) {
             <br />
             <Link href={`/${slug}/alphabetical-index`}>{`Alphabetical list of ${label} Hotspots`}</Link>
             <br />
-            <a href="#top-locations" onClick={scrollToAnchor}>
+            <a href="#hotspots" onClick={scrollToAnchor}>
               Top Birding Locations in {label}
             </a>
             <br />
@@ -134,7 +134,7 @@ export default function State({ state, counties, topHotspots, info }: Props) {
           <TopHotspotList hotspots={topHotspots} />
         </section>
         <section className="mb-8 flex flex-col">
-          <Heading id="hotspots" color="green" className="mt-12 mb-8">
+          <Heading id="counties" color="green" className="mt-12 mb-8">
             {label} Counties
           </Heading>
           <div className="columns-3 sm:columns-4 flex-grow">

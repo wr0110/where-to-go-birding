@@ -114,7 +114,7 @@ export default function County({ state, county, hotspots, topHotspots }: Props) 
           </section>
         </div>
       </div>
-      <RareBirds region={ebirdCode} label={`${name} County Notable Sightings`} className="mt-16" />
+      <RareBirds region={ebirdCode} label={`${name} County`} className="mt-16" />
     </div>
   );
 }

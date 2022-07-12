@@ -23,22 +23,27 @@ export default function Header() {
       <header className="bg-white border-b static md:fixed top-0 right-0 left-0 pl-3 sm:pr-4 md:pr-10 shadow-sm z-10">
         <div>
           <div className="sm:flex justify-between py-2 items-center">
-            <Link href="/">
-              <a className="flex gap-2 items-center">
-                <Logo className={`w-[50px] ${!collapsed ? "md:w-[85px]" : ""} transition-all duration-300 h-auto`} />
-                <div className="flex flex-col justify-center">
-                  <h1
-                    className={`text-lg ${!collapsed ? "md:text-3xl" : ""} text-gray-900 transition-all duration-300`}
-                  >
-                    Birding Hotspots
-                  </h1>
-                  <em className="text-[0.8em] leading-4 text-[#92ad39] font-medium">Where to Go Birding</em>
-                </div>
-              </a>
-            </Link>
+            <div className="flex pr-8 justify-between">
+              <Link href="/">
+                <a className="flex gap-2 items-center">
+                  <Logo className={`w-[50px] ${!collapsed ? "md:w-[85px]" : ""} transition-all duration-300 h-auto`} />
+                  <div className="flex flex-col justify-center">
+                    <h1
+                      className={`text-lg ${!collapsed ? "md:text-3xl" : ""} text-gray-900 transition-all duration-300`}
+                    >
+                      Birding Hotspots
+                    </h1>
+                    <em className="text-[0.8em] leading-4 text-[#92ad39] font-medium">Where to Go Birding</em>
+                  </div>
+                </a>
+              </Link>
+              <button type="button" onClick={() => setShowSearch(true)} className="sm:hidden">
+                <SearchIcon className="h-5 w-5" />
+              </button>
+            </div>
             <nav className="mt-2 md:mt-0">
               <ul className="flex gap-7">
-                <li className="flex items-center justify-center">
+                <li className="items-center justify-center hidden sm:flex">
                   <button type="button" onClick={() => setShowSearch(true)}>
                     <SearchIcon className="h-5 w-5" />
                   </button>
