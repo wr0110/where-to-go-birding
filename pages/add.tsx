@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "components/Input";
@@ -14,8 +15,10 @@ export default function Add() {
   const form = useForm<Inputs>();
   const router = useRouter();
   const { defaultParentId } = router.query;
+  const [loading, setLoading] = React.useState(false);
 
   const handleSubmit: SubmitHandler<Inputs> = async ({ locationId }) => {
+    setLoading(true);
     const url = defaultParentId ? `/edit/${locationId}?defaultParentId=${defaultParentId}` : `/edit/${locationId}`;
     router.push(url);
   };
@@ -32,7 +35,7 @@ export default function Add() {
             </Field>
           </div>
           <div className="px-4 py-3 bg-gray-100 text-right sm:px-6 rounded">
-            <Submit color="green" className="font-medium">
+            <Submit loading={loading} color="green" className="font-medium">
               Continue
             </Submit>
           </div>

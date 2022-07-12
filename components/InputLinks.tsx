@@ -9,11 +9,12 @@ const Input = () => {
   } = useFormContext();
   const { fields, append, remove } = useFieldArray({ name: "links", control });
   return (
-    <div>
-      {fields.map((field, index) => {
-        return (
-          <div key={field.id}>
-            <section className="flex gap-4">
+    <div className="flex-1">
+      <label className="text-gray-500 font-bold">Links</label>
+      <div>
+        {fields.map((field, index) => {
+          return (
+            <div className="flex gap-4" key={field.id}>
               <input
                 type="text"
                 placeholder="Label"
@@ -29,10 +30,10 @@ const Input = () => {
               <button type="button" onClick={() => remove(index)}>
                 <TrashIcon className="h-6 w-6 text-red-700 opacity-80" />
               </button>
-            </section>
-          </div>
-        );
-      })}
+            </div>
+          );
+        })}
+      </div>
       <button
         type="button"
         className="bg-gray-700 py-1 px-4 text-sm rounded text-white mt-2"

@@ -127,10 +127,10 @@ export default function Edit({ id, isNew, data, error }: Props) {
         reviewed: true, //TODO: Remove after migration
       },
     });
-    setSaving(false);
     if (json.success) {
       router.push(url);
     } else {
+      setSaving(false);
       console.error(json.error);
       alert("Error saving hotspot");
     }
@@ -182,9 +182,7 @@ export default function Edit({ id, isNew, data, error }: Props) {
                 )}
               </Field>
 
-              <Field label="Links">
-                <InputLinks />
-              </Field>
+              <InputLinks />
 
               <Field label="Tips for Birding">
                 <div className="mt-1">
