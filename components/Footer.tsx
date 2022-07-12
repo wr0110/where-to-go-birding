@@ -14,7 +14,7 @@ export default function Footer() {
     <footer>
       {stateSlug === "ohio" && <OhioFooter />}
       <div className="bg-[#325a79] py-3 text-xs text-gray-300 text-center">
-        All photos and content (excluding maps and quote text) are released into the public domain&nbsp;
+        All photos and content (excluding maps and quoted text) are released into the public domain&nbsp;
         <a
           href="https://creativecommons.org/share-your-work/public-domain/cc0/"
           target="_blank"
