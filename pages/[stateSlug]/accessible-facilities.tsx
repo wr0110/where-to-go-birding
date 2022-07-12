@@ -48,7 +48,12 @@ export default function AccessibleFacilities({ state, hotspots }: Props) {
       </p>
       <p className="mb-4">
         Also, see <Link href={`/${state.slug}/roadside-birding`}>Roadside Birding</Link> for hotspots where you may view
-        birds from your vehicle.
+        birds from your vehicle. We also recommend checkig out the&nbsp;
+        <a href="https://www.birdability.org/" target="_blank" rel="noreferrer">
+          Birdability
+        </a>
+        &nbsp;website for an interactive map listing birding locations that are welcoming, inclusive, safe, and
+        accessible for everybody.
       </p>
       <h3 className="text-lg mb-8 font-bold">Accessible Facilities Listed by County</h3>
       <div className="columns-1 sm:columns-3 mb-12">
