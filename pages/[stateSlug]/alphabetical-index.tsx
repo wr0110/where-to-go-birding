@@ -75,12 +75,13 @@ export default function AlphabeticalIndex({ state, hotspots, activeLetters }: Pr
       </p>
       {hotspots.map(({ name, url, reviewed }, i, array) => {
         const prev = i === 0 ? null : array[i - 1];
-        const showLetter = prev ? name.charAt(0) !== prev.name.charAt(0) : true;
+        const isNumber = !isNaN(parseInt(name.charAt(0)));
+        const showLetter = prev ? name.charAt(0) !== prev.name.charAt(0) && !isNumber : true;
         return (
           <React.Fragment key={name}>
             {showLetter && (
               <h2 id={name[0]} className="font-bold mt-4 mb-2">
-                {name[0].toUpperCase()}
+                {isNumber ? "" : name[0].toUpperCase()}
               </h2>
             )}
             <Link href={url}>{name}</Link>
