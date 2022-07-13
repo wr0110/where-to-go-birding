@@ -38,7 +38,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const county = getCountyBySlug(state.code, countySlug);
   if (!county?.slug) return { notFound: true };
 
-  const data = await getHotspotBySlug(county.ebirdCode, slug);
+  const data = await getHotspotBySlug(state.code, slug);
   if (!data) return { notFound: true };
 
   const childLocations = data?.parent ? [] : await getChildren(data._id);

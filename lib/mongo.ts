@@ -133,9 +133,9 @@ export async function getChildHotspots(id: string) {
   return result;
 }
 
-export async function getHotspotBySlug(countyCode: string, slug: string) {
+export async function getHotspotBySlug(stateCode: string, slug: string) {
   await connect();
-  const result = await Hotspot.findOne({ countyCode, slug }).populate("parent").lean().exec();
+  const result = await Hotspot.findOne({ stateCode, slug }).populate("parent").lean().exec();
 
   return result ? JSON.parse(JSON.stringify(result)) : null;
 }
