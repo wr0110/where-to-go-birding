@@ -14,7 +14,7 @@ export default function ListHotspotsByCounty({ stateSlug, hotspots }: Props) {
         <p key={countySlug} className="mb-4 break-inside-avoid">
           {stateSlug ? (
             <Link href={`/${stateSlug}/${countySlug}-county`}>
-              <a>{countyName} County</a>
+              <a className="font-bold">{countyName} County</a>
             </Link>
           ) : (
             <span>{countyName} County</span>
@@ -22,9 +22,7 @@ export default function ListHotspotsByCounty({ stateSlug, hotspots }: Props) {
           <br />
           {hotspots.map(({ name, url }) => (
             <React.Fragment key={url}>
-              <Link href={url}>
-                <a className="font-bold">{name}</a>
-              </Link>
+              <Link href={url}>{name}</Link>
               <br />
             </React.Fragment>
           ))}

@@ -52,6 +52,7 @@ type Props = {
 
 export default function County({ state, county, hotspots, topHotspots }: Props) {
   const { slug, name, ebirdCode } = county;
+  const dayHikeHotspots = hotspots.filter((it) => it.dayhike === "Yes");
   const hotspotIBA = hotspots.filter(({ iba }) => iba?.value).map(({ iba }) => iba);
 
   //Removes duplicate objects from IBA array
@@ -78,23 +79,49 @@ export default function County({ state, county, hotspots, topHotspots }: Props) 
                 Alphabetical List of Hotspots
               </a>
             </p>
+            <p>
+              <a href="#tophotspots" onClick={scrollToAnchor}>
+                Top Hotspots
+              </a>
+            </p>
+            {dayHikeHotspots.length > 0 && (
+              <p>
+                <a href="#hikes" onClick={scrollToAnchor}>
+                  Day Hikes
+                </a>
+              </p>
+            )}
+            {iba.length > 0 && (
+              <p>
+                <a href="#iba" onClick={scrollToAnchor}>
+                  Audubon Important Bird Areas
+                </a>
+              </p>
+            )}
+            <p>
+              <a href="#notable" onClick={scrollToAnchor}>
+                Notable Sightings
+              </a>
+            </p>
           </section>
           <EbirdCountySummary {...{ state, county }} />
           <section>
-            <h3 className="text-lg mb-2 font-bold" id="hotspots">
+            <h3 className="text-lg mb-2 font-bold" id="tophotspots">
               Top Hotspots in {name} County
             </h3>
             <TopHotspotList hotspots={topHotspots} />
           </section>
-        </div>
-        <div className="flex flex-col gap-8">
-          {state.code === "OH" && (
-            <img src={`/oh-maps/${slug}.jpg`} width="260" className="mx-auto" alt={`${name} county map`} />
+          {dayHikeHotspots.length > 0 && (
+            <section>
+              <h3 className="text-lg mb-2 font-bold" id="hikes">
+                Day Hikes
+              </h3>
+              <HotspotList hotspots={dayHikeHotspots} />
+            </section>
           )}
-          {name && <RegionMap location={`${name} County, ${state.label}`} />}
           {iba.length > 0 && (
             <section>
-              <h3 className="text-lg mb-2 font-bold mt-6" id="dayhikes">
+              <h3 className="text-lg mb-2 font-bold" id="iba">
                 Important Bird Areas
               </h3>
               <ul>
@@ -106,6 +133,12 @@ export default function County({ state, county, hotspots, topHotspots }: Props) 
               </ul>
             </section>
           )}
+        </div>
+        <div className="flex flex-col gap-8">
+          {state.code === "OH" && (
+            <img src={`/oh-maps/${slug}.jpg`} width="260" className="mx-auto" alt={`${name} county map`} />
+          )}
+          {name && <RegionMap location={`${name} County, ${state.label}`} />}
           <section>
             <h3 className="text-lg mb-2 font-bold" id="hotspots">
               All Hotspots in {name} County

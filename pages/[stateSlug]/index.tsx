@@ -111,7 +111,7 @@ export default function State({ state, counties, topHotspots, info }: Props) {
             <Link href={`/${slug}/alphabetical-index`}>{`Alphabetical list of ${label} Hotspots`}</Link>
             <br />
             <a href="#hotspots" onClick={scrollToAnchor}>
-              Top Birding Locations in {label}
+              Top Hotspots
             </a>
             <br />
             <a href="#notable" onClick={scrollToAnchor}>
@@ -160,7 +160,7 @@ export default function State({ state, counties, topHotspots, info }: Props) {
       </Heading>
 
       <div className="md:columns-2 gap-16 formatted">
-        <ReactMarkdown>{info}</ReactMarkdown>
+        <ReactMarkdown linkTarget="_blank">{info}</ReactMarkdown>
       </div>
       <hr className="my-8 opacity-70" />
       <div className="grid md:grid-cols-2 gap-12">
