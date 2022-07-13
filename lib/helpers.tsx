@@ -25,6 +25,7 @@ export const tinyConfig = {
   formats: {
     citation: { inline: "cite" },
   },
+  convert_urls: false,
   setup: (editor: any) => {
     editor.ui.registry.addToggleButton("cite", {
       text: "Cite",
