@@ -72,6 +72,7 @@ export default function GroupHotspot({
   name,
   lat,
   lng,
+  zoom,
   address,
   links,
   iba,
@@ -180,7 +181,7 @@ export default function GroupHotspot({
                 </Link>
               ))}
           </div>
-          {lat && lng && <Map lat={lat} lng={lng} />}
+          {lat && lng && <Map lat={lat} lng={lng} zoom={zoom} />}
           {!!images?.length && <MapList images={images} />}
           {!!images?.length && (
             <div className="mt-6">

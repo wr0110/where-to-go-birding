@@ -36,6 +36,7 @@ export type Hotspot = {
   oldSlug?: string;
   lat: number;
   lng: number;
+  zoom: number;
   locationId: string;
   stateCode: string;
   countyCode?: string;

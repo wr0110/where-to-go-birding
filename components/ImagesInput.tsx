@@ -21,7 +21,7 @@ export default function ImagesInput() {
   return (
     <div className="mt-2">
       {!!fields.length && (
-        <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className="grid lg:grid-cols-2 gap-4 mb-4">
           {fields.map((field: any, i) => {
             return (
               <article key={field.id} className="flex gap-4 rounded bg-gray-50 relative group">

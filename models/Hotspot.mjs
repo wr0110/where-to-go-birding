@@ -25,6 +25,10 @@ const HotspotSchema = new Schema({
 	multiCounties: Array,
 	lat: Number,
 	lng: Number,
+	zoom: {
+		type: Number,
+		default: 15,
+	},
 	locationId: String,
 	slug: {
 		type: String,

@@ -64,6 +64,7 @@ export default function Hotspot({
   _id,
   lat,
   lng,
+  zoom,
   address,
   links,
   about,
@@ -191,7 +192,7 @@ export default function Hotspot({
               </a>
             </Link>
           )}
-          {lat && lng && <Map lat={lat} lng={lng} />}
+          {lat && lng && <Map lat={lat} lng={lng} zoom={zoom} />}
           {!!images?.length && <MapList images={images} />}
           {!!images?.length && (
             <div className="mt-6">

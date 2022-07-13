@@ -7,6 +7,7 @@ import Input from "components/Input";
 import Textarea from "components/Textarea";
 import Form from "components/Form";
 import Submit from "components/Submit";
+import Range from "components/Range";
 import { Editor } from "@tinymce/tinymce-react";
 import { getHotspotById } from "lib/mongo";
 import { slugify, geocode, tinyConfig, accessibleOptions, restroomOptions } from "lib/helpers";
@@ -23,6 +24,7 @@ import CountySelect from "components/CountySelect";
 import FormError from "components/FormError";
 import useSecureFetch from "hooks/useSecureFetch";
 import ImagesInput from "components/ImagesInput";
+import Map from "components/Map";
 
 const ibaOptions = IBAs.map(({ slug, name }) => ({ value: slug, label: name }));
 
@@ -54,6 +56,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         restrooms: restroomOptions.find((it) => it.value === data?.restrooms) || null,
         accessible: data?.accessible || null,
         dayhike: data?.dayhike || "No",
+        zoom: data?.zoom || 15,
       },
       stateCode,
     },
@@ -79,6 +82,7 @@ export default function Edit({ id, isNew, data, state }: Props) {
   const router = useRouter();
   const form = useForm<Hotspot>({ defaultValues: data });
   const isOH = data.stateCode === "OH";
+  const zoom = form.watch("zoom");
 
   const handleSubmit: SubmitHandler<Hotspot> = async (formData) => {
     if (!state || !formData?.multiCounties?.length) {
@@ -163,11 +167,10 @@ export default function Edit({ id, isNew, data, state }: Props) {
   return (
     <AdminPage title="Edit Hotspot">
       <div className="container pb-16 my-12">
+        <h2 className="text-xl font-bold text-gray-600 border-b pb-4">Add Group Hotspot</h2>
         <Form form={form} onSubmit={handleSubmit}>
-          <div className="max-w-2xl mx-auto">
-            <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
-              <h2 className="text-xl font-bold text-gray-600 border-b pb-4">Add Group Hotspot</h2>
-
+          <div className="flex flex-col md:flex-row gap-8">
+            <div className="pt-5 bg-white space-y-6 flex-1">
               <Field label="Name">
                 <Input type="text" name="name" required />
                 <FormError name="name" />
@@ -251,22 +254,43 @@ export default function Edit({ id, isNew, data, state }: Props) {
                 </Field>
               )}
 
+              <Field label="Images">
+                <ImagesInput />
+              </Field>
+              <div className="px-4 py-3 bg-gray-100 text-right sm:px-6 rounded hidden md:block">
+                <Submit loading={saving} color="green" className="font-medium">
+                  Save Hotspot
+                </Submit>
+              </div>
+            </div>
+
+            <aside className="px-4 md:mt-12 pb-5 pt-3 rounded bg-gray-100 md:w-[350px] space-y-6">
+              <Field label="Map Zoom">
+                <div className="flex gap-2">
+                  <Range name="zoom" min={7} max={17} step={1} />
+                  {zoom}
+                </div>
+                <div className="relative md:aspect-[4/3.5]">
+                  <Map
+                    lat={lat}
+                    lng={lng}
+                    zoom={zoom}
+                    className="pointer-events-none scale-[.6] sm:scale-100 md:scale-[.6] sm:w-full md:w-[167%] w-[167%] origin-top-left absolute top-0 left-0"
+                  />
+                </div>
+              </Field>
               <Field label="Restrooms">
                 <Select name="restrooms" options={restroomOptions} isClearable />
               </Field>
               <CheckboxGroup name="accessible" label="Accessible Facilities" options={accessibleOptions} />
               <RadioGroup name="roadside" label="Roadside accessible" options={["Yes", "No", "Unknown"]} />
               <RadioGroup name="dayhike" label="Show in Day Hike index" options={["Yes", "No"]} />
-
-              <Field label="Images">
-                <ImagesInput />
-              </Field>
-            </div>
-            <div className="px-4 py-3 bg-gray-100 text-right sm:px-6 rounded">
-              <Submit loading={saving} color="green" className="font-medium">
-                Save Hotspot
-              </Submit>
-            </div>
+            </aside>
+          </div>
+          <div className="px-4 py-3 bg-gray-100 text-right rounded mt-4 md:hidden">
+            <Submit loading={saving} color="green" className="font-medium">
+              Save Hotspot
+            </Submit>
           </div>
         </Form>
       </div>
