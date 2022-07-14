@@ -265,20 +265,22 @@ export default function Edit({ id, isNew, data, state }: Props) {
             </div>
 
             <aside className="px-4 md:mt-12 pb-5 pt-3 rounded bg-gray-100 md:w-[350px] space-y-6">
-              <Field label="Map Zoom">
-                <div className="flex gap-2">
-                  <Range name="zoom" min={7} max={17} step={1} />
-                  {zoom}
-                </div>
-                <div className="relative md:aspect-[4/3.5]">
-                  <Map
-                    lat={lat}
-                    lng={lng}
-                    zoom={zoom}
-                    className="pointer-events-none scale-[.6] sm:scale-100 md:scale-[.6] sm:w-full md:w-[167%] w-[167%] origin-top-left absolute top-0 left-0"
-                  />
-                </div>
-              </Field>
+              {lat && lng && (
+                <Field label="Map Zoom">
+                  <div className="flex gap-2">
+                    <Range name="zoom" min={7} max={17} step={1} />
+                    {zoom}
+                  </div>
+                  <div className="relative md:aspect-[4/3.5]">
+                    <Map
+                      lat={lat}
+                      lng={lng}
+                      zoom={zoom}
+                      className="pointer-events-none scale-[.6] sm:scale-100 md:scale-[.6] sm:w-full md:w-[167%] w-[167%] origin-top-left absolute top-0 left-0"
+                    />
+                  </div>
+                </Field>
+              )}
               <Field label="Restrooms">
                 <Select name="restrooms" options={restroomOptions} isClearable />
               </Field>

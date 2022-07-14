@@ -24,7 +24,7 @@ export default function PageHeading({
   const bgColor = state?.color || "#4a84b2";
   return (
     <header
-      className={`font-bold text-white text-2xl header-gradient my-16 ${className || ""}`}
+      className={`font-bold text-white text-2xl header-gradient my-16 rounded-md ${className || ""}`}
       style={{ "--color": bgColor } as React.CSSProperties}
       {...props}
     >

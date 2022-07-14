@@ -5,7 +5,7 @@ import Link from "next/link";
 import { getGroupBySlug, getGroupHotspots } from "lib/mongo";
 import AboutSection from "components/AboutSection";
 import { getCountyByCode, getState } from "lib/localData";
-import { State, HotspotsByCounty, Hotspot as HotspotType } from "lib/types";
+import { State, HotspotsByCounty, Hotspot as HotspotType, Marker } from "lib/types";
 import EditorActions from "components/EditorActions";
 import PageHeading from "components/PageHeading";
 import EbirdBarcharts from "components/EbirdBarcharts";
@@ -13,10 +13,10 @@ import { restructureHotspotsByCounty } from "lib/helpers";
 import ListHotspotsByCounty from "components/ListHotspotsByCounty";
 import DeleteBtn from "components/DeleteBtn";
 import Title from "components/Title";
-import Map from "components/Map";
 import Slideshow from "components/Slideshow";
 import MapList from "components/MapList";
 import { accessibleOptions, restroomOptions } from "lib/helpers";
+import GroupMap from "components/GroupMap";
 
 const getChildren = async (id: string) => {
   if (!id) return null;
@@ -40,6 +40,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const childLocations = restructureHotspotsByCounty(children as any);
   const childIds = children?.map((item: any) => item.locationId) || [];
 
+  const markers =
+    children?.map((it: any) => ({
+      coordinates: [it.lng, it.lat],
+      name: it.name,
+      url: it.url,
+    })) || [];
+
   const countySlugs = data.multiCounties?.map((item: string) => {
     const county = getCountyByCode(item);
     return county?.slug;
@@ -51,6 +58,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       portal: state.portal || null,
       childLocations,
       childIds,
+      markers,
       countySlugs,
       ...data,
     },
@@ -63,6 +71,7 @@ interface Props extends HotspotType {
   childLocations: HotspotsByCounty;
   childIds: string[];
   countySlugs: string[];
+  markers: Marker[];
 }
 
 export default function GroupHotspot({
@@ -88,6 +97,7 @@ export default function GroupHotspot({
   images,
   childIds,
   slug,
+  markers,
 }: Props) {
   let extraLinks = [];
   if (roadside === "Yes") {
@@ -104,11 +114,19 @@ export default function GroupHotspot({
     });
   }
 
+  const featuredImage = images?.filter((it) => !it.isMap && it?.width && it?.height && it?.width > it?.height)?.[0];
+
   return (
     <div className="container pb-16">
       <Title isOhio={state.slug === "ohio"}>{name}</Title>
       <PageHeading state={state}>{name}</PageHeading>
-      <EditorActions>
+      {featuredImage && (
+        <img
+          src={featuredImage.lgUrl || featuredImage.smUrl}
+          className="w-full h-[250px] sm:h-[350px] md:h-[450px] object-cover object-center rounded-lg mb-8 -mt-10"
+        />
+      )}
+      <EditorActions className={featuredImage ? "-mt-2" : "-mt-12"}>
         <Link href={`/edit/group/${_id}`}>Edit Hotspot</Link>
         <Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>
         <a href={`https://birding-in-ohio.com/${slug}`} target="_blank" rel="noreferrer">
@@ -181,7 +199,7 @@ export default function GroupHotspot({
                 </Link>
               ))}
           </div>
-          {lat && lng && <Map lat={lat} lng={lng} zoom={zoom} />}
+          {lat && lng && <GroupMap lat={lat} lng={lng} zoom={zoom} markers={markers} />}
           {!!images?.length && <MapList images={images} />}
           {!!images?.length && (
             <div className="mt-6">

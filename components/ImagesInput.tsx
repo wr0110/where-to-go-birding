@@ -23,20 +23,37 @@ export default function ImagesInput() {
       {!!fields.length && (
         <div className="grid lg:grid-cols-2 gap-4 mb-4">
           {fields.map((field: any, i) => {
+            const isVertical = field.height > field.width;
             return (
-              <article key={field.id} className="flex gap-4 rounded bg-gray-50 relative group">
-                <img src={field.preview || field.smUrl} className="w-[115px] h-[115px] object-cover rounded" />
-                <div className="mt-2.5 pr-4">
-                  <label className="text-gray-500 font-bold mb-2 block">
-                    Photographer <br />
+              <article key={field.id} className="flex flex-col gap-2 rounded bg-gray-50 relative group">
+                <img
+                  src={field.preview || field.smUrl}
+                  className={`w-full h-[240px] bg-zinc-700 object-${isVertical ? "contain" : "cover"} rounded`}
+                />
+                <div className="px-3 pb-2 text-xs w-full">
+                  <label className="text-gray-500 font-bold mb-2 relative flex">
+                    <span className="absolute top-[5px] left-[1px] bottom-[1px] px-[7px] bg-gray-200 flex items-center rounded-l-[5px]">
+                      Caption
+                    </span>
                     <input
                       type="text"
-                      {...register(`images.${i}.by` as const)}
-                      className="form-input py-1"
+                      {...register(`images.${i}.caption` as const)}
+                      className="form-input py-0.5 px-2 pl-[68px]"
                       style={{ fontSize: "12px" }}
                     />
                   </label>
-                  <label className="text-gray-500 font-bold">
+                  <label className="text-gray-500 font-bold mb-2 relative flex">
+                    <span className="absolute top-[5px] left-[1px] bottom-[1px] px-[7px] bg-gray-200 flex items-center rounded-l-[5px]">
+                      By
+                    </span>
+                    <input
+                      type="text"
+                      {...register(`images.${i}.by` as const)}
+                      className="form-input py-0.5 pr-2 pl-[35px] max-w-[50%]"
+                      style={{ fontSize: "12px" }}
+                    />
+                  </label>
+                  <label className="text-gray-500 font-bold block mt-2">
                     <input
                       type="checkbox"
                       {...register(`images.${i}.isMap` as const)}
