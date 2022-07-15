@@ -14,7 +14,7 @@ export default function MapBox({ lat, lng, zoom }: Props) {
   const map = React.useRef<any>(null);
 
   React.useEffect(() => {
-    if (!mapContainer.current) return;
+    if (!mapContainer.current || !lat || !lng) return;
     if (map.current) return;
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
