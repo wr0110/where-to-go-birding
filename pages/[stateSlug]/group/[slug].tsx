@@ -140,12 +140,12 @@ export default function GroupHotspot({
             <h3 className="font-bold text-lg">{name}</h3>
             {address && <p className="whitespace-pre-line mb-2" dangerouslySetInnerHTML={{ __html: address }} />}
             {links?.map(({ url, label }, index) => (
-              <>
+              <React.Fragment key={url}>
                 <a key={index} href={url} target="_blank" rel="noreferrer">
                   {label}
                 </a>
                 <br />
-              </>
+              </React.Fragment>
             ))}
             {extraLinks.length > 0 && (
               <p className="mt-4">

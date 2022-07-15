@@ -114,7 +114,7 @@ export default function Hotspot({
       </PageHeading>
       {featuredImage && (
         <img
-          src={featuredImage.lgUrl}
+          src={featuredImage.lgUrl || featuredImage.smUrl}
           className="w-full h-[250px] sm:h-[350px] md:h-[450px] object-cover object-center rounded-lg mb-8 -mt-10"
         />
       )}

@@ -27,6 +27,7 @@ export type Image = {
   height?: number;
   preview?: string;
   caption?: string;
+  legacy?: boolean;
   isNew?: boolean; //temporarily added after uploaded
   id?: string; //temporarily added after uploaded
 };
