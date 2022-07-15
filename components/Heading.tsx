@@ -20,7 +20,7 @@ export default function Heading({ children, color, colorCode, className, ...prop
   const bgColor = colorCode || (color && colors[color]) || "#4a84b2";
   return (
     <h2
-      className={`font-bold text-white text-2xl header-gradient p-3 ${className || ""}`}
+      className={`font-bold text-white text-2xl header-gradient p-3 rounded-md ${className || ""}`}
       style={{ "--color": bgColor } as React.CSSProperties}
       {...props}
     >

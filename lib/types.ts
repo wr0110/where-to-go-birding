@@ -26,6 +26,10 @@ export type Image = {
   width?: number;
   height?: number;
   preview?: string;
+  caption?: string;
+  legacy?: boolean;
+  isNew?: boolean; //temporarily added after uploaded
+  id?: string; //temporarily added after uploaded
 };
 
 export type Hotspot = {
@@ -98,4 +102,10 @@ export type EbirdHotspot = {
   longitude: number;
   subnational1Code: string;
   subnational2Code: string;
+};
+
+export type Marker = {
+  coordinates: [number, number];
+  name: string;
+  url: string;
 };

@@ -49,7 +49,6 @@ export default function Contact() {
     window.grecaptcha.ready(() => {
       // @ts-ignore
       window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_KEY, { action: "submit" }).then((token: string) => {
-        console.log("TOKEN", token);
         post({ ...data, token });
       });
     });

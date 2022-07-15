@@ -20,6 +20,7 @@ export default function Slideshow({ images }: Props) {
     thumbnail: image.smUrl,
     originalHeight: image.height,
     originalWidth: image.width,
+    description: image.caption,
   }));
 
   const handleClick = () => {
@@ -39,7 +40,7 @@ export default function Slideshow({ images }: Props) {
         showPlayButton={false}
         onClick={handleClick}
         slideDuration={1000}
-        slideInterval={5000}
+        slideInterval={50000}
         lazyLoad
         autoPlay
         renderFullscreenButton={(onClick, isFullscreen) =>

@@ -75,6 +75,7 @@ const HotspotSchema = new Schema({
 		isMap: Boolean,
 		width: Number,
 		height: Number,
+		caption: String,
 		legacy: Boolean,
 	}],
 	createdAt: {

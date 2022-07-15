@@ -1,12 +1,14 @@
 import { useFormContext, useFieldArray } from "react-hook-form";
-import { TrashIcon } from "@heroicons/react/outline";
 import Uppy from "components/Uppy";
 import useSecureFetch from "hooks/useSecureFetch";
+import SortableImage from "./SortableImage";
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, rectSortingStrategy } from "@dnd-kit/sortable";
 
 export default function ImagesInput() {
   const secureFetch = useSecureFetch();
   const { control, register } = useFormContext();
-  const { fields, append, remove } = useFieldArray({ name: "images", control });
+  const { fields, append, remove, move } = useFieldArray({ name: "images", control });
 
   const handleDelete = async (i: number, url: string, isNew: boolean) => {
     if (!confirm("Are you sure you want to delete this image?")) return;
@@ -18,43 +20,41 @@ export default function ImagesInput() {
     }
   };
 
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
+
+  const ids = fields.map(({ id }) => id);
+
+  function handleDragEnd(event: any) {
+    //Prevent useFieldArray from focusing first image input after move()
+    document.querySelectorAll(".sortableGrid input").forEach((element: any) => {
+      element.disabled = true;
+    });
+    const { active, over } = event;
+    if (active.id === over.id) return;
+    const oldIndex = ids.indexOf(active.id);
+    const newIndex = ids.indexOf(over.id);
+    move(oldIndex, newIndex);
+    setTimeout(() => {
+      document.querySelectorAll(".sortableGrid input").forEach((element: any) => {
+        element.disabled = false;
+      });
+    }, 500);
+  }
+
   return (
     <div className="mt-2">
       {!!fields.length && (
-        <div className="grid lg:grid-cols-2 gap-4 mb-4">
-          {fields.map((field: any, i) => {
-            return (
-              <article key={field.id} className="flex gap-4 rounded bg-gray-50 relative group">
-                <img src={field.preview || field.smUrl} className="w-[115px] h-[115px] object-cover rounded" />
-                <div className="mt-2.5 pr-4">
-                  <label className="text-gray-500 font-bold mb-2 block">
-                    Photographer <br />
-                    <input
-                      type="text"
-                      {...register(`images.${i}.by` as const)}
-                      className="form-input py-1"
-                      style={{ fontSize: "12px" }}
-                    />
-                  </label>
-                  <label className="text-gray-500 font-bold">
-                    <input
-                      type="checkbox"
-                      {...register(`images.${i}.isMap` as const)}
-                      className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                    />
-                    &nbsp;&nbsp;Map image
-                  </label>
-                </div>
-                <button
-                  type="button"
-                  className="opacity-0 group-hover:opacity-100 transition-opacity bg-red-700/90 p-1.5 rounded-full flex items-center justify-center absolute -left-2 -top-2 shadow"
-                  onClick={() => handleDelete(i, field.smUrl, field.isNew)}
-                >
-                  <TrashIcon className="h-4 w-4 text-white opacity-80" />
-                </button>
-              </article>
-            );
-          })}
+        <div className="grid lg:grid-cols-2 gap-4 mb-4 sortableGrid">
+          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <SortableContext items={ids} strategy={rectSortingStrategy}>
+              {fields.map((field: any, i) => (
+                <SortableImage key={field.id} i={i} handleDelete={handleDelete} {...field} />
+              ))}
+            </SortableContext>
+          </DndContext>
         </div>
       )}
 

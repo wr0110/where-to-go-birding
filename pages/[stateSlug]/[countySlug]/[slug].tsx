@@ -17,6 +17,8 @@ import Title from "components/Title";
 import Slideshow from "components/Slideshow";
 import MapList from "components/MapList";
 import { accessibleOptions, restroomOptions } from "lib/helpers";
+import MapBox from "components/MapBox";
+import MapCustomizer from "components/MapCustomizer";
 
 const getChildren = async (id: string) => {
   if (!id) return null;
@@ -102,13 +104,21 @@ export default function Hotspot({
     });
   }
 
+  const featuredImage = images?.filter((it) => !it.isMap && it?.width && it?.height && it?.width > it?.height)?.[0];
+
   return (
     <div className="container pb-16">
       <Title isOhio={state.code === "OH"}>{name}</Title>
       <PageHeading state={state} county={county}>
         {name}
       </PageHeading>
-      <EditorActions>
+      {featuredImage && (
+        <img
+          src={featuredImage.lgUrl || featuredImage.smUrl}
+          className="w-full h-[250px] sm:h-[350px] md:h-[450px] object-cover object-center rounded-lg mb-8 -mt-10"
+        />
+      )}
+      <EditorActions className={featuredImage ? "-mt-2" : "-mt-12"}>
         <Link href={`/edit/${locationId}`}>Edit Hotspot</Link>
         {!parent && <Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>}
         {state.code === "OH" ? (
@@ -193,6 +203,12 @@ export default function Hotspot({
             </Link>
           )}
           {lat && lng && <Map lat={lat} lng={lng} zoom={zoom} />}
+          {/*lat && lng && (
+            <>
+              <MapCustomizer lat={lat} lng={lng} zoom={zoom} />
+              <MapBox lat={lat} lng={lng} zoom={zoom} />
+            </>
+          )*/}
           {!!images?.length && <MapList images={images} />}
           {!!images?.length && (
             <div className="mt-6">
