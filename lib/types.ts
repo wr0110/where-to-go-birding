@@ -86,6 +86,17 @@ export type HotspotsByCounty = [
   }
 ];
 
+export type DrivesByCounty = [
+  {
+    countySlug: string;
+    countyName: string;
+    drives: {
+      name: string;
+      url: string;
+    }[];
+  }
+];
+
 export type IBA = {
   name: string;
   slug: string;
@@ -108,4 +119,39 @@ export type Marker = {
   coordinates: [number, number];
   name: string;
   url: string;
+};
+
+export type Drive = {
+  _id?: string;
+  name: string;
+  stateCode: string;
+  slug: string;
+  description: string;
+  mapId: string;
+  counties: string[];
+  entries: [
+    {
+      hotspot: Hotspot;
+      description: string;
+    }
+  ];
+};
+
+export type DriveInputs = {
+  _id?: string;
+  name: string;
+  stateCode: string;
+  slug: string;
+  description: string;
+  mapId: string;
+  counties: string[];
+  entries: [
+    {
+      hotspotSelect: {
+        label: string;
+        value: string;
+      };
+      description: string;
+    }
+  ];
 };

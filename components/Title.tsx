@@ -1,15 +1,13 @@
 import Head from "next/head";
 
 type TitleProps = {
-  isOhio?: boolean;
   children?: string;
 };
 
-export default function Title({ children, isOhio }: TitleProps) {
-  const suffix = isOhio ? "Birding in Ohio" : "Birding Hotspots";
+export default function Title({ children }: TitleProps) {
   return (
     <Head>
-      <title>{children ? `${children} - ${suffix}` : suffix}</title>
+      <title>{children ? `${children} - "Birding Hotspots"` : "Birding Hotspots"}</title>
     </Head>
   );
 }

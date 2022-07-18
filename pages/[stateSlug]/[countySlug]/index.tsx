@@ -65,7 +65,7 @@ export default function County({ state, county, hotspots, topHotspots }: Props) 
 
   return (
     <div className="container pb-16">
-      <Title isOhio={state.slug === "ohio"}>{`${name} County, ${state.label}`}</Title>
+      <Title>{`${name} County, ${state.label}`}</Title>
       <PageHeading state={state}>{name} County</PageHeading>
       <EditorActions>
         <Link href="/add">Add Hotspot</Link>

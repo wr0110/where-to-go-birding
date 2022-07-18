@@ -30,7 +30,7 @@ type Props = {
 export default function BirdingDayHikes({ state, hotspots }: Props) {
   return (
     <div className="container pb-16 mt-12">
-      <Title isOhio={state.code === "OH"}>Birding Day Hikes</Title>
+      <Title>Birding Day Hikes</Title>
       <PageHeading state={state}>Birding Day Hikes</PageHeading>
       <div className="md:flex gap-8 items-start mb-8">
         <div>

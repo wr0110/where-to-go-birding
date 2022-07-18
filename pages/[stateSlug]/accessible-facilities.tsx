@@ -35,7 +35,7 @@ type Props = {
 export default function AccessibleFacilities({ state, hotspots }: Props) {
   return (
     <div className="container pb-16 mt-12">
-      <Title isOhio={state.code === "OH"}>Accessible Facilities</Title>
+      <Title>Accessible Facilities</Title>
       <PageHeading state={state}>Accessible Facilities</PageHeading>
       <p className="mb-4">
         <strong>

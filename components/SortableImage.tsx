@@ -29,7 +29,7 @@ export default function SortableImage({ handleDelete, id, i, width, height, prev
     >
       <img
         src={preview || smUrl}
-        className={`w-full h-[240px] bg-zinc-700 object-${isVertical ? "contain" : "cover"} rounded cursor-move`}
+        className={`w-full h-[240px] bg-zinc-700 ${isVertical ? "object-contain" : "object-cover"} rounded cursor-move`}
         {...attributes}
         {...listeners}
       />

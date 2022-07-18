@@ -8,18 +8,19 @@ type Option = {
 
 type Props = {
   name: string;
-  stateCode: string;
+  countyCode: string;
+  self?: string;
   required?: boolean;
   [x: string]: any;
 };
 
-export default function HotspotSelect({ name, stateCode, required, ...props }: Props) {
+export default function HotspotSelect({ name, countyCode, self, required, ...props }: Props) {
   const { control } = useFormContext();
 
   const loadOptions = async (inputValue: string, callback: (options: Option[]) => void) => {
-    const response = await fetch(`/api/hotspot/search?stateCode=${stateCode}&q=${inputValue}`);
+    const response = await fetch(`/api/hotspot/parent-search?countyCode=${countyCode}&q=${inputValue}`);
     const json = await response.json();
-    const options = json.results;
+    const options = json.results?.filter((option: any) => option.value !== self);
     callback(options || []);
   };
 

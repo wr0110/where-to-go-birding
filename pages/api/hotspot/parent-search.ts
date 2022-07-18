@@ -3,11 +3,12 @@ import connect from "lib/mongo";
 import Hotspot from "models/Hotspot.mjs";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
-  const { q, stateCode }: any = req.query;
+  const { q, countyCode }: any = req.query;
 
   const query = {
     name: { $regex: new RegExp(q), $options: "i" },
-    stateCode,
+    parent: null,
+    $or: [{ countyCode }, { multiCounties: countyCode }],
   };
 
   try {

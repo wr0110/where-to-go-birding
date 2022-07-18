@@ -8,9 +8,8 @@ import Textarea from "components/Textarea";
 import Form from "components/Form";
 import Submit from "components/Submit";
 import Range from "components/Range";
-import { Editor } from "@tinymce/tinymce-react";
 import { getHotspotByLocationId, getHotspotById } from "lib/mongo";
-import { slugify, tinyConfig, geocode, getEbirdHotspot, accessibleOptions, restroomOptions } from "lib/helpers";
+import { slugify, geocode, getEbirdHotspot, accessibleOptions, restroomOptions } from "lib/helpers";
 import { getStateByCode, getCountyByCode } from "lib/localData";
 import InputLinks from "components/InputLinks";
 import Select from "components/Select";
@@ -21,10 +20,11 @@ import RadioGroup from "components/RadioGroup";
 import CheckboxGroup from "components/CheckboxGroup";
 import Field from "components/Field";
 import useSecureFetch from "hooks/useSecureFetch";
-import HotspotSelect from "components/HotspotSelect";
+import ParentHotspotSelect from "components/ParentHotspotSelect";
 import Error from "next/error";
 import ImagesInput from "components/ImagesInput";
 import Map from "components/Map";
+import TinyMCE from "components/TinyMCE";
 
 const ibaOptions = IBAs.map(({ slug, name }) => ({ value: slug, label: name }));
 
@@ -92,10 +92,6 @@ type Props = {
 export default function Edit({ id, isNew, data, error }: Props) {
   const [saving, setSaving] = React.useState<boolean>(false);
   const [isGeocoded, setIsGeocoded] = React.useState(false);
-  const aboutRef = React.useRef<any>();
-  const birdsRef = React.useRef<any>();
-  const tipsRef = React.useRef<any>();
-  const hikesRef = React.useRef<any>();
   const secureFetch = useSecureFetch();
 
   const router = useRouter();
@@ -121,10 +117,6 @@ export default function Edit({ id, isNew, data, error }: Props) {
         parent: data.parentSelect?.value || null,
         multiCounties: null,
         iba: data.iba || null,
-        about: aboutRef.current.getContent() || "",
-        tips: tipsRef.current.getContent() || "",
-        birds: birdsRef.current.getContent() || "",
-        hikes: hikesRef.current.getContent() || "",
         restrooms: (data.restrooms as any)?.value || null,
         accessible: data.accessible && data.accessible?.length > 0 ? data.accessible : null,
         reviewed: true, //TODO: Remove after migration
@@ -161,7 +153,8 @@ export default function Edit({ id, isNew, data, error }: Props) {
   }, [address, lat, lng]);
 
   const handleHikeBlur = () => {
-    if (isNew && hikesRef.current.getContent()) {
+    const value = form.getValues("hikes");
+    if (isNew && value) {
       form.setValue("dayhike", "Yes");
     }
   };
@@ -188,53 +181,24 @@ export default function Edit({ id, isNew, data, error }: Props) {
               <InputLinks />
 
               <Field label="Tips for Birding">
-                <div className="mt-1">
-                  <Editor
-                    id="tips-editor"
-                    onInit={(e, editor) => (tipsRef.current = editor)}
-                    initialValue={data?.tips}
-                    init={tinyConfig}
-                  />
-                </div>
+                <TinyMCE name="tips" defaultValue={data?.tips} />
               </Field>
 
               <Field label="Birding Day Hike">
-                <div className="mt-1">
-                  <Editor
-                    id="hikes-editor"
-                    onInit={(e, editor) => (hikesRef.current = editor)}
-                    initialValue={data?.hikes}
-                    init={tinyConfig}
-                    onBlur={handleHikeBlur}
-                  />
-                </div>
+                <TinyMCE name="hikes" defaultValue={data?.hikes} onBlur={handleHikeBlur} />
               </Field>
 
               <Field label="Birds of Interest">
-                <div className="mt-1">
-                  <Editor
-                    id="birds-editor"
-                    onInit={(e, editor) => (birdsRef.current = editor)}
-                    initialValue={data?.birds}
-                    init={tinyConfig}
-                  />
-                </div>
+                <TinyMCE name="birds" defaultValue={data?.birds} />
               </Field>
 
               <Field label="About this location">
-                <div className="mt-1">
-                  <Editor
-                    id="about-editor"
-                    onInit={(e, editor) => (aboutRef.current = editor)}
-                    initialValue={data?.about}
-                    init={tinyConfig}
-                  />
-                </div>
+                <TinyMCE name="about" defaultValue={data?.about} />
               </Field>
 
               <div className="grid md:grid-cols-2 gap-4">
                 <Field label="Parent Hotspot">
-                  <HotspotSelect self={id} countyCode={data.countyCode || ""} name="parentSelect" isClearable />
+                  <ParentHotspotSelect self={id} countyCode={data.countyCode || ""} name="parentSelect" isClearable />
                 </Field>
 
                 {isOH && (

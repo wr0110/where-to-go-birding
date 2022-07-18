@@ -108,7 +108,7 @@ export default function Hotspot({
 
   return (
     <div className="container pb-16">
-      <Title isOhio={state.code === "OH"}>{name}</Title>
+      <Title>{name}</Title>
       <PageHeading state={state} county={county}>
         {name}
       </PageHeading>
@@ -136,7 +136,9 @@ export default function Hotspot({
             Old Website
           </a>
         )}
-        <DeleteBtn id={_id || ""} className="ml-auto" />
+        <DeleteBtn url={`/api/hotspot/delete?id=${_id}`} entity="hotspot" className="ml-auto">
+          Delete Hotspot
+        </DeleteBtn>
       </EditorActions>
       <div className="grid md:grid-cols-2 gap-12">
         <div>

@@ -86,7 +86,7 @@ export default function State({ state, counties, topHotspots, info }: Props) {
 
   return (
     <div className="container pb-16 mt-12">
-      <Title isOhio={slug === "ohio"}>{slug === "ohio" ? "" : `Birding in ${label}`}</Title>
+      <Title>{slug === "ohio" ? "" : `Birding in ${label}`}</Title>
       <PageHeading state={state} hideState>
         Welcome to Birding in {label}
         {code === "OH" && (
@@ -96,7 +96,7 @@ export default function State({ state, counties, topHotspots, info }: Props) {
           </>
         )}
       </PageHeading>
-      <EditorActions>
+      <EditorActions className="-mt-10">
         <Link href="/add">Add Hotspot</Link>
         <Link href={`/edit/group/new?state=${code}`}>Add Group Hotspot</Link>
       </EditorActions>

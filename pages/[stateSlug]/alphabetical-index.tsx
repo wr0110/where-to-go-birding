@@ -42,7 +42,7 @@ export default function AlphabeticalIndex({ state, hotspots, activeLetters }: Pr
   const { user } = useUser(); //TODO: Remove after migration
   return (
     <div className="container pb-16 mt-12">
-      <Title isOhio={state.code === "OH"}>Alphabetical Index</Title>
+      <Title>Alphabetical Index</Title>
       <PageHeading state={state}>Alphabetical Index</PageHeading>
       <p className="mb-4">
         <i>

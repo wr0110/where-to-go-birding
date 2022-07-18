@@ -1,5 +1,5 @@
 import Geocode from "react-geocode";
-import { Hotspot } from "lib/types";
+import { Hotspot, Drive } from "lib/types";
 import { getCountyByCode } from "lib/localData";
 
 export function slugify(title?: string) {
@@ -74,16 +74,47 @@ export function restructureHotspotsByCounty(hotspots: Hotspot[]) {
     }
   });
 
-  return (
+  const unsorted =
     Object.entries(counties).map(([key, hotspots]) => {
       const county = getCountyByCode(key);
       return {
-        countySlug: county?.slug,
-        countyName: county?.name,
+        countySlug: county?.slug || "",
+        countyName: county?.name || "",
         hotspots,
       };
-    }) || []
-  );
+    }) || [];
+  return unsorted.sort((a, b) => (a.countyName > b.countyName ? 1 : -1));
+}
+
+type DriveMap = {
+  [x: string]: {
+    name: string;
+    url: string;
+  }[];
+};
+
+export function restructureDrivesByCounty(drives: Drive[], stateSlug: string) {
+  let drivesByCounty: DriveMap = {};
+  drives.forEach(({ counties, slug, name }) => {
+    counties.forEach((countyCode) => {
+      if (!countyCode) return;
+      if (!drivesByCounty[countyCode]) {
+        drivesByCounty[countyCode] = [];
+      }
+      drivesByCounty[countyCode].push({ name, url: `/${stateSlug}/drive/${slug}` });
+    });
+  });
+
+  const unsorted =
+    Object.entries(drivesByCounty).map(([key, drives]) => {
+      const county = getCountyByCode(key);
+      return {
+        countySlug: county?.slug || "",
+        countyName: county?.name || "",
+        drives,
+      };
+    }) || [];
+  return unsorted.sort((a, b) => (a.countyName > b.countyName ? 1 : -1));
 }
 
 export async function geocode(lat: number, lng: number) {
