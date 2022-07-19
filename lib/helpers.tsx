@@ -124,7 +124,6 @@ export async function geocode(lat: number, lng: number) {
     if (!apiKey) return {};
     Geocode.setApiKey(apiKey);
     Geocode.setRegion("us");
-    // @ts-expect-error
     Geocode.setLocationType("ROOFTOP");
     const response = await Geocode.fromLatLng(lat.toString(), lng.toString());
 
