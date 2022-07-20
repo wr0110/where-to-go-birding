@@ -20,7 +20,10 @@ export default function Slideshow({ images }: Props) {
     thumbnail: image.smUrl,
     originalHeight: image.height,
     originalWidth: image.width,
-    description: image.caption,
+
+    description: [
+      <div key={image.smUrl} className="text-xs" dangerouslySetInnerHTML={{ __html: image.caption || "" }} />,
+    ],
   }));
 
   const handleClick = () => {
@@ -34,6 +37,7 @@ export default function Slideshow({ images }: Props) {
     <>
       <ImageGallery
         ref={ref}
+        //@ts-ignore
         items={slides}
         useBrowserFullscreen={false}
         showThumbnails={filtered.length > 1}
