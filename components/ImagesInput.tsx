@@ -3,11 +3,15 @@ import Uppy from "components/Uppy";
 import useSecureFetch from "hooks/useSecureFetch";
 import SortableImage from "./SortableImage";
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, rectSortingStrategy } from "@dnd-kit/sortable";
+import { SortableContext, sortableKeyboardCoordinates, rectSortingStrategy } from "@dnd-kit/sortable";
 
-export default function ImagesInput() {
+type Props = {
+  hideExtraFields?: boolean;
+};
+
+export default function ImagesInput({ hideExtraFields }: Props) {
   const secureFetch = useSecureFetch();
-  const { control, register } = useFormContext();
+  const { control } = useFormContext();
   const { fields, append, remove, move } = useFieldArray({ name: "images", control });
 
   const handleDelete = async (i: number, url: string, isNew: boolean) => {
@@ -51,7 +55,13 @@ export default function ImagesInput() {
           <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <SortableContext items={ids} strategy={rectSortingStrategy}>
               {fields.map((field: any, i) => (
-                <SortableImage key={field.id} i={i} handleDelete={handleDelete} {...field} />
+                <SortableImage
+                  key={field.id}
+                  i={i}
+                  handleDelete={handleDelete}
+                  hideExtraFields={hideExtraFields}
+                  {...field}
+                />
               ))}
             </SortableContext>
           </DndContext>

@@ -1,5 +1,5 @@
 import { useFormContext, Controller } from "react-hook-form";
-import RAsyncSelectStyled from "components/AsyncSelectStyled";
+import AsyncSelectStyled from "components/AsyncSelectStyled";
 
 type Option = {
   value: string;
@@ -30,7 +30,7 @@ export default function HotspotSelect({ name, stateCode, required, ...props }: P
       rules={{ required: required ? "This field is required" : false }}
       render={({ field: { ref, ...field } }) => {
         return (
-          <RAsyncSelectStyled
+          <AsyncSelectStyled
             loadOptions={loadOptions}
             cacheOptions
             defaultOptions

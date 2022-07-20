@@ -17,6 +17,7 @@ import FormError from "components/FormError";
 import { getState } from "lib/localData";
 import { slugify } from "lib/helpers";
 import TinyMCE from "components/TinyMCE";
+import ImagesInput from "components/ImagesInput";
 
 interface Params extends ParsedUrlQuery {
   id: string;
@@ -58,18 +59,19 @@ export default function Edit({ isNew, data, id, state }: Props) {
 
   const handleSubmit: SubmitHandler<DriveInputs> = async (data) => {
     setSaving(true);
+    const newSlug = slugify(data.name);
     const json = await secureFetch(`/api/drive/set?isNew=${isNew}`, "POST", {
       id,
       data: {
         ...data,
         stateCode: state.code,
-        slug: slugify(data.name),
+        slug: newSlug,
         entries: data.entries.map((it) => ({ ...it, hotspot: it.hotspotSelect.value })),
       },
     });
     setSaving(false);
     if (json.success) {
-      router.push(`/${state.slug}/drive/${data.slug}`);
+      router.push(`/${state.slug}/drive/${newSlug}`);
     } else {
       console.error(json.error);
       alert("Error saving drive");
@@ -98,6 +100,9 @@ export default function Edit({ isNew, data, id, state }: Props) {
               <Field label="Counties">
                 <CountySelect name="counties" stateCode={state.code} isMulti required />
                 <FormError name="counties" />
+              </Field>
+              <Field label="Images">
+                <ImagesInput hideExtraFields />
               </Field>
               <InputDrive stateCode={state.code} />
             </div>

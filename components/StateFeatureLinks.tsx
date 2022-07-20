@@ -10,7 +10,7 @@ export default function StateFeatureLinks({ features, slug }: Props) {
     <p className="mb-8">
       {features.includes("drives") && (
         <>
-          <Link href={`/${slug}/birding-drives`}>Birding Drives</Link>
+          <Link href={`/${slug}/drives`}>Birding Drives</Link>
           <br />
         </>
       )}

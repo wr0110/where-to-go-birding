@@ -115,6 +115,7 @@ export default function GroupHotspot({
   }
 
   const featuredImage = images?.filter((it) => !it.isMap && it?.width && it?.height && it?.width > it?.height)?.[0];
+  const mapImages = images?.filter((item) => item.smUrl && item.isMap) || [];
 
   return (
     <div className="container pb-16">
@@ -202,7 +203,7 @@ export default function GroupHotspot({
               ))}
           </div>
           {lat && lng && <GroupMap lat={lat} lng={lng} zoom={zoom} markers={markers} />}
-          {!!images?.length && <MapList images={images} />}
+          {!!images?.length && <MapList images={mapImages} />}
           {!!images?.length && (
             <div className="mt-6">
               <Slideshow images={images} />

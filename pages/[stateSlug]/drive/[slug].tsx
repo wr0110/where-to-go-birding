@@ -9,6 +9,7 @@ import PageHeading from "components/PageHeading";
 import Title from "components/Title";
 import EditorActions from "components/EditorActions";
 import DeleteBtn from "components/DeleteBtn";
+import MapList from "components/MapList";
 
 interface Params extends ParsedUrlQuery {
   stateSlug: string;
@@ -44,7 +45,7 @@ interface Props extends DriveType {
   countySlugs: string[];
 }
 
-export default function Drive({ name, description, state, mapId, countySlugs, entries, _id }: Props) {
+export default function Drive({ name, description, state, mapId, countySlugs, entries, images, _id }: Props) {
   return (
     <div className="container pb-16">
       <Title>{name}</Title>
@@ -104,6 +105,7 @@ export default function Drive({ name, description, state, mapId, countySlugs, en
             height="480"
             className="w-full"
           />
+          {!!images?.length && <MapList images={images} />}
         </div>
       </div>
     </div>

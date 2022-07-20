@@ -190,7 +190,7 @@
 		"slug": "ohio",
 		"code": "OH",
 		"email": "hotspots@ohiobirds.org",
-		"features": [ "roadside", "accessible", "iba", "hikes" ],
+		"features": [ "roadside", "accessible", "iba", "hikes", "drives" ],
 		"active": true,
 		"color": "#4a84b2"
 	},

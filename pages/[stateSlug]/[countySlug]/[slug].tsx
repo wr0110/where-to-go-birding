@@ -105,6 +105,7 @@ export default function Hotspot({
   }
 
   const featuredImage = images?.filter((it) => !it.isMap && it?.width && it?.height && it?.width > it?.height)?.[0];
+  const mapImages = images?.filter((item) => item.smUrl && item.isMap) || [];
 
   return (
     <div className="container pb-16">
@@ -211,7 +212,7 @@ export default function Hotspot({
               <MapBox lat={lat} lng={lng} zoom={zoom} />
             </>
           )*/}
-          {!!images?.length && <MapList images={images} />}
+          {!!images?.length && <MapList images={mapImages} />}
           {!!images?.length && (
             <div className="mt-6">
               <Slideshow images={images} />

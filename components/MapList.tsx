@@ -7,14 +7,13 @@ type Props = {
 };
 
 export default function MapList({ images }: Props) {
-  const filtered = images.filter((item) => item.smUrl && item.isMap);
-
-  const items = filtered.map((image) => ({
+  const items = images.map((image) => ({
     original: image.lgUrl || image.smUrl,
     thumbnail: image.lgUrl && image.height && image.width && image.height > image.width ? image.lgUrl : image.smUrl,
     width: image.width,
     height: image.height,
     by: image.by,
+    caption: image.caption,
   }));
 
   if (items.length === 0) return null;
@@ -39,6 +38,7 @@ export default function MapList({ images }: Props) {
                 );
               }}
             </Item>
+            {item.caption && <span className="text-xs" dangerouslySetInnerHTML={{ __html: item.caption }} />}
             {item.by && <span className="text-xs" dangerouslySetInnerHTML={{ __html: item.by }} />}
           </div>
         ))}

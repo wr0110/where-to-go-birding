@@ -129,6 +129,7 @@ export type Drive = {
   description: string;
   mapId: string;
   counties: string[];
+  images?: Image[];
   entries: [
     {
       hotspot: Hotspot;
@@ -145,6 +146,7 @@ export type DriveInputs = {
   description: string;
   mapId: string;
   counties: string[];
+  images?: Image[];
   entries: [
     {
       hotspotSelect: {

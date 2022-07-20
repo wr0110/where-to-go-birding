@@ -17,8 +17,8 @@ const Input = ({ stateCode }: Props) => {
         const description = field.description;
         return (
           <>
-            {index > 0 && (
-              <div className="group text-center">
+            {fields.length > 0 && (
+              <div className="group text-center -my-4 py-4">
                 <button
                   type="button"
                   className="bg-gray-700 py-0.5 px-4 text-xs rounded text-white opacity-0 group-hover:opacity-100 transition-opacity"
