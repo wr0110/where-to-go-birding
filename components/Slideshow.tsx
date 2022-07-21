@@ -20,10 +20,9 @@ export default function Slideshow({ images }: Props) {
     thumbnail: image.smUrl,
     originalHeight: image.height,
     originalWidth: image.width,
-
-    description: [
-      <div key={image.smUrl} className="text-xs" dangerouslySetInnerHTML={{ __html: image.caption || "" }} />,
-    ],
+    description: image.caption
+      ? [<div key={image.smUrl} className="text-xs" dangerouslySetInnerHTML={{ __html: image.caption || "" }} />]
+      : null,
   }));
 
   const handleClick = () => {

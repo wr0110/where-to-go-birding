@@ -64,6 +64,10 @@ export type Hotspot = {
     value: string;
     label: string;
   };
+  drive?: {
+    slug: string;
+    name: string;
+  };
   images?: Image[];
   reviewed: boolean; //TODO: remove after migration
 };

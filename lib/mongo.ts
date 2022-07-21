@@ -22,7 +22,7 @@ export async function getHotspotsByCounty(countyCode: string) {
     {
       $or: [{ countyCode }, { multiCounties: countyCode }],
     },
-    ["-_id", "name", "url", "iba", "dayhike"]
+    ["-_id", "name", "url", "iba", "dayhike", "drive"]
   )
     .sort({ name: 1 })
     .lean()

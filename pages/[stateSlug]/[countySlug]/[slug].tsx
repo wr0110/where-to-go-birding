@@ -82,6 +82,7 @@ export default function Hotspot({
   locationIds,
   slug,
   iba,
+  drive,
   images,
 }: Props) {
   let extraLinks = [];
@@ -101,6 +102,12 @@ export default function Hotspot({
     extraLinks.push({
       label: `${iba.label} Important Bird Area`,
       url: `/${state.slug}/important-bird-areas/${iba.value}`,
+    });
+  }
+  if (drive) {
+    extraLinks.push({
+      label: drive.name,
+      url: `/${state.slug}/drive/${drive.slug}`,
     });
   }
 

@@ -54,6 +54,7 @@ export default function County({ state, county, hotspots, topHotspots }: Props) 
   const { slug, name, ebirdCode } = county;
   const dayHikeHotspots = hotspots.filter((it) => it.dayhike === "Yes");
   const hotspotIBA = hotspots.filter(({ iba }) => iba?.value).map(({ iba }) => iba);
+  const hotspotDrives = hotspots.filter(({ drive }) => drive?.slug).map(({ drive }) => drive);
 
   //Removes duplicate objects from IBA array
   const iba = hotspotIBA.filter(
@@ -62,6 +63,20 @@ export default function County({ state, county, hotspots, topHotspots }: Props) 
         return t?.value === elem?.value && t?.label === elem?.label;
       }) === index
   );
+
+  //Removes duplicate objects from drive array
+  const drives = hotspotDrives.filter(
+    (elem, index, self) =>
+      self.findIndex((t) => {
+        return t?.slug === elem?.slug && t?.name === elem?.name;
+      }) === index
+  );
+
+  //@ts-ignore
+  const sortedIba = iba.sort((a, b) => a.label.localeCompare(b.label));
+
+  //@ts-ignore
+  const sortedDrives = drives.sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <div className="container pb-16">
@@ -119,15 +134,29 @@ export default function County({ state, county, hotspots, topHotspots }: Props) 
               <HotspotList hotspots={dayHikeHotspots} />
             </section>
           )}
-          {iba.length > 0 && (
+          {sortedIba.length > 0 && (
             <section>
               <h3 className="text-lg mb-2 font-bold" id="iba">
                 Important Bird Areas
               </h3>
               <ul>
-                {iba?.map(({ label, value }: any) => (
+                {sortedIba?.map(({ label, value }: any) => (
                   <li key={value}>
                     <Link href={`/${state.slug}/important-bird-areas/${value}`}>{label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+          {sortedDrives.length > 0 && (
+            <section>
+              <h3 className="text-lg mb-2 font-bold" id="iba">
+                Birding Drives
+              </h3>
+              <ul>
+                {sortedDrives?.map(({ name, slug }: any) => (
+                  <li key={slug}>
+                    <Link href={`/${state.slug}/drive/${slug}`}>{name}</Link>
                   </li>
                 ))}
               </ul>

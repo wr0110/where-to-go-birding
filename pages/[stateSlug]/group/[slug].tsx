@@ -98,6 +98,7 @@ export default function GroupHotspot({
   childIds,
   slug,
   markers,
+  drive,
 }: Props) {
   let extraLinks = [];
   if (roadside === "Yes") {
@@ -111,6 +112,13 @@ export default function GroupHotspot({
     extraLinks.push({
       label: `${iba.label} Important Bird Area`,
       url: `/${state.slug}/important-bird-areas/${iba.value}`,
+    });
+  }
+
+  if (drive) {
+    extraLinks.push({
+      label: drive.name,
+      url: `/${state.slug}/drive/${drive.slug}`,
     });
   }
 
