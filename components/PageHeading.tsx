@@ -9,6 +9,10 @@ type Props = {
   children: React.ReactNode;
   color?: "red" | "blue" | "green" | "yellow" | "orange" | "purple" | "turquoise";
   className?: string;
+  extraCrumb?: {
+    href: string;
+    label: string;
+  };
   [x: string]: any;
 };
 
@@ -19,6 +23,7 @@ export default function PageHeading({
   breadcrumbs = true,
   hideState,
   className,
+  extraCrumb,
   ...props
 }: Props) {
   const bgColor = state?.color || "#4a84b2";
@@ -31,6 +36,14 @@ export default function PageHeading({
       <h1 className="p-3">{children}</h1>
       {breadcrumbs && (
         <nav className="text-xs sm:text-[13px] leading-4 sm:leading-5 flex items-stretch">
+          {extraCrumb && (
+            <>
+              <Link href={extraCrumb.href}>
+                <a className="text-white/90 px-5 py-1.5 bg-white/10 flex items-center">{extraCrumb.label}</a>
+              </Link>
+              <Icon />
+            </>
+          )}
           {county && state && (
             <>
               <Link href={`/${state.slug}/${county.slug}-county`}>

@@ -46,10 +46,16 @@ interface Props extends DriveType {
 }
 
 export default function Drive({ name, description, state, mapId, countySlugs, entries, images, _id }: Props) {
+  const [rendered, isRendered] = React.useState(false);
+  React.useEffect(() => {
+    isRendered(true);
+  }, []);
   return (
     <div className="container pb-16">
       <Title>{name}</Title>
-      <PageHeading state={state}>{name}</PageHeading>
+      <PageHeading state={state} extraCrumb={{ label: "Birding Drives", href: `/${state.slug}/drives` }}>
+        {name}
+      </PageHeading>
       <EditorActions className="-mt-12">
         <Link href={`/${state.slug}/drive/edit/${_id}`}>Edit Drive</Link>
         <Link href={`/${state.slug}/drive/edit/new`}>Add Drive</Link>
@@ -98,13 +104,14 @@ export default function Drive({ name, description, state, mapId, countySlugs, en
                 </Link>
               ))}
           </div>
-          <iframe
-            src={`https://www.google.com/maps/d/embed?mid=${mapId}&z=10`}
-            key={mapId}
-            width="510"
-            height="480"
-            className="w-full"
-          />
+          {rendered && (
+            <iframe
+              src={`https://www.google.com/maps/d/embed?mid=${mapId}`}
+              width="510"
+              height="480"
+              className="w-full"
+            />
+          )}
           {!!images?.length && <MapList images={images} />}
         </div>
       </div>
