@@ -28,8 +28,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         const fileId = filename?.split("_")[0];
         const file1 = bucket.file(`${fileId}_small.jpg`);
         const file2 = bucket.file(`${fileId}_large.jpg`);
+        const file3 = bucket.file(`${fileId}_:original.jpg`);
         await file1.delete();
         await file2.delete();
+        await file3.delete();
       });
     }
     await Hotspot.replaceOne({ _id: id }, data);

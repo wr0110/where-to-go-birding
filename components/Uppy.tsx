@@ -53,6 +53,7 @@ export default function ImageInput({ onSuccess }: Props) {
         return {
           smUrl: `https://storage.googleapis.com/birding-hotspots.appspot.com/${baseName}_small.jpg`,
           lgUrl: `https://storage.googleapis.com/birding-hotspots.appspot.com/${baseName}_large.jpg`,
+          originalUrl: `https://storage.googleapis.com/birding-hotspots.appspot.com/${baseName}_:original.jpg`,
           preview: preview,
           by: null,
           width: file.meta.width || null,

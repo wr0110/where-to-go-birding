@@ -12,7 +12,7 @@
 		@apply leading-6;
 		@apply antialiased;
 		@apply pt-0;
-		@apply md:pt-32;
+		@apply md:pt-[102px];
 	}
 
 	a {
@@ -73,6 +73,11 @@ svg.icon {
 	height: 1em;		
 	@apply fill-current;
 	@apply inline;
+}
+
+.bg-puffin {
+	background: linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0)), url("/puffin.jpg");
+	@apply bg-cover;
 }
 
 .header-gradient {

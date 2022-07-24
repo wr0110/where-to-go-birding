@@ -18,8 +18,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const bucket = getStorage().bucket(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET);
     const file1 = bucket.file(`${fileId}_small.jpg`);
     const file2 = bucket.file(`${fileId}_large.jpg`);
+    const file3 = bucket.file(`${fileId}_:original.jpg`);
     await file1.delete();
     await file2.delete();
+    await file3.delete();
 
     res.status(200).json({ success: true });
   } catch (error: any) {
