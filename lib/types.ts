@@ -69,6 +69,7 @@ export type Hotspot = {
     name: string;
   };
   images?: Image[];
+  isGroup?: boolean;
   reviewed: boolean; //TODO: remove after migration
 };
 

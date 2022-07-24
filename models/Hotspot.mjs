@@ -29,7 +29,10 @@ const HotspotSchema = new Schema({
 		type: Number,
 		default: 15,
 	},
-	locationId: String,
+	locationId: {
+		type: String,
+		required: true
+	},
 	slug: {
 		type: String,
 		required: true
@@ -87,6 +90,7 @@ const HotspotSchema = new Schema({
 		default: dayjs().format("YYYY-MM-DD"),
 		required: true
 	},
+	isGroup: Boolean,
 	migrateParentSlug: String, //TODO remove
 	migrateParentGroupSlug: String, //TODO remove
 	reviewed: Boolean, //TODO remove

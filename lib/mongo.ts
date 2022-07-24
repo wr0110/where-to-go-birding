@@ -114,28 +114,9 @@ export async function getIBAHotspots(ibaSlug: string) {
   return result;
 }
 
-export async function getGroupHotspots(id: string) {
-  await connect();
-  const result = await Hotspot.find({ parent: id }, [
-    "-_id",
-    "name",
-    "url",
-    "locationId",
-    "dayhike",
-    "countyCode",
-    "lat",
-    "lng",
-  ])
-    .sort({ name: 1 })
-    .lean()
-    .exec();
-
-  return result;
-}
-
 export async function getChildHotspots(id: string) {
   await connect();
-  const result = await Hotspot.find({ parent: id }, ["-_id", "name", "url", "locationId"])
+  const result = await Hotspot.find({ parent: id }, ["-_id", "name", "url", "locationId", "lat", "lng", "countyCode"])
     .sort({ name: 1 })
     .lean()
     .exec();
@@ -143,23 +124,11 @@ export async function getChildHotspots(id: string) {
   return result;
 }
 
-export async function getHotspotBySlug(stateCode: string, slug: string) {
+export async function getHotspotByLocationId(locationId: string, populate?: boolean) {
   await connect();
-  const result = await Hotspot.findOne({ stateCode, slug }).populate("parent").lean().exec();
-
-  return result ? JSON.parse(JSON.stringify(result)) : null;
-}
-
-export async function getGroupBySlug(stateCode: string, slug: string) {
-  await connect();
-  const result = await Hotspot.findOne({ stateCode, slug }).lean().exec();
-
-  return result ? JSON.parse(JSON.stringify(result)) : null;
-}
-
-export async function getHotspotByLocationId(locationId: string) {
-  await connect();
-  const result = await Hotspot.findOne({ locationId }).lean().exec();
+  const result = populate
+    ? await Hotspot.findOne({ locationId }).populate("parent").lean().exec()
+    : await Hotspot.findOne({ locationId }).lean().exec();
 
   return result ? JSON.parse(JSON.stringify(result)) : null;
 }

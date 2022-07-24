@@ -17,6 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   try {
     await connect();
     const { id, data } = req.body;
+    const url = `/hotspot/${data.locationId}/${data.slug}`;
     const oldHotspot = await Hotspot.findById(id);
     const oldImageUrls = oldHotspot.images?.map((image: any) => image.smUrl);
     const newImageUrls = data.images?.map((image: any) => image.smUrl);
@@ -34,8 +35,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         await file3.delete();
       });
     }
-    await Hotspot.replaceOne({ _id: id }, data);
-    res.status(200).json({ success: true });
+    await Hotspot.replaceOne({ _id: id }, { ...data, url });
+    res.status(200).json({ success: true, url });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

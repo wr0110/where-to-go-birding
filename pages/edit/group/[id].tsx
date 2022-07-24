@@ -93,7 +93,6 @@ export default function Edit({ id, isNew, data, state }: Props) {
       slug = slugify(formData.name);
     }
 
-    const url = `/${state?.slug}/group/${slug}`;
     const json = await secureFetch(`/api/hotspot/${isNew ? "add" : "update"}`, "POST", {
       id,
       data: {
@@ -103,14 +102,14 @@ export default function Edit({ id, isNew, data, state }: Props) {
         countyCode: null,
         iba: formData.iba || null,
         slug,
-        url,
         restrooms: (formData.restrooms as any)?.value || null,
         accessible: formData.accessible && formData.accessible?.length > 0 ? formData.accessible : null,
+        isGroup: true,
         reviewed: true, //TODO: Remove after migration
       },
     });
     if (json.success) {
-      router.push(url);
+      router.push(json.url);
     } else {
       setSaving(false);
       console.error(json.error);

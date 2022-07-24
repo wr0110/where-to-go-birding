@@ -108,12 +108,10 @@ export default function Edit({ id, isNew, data, error }: Props) {
     }
 
     setSaving(true);
-    const url = `/${state?.slug}/${county?.slug}-county/${data?.slug}`;
     const json = await secureFetch(`/api/hotspot/${isNew ? "add" : "update"}`, "POST", {
       id,
       data: {
         ...data,
-        url,
         parent: data.parentSelect?.value || null,
         multiCounties: null,
         iba: data.iba || null,
@@ -123,7 +121,7 @@ export default function Edit({ id, isNew, data, error }: Props) {
       },
     });
     if (json.success) {
-      router.push(url);
+      router.push(json.url);
     } else {
       setSaving(false);
       console.error(json.error);

@@ -194,3 +194,7 @@ export const accessibleOptions = [
   { value: "pier", label: "ADA accessible fishing pier." },
   { value: "blind", label: "ADA accessible bird blind." },
 ];
+
+export const generateRandomId = () => {
+  return Math.random().toString().slice(2, 11);
+};

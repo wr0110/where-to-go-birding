@@ -3,20 +3,24 @@ import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Address from "components/Address";
 import EbirdHotspotSummary from "components/EbirdHotspotSummary";
+import EbirdBarcharts from "components/EbirdBarcharts";
 import Map from "components/Map";
 import Link from "next/link";
-import { getHotspotBySlug, getChildHotspots } from "lib/mongo";
+import { getHotspotByLocationId, getChildHotspots } from "lib/mongo";
 import AboutSection from "components/AboutSection";
-import { getCountyBySlug, getState } from "lib/localData";
-import { County, State, Hotspot as HotspotType } from "lib/types";
+import { getCountyByCode, getStateByCode } from "lib/localData";
+import { County, State, HotspotsByCounty, Hotspot as HotspotType, Marker } from "lib/types";
 import EditorActions from "components/EditorActions";
 import HotspotList from "components/HotspotList";
+import ListHotspotsByCounty from "components/ListHotspotsByCounty";
 import PageHeading from "components/PageHeading";
 import DeleteBtn from "components/DeleteBtn";
 import Title from "components/Title";
 import Slideshow from "components/Slideshow";
 import MapList from "components/MapList";
 import { accessibleOptions, restroomOptions } from "lib/helpers";
+import { restructureHotspotsByCounty } from "lib/helpers";
+import GroupMap from "components/GroupMap";
 import MapBox from "components/MapBox";
 import MapCustomizer from "components/MapCustomizer";
 
@@ -27,28 +31,53 @@ const getChildren = async (id: string) => {
 };
 
 interface Params extends ParsedUrlQuery {
-  stateSlug: string;
-  countySlug: string;
+  locationId: string;
   slug: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { stateSlug, countySlug, slug } = query as Params;
-  const state = getState(stateSlug);
-  if (!state) return { notFound: true };
+  const { locationId } = query as Params;
 
-  const county = getCountyBySlug(state.code, countySlug);
-  if (!county?.slug) return { notFound: true };
-
-  const data = await getHotspotBySlug(state.code, slug);
+  const data = await getHotspotByLocationId(locationId, true);
   if (!data) return { notFound: true };
 
+  const state = getStateByCode(data.stateCode);
+  if (!state) return { notFound: true };
+
+  const county = getCountyByCode(data.countyCode);
+
   const childLocations = data?.parent ? [] : await getChildren(data._id);
+  const childLocationsByCounty = data?.isGroup ? restructureHotspotsByCounty(childLocations as any) : [];
   const childIds = childLocations?.map((item) => item.locationId) || [];
-  const locationIds = childIds?.length > 0 ? [data?.locationId, ...childIds] : [data?.locationId];
+  let locationIds = childIds?.length > 0 ? childIds : [];
+  if (!data?.isGroup) {
+    locationIds = [data?.locationId, ...locationIds];
+  }
+
+  const markers =
+    childLocations?.map((it: any) => ({
+      coordinates: [it.lng, it.lat],
+      name: it.name,
+      url: it.url,
+    })) || [];
+
+  const countySlugs =
+    data.multiCounties?.map((item: string) => {
+      const county = getCountyByCode(item);
+      return county?.slug;
+    }) || [];
 
   return {
-    props: { state, county, childLocations, locationIds, ...data },
+    props: {
+      state,
+      county,
+      childLocations: data?.isGroup ? [] : childLocations,
+      childLocationsByCounty,
+      locationIds,
+      markers,
+      countySlugs,
+      ...data,
+    },
   };
 };
 
@@ -56,7 +85,10 @@ interface Props extends HotspotType {
   county: County;
   state: State;
   childLocations: HotspotType[];
+  childLocationsByCounty: HotspotsByCounty;
   locationIds: string[];
+  countySlugs: string[];
+  markers: Marker[];
 }
 
 export default function Hotspot({
@@ -79,11 +111,15 @@ export default function Hotspot({
   locationId,
   parent,
   childLocations,
+  childLocationsByCounty,
   locationIds,
   slug,
   iba,
   drive,
   images,
+  isGroup,
+  markers,
+  countySlugs,
 }: Props) {
   let extraLinks = [];
   if (roadside === "Yes") {
@@ -127,22 +163,26 @@ export default function Hotspot({
         />
       )}
       <EditorActions className={featuredImage ? "-mt-2" : "-mt-12"}>
-        <Link href={`/edit/${locationId}`}>Edit Hotspot</Link>
-        {!parent && <Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>}
-        {state.code === "OH" ? (
-          <a href={`https://birding-in-ohio.com/${county.slug}-county/${slug}`} target="_blank" rel="noreferrer">
-            Old Website
-          </a>
-        ) : (
-          <a
-            href={`https://ebirdhotspots.com/birding-in-${state.slug}/us${state.code.toLowerCase()}-${
-              county.slug
-            }-county/us${state.code.toLowerCase()}-${slug}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Old Website
-          </a>
+        <Link href={isGroup ? `/edit/group/${_id}` : `/edit/${locationId}`}>Edit Hotspot</Link>
+        {(isGroup || !parent) && <Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>}
+        {!isGroup && (
+          <>
+            {state.code === "OH" ? (
+              <a href={`https://birding-in-ohio.com/${county.slug}-county/${slug}`} target="_blank" rel="noreferrer">
+                Old Website
+              </a>
+            ) : (
+              <a
+                href={`https://ebirdhotspots.com/birding-in-${state.slug}/us${state.code.toLowerCase()}-${
+                  county.slug
+                }-county/us${state.code.toLowerCase()}-${slug}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Old Website
+              </a>
+            )}
+          </>
         )}
         <DeleteBtn url={`/api/hotspot/delete?id=${_id}`} entity="hotspot" className="ml-auto">
           Delete Hotspot
@@ -173,12 +213,23 @@ export default function Hotspot({
               </p>
             )}
           </div>
-          {name && <EbirdHotspotSummary {...{ state, county, name, locationId, locationIds, lat, lng }} />}
+          {isGroup ? (
+            <EbirdBarcharts portal={state.portal} region={locationIds.join(",")} />
+          ) : (
+            <EbirdHotspotSummary {...{ state, county, name, locationId, locationIds, lat, lng }} />
+          )}
 
           {childLocations.length > 0 && (
             <div className="mb-6">
               <h3 className="mb-1.5 font-bold text-lg">Locations</h3>
               <HotspotList hotspots={childLocations} />
+            </div>
+          )}
+
+          {childLocationsByCounty.length > 0 && (
+            <div className="mb-6">
+              <h3 className="mb-1.5 font-bold text-lg">Locations</h3>
+              <ListHotspotsByCounty stateSlug={state.slug} hotspots={childLocationsByCounty} />
             </div>
           )}
 
@@ -200,7 +251,23 @@ export default function Hotspot({
           </div>
         </div>
         <div>
-          {state.code === "OH" && (
+          {isGroup && state.code === "OH" && (
+            <div
+              className={`xs:grid md:block lg:grid ${
+                countySlugs?.length > 1 ? "grid-cols-2" : "px-[25%]"
+              } gap-12 mb-16`}
+            >
+              {state.slug === "ohio" &&
+                countySlugs?.map((slug) => (
+                  <Link key={slug} href={`/${state.slug}/${slug}-county`}>
+                    <a>
+                      <img src={`/oh-maps/${slug}.jpg`} width="260" className="w-full" alt="County map" />
+                    </a>
+                  </Link>
+                ))}
+            </div>
+          )}
+          {!isGroup && state.code === "OH" && (
             <Link href={`/${state.slug}/${county.slug}-county`}>
               <a>
                 <img
@@ -212,7 +279,8 @@ export default function Hotspot({
               </a>
             </Link>
           )}
-          {lat && lng && <Map lat={lat} lng={lng} zoom={zoom} />}
+          {lat && lng && isGroup && <GroupMap lat={lat} lng={lng} zoom={zoom} markers={markers} />}
+          {lat && lng && !isGroup && <Map lat={lat} lng={lng} zoom={zoom} />}
           {/*lat && lng && (
             <>
               <MapCustomizer lat={lat} lng={lng} zoom={zoom} />
