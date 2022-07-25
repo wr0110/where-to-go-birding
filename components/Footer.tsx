@@ -3,6 +3,7 @@ import { PencilAltIcon, UserIcon } from "@heroicons/react/outline";
 import useFirebaseLogout from "hooks/useFirebaseLogout";
 import { useUser } from "providers/user";
 import OhioFooter from "./OhioFooter";
+import GeneralFooter from "./GeneralFooter";
 import { useRouter } from "next/router";
 
 export default function Footer() {
@@ -12,7 +13,7 @@ export default function Footer() {
   const { stateSlug } = router.query;
   return (
     <footer>
-      {stateSlug === "ohio" && <OhioFooter />}
+      {stateSlug === "ohio" ? <OhioFooter /> : <GeneralFooter />}
       <div className="bg-[#325a79] py-3 text-xs text-gray-300 text-center">
         All photos and content (excluding maps and quoted text) are released into the public domain&nbsp;
         <a

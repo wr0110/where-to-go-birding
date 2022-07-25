@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   try {
     await connect();
     const { id, data } = req.body;
-    const url = `/hotspot/${data.locationId}/${data.slug}`;
+    const url = `/hotspot/${data.locationId}`;
     const oldHotspot = await Hotspot.findById(id);
     const oldImageUrls = oldHotspot.images?.map((image: any) => image.smUrl);
     const newImageUrls = data.images?.map((image: any) => image.smUrl);

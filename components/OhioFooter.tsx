@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function OhioFooter() {
   return (
     <div className="bg-[#4a84b2] py-16 text-white">
@@ -41,33 +43,18 @@ export default function OhioFooter() {
         </section>
 
         <section>
-          <h3 className="text-lg font-bold mb-2">About Birding in Ohio</h3>
-          <a
-            href="https://birding-in-ohio.com/about-birding-in-ohio-website/"
-            target="_blank"
-            rel="noreferrer"
-            className="text-white"
-          >
-            About this Website
-          </a>
+          <h3 className="text-lg font-bold mb-2">Learn More</h3>
+          <Link href="/about">
+            <a className="text-white">About this Website</a>
+          </Link>
           <br />
-          <a href="https://birding-in-ohio.com/about-ebird/" target="_blank" rel="noreferrer" className="text-white">
-            About eBird
-          </a>
+          <Link href="/about-ebird">
+            <a className="text-white">About eBird</a>
+          </Link>
           <br />
-          <a
-            href="https://birding-in-ohio.com/category/focus-on/"
-            target="_blank"
-            rel="noreferrer"
-            className="text-white"
-          >
-            Focus on...
-          </a>
-          <br />
-          <a href="https://birding-in-ohio.com/blog-index/" target="_blank" rel="noreferrer" className="text-white">
-            Help Topics
-          </a>
-          <br />
+          <Link href="/contact">
+            <a className="text-white">Contact</a>
+          </Link>
         </section>
       </div>
     </div>
