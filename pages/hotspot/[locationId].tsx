@@ -155,7 +155,7 @@ export default function Hotspot({
   return (
     <div className="container pb-16">
       <Title>{name}</Title>
-      <PageHeading state={state} county={county}>
+      <PageHeading countrySlug={countryCode.toLowerCase()} state={state} county={county}>
         {name}
       </PageHeading>
       {featuredImage && (
