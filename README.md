@@ -1,4 +1,4 @@
-This is the Next.js project that will eventually replace https://ebirdhotspots.com and https://birding-in-ohio.com when development is complete.
+This is the Next.js project powers https://birdinghotspots.org
 
 We use the following tools and technologies:
 
@@ -7,7 +7,7 @@ We use the following tools and technologies:
 - Tailwind CSS
 - MongoDB
 - Firebase for authentication
-- Google Cloud Storage for images
+- Wasabi for image storage
 - Transloadit for image processing
 
 If you have any questions or would like to contribute, reach out to use at: https://ebirdhotspots.com/how-to-help
