@@ -1,4 +1,3 @@
-import Geocode from "react-geocode";
 import { Hotspot, Drive } from "lib/types";
 import { getCountyByCode } from "lib/localData";
 
@@ -120,12 +119,10 @@ export function restructureDrivesByCounty(drives: Drive[], countrySlug: string, 
 export async function geocode(lat: number, lng: number) {
   console.log("Geocoding", lat, lng);
   try {
-    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_KEY;
-    if (!apiKey) return {};
-    Geocode.setApiKey(apiKey);
-    Geocode.setRegion("us");
-    Geocode.setLocationType("ROOFTOP");
-    const response = await Geocode.fromLatLng(lat.toString(), lng.toString());
+    const request = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.NEXT_PUBLIC_GOOGLE_KEY}`
+    );
+    const response = await request.json();
 
     let city = "";
     let state = "";
