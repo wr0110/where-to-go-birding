@@ -11,12 +11,13 @@ import ListHotspotsByCounty from "components/ListHotspotsByCounty";
 import EbirdBarcharts from "components/EbirdBarcharts";
 
 interface Params extends ParsedUrlQuery {
+  countrySlug: string;
   stateSlug: string;
   iba: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { stateSlug, iba } = query as Params;
+  const { countrySlug, stateSlug, iba } = query as Params;
   const state = getState(stateSlug);
   if (!state) return { notFound: true };
 
@@ -28,17 +29,19 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const locationIds = data?.ebirdCode ? [] : hotspots.map((item) => item.locationId);
 
   return {
-    props: { state, hotspots: hotspotsByCounty, locationIds, ...data },
+    props: { countrySlug, state, hotspots: hotspotsByCounty, locationIds, ...data },
   };
 };
 
 interface Props extends IBA {
+  countrySlug: string;
   state: State;
   locationIds: string[];
   hotspots: HotspotsByCounty;
 }
 
 export default function ImportantBirdAreas({
+  countrySlug,
   state,
   name,
   slug,
@@ -51,11 +54,13 @@ export default function ImportantBirdAreas({
   const region = ebirdCode || locationIds.join(",");
   return (
     <div className="container pb-16 mt-12">
-      <PageHeading state={state}>{name} Important Bird Area</PageHeading>
+      <PageHeading countrySlug={countrySlug} state={state}>
+        {name} Important Bird Area
+      </PageHeading>
       <div className="md:grid grid-cols-2 gap-12">
         <div>
           <p className="font-bold mb-6">
-            <Link href={`/${state?.slug}/important-bird-areas`}>
+            <Link href={`/${countrySlug}/${state?.slug}/important-bird-areas`}>
               <a>{state?.label} Important Bird Areas</a>
             </Link>
           </p>

@@ -1,40 +1,41 @@
 import Link from "next/link";
 
 type Props = {
+  countrySlug: string;
   features: string[];
   slug: string;
 };
 
-export default function StateFeatureLinks({ features, slug }: Props) {
+export default function StateFeatureLinks({ countrySlug, features, slug }: Props) {
   return (
     <p className="mb-8">
       {features.includes("drives") && (
         <>
-          <Link href={`/${slug}/drives`}>Birding Drives</Link>
+          <Link href={`/${countrySlug}/${slug}/drives`}>Birding Drives</Link>
           <br />
         </>
       )}
       {features.includes("hikes") && (
         <>
-          <Link href={`/${slug}/birding-day-hikes`}>Birding Day Hikes</Link>
+          <Link href={`/${countrySlug}/${slug}/birding-day-hikes`}>Birding Day Hikes</Link>
           <br />
         </>
       )}
       {features.includes("roadside") && (
         <>
-          <Link href={`/${slug}/roadside-birding`}>Roadside Birding</Link>
+          <Link href={`/${countrySlug}/${slug}/roadside-birding`}>Roadside Birding</Link>
           <br />
         </>
       )}
       {features.includes("accessible") && (
         <>
-          <Link href={`/${slug}/accessible-facilities`}>Accessible Facilities</Link>
+          <Link href={`/${countrySlug}/${slug}/accessible-facilities`}>Accessible Facilities</Link>
           <br />
         </>
       )}
       {features.includes("iba") && (
         <>
-          <Link href={`/${slug}/important-bird-areas`}>Audubon Important Bird Areas</Link>
+          <Link href={`/${countrySlug}/${slug}/important-bird-areas`}>Audubon Important Bird Areas</Link>
           <br />
         </>
       )}

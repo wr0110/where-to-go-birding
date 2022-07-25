@@ -120,12 +120,14 @@ export default function Hotspot({
   isGroup,
   markers,
   countySlugs,
+  countryCode,
 }: Props) {
+  const countrySlug = countryCode?.toLowerCase();
   let extraLinks = [];
   if (roadside === "Yes") {
     extraLinks.push({
       label: "Roadside Birding",
-      url: `/${state.slug}/roadside-birding`,
+      url: `/${countrySlug}/${state.slug}/roadside-birding`,
     });
   }
   if (parent) {
@@ -137,13 +139,13 @@ export default function Hotspot({
   if (iba) {
     extraLinks.push({
       label: `${iba.label} Important Bird Area`,
-      url: `/${state.slug}/important-bird-areas/${iba.value}`,
+      url: `/${countrySlug}/${state.slug}/important-bird-areas/${iba.value}`,
     });
   }
   if (drive) {
     extraLinks.push({
       label: drive.name,
-      url: `/${state.slug}/drive/${drive.slug}`,
+      url: `/${countrySlug}/${state.slug}/drive/${drive.slug}`,
     });
   }
 
@@ -229,7 +231,11 @@ export default function Hotspot({
           {childLocationsByCounty.length > 0 && (
             <div className="mb-6">
               <h3 className="mb-1.5 font-bold text-lg">Locations</h3>
-              <ListHotspotsByCounty stateSlug={state.slug} hotspots={childLocationsByCounty} />
+              <ListHotspotsByCounty
+                countrySlug={countryCode.toLowerCase()}
+                stateSlug={state.slug}
+                hotspots={childLocationsByCounty}
+              />
             </div>
           )}
 
@@ -259,7 +265,7 @@ export default function Hotspot({
             >
               {state.slug === "ohio" &&
                 countySlugs?.map((slug) => (
-                  <Link key={slug} href={`/${state.slug}/${slug}-county`}>
+                  <Link key={slug} href={`/${countrySlug}/${state.slug}/${slug}-county`}>
                     <a>
                       <img src={`/oh-maps/${slug}.jpg`} width="260" className="w-full" alt="County map" />
                     </a>
@@ -268,7 +274,7 @@ export default function Hotspot({
             </div>
           )}
           {!isGroup && state.code === "OH" && (
-            <Link href={`/${state.slug}/${county.slug}-county`}>
+            <Link href={`/${countrySlug}/${state.slug}/${county.slug}-county`}>
               <a>
                 <img
                   src={`/oh-maps/${county.slug}.jpg`}

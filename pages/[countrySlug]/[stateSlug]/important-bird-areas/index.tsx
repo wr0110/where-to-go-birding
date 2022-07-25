@@ -8,30 +8,34 @@ import PageHeading from "components/PageHeading";
 import { State } from "lib/types";
 
 interface Params extends ParsedUrlQuery {
+  countrySlug: string;
   stateSlug: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { stateSlug } = query as Params;
+  const { countrySlug, stateSlug } = query as Params;
   const state = getState(stateSlug);
   if (!state) return { notFound: true };
 
   const areas = OhioIBA.filter(({ name, slug }) => ({ name, slug })) || [];
 
   return {
-    props: { state, areas },
+    props: { countrySlug, state, areas },
   };
 };
 
 type Props = {
+  countrySlug: string;
   state: State;
   areas: { name: string; slug: string }[];
 };
 
-export default function ImportantBirdAreas({ areas, state }: Props) {
+export default function ImportantBirdAreas({ countrySlug, areas, state }: Props) {
   return (
     <div className="container pb-16 mt-12">
-      <PageHeading state={state}>Important Bird Areas</PageHeading>
+      <PageHeading countrySlug={countrySlug} state={state}>
+        Important Bird Areas
+      </PageHeading>
       <div className="md:flex gap-8 items-start mb-8">
         <div>
           <p className="mb-4">
@@ -68,7 +72,7 @@ export default function ImportantBirdAreas({ areas, state }: Props) {
       <div className="columns-1 sm:columns-3 mb-12">
         {areas.map(({ name, slug }) => (
           <React.Fragment key={slug}>
-            <Link href={`/${state.slug}/important-bird-areas/${slug}`}>
+            <Link href={`/${countrySlug}/${state.slug}/important-bird-areas/${slug}`}>
               <a className="font-bold">{name}</a>
             </Link>
             <br />

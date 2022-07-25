@@ -93,7 +93,7 @@ type DriveMap = {
   }[];
 };
 
-export function restructureDrivesByCounty(drives: Drive[], stateSlug: string) {
+export function restructureDrivesByCounty(drives: Drive[], countrySlug: string, stateSlug: string) {
   let drivesByCounty: DriveMap = {};
   drives.forEach(({ counties, slug, name }) => {
     counties.forEach((countyCode) => {
@@ -101,7 +101,7 @@ export function restructureDrivesByCounty(drives: Drive[], stateSlug: string) {
       if (!drivesByCounty[countyCode]) {
         drivesByCounty[countyCode] = [];
       }
-      drivesByCounty[countyCode].push({ name, url: `/${stateSlug}/drive/${slug}` });
+      drivesByCounty[countyCode].push({ name, url: `/${countrySlug}/${stateSlug}/drive/${slug}` });
     });
   });
 

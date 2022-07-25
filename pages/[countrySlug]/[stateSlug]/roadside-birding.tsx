@@ -10,6 +10,7 @@ import ListHotspotsByCounty from "components/ListHotspotsByCounty";
 import Title from "components/Title";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const countrySlug = query.countrySlug as string;
   const stateSlug = query.stateSlug as string;
   const state = getState(stateSlug);
   if (!state) return { notFound: true };
@@ -18,20 +19,23 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const hotspotsByCounty = restructureHotspotsByCounty(hotspots as any);
 
   return {
-    props: { state, hotspots: hotspotsByCounty },
+    props: { countrySlug, state, hotspots: hotspotsByCounty },
   };
 };
 
 type Props = {
+  countrySlug: string;
   state: State;
   hotspots: HotspotsByCounty;
 };
 
-export default function RoadsideBirding({ state, hotspots }: Props) {
+export default function RoadsideBirding({ countrySlug, state, hotspots }: Props) {
   return (
     <div className="container pb-16 mt-12">
       <Title>Roadside Birding</Title>
-      <PageHeading state={state}>Roadside Birding</PageHeading>
+      <PageHeading countrySlug={countrySlug} state={state}>
+        Roadside Birding
+      </PageHeading>
       <div className="md:flex gap-8 items-start mb-8">
         <figure className="border p-2 bg-gray-200 text-center text-xs mb-4">
           <img src="/riddle-rd.jpg" className="md:min-w-[400px] mx-auto" />
@@ -60,7 +64,7 @@ export default function RoadsideBirding({ state, hotspots }: Props) {
           </p>
           <p className="mb-4">
             Also, see the list of hotspot locations which have{" "}
-            <Link href={`/${state.slug}/accessible-facilities`}>handicap accessible facilities</Link>.
+            <Link href={`/${countrySlug}/${state.slug}/accessible-facilities`}>handicap accessible facilities</Link>.
           </p>
         </div>
       </div>

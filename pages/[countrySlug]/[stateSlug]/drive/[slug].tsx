@@ -12,12 +12,13 @@ import DeleteBtn from "components/DeleteBtn";
 import MapList from "components/MapList";
 
 interface Params extends ParsedUrlQuery {
+  countrySlug: string;
   stateSlug: string;
   slug: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { stateSlug, slug } = query as Params;
+  const { countrySlug, stateSlug, slug } = query as Params;
   const state = getState(stateSlug);
   if (!state) return { notFound: true };
 
@@ -31,6 +32,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   return {
     props: {
+      countrySlug,
       state,
       portal: state.portal || null,
       countySlugs,
@@ -40,12 +42,23 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 };
 
 interface Props extends DriveType {
+  countrySlug: string;
   state: State;
   portal: string;
   countySlugs: string[];
 }
 
-export default function Drive({ name, description, state, mapId, countySlugs, entries, images, _id }: Props) {
+export default function Drive({
+  countrySlug,
+  name,
+  description,
+  state,
+  mapId,
+  countySlugs,
+  entries,
+  images,
+  _id,
+}: Props) {
   const [rendered, isRendered] = React.useState(false);
   React.useEffect(() => {
     isRendered(true);
@@ -53,12 +66,16 @@ export default function Drive({ name, description, state, mapId, countySlugs, en
   return (
     <div className="container pb-16">
       <Title>{name}</Title>
-      <PageHeading state={state} extraCrumb={{ label: "Birding Drives", href: `/${state.slug}/drives` }}>
+      <PageHeading
+        countrySlug={countrySlug}
+        state={state}
+        extraCrumb={{ label: "Birding Drives", href: `/${countrySlug}/${state.slug}/drives` }}
+      >
         {name}
       </PageHeading>
       <EditorActions className="-mt-12">
-        <Link href={`/${state.slug}/drive/edit/${_id}`}>Edit Drive</Link>
-        <Link href={`/${state.slug}/drive/edit/new`}>Add Drive</Link>
+        <Link href={`/${countrySlug}/${state.slug}/drive/edit/${_id}`}>Edit Drive</Link>
+        <Link href={`/${countrySlug}/${state.slug}/drive/edit/new`}>Add Drive</Link>
         <DeleteBtn url={`/api/drive/delete?id=${_id}`} entity="drive" className="ml-auto">
           Delete Drive
         </DeleteBtn>
@@ -97,7 +114,7 @@ export default function Drive({ name, description, state, mapId, countySlugs, en
           >
             {state.slug === "ohio" &&
               countySlugs?.map((slug) => (
-                <Link key={slug} href={`/${state.slug}/${slug}-county`}>
+                <Link key={slug} href={`/${countrySlug}/${state.slug}/${slug}-county`}>
                   <a>
                     <img src={`/oh-maps/${slug}.jpg`} width="260" className="w-full" alt="County map" />
                   </a>

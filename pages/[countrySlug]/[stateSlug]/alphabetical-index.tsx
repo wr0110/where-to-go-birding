@@ -11,10 +11,11 @@ import { useUser } from "providers/user";
 
 interface Params extends ParsedUrlQuery {
   stateSlug: string;
+  countrySlug: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { stateSlug } = query as Params;
+  const { countrySlug, stateSlug } = query as Params;
   const state = getState(stateSlug);
   if (!state) return { notFound: true };
 
@@ -23,11 +24,12 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   activeLetters = [...new Set(activeLetters)];
 
   return {
-    props: { state, hotspots, activeLetters },
+    props: { countrySlug, state, hotspots, activeLetters },
   };
 };
 
 type Props = {
+  countrySlug: string;
   state: State;
   activeLetters: string[];
   hotspots: {
@@ -37,13 +39,15 @@ type Props = {
   }[];
 };
 
-export default function AlphabeticalIndex({ state, hotspots, activeLetters }: Props) {
+export default function AlphabeticalIndex({ countrySlug, state, hotspots, activeLetters }: Props) {
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   const { user } = useUser(); //TODO: Remove after migration
   return (
     <div className="container pb-16 mt-12">
       <Title>Alphabetical Index</Title>
-      <PageHeading state={state}>Alphabetical Index</PageHeading>
+      <PageHeading countrySlug={countrySlug} state={state}>
+        Alphabetical Index
+      </PageHeading>
       <p className="mb-4">
         <i>
           Tip: Use your browser’s search function to search this page for all or part of the name of a hotspot. Or click
@@ -51,8 +55,8 @@ export default function AlphabeticalIndex({ state, hotspots, activeLetters }: Pr
         </i>
       </p>
       <p className="my-4">
-        Also, see <Link href={`/${state.slug}/roadside-birding`}>Roadside Birding</Link> for hotspots where you may view
-        birds from your vehicle.
+        Also, see <Link href={`/${countrySlug}/${state.slug}/roadside-birding`}>Roadside Birding</Link> for hotspots
+        where you may view birds from your vehicle.
       </p>
       <p className="mb-8">
         Total hotspots: <strong>{hotspots?.length}</strong>

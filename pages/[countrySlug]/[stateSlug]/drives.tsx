@@ -9,28 +9,32 @@ import { DrivesByCounty, State } from "lib/types";
 import Title from "components/Title";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const countrySlug = query.countrySlug as string;
   const stateSlug = query.stateSlug as string;
   const state = getState(stateSlug);
   if (!state) return { notFound: true };
 
   const drives = (await getDrivesByState(state.code)) || [];
-  const drivesByCounty = restructureDrivesByCounty(drives as any, stateSlug);
+  const drivesByCounty = restructureDrivesByCounty(drives as any, countrySlug, stateSlug);
 
   return {
-    props: { state, drives: drivesByCounty },
+    props: { countrySlug, state, drives: drivesByCounty },
   };
 };
 
 type Props = {
+  countrySlug: string;
   state: State;
   drives: DrivesByCounty;
 };
 
-export default function Drives({ state, drives }: Props) {
+export default function Drives({ countrySlug, state, drives }: Props) {
   return (
     <div className="container pb-16 mt-12">
       <Title>Birding Drives</Title>
-      <PageHeading state={state}>Birding Drives</PageHeading>
+      <PageHeading countrySlug={countrySlug} state={state}>
+        Birding Drives
+      </PageHeading>
       <div className="md:flex gap-8 items-start mb-8">
         <div>
           <p className="mb-4">
@@ -56,7 +60,7 @@ export default function Drives({ state, drives }: Props) {
       <div className="columns-1 sm:columns-3 mb-12">
         {drives.map(({ countySlug, countyName, drives }) => (
           <p key={countySlug} className="mb-4 break-inside-avoid">
-            <Link href={`/${state.slug}/${countySlug}-county`}>
+            <Link href={`/${countrySlug}/${state.slug}/${countySlug}-county`}>
               <a className="font-bold">{countyName} County</a>
             </Link>
             <br />

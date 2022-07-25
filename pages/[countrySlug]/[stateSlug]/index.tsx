@@ -30,18 +30,19 @@ import path from "path";
 import ReactMarkdown from "react-markdown";
 
 interface Params extends ParsedUrlQuery {
+  countrySlug: string;
   stateSlug: string;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = States.filter(({ active }) => active).map(({ slug }) => ({
-    params: { stateSlug: slug },
+    params: { countrySlug: "us", stateSlug: slug },
   }));
   return { paths, fallback: true };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { stateSlug } = params as Params;
+  const { countrySlug, stateSlug } = params as Params;
   const state = getState(stateSlug);
   if (!state) return { notFound: true };
   const counties = getCounties(state.code);
@@ -53,10 +54,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const infoFile = path.join(process.cwd(), "data", "state-info", `${state.code.toLowerCase()}.md`);
   const info = fs.readFileSync(infoFile.toString(), "utf8");
 
-  return { props: { counties, state, topHotspots, info } };
+  return { props: { countrySlug, counties, state, topHotspots, info } };
 };
 
 type Props = {
+  countrySlug: string;
   state: StateType;
   counties: CountyType[];
   info: string;
@@ -67,7 +69,7 @@ type Props = {
   }[];
 };
 
-export default function State({ state, counties, topHotspots, info }: Props) {
+export default function State({ countrySlug, state, counties, topHotspots, info }: Props) {
   const { label, code, slug, features } = state || ({} as StateType);
   const maps: any = {
     OH: <OhioMap />,
@@ -87,7 +89,7 @@ export default function State({ state, counties, topHotspots, info }: Props) {
   return (
     <div className="container pb-16 mt-12">
       <Title>{slug === "ohio" ? "" : `Birding in ${label}`}</Title>
-      <PageHeading state={state} hideState>
+      <PageHeading countrySlug={countrySlug} state={state} hideState>
         Welcome to Birding in {label}
         {code === "OH" && (
           <>
@@ -98,7 +100,7 @@ export default function State({ state, counties, topHotspots, info }: Props) {
       </PageHeading>
       <EditorActions className="-mt-10">
         <Link href="/add">Add Hotspot</Link>
-        <Link href={`/edit/group/new?state=${code}`}>Add Group Hotspot</Link>
+        <Link href={`/edit/group/new?state=${code}&country=${countrySlug}`}>Add Group Hotspot</Link>
       </EditorActions>
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
         <div>
@@ -108,7 +110,7 @@ export default function State({ state, counties, topHotspots, info }: Props) {
               Alphabetical list of {label} Counties
             </a>
             <br />
-            <Link href={`/${slug}/alphabetical-index`}>{`Alphabetical list of ${label} Hotspots`}</Link>
+            <Link href={`/${countrySlug}/${slug}/alphabetical-index`}>{`Alphabetical list of ${label} Hotspots`}</Link>
             <br />
             <a href="#hotspots" onClick={scrollToAnchor}>
               Top Hotspots
@@ -118,7 +120,7 @@ export default function State({ state, counties, topHotspots, info }: Props) {
               {label} Notable Bird Sightings
             </a>
           </p>
-          {features?.length > 0 && <StateFeatureLinks slug={slug} features={features} />}
+          {features?.length > 0 && <StateFeatureLinks countrySlug={countrySlug} slug={slug} features={features} />}
           <EbirdStateSummary {...state} />
         </div>
         <div className="mb-8">
@@ -141,7 +143,7 @@ export default function State({ state, counties, topHotspots, info }: Props) {
             {counties?.map(({ name, slug: countySlug, ebirdCode, active }) => (
               <p key={name}>
                 {active ? (
-                  <Link href={`/${slug}/${countySlug}-county`}>
+                  <Link href={`/${countrySlug}/${slug}/${countySlug}-county`}>
                     <a className="font-bold">{name}</a>
                   </Link>
                 ) : (

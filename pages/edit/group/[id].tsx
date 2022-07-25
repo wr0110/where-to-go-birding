@@ -34,11 +34,12 @@ interface Params extends ParsedUrlQuery {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { id, state: stateParam } = query as Params;
+  const { id, state: stateParam, country: countryParam } = query as Params;
   const isNew = id === "new";
 
   const data = isNew ? null : await getHotspotById(id);
 
+  const countryCode = data?.countryCode || (countryParam as string)?.toUpperCase();
   const stateCode = data?.stateCode || stateParam;
   const state = getStateByCode(stateCode);
 
@@ -49,6 +50,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       state,
       data: {
         ...data,
+        countryCode,
         name: data?.name || "",
         slug: data?.slug || "",
         multiCounties: data?.multiCounties || [],
@@ -58,7 +60,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         dayhike: data?.dayhike || "No",
         zoom: data?.zoom || 15,
       },
-      stateCode,
     },
   };
 };

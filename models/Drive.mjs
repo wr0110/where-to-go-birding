@@ -7,6 +7,10 @@ const DriveSchema = new Schema({
     type: String,
     required: true,
   },
+  countryCode: {
+    type: String,
+    required: true,
+  },
   stateCode: {
     type: String,
     required: true,

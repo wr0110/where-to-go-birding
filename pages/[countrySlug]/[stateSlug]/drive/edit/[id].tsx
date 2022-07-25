@@ -21,11 +21,12 @@ import ImagesInput from "components/ImagesInput";
 
 interface Params extends ParsedUrlQuery {
   id: string;
+  countrySlug: string;
   stateSlug: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { id, stateSlug } = query as Params;
+  const { id, countrySlug, stateSlug } = query as Params;
   const data: Drive = id !== "new" ? await getDriveById(id) : null;
 
   const state = getState(stateSlug);
@@ -36,6 +37,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   return {
     props: {
       id: data?._id || null,
+      countrySlug,
       state,
       isNew: !data,
       data: { ...data, entries, counties: data?.counties || [] },
@@ -45,12 +47,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
 type Props = {
   id?: string;
+  countrySlug: string;
   state: State;
   isNew: boolean;
   data: Drive;
 };
 
-export default function Edit({ isNew, data, id, state }: Props) {
+export default function Edit({ isNew, data, id, state, countrySlug }: Props) {
   const [saving, setSaving] = React.useState<boolean>(false);
   const secureFetch = useSecureFetch();
 
@@ -71,7 +74,7 @@ export default function Edit({ isNew, data, id, state }: Props) {
     });
     setSaving(false);
     if (json.success) {
-      router.push(`/${state.slug}/drive/${newSlug}`);
+      router.push(`/${countrySlug}/${state.slug}/drive/${newSlug}`);
     } else {
       console.error(json.error);
       alert("Error saving drive");

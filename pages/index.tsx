@@ -18,7 +18,7 @@ export default function Home() {
         {States.map(({ label, slug, code, active }) => (
           <p key={code}>
             {active ? (
-              <Link href={`/${slug}`}>
+              <Link href={`/us/${slug}`}>
                 <a className="font-bold">{label}</a>
               </Link>
             ) : (

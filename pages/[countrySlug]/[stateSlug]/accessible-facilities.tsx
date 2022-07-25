@@ -11,11 +11,12 @@ import ListHotspotsByCounty from "components/ListHotspotsByCounty";
 import Title from "components/Title";
 
 interface Params extends ParsedUrlQuery {
+  countrySlug: string;
   stateSlug: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { stateSlug } = query as Params;
+  const { countrySlug, stateSlug } = query as Params;
   const state = getState(stateSlug);
   if (!state) return { notFound: true };
 
@@ -23,20 +24,23 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const hotspotsByCounty = restructureHotspotsByCounty(hotspots as any);
 
   return {
-    props: { state, hotspots: hotspotsByCounty },
+    props: { countrySlug, state, hotspots: hotspotsByCounty },
   };
 };
 
 type Props = {
+  countrySlug: string;
   state: State;
   hotspots: HotspotsByCounty;
 };
 
-export default function AccessibleFacilities({ state, hotspots }: Props) {
+export default function AccessibleFacilities({ state, countrySlug, hotspots }: Props) {
   return (
     <div className="container pb-16 mt-12">
       <Title>Accessible Facilities</Title>
-      <PageHeading state={state}>Accessible Facilities</PageHeading>
+      <PageHeading countrySlug={countrySlug} state={state}>
+        Accessible Facilities
+      </PageHeading>
       <p className="mb-4">
         <strong>
           Below are listed, alphabetically by county, eBird hotspots which have facilities which are ADA accessible.
@@ -47,8 +51,8 @@ export default function AccessibleFacilities({ state, hotspots }: Props) {
         Safety first
       </p>
       <p className="mb-4">
-        Also, see <Link href={`/${state.slug}/roadside-birding`}>Roadside Birding</Link> for hotspots where you may view
-        birds from your vehicle. We also recommend checkig out the&nbsp;
+        Also, see <Link href={`/${countrySlug}/${state.slug}/roadside-birding`}>Roadside Birding</Link> for hotspots
+        where you may view birds from your vehicle. We also recommend checkig out the&nbsp;
         <a href="https://www.birdability.org/" target="_blank" rel="noreferrer">
           Birdability
         </a>

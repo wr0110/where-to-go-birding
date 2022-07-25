@@ -42,6 +42,7 @@ export type Hotspot = {
   lng: number;
   zoom: number;
   locationId: string;
+  countryCode: string;
   stateCode: string;
   countyCode?: string;
   multiCounties?: string[];
@@ -129,6 +130,7 @@ export type Marker = {
 export type Drive = {
   _id?: string;
   name: string;
+  countryCode: string;
   stateCode: string;
   slug: string;
   description: string;
@@ -146,6 +148,7 @@ export type Drive = {
 export type DriveInputs = {
   _id?: string;
   name: string;
+  countryCode: string;
   stateCode: string;
   slug: string;
   description: string;

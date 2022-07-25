@@ -17,12 +17,13 @@ import fs from "fs";
 import path from "path";
 
 interface Params extends ParsedUrlQuery {
+  countrySlug: string;
   stateSlug: string;
   countySlug: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { stateSlug, countySlug } = query as Params;
+  const { countrySlug, stateSlug, countySlug } = query as Params;
   const state = getState(stateSlug);
   if (!state) return { notFound: true };
 
@@ -35,11 +36,12 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   const hotspots = (await getHotspotsByCounty(county.ebirdCode)) || [];
   return {
-    props: { state, county, hotspots, topHotspots },
+    props: { countrySlug, state, county, hotspots, topHotspots },
   };
 };
 
 type Props = {
+  countrySlug: string;
   county: CountyType;
   state: State;
   hotspots: Hotspot[];
@@ -50,7 +52,7 @@ type Props = {
   }[];
 };
 
-export default function County({ state, county, hotspots, topHotspots }: Props) {
+export default function County({ countrySlug, state, county, hotspots, topHotspots }: Props) {
   const { slug, name, ebirdCode } = county;
   const dayHikeHotspots = hotspots.filter((it) => it.dayhike === "Yes");
   const hotspotIBA = hotspots.filter(({ iba }) => iba?.value).map(({ iba }) => iba);
@@ -81,7 +83,9 @@ export default function County({ state, county, hotspots, topHotspots }: Props) 
   return (
     <div className="container pb-16">
       <Title>{`${name} County, ${state.label}`}</Title>
-      <PageHeading state={state}>{name} County</PageHeading>
+      <PageHeading countrySlug={countrySlug} state={state}>
+        {name} County
+      </PageHeading>
       <EditorActions>
         <Link href="/add">Add Hotspot</Link>
       </EditorActions>
@@ -142,7 +146,7 @@ export default function County({ state, county, hotspots, topHotspots }: Props) 
               <ul>
                 {sortedIba?.map(({ label, value }: any) => (
                   <li key={value}>
-                    <Link href={`/${state.slug}/important-bird-areas/${value}`}>{label}</Link>
+                    <Link href={`/${countrySlug}/${state.slug}/important-bird-areas/${value}`}>{label}</Link>
                   </li>
                 ))}
               </ul>
@@ -156,7 +160,7 @@ export default function County({ state, county, hotspots, topHotspots }: Props) 
               <ul>
                 {sortedDrives?.map(({ name, slug }: any) => (
                   <li key={slug}>
-                    <Link href={`/${state.slug}/drive/${slug}`}>{name}</Link>
+                    <Link href={`/${countrySlug}/${state.slug}/drive/${slug}`}>{name}</Link>
                   </li>
                 ))}
               </ul>

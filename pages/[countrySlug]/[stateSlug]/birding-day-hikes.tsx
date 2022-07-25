@@ -10,6 +10,7 @@ import Title from "components/Title";
 import { State } from "lib/types";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const countrySlug = query.countrySlug as string;
   const stateSlug = query.stateSlug as string;
   const state = getState(stateSlug);
   if (!state) return { notFound: true };
@@ -18,20 +19,23 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const hotspotsByCounty = restructureHotspotsByCounty(hotspots as any);
 
   return {
-    props: { state, hotspots: hotspotsByCounty },
+    props: { countrySlug, state, hotspots: hotspotsByCounty },
   };
 };
 
 type Props = {
+  countrySlug: string;
   state: State;
   hotspots: HotspotsByCounty;
 };
 
-export default function BirdingDayHikes({ state, hotspots }: Props) {
+export default function BirdingDayHikes({ countrySlug, state, hotspots }: Props) {
   return (
     <div className="container pb-16 mt-12">
       <Title>Birding Day Hikes</Title>
-      <PageHeading state={state}>Birding Day Hikes</PageHeading>
+      <PageHeading countrySlug={countrySlug} state={state}>
+        Birding Day Hikes
+      </PageHeading>
       <div className="md:flex gap-8 items-start mb-8">
         <div>
           <p className="mb-4">

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { State, County } from "lib/types";
 
 type Props = {
+  countrySlug?: string;
   state?: State;
   county?: County;
   breadcrumbs?: boolean;
@@ -17,6 +18,7 @@ type Props = {
 };
 
 export default function PageHeading({
+  countrySlug,
   state,
   county,
   children,
@@ -46,7 +48,7 @@ export default function PageHeading({
           )}
           {county && state && (
             <>
-              <Link href={`/${state.slug}/${county.slug}-county`}>
+              <Link href={`/${countrySlug}/${state.slug}/${county.slug}-county`}>
                 <a className="text-white/90 px-5 py-1.5 bg-white/10 flex items-center">{county.name} County</a>
               </Link>
               <Icon />
@@ -54,7 +56,7 @@ export default function PageHeading({
           )}
           {state && !hideState && (
             <>
-              <Link href={`/${state.slug}`}>
+              <Link href={`/${countrySlug}/${state.slug}`}>
                 <a className="text-white/90 px-5 py-1.5 bg-white/10 flex items-center">{state.label}</a>
               </Link>
               <Icon />
