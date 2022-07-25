@@ -51,9 +51,9 @@ export default function ImageInput({ onSuccess }: Props) {
         const preview = previewsRef.current ? previewsRef.current[file.id] : null;
         const baseName = file.name.split(".")[0];
         return {
-          smUrl: `https://storage.googleapis.com/birding-hotspots.appspot.com/${baseName}_small.jpg`,
-          lgUrl: `https://storage.googleapis.com/birding-hotspots.appspot.com/${baseName}_large.jpg`,
-          originalUrl: `https://storage.googleapis.com/birding-hotspots.appspot.com/${baseName}_:original.jpg`,
+          smUrl: `https://s3.us-east-1.wasabisys.com/birdinghotspots/${baseName}_small.jpg`,
+          lgUrl: `https://s3.us-east-1.wasabisys.com/birdinghotspots/${baseName}_large.jpg`,
+          originalUrl: `https://s3.us-east-1.wasabisys.com/birdinghotspots/${baseName}_:original.jpg`,
           preview: preview,
           by: null,
           width: file.meta.width || null,
