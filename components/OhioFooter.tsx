@@ -55,6 +55,10 @@ export default function OhioFooter() {
           <Link href="/contact">
             <a className="text-white">Contact</a>
           </Link>
+          <br />
+          <Link href="/license">
+            <a className="text-white">License & Copyright</a>
+          </Link>
         </section>
       </div>
     </div>

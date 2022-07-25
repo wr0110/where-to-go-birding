@@ -15,7 +15,7 @@ export default function Footer() {
     <footer>
       {stateSlug === "ohio" ? <OhioFooter /> : <GeneralFooter />}
       <div className="bg-[#325a79] py-3 text-xs text-gray-300 text-center">
-        All photos and content (excluding maps and quoted text) are released into the public domain&nbsp;
+        Most content is released into the public domain&nbsp;
         <a
           href="https://creativecommons.org/share-your-work/public-domain/cc0/"
           target="_blank"
@@ -24,7 +24,10 @@ export default function Footer() {
         >
           CC0
         </a>
-        &nbsp;unless otherwise noted.
+        &nbsp;with some exceptions -{" "}
+        <Link href="/license">
+          <a className="text-[#81b5e0]">learn More</a>
+        </Link>
         <p className="mt-2">
           {user ? (
             <>
