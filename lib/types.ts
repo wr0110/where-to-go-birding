@@ -21,6 +21,7 @@ export type County = {
 export type Image = {
   smUrl: string;
   lgUrl: string;
+  originalUrl: string;
   by?: string;
   isMap?: boolean;
   width?: number;

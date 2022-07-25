@@ -83,6 +83,7 @@ const HotspotSchema = new Schema({
 	images: [{
 		smUrl: String,
 		lgUrl: String,
+		originalUrl: String,
 		by: String,
 		isMap: Boolean,
 		width: Number,
