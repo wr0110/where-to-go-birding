@@ -121,7 +121,7 @@ export default function State({ countrySlug, state, counties, topHotspots, info 
             </a>
           </p>
           {features?.length > 0 && <StateFeatureLinks countrySlug={countrySlug} slug={slug} features={features} />}
-          <EbirdStateSummary {...state} code={`${countrySlug.toUpperCase()}-${state.code}`} />
+          <EbirdStateSummary {...state} code={`${countrySlug?.toUpperCase()}-${state.code}`} />
         </div>
         <div className="mb-8">
           <div className="flex justify-center items-start md:mt-12">{map}</div>
