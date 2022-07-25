@@ -44,7 +44,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { countrySlug, stateSlug } = params as Params;
   const state = getState(stateSlug);
-  if (!state) return { notFound: true };
+  if (!countrySlug || !state) return { notFound: true };
   const counties = getCounties(state.code);
 
   const top10File = path.join(process.cwd(), "public", "top10", `US-${state.code}.json`);
@@ -121,7 +121,7 @@ export default function State({ countrySlug, state, counties, topHotspots, info 
             </a>
           </p>
           {features?.length > 0 && <StateFeatureLinks countrySlug={countrySlug} slug={slug} features={features} />}
-          <EbirdStateSummary {...state} code={`${countrySlug?.toUpperCase()}-${state.code}`} />
+          <EbirdStateSummary {...state} code={`${countrySlug?.toUpperCase()}-${state?.code}`} />
         </div>
         <div className="mb-8">
           <div className="flex justify-center items-start md:mt-12">{map}</div>
