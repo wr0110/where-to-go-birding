@@ -33,10 +33,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const deletedImageUrls = oldImageUrls.filter(
       (url: string) => !newImageUrls.includes(url) && !legacyUrls.includes(url)
     );
+    console.log("deletedImageUrls", deletedImageUrls);
+    console.log("legacyUrls", legacyUrls);
     if (deletedImageUrls) {
       deletedImageUrls.forEach(async (imageUrl: string) => {
         const filename = imageUrl.split("/").pop();
         const fileId = filename?.split("_")[0];
+        console.log("deleting", `${fileId}_small.jpg`);
+        console.log("deleting", `${fileId}_large.jpg`);
+        console.log("deleting", `${fileId}_original.jpg`);
         try {
           await s3.deleteObject({ Bucket: "birdinghotspots", Key: `${fileId}_small.jpg` }).promise();
         } catch (error) {}
