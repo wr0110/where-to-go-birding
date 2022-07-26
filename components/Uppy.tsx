@@ -53,7 +53,7 @@ export default function ImageInput({ onSuccess }: Props) {
         return {
           smUrl: `https://s3.us-east-1.wasabisys.com/birdinghotspots/${baseName}_small.jpg`,
           lgUrl: `https://s3.us-east-1.wasabisys.com/birdinghotspots/${baseName}_large.jpg`,
-          originalUrl: `https://s3.us-east-1.wasabisys.com/birdinghotspots/${baseName}_:original.jpg`,
+          originalUrl: `https://s3.us-east-1.wasabisys.com/birdinghotspots/${baseName}_original.jpg`,
           preview: preview,
           by: null,
           width: file.meta.width || null,
