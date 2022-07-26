@@ -33,20 +33,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const deletedImageUrls = oldImageUrls.filter(
       (url: string) => !newImageUrls.includes(url) && !legacyUrls.includes(url)
     );
-    console.log("deletedImageUrls", deletedImageUrls);
-    console.log("legacyUrls", legacyUrls);
+
     await Hotspot.replaceOne({ _id: id }, { ...data, url });
+
     if (deletedImageUrls) {
-      deletedImageUrls.forEach(async (imageUrl: string) => {
-        const filename = imageUrl.split("/").pop();
-        const fileId = filename?.split("_")[0];
-        console.log("deleting", `${fileId}_small.jpg`);
-        await s3.deleteObject({ Bucket: "birdinghotspots", Key: `${fileId}_small.jpg` }).promise();
-        console.log("deleting", `${fileId}_large.jpg`);
-        await s3.deleteObject({ Bucket: "birdinghotspots", Key: `${fileId}_large.jpg` }).promise();
-        console.log("deleting", `${fileId}_original.jpg`);
-        await s3.deleteObject({ Bucket: "birdinghotspots", Key: `${fileId}_original.jpg` }).promise();
-      });
+      await Promise.all(
+        deletedImageUrls.map(async (imageUrl: string) => {
+          const filename = imageUrl.split("/").pop();
+          const fileId = filename?.split("_")[0];
+          try {
+            await s3.deleteObject({ Bucket: "birdinghotspots", Key: `${fileId}_small.jpg` }).promise();
+          } catch (error) {}
+          try {
+            await s3.deleteObject({ Bucket: "birdinghotspots", Key: `${fileId}_large.jpg` }).promise();
+          } catch (error) {}
+          try {
+            await s3.deleteObject({ Bucket: "birdinghotspots", Key: `${fileId}_original.jpg` }).promise();
+          } catch (error) {}
+        })
+      );
     }
     res.status(200).json({ success: true, url });
   } catch (error: any) {
