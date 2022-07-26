@@ -2,10 +2,18 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import connect from "lib/mongo";
 import Hotspot from "models/Hotspot.mjs";
 import admin from "lib/firebaseAdmin";
-import { getStorage } from "firebase-admin/storage";
+import aws from "aws-sdk";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   const token = req.headers.authorization;
+  aws.config.update({
+    accessKeyId: process.env.WASABI_KEY,
+    secretAccessKey: process.env.WASABI_SECRET,
+    region: "us-east-1",
+    signatureVersion: "v4",
+  });
+  const endpoint = new aws.Endpoint("s3.wasabisys.com");
+  const s3 = new aws.S3({ endpoint });
 
   try {
     await admin.verifyIdToken(token || "");
@@ -19,20 +27,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const { id, data } = req.body;
     const url = `/hotspot/${data.locationId}`;
     const oldHotspot = await Hotspot.findById(id);
+    const legacyUrls = oldHotspot.images?.filter((image: any) => !!image.legacy).map((image: any) => image.smUrl);
     const oldImageUrls = oldHotspot.images?.map((image: any) => image.smUrl);
     const newImageUrls = data.images?.map((image: any) => image.smUrl);
-    const deletedImageUrls = oldImageUrls.filter((url: string) => !newImageUrls.includes(url));
+    const deletedImageUrls = oldImageUrls.filter(
+      (url: string) => !newImageUrls.includes(url) && !legacyUrls.includes(url)
+    );
     if (deletedImageUrls) {
-      const bucket = getStorage().bucket(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET);
       deletedImageUrls.forEach(async (imageUrl: string) => {
         const filename = imageUrl.split("/").pop();
         const fileId = filename?.split("_")[0];
-        const file1 = bucket.file(`${fileId}_small.jpg`);
-        const file2 = bucket.file(`${fileId}_large.jpg`);
-        const file3 = bucket.file(`${fileId}_original.jpg`);
-        await file1.delete();
-        await file2.delete();
-        await file3.delete();
+        try {
+          await s3.deleteObject({ Bucket: "birdinghotspots", Key: `${fileId}_small.jpg` }).promise();
+        } catch (error) {}
+        try {
+          await s3.deleteObject({ Bucket: "birdinghotspots", Key: `${fileId}_large.jpg` }).promise();
+        } catch (error) {}
+        try {
+          await s3.deleteObject({ Bucket: "birdinghotspots", Key: `${fileId}_original.jpg` }).promise();
+        } catch (error) {}
       });
     }
     await Hotspot.replaceOne({ _id: id }, { ...data, url });

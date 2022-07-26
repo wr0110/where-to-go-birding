@@ -1,9 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import admin from "lib/firebaseAdmin";
-import { getStorage } from "firebase-admin/storage";
+import aws from "aws-sdk";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   const token = req.headers.authorization;
+  aws.config.update({
+    accessKeyId: process.env.WASABI_KEY,
+    secretAccessKey: process.env.WASABI_SECRET,
+    region: "us-east-1",
+    signatureVersion: "v4",
+  });
+  const endpoint = new aws.Endpoint("s3.wasabisys.com");
+  const s3 = new aws.S3({ endpoint });
 
   try {
     await admin.verifyIdToken(token || "");
@@ -15,13 +23,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const { fileId }: any = req.query;
 
   try {
-    const bucket = getStorage().bucket(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET);
-    const file1 = bucket.file(`${fileId}_small.jpg`);
-    const file2 = bucket.file(`${fileId}_large.jpg`);
-    const file3 = bucket.file(`${fileId}_original.jpg`);
-    await file1.delete();
-    await file2.delete();
-    await file3.delete();
+    try {
+      await s3.deleteObject({ Bucket: "birdinghotspots", Key: `${fileId}_small.jpg` }).promise();
+    } catch (error) {}
+    try {
+      await s3.deleteObject({ Bucket: "birdinghotspots", Key: `${fileId}_large.jpg` }).promise();
+    } catch (error) {}
+    try {
+      await s3.deleteObject({ Bucket: "birdinghotspots", Key: `${fileId}_original.jpg` }).promise();
+    } catch (error) {}
 
     res.status(200).json({ success: true });
   } catch (error: any) {
