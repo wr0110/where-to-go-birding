@@ -35,25 +35,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     );
     console.log("deletedImageUrls", deletedImageUrls);
     console.log("legacyUrls", legacyUrls);
+    await Hotspot.replaceOne({ _id: id }, { ...data, url });
     if (deletedImageUrls) {
       deletedImageUrls.forEach(async (imageUrl: string) => {
         const filename = imageUrl.split("/").pop();
         const fileId = filename?.split("_")[0];
-        console.log("deleting", `${fileId}_small.jpg`);
-        console.log("deleting", `${fileId}_large.jpg`);
-        console.log("deleting", `${fileId}_original.jpg`);
         try {
+          console.log("deleting", `${fileId}_small.jpg`);
           await s3.deleteObject({ Bucket: "birdinghotspots", Key: `${fileId}_small.jpg` }).promise();
-        } catch (error) {}
+        } catch (error) {
+          console.log("error", error);
+        }
         try {
+          console.log("deleting", `${fileId}_large.jpg`);
           await s3.deleteObject({ Bucket: "birdinghotspots", Key: `${fileId}_large.jpg` }).promise();
-        } catch (error) {}
+        } catch (error) {
+          console.log("error", error);
+        }
         try {
+          console.log("deleting", `${fileId}_original.jpg`);
           await s3.deleteObject({ Bucket: "birdinghotspots", Key: `${fileId}_original.jpg` }).promise();
-        } catch (error) {}
+        } catch (error) {
+          console.log("error", error);
+        }
       });
     }
-    await Hotspot.replaceOne({ _id: id }, { ...data, url });
     res.status(200).json({ success: true, url });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
