@@ -8,7 +8,7 @@ export default function AboutEbird() {
   return (
     <div className="container pb-16 mt-12">
       <Title>About</Title>
-      <PageHeading breadcrumbs={false}>About BirdingHotspots.org</PageHeading>
+      <PageHeading breadcrumbs={false}>About eBird</PageHeading>
       <div className="md:grid grid-cols-2 gap-8">
         <div>
           <EbirdDescription />
