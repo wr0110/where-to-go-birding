@@ -33,6 +33,14 @@ export type Image = {
   id?: string; //temporarily added after uploaded
 };
 
+export type Marker = {
+  lat: number;
+  lng: number;
+  type: string;
+  description: string;
+  useForDirections: boolean;
+};
+
 export type Hotspot = {
   name: string;
   _id?: string;
@@ -71,6 +79,8 @@ export type Hotspot = {
     name: string;
   };
   images?: Image[];
+  markers?: Marker[];
+  hideDefaultMarker?: boolean;
   isGroup?: boolean;
   reviewed: boolean; //TODO: remove after migration
 };
@@ -122,7 +132,7 @@ export type EbirdHotspot = {
   subnational2Code: string;
 };
 
-export type Marker = {
+export type GroupMarker = {
   coordinates: [number, number];
   name: string;
   url: string;

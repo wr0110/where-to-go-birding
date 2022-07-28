@@ -34,6 +34,19 @@
 		@apply font-normal;
 	}
 
+	input.basic-input, textarea.basic-input {
+		@apply w-full;
+		@apply mt-1;
+		@apply block;
+		@apply rounded-md;
+		@apply border-gray-200;
+		@apply focus:border-indigo-200;
+		@apply shadow-sm;
+		@apply text-sm;
+		@apply font-normal;
+		box-shadow: none !important;
+	}
+
 	.form-input.input-error {
 		border-color: #e90000ad;
 	}
@@ -182,4 +195,33 @@ svg.icon {
 
 .marker-link:focus-visible {
 	@apply outline-none;
+}
+
+img.marker {
+	width: 30px;
+	height: 40px;
+	margin-top: -20px;
+	cursor: pointer;
+}
+
+.hide-default .default-marker {
+	opacity: 0;
+}
+
+.mapboxgl-ctrl-compass {
+	display: none !important;
+}
+
+/*Animations*/
+@keyframes zoom {
+	0% { transform: scale(0.5); opacity: 0; }
+	80% { transform: scale(1.02); opacity: 1; }
+	100% { transform: scale(1); }
+}
+
+.zoom-in {
+	transform-origin: center;
+	animation-name: zoom;
+	animation-duration: 300ms;
+	animation-timing-function: ease;
 }

@@ -1,6 +1,6 @@
 import * as React from "react";
 import mapboxgl from "mapbox-gl";
-import { Marker } from "lib/types";
+import { GroupMarker } from "lib/types";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_KEY || "";
 
@@ -8,7 +8,7 @@ type Props = {
   lat: number;
   lng: number;
   zoom: number;
-  markers: Marker[];
+  markers: GroupMarker[];
 };
 
 export default function MapCustomizer({ markers, lat, lng, zoom }: Props) {
@@ -40,7 +40,7 @@ export default function MapCustomizer({ markers, lat, lng, zoom }: Props) {
       }
       const marker = new mapboxgl.Marker();
       const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-        `<strong>${name}</strong><br><a href="${it.url}" class="marker-link">View Hotspot</button>`
+        `<strong>${name}</strong><br><a href="${it.url}" class="marker-link">View Hotspot</a>`
       );
       marker.setLngLat(it.coordinates).setPopup(popup).addTo(map.current);
     });

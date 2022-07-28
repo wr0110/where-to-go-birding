@@ -4,12 +4,11 @@ import { ParsedUrlQuery } from "querystring";
 import Address from "components/Address";
 import EbirdHotspotSummary from "components/EbirdHotspotSummary";
 import EbirdBarcharts from "components/EbirdBarcharts";
-import Map from "components/Map";
 import Link from "next/link";
 import { getHotspotByLocationId, getChildHotspots } from "lib/mongo";
 import AboutSection from "components/AboutSection";
 import { getCountyByCode, getStateByCode } from "lib/localData";
-import { County, State, HotspotsByCounty, Hotspot as HotspotType, Marker } from "lib/types";
+import { County, State, HotspotsByCounty, Hotspot as HotspotType, GroupMarker } from "lib/types";
 import EditorActions from "components/EditorActions";
 import HotspotList from "components/HotspotList";
 import ListHotspotsByCounty from "components/ListHotspotsByCounty";
@@ -22,7 +21,6 @@ import { accessibleOptions, restroomOptions } from "lib/helpers";
 import { restructureHotspotsByCounty } from "lib/helpers";
 import GroupMap from "components/GroupMap";
 import MapBox from "components/MapBox";
-import MapCustomizer from "components/MapCustomizer";
 
 const getChildren = async (id: string) => {
   if (!id) return null;
@@ -54,7 +52,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     locationIds = [data?.locationId, ...locationIds];
   }
 
-  const markers =
+  const groupMarkers =
     childLocations?.map((it: any) => ({
       coordinates: [it.lng, it.lat],
       name: it.name,
@@ -74,7 +72,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       childLocations: data?.isGroup ? [] : childLocations,
       childLocationsByCounty,
       locationIds,
-      markers,
+      groupMarkers,
       countySlugs,
       ...data,
     },
@@ -88,7 +86,7 @@ interface Props extends HotspotType {
   childLocationsByCounty: HotspotsByCounty;
   locationIds: string[];
   countySlugs: string[];
-  markers: Marker[];
+  groupMarkers: GroupMarker[];
 }
 
 export default function Hotspot({
@@ -118,9 +116,11 @@ export default function Hotspot({
   drive,
   images,
   isGroup,
-  markers,
+  groupMarkers,
   countySlugs,
   countryCode,
+  markers,
+  hideDefaultMarker,
 }: Props) {
   const countrySlug = countryCode?.toLowerCase();
   let extraLinks = [];
@@ -241,13 +241,13 @@ export default function Hotspot({
 
           {tips && <AboutSection heading="Tips for Birding" text={tips} />}
 
-          {hikes && <AboutSection heading="Birding Day Hike" text={hikes} />}
-
           {birds && <AboutSection heading="Birds of Interest" text={birds} />}
 
           {about && <AboutSection heading="About this Location" text={about} />}
 
           {parent?.about && parent?.name && <AboutSection heading={`About ${parent.name}`} text={parent.about} />}
+
+          {hikes && <AboutSection heading="Birding Day Hike" text={hikes} />}
           <div className="space-y-1">
             {restrooms !== null && <p>{restroomOptions.find((it) => it.value === restrooms)?.label}</p>}
             {accessible?.map((option) => (
@@ -273,26 +273,17 @@ export default function Hotspot({
                 ))}
             </div>
           )}
-          {!isGroup && state.code === "OH" && (
-            <Link href={`/${countrySlug}/${state.slug}/${county.slug}-county`}>
-              <a>
-                <img
-                  src={`/oh-maps/${county.slug}.jpg`}
-                  width="260"
-                  className="mx-auto mb-10"
-                  alt={`${county.name} county map`}
-                />
-              </a>
-            </Link>
+          {lat && lng && isGroup && <GroupMap lat={lat} lng={lng} zoom={zoom} markers={groupMarkers} />}
+          {lat && lng && _id && !isGroup && (
+            <MapBox
+              hideDefault={!!hideDefaultMarker}
+              markers={markers || []}
+              hotspotId={_id}
+              lat={lat}
+              lng={lng}
+              zoom={zoom}
+            />
           )}
-          {lat && lng && isGroup && <GroupMap lat={lat} lng={lng} zoom={zoom} markers={markers} />}
-          {lat && lng && !isGroup && <Map lat={lat} lng={lng} zoom={zoom} />}
-          {/*lat && lng && (
-            <>
-              <MapCustomizer lat={lat} lng={lng} zoom={zoom} />
-              <MapBox lat={lat} lng={lng} zoom={zoom} />
-            </>
-          )*/}
           {!!images?.length && <MapList images={mapImages} />}
           {!!images?.length && (
             <div className="mt-6">

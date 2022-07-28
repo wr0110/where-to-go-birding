@@ -7,7 +7,6 @@ import Input from "components/Input";
 import Textarea from "components/Textarea";
 import Form from "components/Form";
 import Submit from "components/Submit";
-import Range from "components/Range";
 import { getHotspotByLocationId, getHotspotById } from "lib/mongo";
 import { slugify, geocode, getEbirdHotspot, accessibleOptions, restroomOptions } from "lib/helpers";
 import { getStateByCode, getCountyByCode } from "lib/localData";
@@ -23,7 +22,6 @@ import useSecureFetch from "hooks/useSecureFetch";
 import ParentHotspotSelect from "components/ParentHotspotSelect";
 import Error from "next/error";
 import ImagesInput from "components/ImagesInput";
-import Map from "components/Map";
 import TinyMCE from "components/TinyMCE";
 
 const ibaOptions = IBAs.map(({ slug, name }) => ({ value: slug, label: name }));
@@ -183,16 +181,16 @@ export default function Edit({ id, isNew, data, error }: Props) {
                 <TinyMCE name="tips" defaultValue={data?.tips} />
               </Field>
 
-              <Field label="Birding Day Hike">
-                <TinyMCE name="hikes" defaultValue={data?.hikes} onBlur={handleHikeBlur} />
-              </Field>
-
               <Field label="Birds of Interest">
                 <TinyMCE name="birds" defaultValue={data?.birds} />
               </Field>
 
               <Field label="About this location">
                 <TinyMCE name="about" defaultValue={data?.about} />
+              </Field>
+
+              <Field label="Birding Day Hike">
+                <TinyMCE name="hikes" defaultValue={data?.hikes} onBlur={handleHikeBlur} />
               </Field>
 
               <div className="grid md:grid-cols-2 gap-4">
@@ -218,18 +216,9 @@ export default function Edit({ id, isNew, data, error }: Props) {
             </div>
             <aside className="px-4 md:mt-12 pb-5 pt-3 rounded bg-gray-100 md:w-[350px] space-y-6">
               <Field label="Map Zoom">
-                <div className="flex gap-2">
-                  <Range name="zoom" min={7} max={17} step={1} />
-                  {zoom}
-                </div>
-                <div className="relative aspect-[4/3.5]">
-                  <Map
-                    lat={lat}
-                    lng={lng}
-                    zoom={zoom}
-                    className="pointer-events-none scale-[.6] sm:scale-100 md:scale-[.6] sm:w-full md:w-[167%] w-[167%] origin-top-left absolute top-0 left-0"
-                  />
-                </div>
+                <p className="font-normal">
+                  This feature has moved. Click <em>Edit</em> on the hotspot map.
+                </p>
               </Field>
               <Field label="Restrooms">
                 <Select name="restrooms" options={restroomOptions} isClearable />
