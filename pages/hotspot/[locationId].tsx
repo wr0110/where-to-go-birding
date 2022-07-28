@@ -257,22 +257,6 @@ export default function Hotspot({
           </div>
         </div>
         <div>
-          {isGroup && state.code === "OH" && (
-            <div
-              className={`xs:grid md:block lg:grid ${
-                countySlugs?.length > 1 ? "grid-cols-2" : "px-[25%]"
-              } gap-12 mb-16`}
-            >
-              {state.slug === "ohio" &&
-                countySlugs?.map((slug) => (
-                  <Link key={slug} href={`/${countrySlug}/${state.slug}/${slug}-county`}>
-                    <a>
-                      <img src={`/oh-maps/${slug}.jpg`} width="260" className="w-full" alt="County map" />
-                    </a>
-                  </Link>
-                ))}
-            </div>
-          )}
           {lat && lng && isGroup && <GroupMap lat={lat} lng={lng} zoom={zoom} markers={groupMarkers} />}
           {lat && lng && _id && !isGroup && (
             <MapBox
