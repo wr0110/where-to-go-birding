@@ -55,12 +55,6 @@ export default function LocationSearch({ className, value, onChange, ...props }:
 
   return (
     <>
-      <Head>
-        <script
-          src={`https://maps.googleapis.com/maps/api/js?v=3.exp&key=${process.env.NEXT_PUBLIC_FIREBASE_API_KEY}&sensor=false&libraries=places&region=US`}
-          async
-        />
-      </Head>
       <input
         type="text"
         ref={inputRef}

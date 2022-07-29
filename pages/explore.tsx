@@ -4,12 +4,14 @@ import Title from "components/Title";
 import { Hotspot, LocationSearchValue } from "lib/types";
 import LocationSearch from "components/LocationSearch";
 import { SearchIcon } from "@heroicons/react/outline";
-import { distanceBetween } from "lib/helpers";
+import HotspotGrid from "components/HotspotGrid";
 import PageHeading from "components/PageHeading";
 
 export default function Home() {
   const [results, setResults] = React.useState<Hotspot[]>([]);
   const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState<boolean>(false);
+  const [loadingMore, setLoadingMore] = React.useState(false);
   const [location, setLocation] = React.useState<LocationSearchValue | null>(() => {
     if (typeof window === "undefined") return null;
     const json = localStorage.getItem("location") || "";
@@ -23,7 +25,7 @@ export default function Home() {
 
   const loadMore = async () => {
     if (loading) return;
-    setLoading(true);
+    setLoadingMore(true);
     try {
       const response = await fetch(`/api/hotspot/nearby?lat=${lat}&lng=${lng}&offset=${results.length || 0}`);
       const json = await response.json();
@@ -31,14 +33,20 @@ export default function Home() {
     } catch (error) {
       alert("Error fetching hotspots");
     }
-    setLoading(false);
+    setLoadingMore(false);
   };
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/hotspot/nearby?lat=${lat}&lng=${lng}`);
-      const json = await response.json();
-      setResults(json?.results || []);
+      setLoading(true);
+      try {
+        const response = await fetch(`/api/hotspot/nearby?lat=${lat}&lng=${lng}`);
+        const json = await response.json();
+        setResults(json?.results || []);
+      } catch (error) {
+        setError(true);
+      }
+      setLoading(false);
     };
     if (lat && lng) fetchData();
   }, [lat, lng]);
@@ -60,46 +68,15 @@ export default function Home() {
         />
         <SearchIcon className="absolute top-4 left-4 w-[18px h-[18px] text-gray-500" />
       </div>
-      <div className="mt-12 grid grid-cols-3 gap-6">
-        {results.map(({ name, _id, featuredImg, locationId, parent, lat: hsLat, lng: hsLng }) => {
-          let distance = distanceBetween(lat || 0, lng || 0, hsLat, hsLng);
-          distance = distance < 10 ? parseFloat(distance.toFixed(1)) : parseFloat(distance.toFixed(0));
-          const shortName = name.split("--")?.[1] || name;
-          return (
-            <article key={_id} className="flex flex-col gap-3 relative">
-              <Link href="/hotspot/[id]" as={`/hotspot/${locationId}`}>
-                <a>
-                  <img
-                    src={featuredImg?.smUrl || "/placeholder.png"}
-                    alt={featuredImg?.caption || ""}
-                    className="object-cover rounded-md bg-gray-100 w-full aspect-[1.55]"
-                  />
-                </a>
-              </Link>
-              <div className="flex-1">
-                <div className="mb-4 leading-5 flex items-start">
-                  <div>
-                    {parent?.name && <p className="text-gray-600 text-[11px]">{parent.name}</p>}
-                    <h2 className="font-bold">
-                      <Link href="/hotspot/[id]" as={`/hotspot/${locationId}`}>
-                        <a className="text-gray-700">{shortName}</a>
-                      </Link>
-                    </h2>
-                    <p className="text-gray-500 text-[11px]">{distance} miles away</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-          );
-        })}
-      </div>
+      <HotspotGrid hotspots={results} loading={loading} lat={lat} lng={lng} />
+      {error && <p className="text-center text-lg text-red-700 my-4">Error loading hotspots</p>}
       {results.length > 0 && (
         <button
           type="button"
           onClick={loadMore}
           className="bg-[#4a84b2] hover:bg-[#325a79] text-white font-bold py-2 px-4 rounded-full w-[220px] mx-auto block mt-8"
         >
-          {loading ? "loading..." : "Load More"}
+          {loadingMore ? "loading..." : "Load More"}
         </button>
       )}
     </div>
