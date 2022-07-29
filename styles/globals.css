@@ -225,3 +225,17 @@ img.marker {
 	animation-duration: 300ms;
 	animation-timing-function: ease;
 }
+
+/*Google Places*/
+
+.pac-container {
+	border-radius: 8px;
+	border-top: none;
+	margin-top: 4px;
+	width: 50%;
+	padding: 5px;
+}
+
+.pac-item:first-of-type{
+	border-top: none;
+}

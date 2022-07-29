@@ -1,5 +1,9 @@
 [
 	{
+		"label": "Explore",
+		"href": "/explore"
+	 },
+	{
 	 "label": "United States",
 	 "href": "/"
 	},

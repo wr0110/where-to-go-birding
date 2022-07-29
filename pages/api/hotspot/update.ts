@@ -26,6 +26,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     await connect();
     const { id, data } = req.body;
     const url = `/hotspot/${data.locationId}`;
+
+    let location = null;
+    if (data.lat && data.lng) {
+      location = {
+        type: "Point",
+        coordinates: [data.lng, data.lat],
+      };
+    }
+
+    const featuredImg =
+      data?.images?.filter((it: any) => !it.isMap && it?.width && it?.height && it?.width > it?.height)?.[0] || null;
+
     const oldHotspot = await Hotspot.findById(id);
     const legacyUrls = oldHotspot.images?.filter((image: any) => !!image.legacy).map((image: any) => image.smUrl);
     const oldImageUrls = oldHotspot.images?.map((image: any) => image.smUrl);
@@ -34,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       (url: string) => !newImageUrls.includes(url) && !legacyUrls.includes(url)
     );
 
-    await Hotspot.replaceOne({ _id: id }, { ...data, url });
+    await Hotspot.replaceOne({ _id: id }, { ...data, url, location, featuredImg });
 
     if (deletedImageUrls) {
       await Promise.all(

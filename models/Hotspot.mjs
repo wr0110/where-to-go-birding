@@ -16,6 +16,18 @@ const MarkerSchema = new Schema({
 	type: String,
 });
 
+const PointSchema = new Schema({
+  type: {
+    type: String,
+    enum: ["Point"],
+    required: true
+  },
+  coordinates: {
+    type: [Number],
+    required: true
+  }
+});
+
 const HotspotSchema = new Schema({
 	name: {
 		type: String,
@@ -37,6 +49,7 @@ const HotspotSchema = new Schema({
 	multiCounties: Array,
 	lat: Number,
 	lng: Number,
+	location: PointSchema,
 	zoom: {
 		type: Number,
 		default: 15,
@@ -99,6 +112,15 @@ const HotspotSchema = new Schema({
 		caption: String,
 		legacy: Boolean,
 	}],
+	featuredImg: {
+		smUrl: String,
+		lgUrl: String,
+		by: String,
+		width: Number,
+		height: Number,
+		caption: String,
+		legacy: Boolean,
+	},
 	markers: [MarkerSchema],
 	hideDefaultMarker: Boolean,
 	createdAt: {

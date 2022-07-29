@@ -79,6 +79,7 @@ export type Hotspot = {
     name: string;
   };
   images?: Image[];
+  featuredImg?: Image;
   markers?: Marker[];
   hideDefaultMarker?: boolean;
   isGroup?: boolean;
@@ -175,4 +176,10 @@ export type DriveInputs = {
       description: string;
     }
   ];
+};
+
+export type LocationSearchValue = {
+  label: string;
+  lat: number;
+  lng: number;
 };

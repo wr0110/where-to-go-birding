@@ -19,7 +19,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const { data } = req.body;
     const locationId = data.locationId || `G${generateRandomId()}`;
     const url = `/hotspot/${locationId}`;
-    await Hotspot.create({ ...data, locationId, url });
+
+    let location = null;
+    if (data.lat && data.lng) {
+      location = {
+        type: "Point",
+        coordinates: [data.lng, data.lat],
+      };
+    }
+
+    const featuredImg =
+      data?.images?.filter((it: any) => !it.isMap && it?.width && it?.height && it?.width > it?.height)?.[0] || null;
+
+    await Hotspot.create({ ...data, locationId, url, location, featuredImg });
     res.status(200).json({ success: true, url });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
