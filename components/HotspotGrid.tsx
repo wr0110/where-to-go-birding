@@ -12,14 +12,14 @@ type Props = {
 export default function HotspotGrid({ lat, lng, hotspots, loading }: Props) {
   if (loading) {
     return (
-      <div className="mt-12 grid xs:grid-cols-2 md:grid-cols-3 gap-6">
+      <>
         <Skeleton />
         <Skeleton />
         <Skeleton />
         <Skeleton />
         <Skeleton />
         <Skeleton />
-      </div>
+      </>
     );
   }
   return (
