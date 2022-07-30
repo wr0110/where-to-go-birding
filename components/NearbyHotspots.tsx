@@ -42,17 +42,19 @@ export default function NearbyHotspots({ limit, exclude, lat, lng }: Props) {
     if (lat && lng) fetchData();
   }, [lat, lng, limit, exclude]);
 
+  if (results.length === 0) {
+    return null;
+  }
+
   return (
     <div className="mt-12">
       <h3 className="mb-4 font-bold text-lg">Nearby Hotspots</h3>
       <div className="grid xs:grid-cols-2 gap-6">
         <HotspotGrid hotspots={results} loading={false} lat={lat} lng={lng} />
       </div>
-      {results.length > 0 && (
-        <button type="button" onClick={loadMore} className="text-[#4a84b2] font-bold block mx-auto">
-          {loadingMore ? "loading..." : "View More"}
-        </button>
-      )}
+      <button type="button" onClick={loadMore} className="text-[#4a84b2] font-bold block mx-auto">
+        {loadingMore ? "loading..." : "View More"}
+      </button>
     </div>
   );
 }
