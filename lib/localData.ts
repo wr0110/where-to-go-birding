@@ -74,6 +74,18 @@ export function getCounties(stateCode: string) {
   return formatCountyArray(countyArrays[stateCode]);
 }
 
+export function getAllCounties() {
+  const counties: any = [];
+  Object.entries(countyArrays).forEach(([stateCode, array]: any) => {
+    const stateSlug = getStateByCode(stateCode)?.slug;
+    array.forEach(({ slug }: County) => {
+      const name = capitalize(slug.replaceAll("-", " "));
+      counties.push({ slug, name: `${name}, ${stateCode}, US`, stateSlug });
+    });
+  });
+  return counties;
+}
+
 export function formatCountyArray(counties: County[]) {
   if (!counties) return null;
   return counties.map((county) => ({

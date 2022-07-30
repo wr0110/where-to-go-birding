@@ -28,8 +28,7 @@ export default function HotspotSelect({ onClose, ...props }: Props) {
     (async () => {
       const response = await fetch(`/api/search?q=${inputValue}`);
       const json = await response.json();
-      const options = json.results?.filter((option: any) => option.value !== self);
-      callback(options || []);
+      callback(json.results || []);
     })();
   };
 
@@ -95,7 +94,7 @@ export default function HotspotSelect({ onClose, ...props }: Props) {
             components={{ DropdownIndicator }}
             noOptionsMessage={() => null}
             loadingMessage={() => null}
-            placeholder="Search..."
+            placeholder="Search for a region or hotspot..."
             onChange={(option: any) => handleChange(option)}
             escapeClearsValue
             {...props}
