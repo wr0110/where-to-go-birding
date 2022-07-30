@@ -7,7 +7,7 @@ type Props = {
   className?: string;
 };
 
-export default function Map({ type = "satellite", address, lat, lng, zoom = 15, className }: Props) {
+export default function Map({ type = "satellite", address, lat, lng, zoom = 14, className }: Props) {
   const query = address || `${lat},${lng}`;
   let url = `https://www.google.com/maps/embed/v1/view?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}&center=${query}&maptype=${type}`;
   if (zoom) {

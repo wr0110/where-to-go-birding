@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const { hotspotId, zoom, hideDefaultMarker, data } = req.body;
     await Hotspot.updateOne(
       { _id: hotspotId },
-      { $set: { markers: data?.length > 0 ? data : null, hideDefaultMarker, zoom: zoom || 15 } }
+      { $set: { markers: data?.length > 0 ? data : null, hideDefaultMarker, zoom: zoom || 14 } }
     );
 
     res.status(200).json({ success: true });

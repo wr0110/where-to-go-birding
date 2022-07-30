@@ -29,7 +29,7 @@ export default function MapCustomizer({
   lng,
   zoom: defaultZoom,
 }: Props) {
-  const [zoom, setZoom] = React.useState<number>(defaultZoom || 15);
+  const [zoom, setZoom] = React.useState<number>(defaultZoom || 14);
   const [satellite, setSatellite] = React.useState<boolean>(false);
   const [rendered, setRendered] = React.useState(false);
   const [initalized, setInitialized] = React.useState<boolean>(false);

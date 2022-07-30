@@ -29,7 +29,7 @@ export default function MapCustomizer({ markers, lat, lng, zoom }: Props) {
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/outdoors-v11",
       center: [lng, lat],
-      zoom: zoom || 15,
+      zoom: zoom || 14,
     });
     map.current.addControl(new mapboxgl.NavigationControl());
 

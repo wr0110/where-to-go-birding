@@ -58,7 +58,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         restrooms: restroomOptions.find((it) => it.value === data?.restrooms) || null,
         accessible: data?.accessible || null,
         dayhike: data?.dayhike || "No",
-        zoom: data?.zoom || 15,
+        zoom: data?.zoom || 14,
       },
     },
   };

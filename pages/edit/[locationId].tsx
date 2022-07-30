@@ -67,7 +67,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         name: ebirdData?.name || data?.name,
         lat: ebirdData?.latitude || data?.lat,
         lng: ebirdData?.longitude || data?.lng,
-        zoom: data?.zoom || 15,
+        zoom: data?.zoom || 14,
         countryCode: ebirdData?.subnational1Code?.split("-")?.[0] || data?.countryCode,
         stateCode: data?.stateCode || ebirdData?.subnational1Code?.replace("US-", ""),
         countyCode: data?.countyCode || ebirdData?.subnational2Code,
