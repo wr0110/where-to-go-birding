@@ -3,16 +3,17 @@ import connect from "lib/mongo";
 import Hotspot from "models/Hotspot.mjs";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
-  const { lat, lng, offset }: any = req.query;
+  const { lat, lng, offset, limit, exclude }: any = req.query;
 
   const query = {
     location: { $near: { $geometry: { type: "Point", coordinates: [lng, lat] } } },
+    locationId: { $nin: exclude?.split(",") || [] },
   };
 
   try {
     await connect();
     const results = await Hotspot.find(query, ["parent", "name", "url", "featuredImg", "locationId", "lat", "lng"])
-      .limit(15)
+      .limit(limit || 15)
       .skip(offset || 0)
       .populate("parent", ["name"])
       .lean()

@@ -68,7 +68,9 @@ export default function Home() {
         />
         <SearchIcon className="absolute top-4 left-4 w-[18px h-[18px] text-gray-500" />
       </div>
-      <HotspotGrid hotspots={results} loading={loading} lat={lat} lng={lng} />
+      <div className="mt-12 grid xs:grid-cols-2 md:grid-cols-3 gap-6">
+        <HotspotGrid hotspots={results} loading={loading} lat={lat} lng={lng} />
+      </div>
       {error && <p className="text-center text-lg text-red-700 my-4">Error loading hotspots</p>}
       {results.length > 0 && (
         <button

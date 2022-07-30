@@ -21,6 +21,7 @@ import { accessibleOptions, restroomOptions } from "lib/helpers";
 import { restructureHotspotsByCounty } from "lib/helpers";
 import GroupMap from "components/GroupMap";
 import MapBox from "components/MapBox";
+import NearbyHotspots from "components/NearbyHotspots";
 
 const getChildren = async (id: string) => {
   if (!id) return null;
@@ -274,6 +275,7 @@ export default function Hotspot({
               <Slideshow images={images} />
             </div>
           )}
+          {lat && lng && !isGroup && <NearbyHotspots lat={lat} lng={lng} limit={4} exclude={[locationId]} />}
         </div>
       </div>
     </div>

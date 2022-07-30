@@ -23,7 +23,7 @@ export default function HotspotGrid({ lat, lng, hotspots, loading }: Props) {
     );
   }
   return (
-    <div className="mt-12 grid xs:grid-cols-2 md:grid-cols-3 gap-6">
+    <>
       {hotspots.map(({ name, _id, featuredImg, locationId, parent, lat: hsLat, lng: hsLng }) => {
         let distance = distanceBetween(lat || 0, lng || 0, hsLat, hsLng);
         distance = distance < 10 ? parseFloat(distance.toFixed(1)) : parseFloat(distance.toFixed(0));
@@ -55,7 +55,7 @@ export default function HotspotGrid({ lat, lng, hotspots, loading }: Props) {
           </article>
         );
       })}
-    </div>
+    </>
   );
 }
 
