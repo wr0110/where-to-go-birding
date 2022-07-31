@@ -2,7 +2,7 @@ import * as React from "react";
 import Nav from "data/nav.json";
 import NavItem from "components/NavItem";
 import Link from "next/link";
-import Search from "components/Search";
+import SearchModal from "components/SearchModal";
 import { SearchIcon } from "@heroicons/react/outline";
 import Logo from "components/Logo";
 
@@ -56,7 +56,7 @@ export default function Header() {
           </div>
         </div>
       </header>
-      {showSearch && <Search onClose={() => setShowSearch(false)} />}
+      {showSearch && <SearchModal onClose={() => setShowSearch(false)} />}
     </>
   );
 }

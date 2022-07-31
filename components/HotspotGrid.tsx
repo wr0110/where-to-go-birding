@@ -7,9 +7,10 @@ type Props = {
   lng?: number;
   hotspots: Hotspot[];
   loading: boolean;
+  showFullName?: boolean;
 };
 
-export default function HotspotGrid({ lat, lng, hotspots, loading }: Props) {
+export default function HotspotGrid({ lat, lng, hotspots, loading, showFullName }: Props) {
   if (loading) {
     return (
       <>
@@ -27,7 +28,7 @@ export default function HotspotGrid({ lat, lng, hotspots, loading }: Props) {
       {hotspots.map(({ name, _id, featuredImg, locationId, parent, lat: hsLat, lng: hsLng }) => {
         let distance = distanceBetween(lat || 0, lng || 0, hsLat, hsLng);
         distance = distance < 10 ? parseFloat(distance.toFixed(1)) : parseFloat(distance.toFixed(0));
-        const shortName = name.split("--")?.[1] || name;
+        const shortName = showFullName ? name : name.split("--")?.[1] || name;
         return (
           <article key={_id} className="flex flex-col gap-3">
             <Link href="/hotspot/[id]" as={`/hotspot/${locationId}`}>
@@ -48,7 +49,7 @@ export default function HotspotGrid({ lat, lng, hotspots, loading }: Props) {
                       <a className="text-gray-700">{shortName}</a>
                     </Link>
                   </h2>
-                  <p className="text-gray-500 text-[11px]">{distance} miles away</p>
+                  {lat && lng && <p className="text-gray-500 text-[11px]">{distance} miles away</p>}
                 </div>
               </div>
             </div>

@@ -47,6 +47,17 @@ export function getCountyByCode(code: string) {
   return formatCounty(stateCode, county);
 }
 
+export function getLocationText(countyCode: string) {
+  if (!countyCode) return null;
+  const stateCode = countyCode.split("-")[1];
+  const array = countyArrays[stateCode];
+  if (!array) return null;
+  const county = array.find((county: County) => county.ebirdCode === countyCode);
+  const state = getStateByCode(stateCode);
+  if (!county || !state) return null;
+  return `${capitalize(county.slug.replaceAll("-", " "))} County, ${state?.label}, US`;
+}
+
 export function getCountyBySlug(stateCode: string, countySlug: string) {
   const slug = countySlug.replace("-county", "");
   const array = countyArrays[stateCode];
@@ -80,7 +91,7 @@ export function getAllCounties() {
     const stateSlug = getStateByCode(stateCode)?.slug;
     array.forEach(({ slug }: County) => {
       const name = capitalize(slug.replaceAll("-", " "));
-      counties.push({ slug, name: `${name}, ${stateCode}, US`, stateSlug });
+      counties.push({ slug, name: `${name} County, ${stateCode}, US`, stateSlug });
     });
   });
   return counties;

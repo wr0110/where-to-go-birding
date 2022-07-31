@@ -89,8 +89,17 @@ svg.icon {
 }
 
 .bg-puffin {
-	background: linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0)), url("/puffin.jpg");
-	@apply bg-cover;
+	background: linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, .1), rgba(255, 255, 255, 0)), url("/bunting.jpg");
+	background-size: cover;
+	background-position-y: center;
+	background-position-x: center;
+	background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 640px) {
+	.bg-puffin {
+		background: linear-gradient(to bottom, #f2f6ec, #c4d4a9);
+	}
 }
 
 .header-gradient {
