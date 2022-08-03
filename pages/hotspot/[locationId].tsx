@@ -261,6 +261,7 @@ export default function Hotspot({
           {lat && lng && isGroup && <GroupMap lat={lat} lng={lng} zoom={zoom} markers={groupMarkers} />}
           {lat && lng && _id && !isGroup && (
             <MapBox
+              key={_id}
               hideDefault={!!hideDefaultMarker}
               markers={markers || []}
               hotspotId={_id}
