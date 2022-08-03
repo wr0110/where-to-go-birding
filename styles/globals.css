@@ -132,69 +132,19 @@ svg.icon {
 	@apply border-gray-300/90 !important;
 }
 
-/*react-image-gallery overides*/
-.image-gallery.fullscreen-modal {
-	@apply z-10 !important;
-}
-
-.image-gallery-thumbnail {
-	width: 70px !important;
-	@apply border-0 !important;
-	@apply opacity-50;
-	@apply transition-opacity;
-}
-
-.image-gallery-thumbnail.active {
-	@apply opacity-100;
-}
-
-.image-gallery-thumbnail .image-gallery-thumbnail-image {
-	width: 70px !important;
-	height: 55px;
-	@apply object-cover;
-}
-
-.image-gallery.fullscreen-modal .image-gallery-thumbnails-wrapper {
-	max-width: 500px;
-	@apply mx-auto;
-}
-
-.image-gallery-description {
-	left: 10% !important;
-	right: 10% !important;
-	bottom: 8% !important;
-	line-height: 1.3;
-}
-
-.image-gallery.fullscreen-modal .image-gallery-description {
-	left: 20% !important;
-	right: 20% !important;
-	bottom: 8% !important;
-	line-height: 1.3;
-}
-
-.image-gallery-icon {
-	@apply opacity-50;
-	@apply cursor-pointer;
-}
-
-.image-gallery-icon:hover {
-	@apply text-white !important;
-	@apply opacity-100;
-}
-
-.image-gallery:not(.fullscreen-modal) .image-gallery-svg {
-	width: 30px;
-	height: 60px;
-}
-
-.image-gallery:not(.fullscreen-modal) .image-gallery-image {
-	@apply h-[200px];
-	@apply sm:h-[400px];
-}
-
-.image-gallery-slide, .image-gallery-image {
-	@apply outline-none;
+/*react-photoswipe-gallery*/
+.pswp__default-caption {
+	left: 50% !important;
+	right: unset !important;
+  bottom: 10px !important;
+	transform: translateX(-50%);
+  line-height: 1.3;
+	background: rgba(0,0,0,.4);
+  color: #fff;
+  padding: 10px 20px !important;
+  position: absolute;
+  white-space: normal;
+	position: absolute;
 }
 
 /*Mapbox*/

@@ -34,7 +34,6 @@
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-hook-form": "^7.31.3",
-    "react-image-gallery": "^1.2.8",
     "react-markdown": "^8.0.3",
     "react-photoswipe-gallery": "^2.2.1",
     "react-select": "^5.3.2",

@@ -15,13 +15,13 @@ import ListHotspotsByCounty from "components/ListHotspotsByCounty";
 import PageHeading from "components/PageHeading";
 import DeleteBtn from "components/DeleteBtn";
 import Title from "components/Title";
-import Slideshow from "components/Slideshow";
 import MapList from "components/MapList";
 import { accessibleOptions, restroomOptions } from "lib/helpers";
 import { restructureHotspotsByCounty } from "lib/helpers";
 import GroupMap from "components/GroupMap";
 import MapBox from "components/MapBox";
 import NearbyHotspots from "components/NearbyHotspots";
+import FeaturedImage from "components/FeaturedImage";
 
 const getChildren = async (id: string) => {
   if (!id) return null;
@@ -118,7 +118,6 @@ export default function Hotspot({
   images,
   isGroup,
   groupMarkers,
-  countySlugs,
   countryCode,
   markers,
   hideDefaultMarker,
@@ -150,7 +149,8 @@ export default function Hotspot({
     });
   }
 
-  const featuredImage = images?.filter((it) => !it.isMap && it?.width && it?.height && it?.width > it?.height)?.[0];
+  //const featuredImage = images?.filter((it) => !it.isMap && it?.width && it?.height && it?.width > it?.height)?.[0];
+  const photos = images?.filter((it) => !it.isMap) || [];
   const mapImages = images?.filter((item) => item.smUrl && item.isMap) || [];
 
   return (
@@ -159,13 +159,8 @@ export default function Hotspot({
       <PageHeading countrySlug={countryCode.toLowerCase()} state={state} county={county}>
         {name}
       </PageHeading>
-      {featuredImage && (
-        <img
-          src={featuredImage.lgUrl || featuredImage.smUrl}
-          className="w-full h-[250px] sm:h-[350px] md:h-[450px] object-cover object-center rounded-lg mb-8 -mt-10"
-        />
-      )}
-      <EditorActions className={featuredImage ? "-mt-2" : "-mt-12"}>
+      {photos?.length > 0 && <FeaturedImage photos={photos} />}
+      <EditorActions className={photos?.length > 0 ? "-mt-2" : "-mt-12"}>
         <Link href={isGroup ? `/edit/group/${_id}` : `/edit/${locationId}`}>Edit Hotspot</Link>
         {(isGroup || !parent) && <Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>}
         {!isGroup && (
@@ -271,11 +266,6 @@ export default function Hotspot({
             />
           )}
           {!!images?.length && <MapList images={mapImages} />}
-          {!!images?.length && (
-            <div className="mt-6">
-              <Slideshow images={images} />
-            </div>
-          )}
           {lat && lng && !isGroup && <NearbyHotspots lat={lat} lng={lng} limit={4} exclude={[locationId]} />}
         </div>
       </div>
