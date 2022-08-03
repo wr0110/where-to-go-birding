@@ -195,16 +195,16 @@ export default function Edit({ id, isNew, data, state }: Props) {
                 <TinyMCE name="tips" defaultValue={data?.tips} />
               </Field>
 
-              <Field label="Birding Day Hike">
-                <TinyMCE name="hikes" defaultValue={data?.hikes} onBlur={handleHikeBlur} />
-              </Field>
-
               <Field label="Birds of Interest">
                 <TinyMCE name="birds" defaultValue={data?.birds} />
               </Field>
 
               <Field label="About this location">
                 <TinyMCE name="about" defaultValue={data?.about} />
+              </Field>
+
+              <Field label="Birding Day Hike">
+                <TinyMCE name="hikes" defaultValue={data?.hikes} onBlur={handleHikeBlur} />
               </Field>
 
               <Field label="Counties">

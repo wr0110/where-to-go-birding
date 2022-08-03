@@ -1,18 +1,20 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import connect from "lib/mongo";
 import Hotspot from "models/Hotspot.mjs";
+import Settings from "models/Settings.mjs";
 import { getLocationText, getStateByCode } from "lib/localData";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {
     await connect();
-    const results = await Hotspot.aggregate()
-      .match({ featuredImg: { $exists: true } })
-      .sample(8)
-      .project({ parent: 1, name: 1, url: 1, featuredImg: 1, locationId: 1, countyCode: 1, stateCode: 1 })
+    const settings = await Settings.findOne({ key: "global" }).exec();
+    const featuredIds = settings.featuredIds;
+    const results = await Hotspot.find({ _id: { $in: featuredIds } })
+      .populate("parent", ["name"])
+      .sort({ name: 1 })
+      .lean()
       .exec();
-    const populated = await Hotspot.populate(results, { path: "parent", select: "name" });
-    const formatted = populated.map((hotspot) => {
+    const formatted = results.map((hotspot) => {
       const locationLine = hotspot.countyCode
         ? getLocationText(hotspot.countyCode)
         : `${getStateByCode(hotspot.stateCode)?.label}, US`;

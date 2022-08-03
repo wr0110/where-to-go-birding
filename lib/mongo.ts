@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Hotspot from "models/Hotspot.mjs";
 import Drive from "models/Drive.mjs";
+import Settings from "models/Settings.mjs";
 
 const URI = process.env.MONGO_URI;
 const connect = async () => (URI ? mongoose.connect(URI) : null);
@@ -172,6 +173,13 @@ export async function getDriveBySlug(stateCode: string, slug: string) {
 export async function getDriveById(_id: string) {
   await connect();
   const result = await Drive.findOne({ _id }).populate("entries.hotspot", ["url", "name", "address"]).lean().exec();
+
+  return result ? JSON.parse(JSON.stringify(result)) : null;
+}
+
+export async function getSettings() {
+  await connect();
+  const result = await Settings.findOne({ key: "global" }).lean().exec();
 
   return result ? JSON.parse(JSON.stringify(result)) : null;
 }

@@ -47,6 +47,10 @@
 		box-shadow: none !important;
 	}
 
+	.utility-page .form-input {
+		@apply text-lg;
+	}
+
 	.form-input.input-error {
 		border-color: #e90000ad;
 	}

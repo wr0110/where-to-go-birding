@@ -6,6 +6,7 @@ import Title from "components/Title";
 import Banner from "components/Banner";
 import FeaturedHotspots from "components/FeaturedHotspots";
 import Heading from "components/Heading";
+import EditorActions from "components/EditorActions";
 
 export default function Home2() {
   return (
@@ -35,6 +36,9 @@ export default function Home2() {
         </div>
 
         <Heading className="mb-16 mt-24">Featured Hotspots</Heading>
+        <EditorActions className="-mt-10">
+          <Link href="/featured">Edit Featured Hotspots</Link>
+        </EditorActions>
         <FeaturedHotspots />
         <Heading className="mb-16 mt-12" color="yellow">
           More Information
@@ -46,9 +50,6 @@ export default function Home2() {
               eBird and other websites. In eBird, hotspots are shared locations where birders may report their bird
               sightings to eBird. Hotspots provide birders with information about birding locations where birds are
               being seen.
-            </p>
-            <p className="mb-4">
-              Ken Ostermiller, a volunteer hotspot reviewer for eBird, created and manages the website.
             </p>
             <EbirdDescription />
             <h3 className="text-lg font-bold mb-1.5">eBird can help you</h3>

@@ -5,10 +5,13 @@ import Hotspot from "models/Hotspot.mjs";
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   const { q, stateCode }: any = req.query;
 
-  const query = {
+  let query: any = {
     name: { $regex: new RegExp(q), $options: "i" },
-    stateCode,
   };
+
+  if (stateCode) {
+    query = { ...query, stateCode };
+  }
 
   try {
     await connect();

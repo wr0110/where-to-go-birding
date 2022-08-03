@@ -18,7 +18,7 @@ export default function UtilityPage({ heading, children }: PropTypes) {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8 md:min-h-[800px]">
+    <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8 md:min-h-[800px] utility-page">
       <Title>{heading}</Title>
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Logo className="mx-auto h-16 w-auto" />
