@@ -11,7 +11,7 @@ export default function EbirdStateSummary({ code, color, label, portal }: State)
     <section className="mb-8 p-2 border-2 rounded" style={{ borderColor: color || "#4a84b2" }}>
       <h3 className="text-lg mb-2 font-bold">Explore {label} in eBird</h3>
       {portal && (
-        <a href={`${base}/${portal}/about`} target="_blank" rel="noreferrer">
+        <a href={`${base}/about`} target="_blank" rel="noreferrer">
           <strong>{label} eBird Portal</strong>
         </a>
       )}
