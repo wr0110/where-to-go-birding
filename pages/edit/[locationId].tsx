@@ -7,8 +7,8 @@ import Input from "components/Input";
 import Textarea from "components/Textarea";
 import Form from "components/Form";
 import Submit from "components/Submit";
-import { getHotspotByLocationId, getHotspotById } from "lib/mongo";
-import { slugify, geocode, getEbirdHotspot, accessibleOptions, restroomOptions } from "lib/helpers";
+import { getHotspotByLocationId, getHotspotById, getChildHotspots } from "lib/mongo";
+import { slugify, geocode, getEbirdHotspot, accessibleOptions, restroomOptions, formatMarkerArray } from "lib/helpers";
 import { getStateByCode, getCountyByCode } from "lib/localData";
 import InputLinks from "components/InputLinks";
 import Select from "components/Select";
@@ -23,6 +23,7 @@ import ParentHotspotSelect from "components/ParentHotspotSelect";
 import Error from "next/error";
 import ImagesInput from "components/ImagesInput";
 import TinyMCE from "components/TinyMCE";
+import MapZoomInput from "components/MapZoomInput";
 
 const ibaOptions = IBAs.map(({ slug, name }) => ({ value: slug, label: name }));
 
@@ -36,6 +37,12 @@ const getParent = async (id: string) => {
   return data || null;
 };
 
+const getChildren = async (id: string) => {
+  if (!id) return null;
+  const data = await getChildHotspots(id);
+  return data || [];
+};
+
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { locationId, defaultParentId } = query as Params;
   const data = await getHotspotByLocationId(locationId);
@@ -45,6 +52,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       props: { error: `Hotspot "${locationId}" not found in eBird` },
     };
   }
+  const childLocations = data._id ? await getChildren(data._id) : [];
   const parentId = data?.parent || defaultParentId;
   const parent = parentId ? await getParent(parentId) : null;
   const nameChanged = data?.name && data?.name !== ebirdData.name;
@@ -58,6 +66,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     props: {
       id: data?._id || null,
       isNew: !data,
+      childLocations,
       data: {
         ...data,
         slug,
@@ -86,9 +95,10 @@ type Props = {
   isNew: boolean;
   data: Hotspot;
   error?: string;
+  childLocations: Hotspot[];
 };
 
-export default function Edit({ id, isNew, data, error }: Props) {
+export default function Edit({ id, isNew, data, error, childLocations }: Props) {
   const [saving, setSaving] = React.useState<boolean>(false);
   const [isGeocoded, setIsGeocoded] = React.useState(false);
   const secureFetch = useSecureFetch();
@@ -96,6 +106,10 @@ export default function Edit({ id, isNew, data, error }: Props) {
   const router = useRouter();
   const form = useForm<HotspotInputs>({ defaultValues: data });
   const isOH = data?.stateCode === "OH";
+
+  const latValue = form.watch("lat");
+  const lngValue = form.watch("lng");
+  const markers = formatMarkerArray({ ...data, lat: latValue, lng: lngValue }, childLocations);
 
   const handleSubmit: SubmitHandler<HotspotInputs> = async (data) => {
     const state = getStateByCode(data?.stateCode);
@@ -128,7 +142,6 @@ export default function Edit({ id, isNew, data, error }: Props) {
     }
   };
 
-  const zoom = form.watch("zoom");
   const { address, lat, lng } = data || {};
 
   React.useEffect(() => {
@@ -215,17 +228,16 @@ export default function Edit({ id, isNew, data, error }: Props) {
               </div>
             </div>
             <aside className="px-4 md:mt-12 pb-5 pt-3 rounded bg-gray-100 md:w-[350px] space-y-6">
-              <Field label="Map Zoom">
-                <p className="font-normal">
-                  This feature has moved. Click <em>Edit</em> on the hotspot map.
-                </p>
-              </Field>
               <Field label="Restrooms">
                 <Select name="restrooms" options={restroomOptions} isClearable />
               </Field>
               <CheckboxGroup name="accessible" label="Accessible Facilities" options={accessibleOptions} />
               <RadioGroup name="roadside" label="Roadside accessible" options={["Yes", "No", "Unknown"]} />
               <RadioGroup name="dayhike" label="Show in Day Hike index" options={["Yes", "No"]} />
+              <div className="flex-1">
+                <label className="text-gray-500 font-bold mb-1 block">Hotspot Map</label>
+                <MapZoomInput markers={markers} />
+              </div>
             </aside>
           </div>
           <div className="px-4 py-3 bg-gray-100 text-right rounded mt-4 md:hidden">

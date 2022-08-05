@@ -34,11 +34,10 @@ export type Image = {
 };
 
 export type Marker = {
+  name: string;
   lat: number;
   lng: number;
   type: string;
-  description: string;
-  useForDirections: boolean;
 };
 
 export type Hotspot = {
@@ -80,8 +79,6 @@ export type Hotspot = {
   };
   images?: Image[];
   featuredImg?: Image;
-  markers?: Marker[];
-  hideDefaultMarker?: boolean;
   isGroup?: boolean;
   reviewed: boolean; //TODO: remove after migration
 };
@@ -131,12 +128,6 @@ export type EbirdHotspot = {
   longitude: number;
   subnational1Code: string;
   subnational2Code: string;
-};
-
-export type GroupMarker = {
-  coordinates: [number, number];
-  name: string;
-  url: string;
 };
 
 export type Drive = {

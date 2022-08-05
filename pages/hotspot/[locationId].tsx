@@ -8,7 +8,7 @@ import Link from "next/link";
 import { getHotspotByLocationId, getChildHotspots } from "lib/mongo";
 import AboutSection from "components/AboutSection";
 import { getCountyByCode, getStateByCode } from "lib/localData";
-import { County, State, HotspotsByCounty, Hotspot as HotspotType, GroupMarker } from "lib/types";
+import { County, State, HotspotsByCounty, Marker, Hotspot as HotspotType } from "lib/types";
 import EditorActions from "components/EditorActions";
 import HotspotList from "components/HotspotList";
 import ListHotspotsByCounty from "components/ListHotspotsByCounty";
@@ -16,9 +16,7 @@ import PageHeading from "components/PageHeading";
 import DeleteBtn from "components/DeleteBtn";
 import Title from "components/Title";
 import MapList from "components/MapList";
-import { accessibleOptions, restroomOptions } from "lib/helpers";
-import { restructureHotspotsByCounty } from "lib/helpers";
-import GroupMap from "components/GroupMap";
+import { accessibleOptions, restroomOptions, formatMarkerArray, restructureHotspotsByCounty } from "lib/helpers";
 import MapBox from "components/MapBox";
 import NearbyHotspots from "components/NearbyHotspots";
 import FeaturedImage from "components/FeaturedImage";
@@ -45,26 +43,23 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   const county = getCountyByCode(data.countyCode);
 
-  const childLocations = data?.parent ? [] : await getChildren(data._id);
+  const childLocations = await getChildren(data._id);
   const childLocationsByCounty = data?.isGroup ? restructureHotspotsByCounty(childLocations as any) : [];
-  const childIds = childLocations?.map((item) => item.locationId) || [];
+  const childIds = childLocations?.map((item: HotspotType) => item.locationId) || [];
   let locationIds = childIds?.length > 0 ? childIds : [];
   if (!data?.isGroup) {
     locationIds = [data?.locationId, ...locationIds];
   }
 
-  const groupMarkers =
-    childLocations?.map((it: any) => ({
-      coordinates: [it.lng, it.lat],
-      name: it.name,
-      url: it.url,
-    })) || [];
+  const markers = formatMarkerArray(data, childLocations);
 
   const countySlugs =
     data.multiCounties?.map((item: string) => {
       const county = getCountyByCode(item);
       return county?.slug;
     }) || [];
+
+  console.log(data);
 
   return {
     props: {
@@ -73,7 +68,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       childLocations: data?.isGroup ? [] : childLocations,
       childLocationsByCounty,
       locationIds,
-      groupMarkers,
+      markers,
       countySlugs,
       ...data,
     },
@@ -87,7 +82,7 @@ interface Props extends HotspotType {
   childLocationsByCounty: HotspotsByCounty;
   locationIds: string[];
   countySlugs: string[];
-  groupMarkers: GroupMarker[];
+  markers: Marker[];
 }
 
 export default function Hotspot({
@@ -117,10 +112,8 @@ export default function Hotspot({
   drive,
   images,
   isGroup,
-  groupMarkers,
-  countryCode,
   markers,
-  hideDefaultMarker,
+  countryCode,
 }: Props) {
   const countrySlug = countryCode?.toLowerCase();
   let extraLinks = [];
@@ -149,7 +142,6 @@ export default function Hotspot({
     });
   }
 
-  //const featuredImage = images?.filter((it) => !it.isMap && it?.width && it?.height && it?.width > it?.height)?.[0];
   const photos = images?.filter((it) => !it.isMap) || [];
   const mapImages = images?.filter((item) => item.smUrl && item.isMap) || [];
 
@@ -253,18 +245,7 @@ export default function Hotspot({
           </div>
         </div>
         <div>
-          {lat && lng && isGroup && <GroupMap lat={lat} lng={lng} zoom={zoom} markers={groupMarkers} />}
-          {lat && lng && _id && !isGroup && (
-            <MapBox
-              key={_id}
-              hideDefault={!!hideDefaultMarker}
-              markers={markers || []}
-              hotspotId={_id}
-              lat={lat}
-              lng={lng}
-              zoom={zoom}
-            />
-          )}
+          {lat && lng && markers.length > 0 && <MapBox key={_id} markers={markers} lat={lat} lng={lng} zoom={zoom} />}
           {!!images?.length && <MapList images={mapImages} />}
           {lat && lng && !isGroup && <NearbyHotspots lat={lat} lng={lng} limit={4} exclude={[locationId]} />}
         </div>

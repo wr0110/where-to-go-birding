@@ -8,14 +8,6 @@ const LinkSchema = new Schema({
 	url: String,
 });
 
-const MarkerSchema = new Schema({
-	lat: Number,
-	lng: Number,
-	description: String,
-	useForDirections: Boolean,
-	type: String,
-});
-
 const PointSchema = new Schema({
   type: {
     type: String,
@@ -121,8 +113,6 @@ const HotspotSchema = new Schema({
 		caption: String,
 		legacy: Boolean,
 	},
-	markers: [MarkerSchema],
-	hideDefaultMarker: Boolean,
 	createdAt: {
 		type: "string",
 		default: dayjs().format("YYYY-MM-DD"),

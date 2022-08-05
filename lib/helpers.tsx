@@ -1,4 +1,4 @@
-import { Hotspot, Drive } from "lib/types";
+import { Hotspot, Drive, Marker } from "lib/types";
 import { getCountyByCode } from "lib/localData";
 
 export function slugify(title?: string) {
@@ -217,4 +217,32 @@ export function distanceBetween(lat1: number, lon1: number, lat2: number, lon2: 
     }
     return parseFloat(dist.toString());
   }
+}
+
+export function formatMarkerArray(hotspot: Hotspot, childHotspots: Hotspot[]) {
+  const markers: Marker[] = [];
+
+  if (!hotspot?.isGroup) {
+    markers.push({
+      lat: hotspot.lat,
+      lng: hotspot.lng,
+      type: "primary",
+      name: "General Location",
+    });
+  }
+
+  childHotspots?.forEach((it: any) => {
+    let name = it.name;
+    if (name.includes("--")) {
+      name = name.split("--")[1];
+    }
+    markers.push({
+      lat: it.lat,
+      lng: it.lng,
+      type: "child",
+      name,
+    });
+  });
+
+  return markers;
 }

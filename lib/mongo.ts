@@ -122,7 +122,7 @@ export async function getChildHotspots(id: string) {
     .lean()
     .exec();
 
-  return result;
+  return result ? JSON.parse(JSON.stringify(result)) : null;
 }
 
 export async function getHotspotByLocationId(locationId: string, populate?: boolean) {
