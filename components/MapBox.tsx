@@ -16,6 +16,7 @@ export default function MapBox({ markers, lat, lng, zoom, disabled }: Props) {
   const [satellite, setSatellite] = React.useState<boolean>(false);
   const mapContainer = React.useRef(null);
   const map = React.useRef<any>(null);
+  const markerCount = markers.length;
 
   const handleToggle = () => {
     const style = satellite ? "outdoors-v11" : "satellite-streets-v11";
@@ -35,6 +36,8 @@ export default function MapBox({ markers, lat, lng, zoom, disabled }: Props) {
     });
     map.current.addControl(new mapboxgl.NavigationControl());
 
+    const bounds = new mapboxgl.LngLatBounds();
+
     markers.map((data) => {
       const img = document.createElement("img");
       img.className = "marker";
@@ -46,15 +49,20 @@ export default function MapBox({ markers, lat, lng, zoom, disabled }: Props) {
         `${data.name}<br><a href="https://www.google.com/maps/search/?api=1&query=${data.lat},${data.lng}" target="_blank" class="marker-link"><b>Get Directions</b></a>`
       );
       marker.setLngLat([data.lng, data.lat]).setPopup(popup).addTo(map.current);
+      bounds.extend(marker.getLngLat());
 
       return { ...data, id, ref: marker };
     });
+
+    if (markers.length >= 5) {
+      map.current.fitBounds(bounds, { padding: 40, duration: 0 });
+    }
   });
 
   React.useEffect(() => {
-    if (!map.current) return;
+    if (!map.current || markerCount >= 5) return;
     map.current.flyTo({ zoom });
-  }, [zoom]);
+  }, [zoom, markerCount]);
 
   return (
     <div className="relative w-full aspect-[4/3.5] rounded-md overflow-hidden">

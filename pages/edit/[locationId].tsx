@@ -52,7 +52,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       props: { error: `Hotspot "${locationId}" not found in eBird` },
     };
   }
-  const childLocations = data._id ? await getChildren(data._id) : [];
+  const childLocations = data?._id ? await getChildren(data._id) : [];
   const parentId = data?.parent || defaultParentId;
   const parent = parentId ? await getParent(parentId) : null;
   const nameChanged = data?.name && data?.name !== ebirdData.name;
@@ -234,10 +234,12 @@ export default function Edit({ id, isNew, data, error, childLocations }: Props) 
               <CheckboxGroup name="accessible" label="Accessible Facilities" options={accessibleOptions} />
               <RadioGroup name="roadside" label="Roadside accessible" options={["Yes", "No", "Unknown"]} />
               <RadioGroup name="dayhike" label="Show in Day Hike index" options={["Yes", "No"]} />
-              <div className="flex-1">
-                <label className="text-gray-500 font-bold mb-1 block">Hotspot Map</label>
-                <MapZoomInput markers={markers} />
-              </div>
+              {markers.length > 0 && (
+                <div className="flex-1">
+                  <label className="text-gray-500 font-bold mb-1 block">Hotspot Map</label>
+                  <MapZoomInput markers={markers} />
+                </div>
+              )}
             </aside>
           </div>
           <div className="px-4 py-3 bg-gray-100 text-right rounded mt-4 md:hidden">

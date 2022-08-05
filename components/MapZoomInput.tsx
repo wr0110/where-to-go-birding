@@ -27,11 +27,17 @@ export default function MapZoomInput({ markers }: Props) {
     <>
       <button
         type="button"
-        className="flex gap-2 bg-white shadow items-center rounded px-4 py-1.5 w-full justify-center"
+        className={`flex gap-2 bg-white shadow items-center rounded px-4 py-1.5 w-full justify-center ${
+          markers.length >= 5 ? "opacity-50" : ""
+        }`}
         onClick={() => setOpen(!open)}
+        disabled={markers.length >= 5}
       >
         <ZoomInIcon className="h-5 w-5" /> Edit Map Zoom
       </button>
+      <p className="text-xs text-gray-600 mt-2">
+        If there are 5 or more markers on the map, the zoom will be adjusted to fit the markers.
+      </p>
 
       {open && (
         <div className="mt-8">

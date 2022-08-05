@@ -7,9 +7,8 @@ import Input from "components/Input";
 import Textarea from "components/Textarea";
 import Form from "components/Form";
 import Submit from "components/Submit";
-import Range from "components/Range";
-import { getHotspotById } from "lib/mongo";
-import { slugify, geocode, accessibleOptions, restroomOptions } from "lib/helpers";
+import { getHotspotById, getChildHotspots } from "lib/mongo";
+import { slugify, geocode, accessibleOptions, restroomOptions, formatMarkerArray } from "lib/helpers";
 import { getStateByCode } from "lib/localData";
 import InputLinks from "components/InputLinks";
 import Select from "components/Select";
@@ -25,6 +24,7 @@ import useSecureFetch from "hooks/useSecureFetch";
 import ImagesInput from "components/ImagesInput";
 import Map from "components/Map";
 import TinyMCE from "components/TinyMCE";
+import MapZoomInput from "components/MapZoomInput";
 
 const ibaOptions = IBAs.map(({ slug, name }) => ({ value: slug, label: name }));
 
@@ -32,6 +32,12 @@ interface Params extends ParsedUrlQuery {
   id: string;
   state?: string;
 }
+
+const getChildren = async (id: string) => {
+  if (!id) return null;
+  const data = await getChildHotspots(id);
+  return data || [];
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { id, state: stateParam, country: countryParam } = query as Params;
@@ -43,11 +49,14 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const stateCode = data?.stateCode || stateParam;
   const state = getStateByCode(stateCode);
 
+  const childLocations = data?._id ? await getChildren(data._id) : [];
+
   return {
     props: {
       id: data?._id || null,
       isNew: !data,
       state,
+      childLocations,
       data: {
         ...data,
         countryCode,
@@ -69,9 +78,10 @@ type Props = {
   isNew: boolean;
   data: Hotspot;
   state: State;
+  childLocations: Hotspot[];
 };
 
-export default function Edit({ id, isNew, data, state }: Props) {
+export default function Edit({ id, isNew, data, state, childLocations }: Props) {
   const [saving, setSaving] = React.useState<boolean>(false);
   const [isGeocoded, setIsGeocoded] = React.useState(false);
   const secureFetch = useSecureFetch();
@@ -79,7 +89,10 @@ export default function Edit({ id, isNew, data, state }: Props) {
   const router = useRouter();
   const form = useForm<Hotspot>({ defaultValues: data });
   const isOH = data.stateCode === "OH";
-  const zoom = form.watch("zoom");
+
+  const latValue = form.watch("lat");
+  const lngValue = form.watch("lng");
+  const markers = formatMarkerArray({ ...data, lat: latValue, lng: lngValue }, childLocations);
 
   const handleSubmit: SubmitHandler<Hotspot> = async (formData) => {
     if (!state || !formData?.multiCounties?.length) {
@@ -229,28 +242,18 @@ export default function Edit({ id, isNew, data, state }: Props) {
             </div>
 
             <aside className="px-4 md:mt-12 pb-5 pt-3 rounded bg-gray-100 md:w-[350px] space-y-6">
-              {lat && lng && (
-                <Field label="Map Zoom">
-                  <div className="flex gap-2">
-                    <Range name="zoom" min={7} max={17} step={1} />
-                    {zoom}
-                  </div>
-                  <div className="relative md:aspect-[4/3.5]">
-                    <Map
-                      lat={lat}
-                      lng={lng}
-                      zoom={zoom}
-                      className="pointer-events-none scale-[.6] sm:scale-100 md:scale-[.6] sm:w-full md:w-[167%] w-[167%] origin-top-left absolute top-0 left-0"
-                    />
-                  </div>
-                </Field>
-              )}
               <Field label="Restrooms">
                 <Select name="restrooms" options={restroomOptions} isClearable />
               </Field>
               <CheckboxGroup name="accessible" label="Accessible Facilities" options={accessibleOptions} />
               <RadioGroup name="roadside" label="Roadside accessible" options={["Yes", "No", "Unknown"]} />
               <RadioGroup name="dayhike" label="Show in Day Hike index" options={["Yes", "No"]} />
+              {markers.length > 0 && (
+                <div className="flex-1">
+                  <label className="text-gray-500 font-bold mb-1 block">Hotspot Map</label>
+                  <MapZoomInput markers={markers} />
+                </div>
+              )}
             </aside>
           </div>
           <div className="px-4 py-3 bg-gray-100 text-right rounded mt-4 md:hidden">

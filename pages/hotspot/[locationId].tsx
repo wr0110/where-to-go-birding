@@ -59,8 +59,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       return county?.slug;
     }) || [];
 
-  console.log(data);
-
   return {
     props: {
       state,
