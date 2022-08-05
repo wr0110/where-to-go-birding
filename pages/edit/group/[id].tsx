@@ -22,7 +22,6 @@ import CountySelect from "components/CountySelect";
 import FormError from "components/FormError";
 import useSecureFetch from "hooks/useSecureFetch";
 import ImagesInput from "components/ImagesInput";
-import Map from "components/Map";
 import TinyMCE from "components/TinyMCE";
 import MapZoomInput from "components/MapZoomInput";
 

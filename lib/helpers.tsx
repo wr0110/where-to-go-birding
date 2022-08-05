@@ -246,3 +246,28 @@ export function formatMarkerArray(hotspot: Hotspot, childHotspots: Hotspot[]) {
 
   return markers;
 }
+
+export async function verifyRecaptcha(token: string) {
+  const projectId = "birding-262815";
+  const API_key = process.env.NEXT_PUBLIC_GOOGLE_KEY;
+
+  const verifyResponse = await fetch(
+    `https://recaptchaenterprise.googleapis.com/v1/projects/${projectId}/assessments?key=${API_key}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        event: {
+          token,
+          siteKey: process.env.NEXT_PUBLIC_RECAPTCHA_KEY,
+          expectedAction: "submit",
+        },
+      }),
+    }
+  );
+
+  const verifyData = await verifyResponse.json();
+  return verifyData?.riskAnalysis?.score || 0;
+}

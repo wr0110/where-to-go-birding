@@ -1,7 +1,6 @@
 import Link from "next/link";
 import States from "data/states.json";
 import EbirdDescription from "components/EbirdDescription";
-import PageHeading from "components/PageHeading";
 import Title from "components/Title";
 import Banner from "components/Banner";
 import FeaturedHotspots from "components/FeaturedHotspots";
@@ -17,7 +16,7 @@ export default function Home2() {
         <div className="sm:grid grid-cols-2 gap-16">
           <section>
             <h3 className="text-lg mb-4 font-bold">United States</h3>
-            <div className="columns-2 xs:columns-3 mb-12">
+            <div className="columns-2 lg:columns-3 mb-12">
               {States.filter((state) => state.active).map(({ label, slug, code }) => (
                 <Link key={code} href={`/us/${slug}`}>
                   <a className="font-bold px-2 py-1 text-base mb-1 block">{label}</a>

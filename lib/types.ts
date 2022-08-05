@@ -174,3 +174,20 @@ export type LocationSearchValue = {
   lat: number;
   lng: number;
 };
+
+export type Upload = {
+  locationId: string;
+  countryCode: string;
+  stateCode: string;
+  smUrl: string;
+  lgUrl: string;
+  originalUrl: string;
+  by: string;
+  email: string;
+  width?: number;
+  height?: number;
+  caption?: string;
+  createdAt: Date;
+  status: string;
+  _id?: string;
+};

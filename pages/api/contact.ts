@@ -1,32 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
+import { verifyRecaptcha } from "lib/helpers";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {
     const { name, email, message, token } = req.body;
 
-    const projectId = "birding-262815";
-    const API_key = process.env.NEXT_PUBLIC_GOOGLE_KEY;
-
-    const verifyResponse = await fetch(
-      `https://recaptchaenterprise.googleapis.com/v1/projects/${projectId}/assessments?key=${API_key}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          event: {
-            token,
-            siteKey: process.env.NEXT_PUBLIC_RECAPTCHA_KEY,
-            expectedAction: "submit",
-          },
-        }),
-      }
-    );
-
-    const verifyData = await verifyResponse.json();
-    const score = verifyData?.riskAnalysis?.score || 0;
+    const score = await verifyRecaptcha(token);
 
     if (score > 0.5) {
       const transporter = nodemailer.createTransport({

@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Hotspot from "models/Hotspot.mjs";
 import Drive from "models/Drive.mjs";
 import Settings from "models/Settings.mjs";
+import Upload from "models/Upload";
 
 const URI = process.env.MONGO_URI;
 const connect = async () => (URI ? mongoose.connect(URI) : null);
@@ -180,6 +181,13 @@ export async function getDriveById(_id: string) {
 export async function getSettings() {
   await connect();
   const result = await Settings.findOne({ key: "global" }).lean().exec();
+
+  return result ? JSON.parse(JSON.stringify(result)) : null;
+}
+
+export async function getUploads() {
+  await connect();
+  const result = await Upload.find({ status: "pending" }).sort({ name: 1 }).lean().exec();
 
   return result ? JSON.parse(JSON.stringify(result)) : null;
 }

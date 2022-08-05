@@ -168,9 +168,6 @@ export default function County({ countrySlug, state, county, hotspots, topHotspo
           )}
         </div>
         <div className="flex flex-col gap-8">
-          {state.code === "OH" && (
-            <img src={`/oh-maps/${slug}.jpg`} width="260" className="mx-auto" alt={`${name} county map`} />
-          )}
           {name && <RegionMap location={`${name} County, ${state.label}`} />}
           <section>
             <h3 className="text-lg mb-2 font-bold" id="hotspots">

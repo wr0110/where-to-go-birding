@@ -43,6 +43,7 @@ export default function SortableImage({
         className={`w-full h-[240px] bg-zinc-700 ${isVertical ? "object-contain" : "object-cover"} rounded cursor-move`}
         {...attributes}
         {...listeners}
+        tabIndex={-1}
       />
       <div className="px-3 pb-2 text-xs w-full">
         <label className="text-gray-500 font-bold mb-2 relative flex">
@@ -82,6 +83,7 @@ export default function SortableImage({
       </div>
       <button
         type="button"
+        tabIndex={-1}
         className="opacity-0 group-hover:opacity-100 transition-opacity bg-red-700/90 p-1.5 rounded-full flex items-center justify-center absolute -left-2 -top-2 shadow"
         onClick={() => handleDelete(i, smUrl, !!isNew)}
       >

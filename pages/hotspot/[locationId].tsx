@@ -20,6 +20,8 @@ import { accessibleOptions, restroomOptions, formatMarkerArray, restructureHotsp
 import MapBox from "components/MapBox";
 import NearbyHotspots from "components/NearbyHotspots";
 import FeaturedImage from "components/FeaturedImage";
+import { useUser } from "providers/user";
+import { CameraIcon } from "@heroicons/react/outline";
 
 const getChildren = async (id: string) => {
   if (!id) return null;
@@ -113,6 +115,7 @@ export default function Hotspot({
   markers,
   countryCode,
 }: Props) {
+  const { user } = useUser();
   const countrySlug = countryCode?.toLowerCase();
   let extraLinks = [];
   if (roadside === "Yes") {
@@ -150,10 +153,10 @@ export default function Hotspot({
         {name}
       </PageHeading>
       {photos?.length > 0 && <FeaturedImage photos={photos} />}
-      <EditorActions className={photos?.length > 0 ? "-mt-2" : "-mt-12"}>
-        <Link href={isGroup ? `/edit/group/${_id}` : `/edit/${locationId}`}>Edit Hotspot</Link>
-        {(isGroup || !parent) && <Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>}
-        {!isGroup && (
+      <EditorActions className={`${photos?.length > 0 ? "-mt-2" : "-mt-12"} font-medium`} allowPublic>
+        {user && <Link href={isGroup ? `/edit/group/${_id}` : `/edit/${locationId}`}>Edit Hotspot</Link>}
+        {user && (isGroup || !parent) && <Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>}
+        {user && !isGroup && (
           <>
             {state.code === "OH" ? (
               <a href={`https://birding-in-ohio.com/${county.slug}-county/${slug}`} target="_blank" rel="noreferrer">
@@ -172,9 +175,17 @@ export default function Hotspot({
             )}
           </>
         )}
-        <DeleteBtn url={`/api/hotspot/delete?id=${_id}`} entity="hotspot" className="ml-auto">
-          Delete Hotspot
-        </DeleteBtn>
+        <Link href={`/hotspot/upload/${locationId}`}>
+          <a className="flex gap-1">
+            <CameraIcon className="h-4 w-4" />
+            Upload Photos
+          </a>
+        </Link>
+        {user && (
+          <DeleteBtn url={`/api/hotspot/delete?id=${_id}`} entity="hotspot" className="ml-auto">
+            Delete Hotspot
+          </DeleteBtn>
+        )}
       </EditorActions>
       <div className="grid md:grid-cols-2 gap-12">
         <div>

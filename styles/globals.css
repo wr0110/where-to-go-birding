@@ -175,8 +175,18 @@ img.marker {
 	display: none !important;
 }
 
-.disable-map .mapboxgl-ctrl-zoom-in, .disable-map .mapboxgl-ctrl-zoom-out {
-	pointer-events: none;
+.mapboxgl-popup-anchor-top {
+	margin-top: -25px;
+}
+
+.mapboxgl-popup-anchor-left {
+	margin-left: -15px;
+  margin-top: -15px;
+}
+
+.mapboxgl-popup-anchor-right {
+	margin-right: -25px;
+  margin-top: -15px;
 }
 
 /*Animations*/
