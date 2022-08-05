@@ -28,6 +28,7 @@ export default function HotspotGrid({ lat, lng, hotspots, loading, showFullName 
       {hotspots.map(({ name, _id, featuredImg, locationId, parent, lat: hsLat, lng: hsLng }) => {
         let distance = distanceBetween(lat || 0, lng || 0, hsLat, hsLng);
         distance = distance < 10 ? parseFloat(distance.toFixed(1)) : parseFloat(distance.toFixed(0));
+        showFullName = showFullName || !parent?.name;
         const shortName = showFullName ? name : name.split("--")?.[1] || name;
         return (
           <article key={_id} className="flex flex-col gap-3">
