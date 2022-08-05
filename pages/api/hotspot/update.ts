@@ -35,8 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       };
     }
 
-    const featuredImg =
-      data?.images?.filter((it: any) => !it.isMap && it?.width && it?.height && it?.width > it?.height)?.[0] || null;
+    const featuredImg = data?.images?.filter((it: any) => !it.isMap)?.[0] || null;
 
     const oldHotspot = await Hotspot.findById(id);
     const legacyUrls = oldHotspot.images?.filter((image: any) => !!image.legacy).map((image: any) => image.smUrl);
