@@ -35,14 +35,15 @@ export default function FeaturedImage({ photos }: Props) {
                 height={featured.height}
                 className="w-full h-[250px] sm:h-[350px] md:h-[450px] object-cover object-center rounded-lg mb-8 -mt-10 cursor-pointer"
               />
-              <button
-                type="button"
-                className="absolute top-4 right-4 flex items-center gap-2 px-2 py-1.5 text-sm font-medium bg-white border border-gray-300 hover:opacity-100 opacity-80 rounded-md transition-opacity"
-                onClick={open}
-              >
-                <ViewGridIcon className="w-5 h-5 text-gray-500" />
-                Show all photos
-              </button>
+              {photos.length > 1 && (
+                <button
+                  type="button"
+                  className="absolute top-4 right-4 flex items-center gap-2 px-3 py-0.5 text-sm font-medium bg-white  hover:opacity-100 opacity-80 rounded-md transition-opacity"
+                  onClick={open}
+                >
+                  {photos.length} photos
+                </button>
+              )}
             </div>
           );
         }}
