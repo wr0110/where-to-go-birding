@@ -129,6 +129,10 @@ export default function Upload({ locationId, hotspotName, error }: Props) {
       <div className="bg-gray-100 p-4 mt-8">
         <ul className="space-y-1 list-disc ml-5">
           <li className="font-medium text-amber-600">Only upload photos that you own</li>
+          <li>
+            Upload photos of habitat, features, ponds, trails, parking &ndash; help birders know what to expect when
+            they visit.
+          </li>
           <li>Avoid uploading multiple photos from a similar angle</li>
           <li>Choose a few of your best photos from the hotspot</li>
         </ul>

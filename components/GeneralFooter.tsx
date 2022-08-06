@@ -19,7 +19,7 @@ export default function OhioFooter() {
               <em className="text-[0.8em] text-[#92ad39] font-medium">Where to Go Birding</em>
             </div>
           </a>
-          <p>This website is run by Ken Ostermiller, Adam Jackson and other volunteers.</p>
+          <p>This website is managed by Ken Ostermiller, Adam Jackson, and other volunteers.</p>
         </div>
         <div />
 

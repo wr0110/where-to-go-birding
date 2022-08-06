@@ -90,38 +90,46 @@ export default function Home2() {
                 eBird Facebook page
               </a>
             </p>
-            <h3 className="text-lg font-bold mb-1.5">Links to eBird website</h3>
+            <h3 className="text-lg font-bold mb-1.5">Tips on Managing Your eBird Records</h3>
             <p className="mb-4">
-              <a href="https://birding-in-ohio.com/change-location-of-a-checklist/" target="_blank" rel="noreferrer">
-                How to change the location of a checklist
-              </a>
-              <br />
               <a
-                href="https://birding-in-ohio.com/merge-personal-location-with-a-hotspot/"
+                href="https://support.ebird.org/en/support/solutions/articles/48001158707-get-started-with-ebird"
                 target="_blank"
                 rel="noreferrer"
               >
-                How to merge a personal location with an eBird Hotspot
+                Get started with eBird
               </a>
               <br />
               <a
-                href="https://support.ebird.org/support/solutions/articles/48000625567-checklist-sharing-and-group-accounts"
+                href="https://support.ebird.org/en/support/solutions/articles/48000960317-ebird-alerts-and-targets-faqs"
                 target="_blank"
                 rel="noreferrer"
               >
-                How to share a checklist with other birders
+                eBird Alerts and Targets
               </a>
               <br />
               <a
-                href="https://birding-in-ohio.com/suggest-personal-location-as-a-hotspot/"
+                href="https://support.ebird.org/en/support/solutions/articles/48000625567-checklist-sharing-and-group-accounts#anchorEditChecklists"
                 target="_blank"
                 rel="noreferrer"
               >
-                How to suggest a personal location as a new eBird Hotspot
+                Edit an eBird checklist
               </a>
               <br />
-              <a href="https://birding-in-ohio.com/life-list-personal-location/">
-                How to get a “life list” of bird species at a personal location
+              <a
+                href="https://support.ebird.org/en/support/solutions/articles/48000625567-checklist-sharing-and-group-accounts#anchorShareChecklists"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Sharing eBird checklists
+              </a>
+              <br />
+              <a href="https://support.ebird.org/en/support/solutions/articles/48001009443-ebird-hotspot-faqs#anchorMergeWithHotspot">
+                How do I merge a personal location with an existing Hotspot?
+              </a>
+              <br />
+              <a href="https://support.ebird.org/en/support/solutions/articles/48001009443-ebird-hotspot-faqs#anchorSuggestHotspot">
+                How do I suggest a new Hotspot?
               </a>
             </p>
           </div>
