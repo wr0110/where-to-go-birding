@@ -41,14 +41,7 @@ export default function About() {
           </p>
 
           <h3 className="text-lg font-bold mb-4 mt-8">Regional Editors</h3>
-          <p className="mb-4">
-            <strong>Kate Bedor</strong> (Ohio, Central and Southeast regions)
-            <br />
-            <strong>Fred Dinkelbach</strong> (Ohio, Northwest and Southwest regions)
-            <br />
-            <strong>Joe Wojnarowski</strong> (Ohio, Northeast and East Central regions)
-            <br />
-          </p>
+          <p className="mb-4">Kate Bedor, Fred Dinkelbach, Chris Lamb, Joe Wojnarowski (Ohio)</p>
         </div>
       </div>
     </div>
