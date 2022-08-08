@@ -246,7 +246,7 @@
 		"slug": "vermont",
 		"code": "VT",
 		"portal": "vt",
-		"features": [],
+		"features": ["hikes"],
 		"active": true
 	},
 	{

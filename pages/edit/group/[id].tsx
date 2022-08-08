@@ -93,6 +93,8 @@ export default function Edit({ id, isNew, data, state, childLocations }: Props) 
   const lngValue = form.watch("lng");
   const markers = formatMarkerArray({ ...data, lat: latValue, lng: lngValue }, childLocations);
 
+  const features = state.features || [];
+
   const handleSubmit: SubmitHandler<Hotspot> = async (formData) => {
     if (!state || !formData?.multiCounties?.length) {
       alert("Missing state and/or counties");
@@ -215,9 +217,11 @@ export default function Edit({ id, isNew, data, state, childLocations }: Props) 
                 <TinyMCE name="about" defaultValue={data?.about} />
               </Field>
 
-              <Field label="Birding Day Hike">
-                <TinyMCE name="hikes" defaultValue={data?.hikes} onBlur={handleHikeBlur} />
-              </Field>
+              {features.includes("hikes") && (
+                <Field label="Birding Day Hike">
+                  <TinyMCE name="hikes" defaultValue={data?.hikes} onBlur={handleHikeBlur} />
+                </Field>
+              )}
 
               <Field label="Counties">
                 <CountySelect name="multiCounties" stateCode={state.code} isMulti required />
@@ -246,7 +250,9 @@ export default function Edit({ id, isNew, data, state, childLocations }: Props) 
               </Field>
               <CheckboxGroup name="accessible" label="Accessible Facilities" options={accessibleOptions} />
               <RadioGroup name="roadside" label="Roadside accessible" options={["Yes", "No", "Unknown"]} />
-              <RadioGroup name="dayhike" label="Show in Day Hike index" options={["Yes", "No"]} />
+              {features.includes("hikes") && (
+                <RadioGroup name="dayhike" label="Show in Day Hike index" options={["Yes", "No"]} />
+              )}
               {markers.length > 0 && (
                 <div className="flex-1">
                   <label className="text-gray-500 font-bold mb-1 block">Hotspot Map</label>

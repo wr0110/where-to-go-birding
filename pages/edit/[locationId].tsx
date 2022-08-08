@@ -14,7 +14,7 @@ import InputLinks from "components/InputLinks";
 import Select from "components/Select";
 import IBAs from "data/oh-iba.json";
 import AdminPage from "components/AdminPage";
-import { Hotspot, HotspotInputs, EbirdHotspot } from "lib/types";
+import { Hotspot, HotspotInputs, EbirdHotspot, State } from "lib/types";
 import RadioGroup from "components/RadioGroup";
 import CheckboxGroup from "components/CheckboxGroup";
 import Field from "components/Field";
@@ -62,11 +62,16 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     slug = slugify(ebirdData.name);
   }
 
+  const stateCode = data?.stateCode || ebirdData?.subnational1Code?.replace("US-", "");
+  const countyCode = data?.countyCode || ebirdData?.subnational2Code;
+  const state = getStateByCode(stateCode);
+
   return {
     props: {
       id: data?._id || null,
       isNew: !data,
       childLocations,
+      state,
       data: {
         ...data,
         slug,
@@ -78,8 +83,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         lng: ebirdData?.longitude || data?.lng,
         zoom: data?.zoom || 14,
         countryCode: ebirdData?.subnational1Code?.split("-")?.[0] || data?.countryCode,
-        stateCode: data?.stateCode || ebirdData?.subnational1Code?.replace("US-", ""),
-        countyCode: data?.countyCode || ebirdData?.subnational2Code,
+        stateCode,
+        countyCode,
         locationId: locationId,
         roadside: data?.roadside || "Unknown",
         restrooms: restroomOptions.find((it) => it.value === data?.restrooms) || null,
@@ -94,11 +99,12 @@ type Props = {
   id?: string;
   isNew: boolean;
   data: Hotspot;
+  state: State;
   error?: string;
   childLocations: Hotspot[];
 };
 
-export default function Edit({ id, isNew, data, error, childLocations }: Props) {
+export default function Edit({ id, isNew, data, error, childLocations, state }: Props) {
   const [saving, setSaving] = React.useState<boolean>(false);
   const [isGeocoded, setIsGeocoded] = React.useState(false);
   const secureFetch = useSecureFetch();
@@ -111,15 +117,9 @@ export default function Edit({ id, isNew, data, error, childLocations }: Props) 
   const lngValue = form.watch("lng");
   const markers = formatMarkerArray({ ...data, lat: latValue, lng: lngValue }, childLocations);
 
+  const features = state.features || [];
+
   const handleSubmit: SubmitHandler<HotspotInputs> = async (data) => {
-    const state = getStateByCode(data?.stateCode);
-    const county = getCountyByCode(data?.countyCode || "");
-
-    if (!state || !county) {
-      alert("Error getting state and county data");
-      return;
-    }
-
     setSaving(true);
     const json = await secureFetch(`/api/hotspot/${isNew ? "add" : "update"}`, "POST", {
       id,
@@ -202,9 +202,11 @@ export default function Edit({ id, isNew, data, error, childLocations }: Props) 
                 <TinyMCE name="about" defaultValue={data?.about} />
               </Field>
 
-              <Field label="Birding Day Hike">
-                <TinyMCE name="hikes" defaultValue={data?.hikes} onBlur={handleHikeBlur} />
-              </Field>
+              {features.includes("hikes") && (
+                <Field label="Birding Day Hike">
+                  <TinyMCE name="hikes" defaultValue={data?.hikes} onBlur={handleHikeBlur} />
+                </Field>
+              )}
 
               <div className="grid md:grid-cols-2 gap-4">
                 <Field label="Parent Hotspot">
@@ -233,7 +235,9 @@ export default function Edit({ id, isNew, data, error, childLocations }: Props) 
               </Field>
               <CheckboxGroup name="accessible" label="Accessible Facilities" options={accessibleOptions} />
               <RadioGroup name="roadside" label="Roadside accessible" options={["Yes", "No", "Unknown"]} />
-              <RadioGroup name="dayhike" label="Show in Day Hike index" options={["Yes", "No"]} />
+              {features.includes("hikes") && (
+                <RadioGroup name="dayhike" label="Show in Day Hike index" options={["Yes", "No"]} />
+              )}
               {markers.length > 0 && (
                 <div className="flex-1">
                   <label className="text-gray-500 font-bold mb-1 block">Hotspot Map</label>
