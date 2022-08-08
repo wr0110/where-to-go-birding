@@ -8,11 +8,18 @@ type Props = {
 };
 
 const processImg = (image: Image) => {
+  let caption = "";
+  if (image.caption) {
+    caption = image.caption;
+  }
+  if (image.by) {
+    caption = image.caption ? `${image.caption}<br />Photo by ${image.by}` : `Photo by ${image.by}`;
+  }
   return {
     src: image.lgUrl || image.smUrl,
     width: image.width,
     height: image.height,
-    caption: image.caption ? `${image.caption}<br />Photo by ${image.by}` : `Photo by ${image.by}`,
+    caption,
   };
 };
 
