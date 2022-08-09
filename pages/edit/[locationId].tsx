@@ -221,7 +221,7 @@ export default function Edit({ id, isNew, data, error, childLocations, state }: 
               </div>
 
               <Field label="Images">
-                <ImagesInput />
+                <ImagesInput enableStreetview />
               </Field>
               <div className="px-4 py-3 bg-gray-100 text-right sm:px-6 rounded hidden md:block">
                 <Submit loading={saving} color="green" className="font-medium">

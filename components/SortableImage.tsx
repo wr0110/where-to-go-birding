@@ -19,6 +19,7 @@ export default function SortableImage({
   preview,
   smUrl,
   isNew,
+  isStreetview,
   hideExtraFields,
 }: Props) {
   const { register } = useFormContext();
@@ -40,30 +41,34 @@ export default function SortableImage({
     >
       <img
         src={preview || smUrl}
-        className={`w-full h-[240px] bg-zinc-700 ${isVertical ? "object-contain" : "object-cover"} rounded cursor-move`}
+        className={`w-full aspect-[1.55] bg-zinc-700 ${
+          isVertical ? "object-contain" : "object-cover"
+        } rounded cursor-move`}
         {...attributes}
         {...listeners}
         tabIndex={-1}
       />
       <div className="px-3 pb-2 text-xs w-full">
-        <label className="text-gray-500 font-bold mb-2 relative flex">
+        <label className={`text-gray-500 font-bold mb-2 relative flex ${isStreetview ? "opacity-50" : ""}`}>
           <span className="absolute top-[5px] left-[1px] bottom-[1px] px-[7px] bg-gray-200 flex items-center rounded-l-[5px]">
             Caption
           </span>
           <input
             type="text"
+            disabled={isStreetview}
             {...register(`images.${i}.caption` as const)}
             className="form-input py-0.5 px-2 pl-[68px]"
             style={{ fontSize: "12px" }}
           />
         </label>
         {!hideExtraFields && (
-          <label className="text-gray-500 font-bold mb-2 relative flex">
+          <label className={`text-gray-500 font-bold mb-2 relative flex ${isStreetview ? "opacity-50" : ""}`}>
             <span className="absolute top-[5px] left-[1px] bottom-[1px] px-[7px] bg-gray-200 flex items-center rounded-l-[5px]">
               By
             </span>
             <input
               type="text"
+              disabled={isStreetview}
               {...register(`images.${i}.by` as const)}
               className="form-input py-0.5 pr-2 pl-[35px] max-w-[50%]"
               style={{ fontSize: "12px" }}
@@ -71,9 +76,10 @@ export default function SortableImage({
           </label>
         )}
         {!hideExtraFields && (
-          <label className="text-gray-500 font-bold block mt-2">
+          <label className={`text-gray-500 font-bold block mt-2 ${isStreetview ? "opacity-50" : ""}`}>
             <input
               type="checkbox"
+              disabled={isStreetview}
               {...register(`images.${i}.isMap` as const)}
               className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
             />

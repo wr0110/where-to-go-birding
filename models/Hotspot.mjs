@@ -99,10 +99,12 @@ const HotspotSchema = new Schema({
 		originalUrl: String,
 		by: String,
 		isMap: Boolean,
+		isStreetview: Boolean,
 		width: Number,
 		height: Number,
 		caption: String,
 		legacy: Boolean,
+		streetviewData: Object,
 	}],
 	featuredImg: {
 		smUrl: String,
@@ -112,6 +114,8 @@ const HotspotSchema = new Schema({
 		height: Number,
 		caption: String,
 		legacy: Boolean,
+		isStreetview: Boolean,
+		streetviewData: Object,
 	},
 	createdAt: {
 		type: "string",

@@ -13,7 +13,7 @@
 		"label": "Arizona",
 		"slug": "arizona",
 		"code": "AZ",
-		"features": [],
+		"features": ["hikes"],
 		"active": true,
 		"color": "#e57700"
 	},
@@ -110,7 +110,7 @@
 		"label": "Massachusetts",
 		"slug": "massachusetts",
 		"code": "MA",
-		"features": [],
+		"features": ["hikes"],
 		"active": true,
 		"portal": "massaudubon"
 	},
@@ -155,7 +155,7 @@
 		"label": "New Hampshire",
 		"slug": "new-hampshire",
 		"code": "NH",
-		"features": [],
+		"features": ["hikes"],
 		"active": true
 	},
 	{
@@ -167,7 +167,7 @@
 		"label": "New Mexico",
 		"slug": "new-mexico",
 		"code": "NM",
-		"features": [],
+		"features": ["hikes"],
 		"active": true
 	},
 	{

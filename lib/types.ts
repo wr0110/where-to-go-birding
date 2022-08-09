@@ -24,6 +24,7 @@ export type Image = {
   originalUrl: string;
   by?: string;
   isMap?: boolean;
+  isStreetview?: boolean;
   width?: number;
   height?: number;
   preview?: string;
@@ -31,6 +32,7 @@ export type Image = {
   legacy?: boolean;
   isNew?: boolean; //temporarily added after uploaded
   id?: string; //temporarily added after uploaded
+  streetviewData?: any;
 };
 
 export type Marker = {

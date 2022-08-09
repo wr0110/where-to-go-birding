@@ -147,6 +147,10 @@ svg.icon {
 	position: absolute;
 }
 
+.pswp__default-caption:empty {
+	display: none;
+}
+
 /*Mapbox*/
 .mapboxAddMarkerMode .mapboxgl-canvas-container {
 	@apply cursor-crosshair;

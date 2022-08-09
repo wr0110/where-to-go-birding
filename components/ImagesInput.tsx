@@ -4,12 +4,14 @@ import useSecureFetch from "hooks/useSecureFetch";
 import SortableImage from "./SortableImage";
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { SortableContext, sortableKeyboardCoordinates, rectSortingStrategy } from "@dnd-kit/sortable";
+import AddStreetview from "components/AddStreetview";
 
 type Props = {
   hideExtraFields?: boolean;
+  enableStreetview?: boolean;
 };
 
-export default function ImagesInput({ hideExtraFields }: Props) {
+export default function ImagesInput({ hideExtraFields, enableStreetview }: Props) {
   const secureFetch = useSecureFetch();
   const { control } = useFormContext();
   const { fields, append, remove, move } = useFieldArray({ name: "images", control });
@@ -69,6 +71,7 @@ export default function ImagesInput({ hideExtraFields }: Props) {
       )}
 
       <Uppy onSuccess={(result) => append(result)} />
+      {enableStreetview && <AddStreetview />}
     </div>
   );
 }
