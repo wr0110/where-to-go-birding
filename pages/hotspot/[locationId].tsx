@@ -256,7 +256,9 @@ export default function Hotspot({
         <div>
           {lat && lng && markers.length > 0 && <MapBox key={_id} markers={markers} lat={lat} lng={lng} zoom={zoom} />}
           {!!images?.length && <MapList images={mapImages} />}
-          {lat && lng && !isGroup && <NearbyHotspots lat={lat} lng={lng} limit={4} exclude={[locationId]} />}
+          {lat && lng && !isGroup && (
+            <NearbyHotspots lat={lat} lng={lng} limit={4} exclude={[locationId, ...locationIds]} />
+          )}
         </div>
       </div>
     </div>
