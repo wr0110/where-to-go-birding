@@ -2,37 +2,10 @@ import { Image } from "lib/types";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import "photoswipe/dist/photoswipe.css";
 import StreetView from "components/StreetView";
+import { processImg, uiElements } from "lib/photoswipe";
 
 type Props = {
   photos: Image[];
-};
-
-const processImg = (image: Image) => {
-  if (image.isStreetview) {
-    return {
-      content: (
-        <StreetView
-          className="mt-[60px]"
-          style={{ width: "100%", height: "calc(100% - 60px)" }}
-          {...image.streetviewData}
-        />
-      ),
-      caption: "",
-    };
-  }
-  let caption = "";
-  if (image.caption) {
-    caption = image.caption;
-  }
-  if (image.by) {
-    caption = image.caption ? `${image.caption}<br />Photo by ${image.by}` : `Photo by ${image.by}`;
-  }
-  return {
-    src: image.lgUrl || image.smUrl,
-    width: image.width,
-    height: image.height,
-    caption,
-  };
 };
 
 export default function FeaturedImage({ photos }: Props) {
@@ -44,7 +17,7 @@ export default function FeaturedImage({ photos }: Props) {
   const isStreetview = featured.isStreetview;
 
   return (
-    <Gallery options={{ dataSource: items }} withCaption>
+    <Gallery options={{ dataSource: items }} uiElements={uiElements} withCaption>
       <Item {...processImg(featured)}>
         {({ ref, open }) => {
           const imgRef = ref as any;

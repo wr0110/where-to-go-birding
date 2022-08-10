@@ -151,6 +151,10 @@ svg.icon {
 	display: none;
 }
 
+.pswp__button--download.hidden {
+	display: none !important;
+}
+
 /*Mapbox*/
 .mapboxAddMarkerMode .mapboxgl-canvas-container {
 	@apply cursor-crosshair;

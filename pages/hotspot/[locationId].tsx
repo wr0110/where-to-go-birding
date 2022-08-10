@@ -152,7 +152,7 @@ export default function Hotspot({
       <PageHeading countrySlug={countryCode.toLowerCase()} state={state} county={county}>
         {name}
       </PageHeading>
-      {photos?.length > 0 && <FeaturedImage photos={photos} />}
+      {photos?.length > 0 && <FeaturedImage key={locationId} photos={photos} />}
       <EditorActions className={`${photos?.length > 0 ? "-mt-2" : "-mt-12"} font-medium`} allowPublic>
         {user && <Link href={isGroup ? `/edit/group/${_id}` : `/edit/${locationId}`}>Edit Hotspot</Link>}
         {user && (isGroup || !parent) && <Link href={`/add?defaultParentId=${_id}`}>Add Child Hotspot</Link>}

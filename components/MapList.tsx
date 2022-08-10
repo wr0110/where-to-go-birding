@@ -1,6 +1,7 @@
 import { Image } from "lib/types";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import "photoswipe/dist/photoswipe.css";
+import { uiElements } from "lib/photoswipe";
 
 type Props = {
   images: Image[];
@@ -14,13 +15,14 @@ export default function MapList({ images }: Props) {
     height: image.height,
     by: image.by,
     caption: image.caption,
+    downloadUrl: image.originalUrl || image.lgUrl || image.smUrl,
   }));
 
   if (items.length === 0) return null;
 
   return (
     <div className="flex flex-col gap-6 mt-6">
-      <Gallery>
+      <Gallery uiElements={uiElements} withCaption>
         {items.map((item) => (
           <div key={item.original}>
             <Item key={item.original} {...item}>
