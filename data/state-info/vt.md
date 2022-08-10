@@ -21,7 +21,7 @@ _[Birdwatching in Vermont](https://www.google.com/books/edition/Birdwatching_in_
 [Lake Champlain Birding Trail](https://atlas.lcbp.org/heritage-recreation/recreation-sites/lake-champlain-birding-trail/)  
 [Vermont Atlas for Life](https://val.vtecostudies.org/)  
 [Vermont Birds and Words blog](https://vtbirdsandwords.blogspot.com/)  
-[Vermont Breeding Bird Atlas](https://val.vtecostudies.org/projects/vermont-breeding-bird-atlas/)
+[Vermont Breeding Bird Atlas](https://val.vtecostudies.org/projects/vermont-breeding-bird-atlas/)  
 [Birding In Vermont](https://birdinginvermont.com) (birdinginvermont.com) by Richard Littauer  
 Vermont birding resources: Towns, nocturnal flight calls, subspecies, and more
 
