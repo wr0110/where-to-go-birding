@@ -26,8 +26,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   if (!state) return { notFound: true };
 
   const data = await getArticleBySlug(state.code, slug);
-  const hotspotsByCounty = data.hotspots ? restructureHotspotsByCounty(data.hotspots) : [];
   if (!data) return { notFound: true };
+  const hotspotsByCounty = data.hotspots ? restructureHotspotsByCounty(data.hotspots) : [];
 
   return {
     props: {
@@ -66,7 +66,7 @@ export default function Article({ countrySlug, name, content, hotspotsByCounty, 
           <div className="float-right max-w-[50%] ml-12 -mt-6 mb-6">
             {!!images?.length && <MapList images={images} />}
           </div>
-          {parse(content)}
+          {parse(content || "")}
         </div>
         {hotspotsByCounty.length > 0 && (
           <ListHotspotsByCounty countrySlug={countrySlug} stateSlug={state.slug} hotspots={hotspotsByCounty} />

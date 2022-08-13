@@ -79,7 +79,7 @@ export default function Edit({ isNew, data, id, state, countrySlug }: Props) {
       data: {
         ...data,
         stateCode: state.code,
-        countryCode: countrySlug,
+        countryCode: countrySlug.toUpperCase(),
         slug: newSlug,
         hotspots: data.hotspotSelect.map(({ value }) => value),
       },

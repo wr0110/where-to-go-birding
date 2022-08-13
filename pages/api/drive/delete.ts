@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import connect from "lib/mongo";
-import Drive from "models/Hotspot.mjs";
+import Drive from "models/Drive";
 import admin from "lib/firebaseAdmin";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {

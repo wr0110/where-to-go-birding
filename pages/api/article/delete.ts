@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import connect from "lib/mongo";
-import Article from "models/Hotspot.mjs";
+import Article from "models/Article";
 import admin from "lib/firebaseAdmin";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
@@ -17,7 +17,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   try {
     await connect();
-    await Article.deleteOne({ _id: id });
+    await Article.findByIdAndDelete(id);
+    console.log(id);
     res.status(200).json({ success: true });
   } catch (error: any) {
     res.status(500).json({ error: error.message });

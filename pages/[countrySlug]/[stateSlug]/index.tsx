@@ -1,3 +1,4 @@
+import * as React from "react";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Link from "next/link";
@@ -164,10 +165,11 @@ export default function State({ countrySlug, state, counties, topHotspots, info,
           <>
             <h3 className="text-lg mb-1.5 font-bold">Birding in {label} Articles</h3>
             <p className="mb-4">
-              {articles.map(({ name, slug }) => (
-                <Link href={`/${countrySlug}/${slug}/article/${slug}`} key={slug}>
-                  {name}
-                </Link>
+              {articles.map(({ name, slug: articleSlug }) => (
+                <React.Fragment key={articleSlug}>
+                  <Link href={`/${countrySlug}/${slug}/article/${articleSlug}`}>{name}</Link>
+                  <br />
+                </React.Fragment>
               ))}
             </p>
           </>
