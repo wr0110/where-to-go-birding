@@ -5,10 +5,11 @@ import { tinyConfig } from "lib/helpers";
 type InputProps = {
   name: string;
   defaultValue?: string;
+  config?: any;
   [x: string]: any;
 };
 
-const TinyMCE = ({ name, defaultValue, ...props }: InputProps) => {
+const TinyMCE = ({ name, defaultValue, config, ...props }: InputProps) => {
   const { control } = useFormContext();
   return (
     <div className="mt-1">
@@ -20,7 +21,7 @@ const TinyMCE = ({ name, defaultValue, ...props }: InputProps) => {
             <Editor
               id={name}
               initialValue={defaultValue || ""}
-              init={tinyConfig}
+              init={config || tinyConfig}
               onEditorChange={onChange}
               {...props}
             />

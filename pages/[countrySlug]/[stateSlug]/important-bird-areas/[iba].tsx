@@ -76,7 +76,7 @@ export default function ImportantBirdAreas({
           </p>
           <EbirdBarcharts portal={state.portal} region={region} />
           <h3 className="font-bold mb-1.5 text-lg">Locations</h3>
-          <ListHotspotsByCounty stateSlug={state?.slug} hotspots={hotspots} />
+          <ListHotspotsByCounty countrySlug={countrySlug} stateSlug={state?.slug} hotspots={hotspots} />
         </div>
         <div>
           <img src={`/iba/${slug}.jpg`} className="w-full mb-6" />

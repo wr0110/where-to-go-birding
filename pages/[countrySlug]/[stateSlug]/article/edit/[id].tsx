@@ -3,14 +3,13 @@ import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
-import InputDrives from "components/InputDrives";
+import InputHotspotsWithText from "components/InputHotspotsWithText";
 import Form from "components/Form";
 import Submit from "components/Submit";
 import Input from "components/Input";
-import CountySelect from "components/CountySelect";
-import { getDriveById } from "lib/mongo";
+import { getArticleById } from "lib/mongo";
 import AdminPage from "components/AdminPage";
-import { Drive, DriveInputs, State } from "lib/types";
+import { Article, ArticleInputs, State } from "lib/types";
 import Field from "components/Field";
 import useSecureFetch from "hooks/useSecureFetch";
 import FormError from "components/FormError";
@@ -18,6 +17,19 @@ import { getState } from "lib/localData";
 import { slugify } from "lib/helpers";
 import TinyMCE from "components/TinyMCE";
 import ImagesInput from "components/ImagesInput";
+import HotspotSelect from "components/HotspotSelect";
+
+const tinyConfig = {
+  menubar: false,
+  plugins: "link autoresize code lists",
+  toolbar: "h3 bold italic underline bullist | alignleft aligncenter | removeformat link code",
+  content_style:
+    "body { font-family:Helvetica,Arial,sans-serif; font-size:14px } cite { font-size: 0.75em; font-style: normal; color: #666; } .two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; } .three-columns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; } .four-columns { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 3rem; }",
+  branding: false,
+  elementpath: false,
+  autoresize_bottom_margin: 0,
+  convert_urls: false,
+};
 
 interface Params extends ParsedUrlQuery {
   id: string;
@@ -27,20 +39,19 @@ interface Params extends ParsedUrlQuery {
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { id, countrySlug, stateSlug } = query as Params;
-  const data: Drive = id !== "new" ? await getDriveById(id) : null;
+  const data: Article = id !== "new" ? await getArticleById(id) : null;
 
   const state = getState(stateSlug);
   if (!state) return { notFound: true };
-  const entries =
-    data?.entries?.map((entry) => ({ ...entry, hotspotSelect: { label: entry.hotspot.name, value: entry.hotspot } })) ??
-    [];
+  const hotspotSelect = data?.hotspots?.map((hotspot) => ({ label: hotspot.name, value: hotspot._id })) || [];
+
   return {
     props: {
       id: data?._id || null,
       countrySlug,
       state,
       isNew: !data,
-      data: { ...data, entries, counties: data?.counties || [] },
+      data: { ...data, hotspotSelect },
     },
   };
 };
@@ -50,7 +61,7 @@ type Props = {
   countrySlug: string;
   state: State;
   isNew: boolean;
-  data: Drive;
+  data: Article;
 };
 
 export default function Edit({ isNew, data, id, state, countrySlug }: Props) {
@@ -58,60 +69,55 @@ export default function Edit({ isNew, data, id, state, countrySlug }: Props) {
   const secureFetch = useSecureFetch();
 
   const router = useRouter();
-  const form = useForm<DriveInputs>({ defaultValues: data });
+  const form = useForm<ArticleInputs>({ defaultValues: data });
 
-  const handleSubmit: SubmitHandler<DriveInputs> = async (data) => {
+  const handleSubmit: SubmitHandler<ArticleInputs> = async (data) => {
     setSaving(true);
     const newSlug = slugify(data.name);
-    const json = await secureFetch(`/api/drive/set?isNew=${isNew}`, "POST", {
+    const json = await secureFetch(`/api/article/set?isNew=${isNew}`, "POST", {
       id,
       data: {
         ...data,
         stateCode: state.code,
+        countryCode: countrySlug,
         slug: newSlug,
-        entries: data.entries.map((it) => ({ ...it, hotspot: it.hotspotSelect.value })),
+        hotspots: data.hotspotSelect.map(({ value }) => value),
       },
     });
     setSaving(false);
     if (json.success) {
-      router.push(`/${countrySlug}/${state.slug}/drive/${newSlug}`);
+      router.push(`/${countrySlug}/${state.slug}/article/${newSlug}`);
     } else {
       console.error(json.error);
-      alert("Error saving drive");
+      alert("Error saving article");
     }
   };
 
   return (
-    <AdminPage title={`${isNew ? "Add" : "Edit"} Drive`}>
+    <AdminPage title={`${isNew ? "Add" : "Edit"} Article`}>
       <div className="container pb-16 my-12">
         <Form form={form} onSubmit={handleSubmit}>
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
-              <h2 className="text-xl font-bold text-gray-600 border-b pb-4">{isNew ? "Add" : "Edit"} Drive</h2>
-              <Field label="Name">
+              <h2 className="text-xl font-bold text-gray-600 border-b pb-4">{isNew ? "Add" : "Edit"} Article</h2>
+              <Field label="Title">
                 <Input type="text" name="name" required />
                 <FormError name="name" />
               </Field>
-              <Field label="Description">
-                <TinyMCE name="description" defaultValue={data?.description} />
-                <FormError name="description" />
-              </Field>
-              <Field label="Google Map ID">
-                <Input type="text" name="mapId" required />
-                <FormError name="mapId" />
-              </Field>
-              <Field label="Counties">
-                <CountySelect name="counties" stateCode={state.code} isMulti required />
-                <FormError name="counties" />
+              <Field label="Content">
+                <TinyMCE config={tinyConfig} name="content" defaultValue={data?.content} />
+                <FormError name="content" />
               </Field>
               <Field label="Images">
                 <ImagesInput hideExtraFields />
               </Field>
-              <InputDrives stateCode={state.code} />
+              <Field label="Attached Hotspots">
+                <HotspotSelect name="hotspotSelect" stateCode={state.code} className="mt-1 w-full" isMulti />
+              </Field>
             </div>
             <div className="px-4 py-3 bg-gray-100 text-right sm:px-6 rounded">
               <Submit loading={saving} color="green" className="font-medium">
-                Save Drive
+                Save Article
               </Submit>
             </div>
           </div>

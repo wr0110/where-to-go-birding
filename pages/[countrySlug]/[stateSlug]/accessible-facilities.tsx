@@ -61,7 +61,7 @@ export default function AccessibleFacilities({ state, countrySlug, hotspots }: P
       </p>
       <h3 className="text-lg mb-8 font-bold">Accessible Facilities Listed by County</h3>
       <div className="columns-1 sm:columns-3 mb-12">
-        <ListHotspotsByCounty stateSlug={state.slug} hotspots={hotspots} />
+        <ListHotspotsByCounty countrySlug={countrySlug} stateSlug={state.slug} hotspots={hotspots} />
       </div>
     </div>
   );

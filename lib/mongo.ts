@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Hotspot from "models/Hotspot.mjs";
-import Drive from "models/Drive.mjs";
+import Drive from "models/Drive";
+import Article from "models/Article";
 import Settings from "models/Settings.mjs";
 import Upload from "models/Upload";
 
@@ -174,6 +175,41 @@ export async function getDriveBySlug(stateCode: string, slug: string) {
 export async function getDriveById(_id: string) {
   await connect();
   const result = await Drive.findOne({ _id }).populate("entries.hotspot", ["url", "name", "address"]).lean().exec();
+
+  return result ? JSON.parse(JSON.stringify(result)) : null;
+}
+
+export async function getArticlesByState(stateCode: string) {
+  await connect();
+  const result = await Article.find(
+    {
+      stateCode,
+    },
+    ["-_id", "name", "slug"]
+  )
+    .sort({ name: 1 })
+    .lean()
+    .exec();
+
+  return result;
+}
+
+export async function getArticleBySlug(stateCode: string, slug: string) {
+  await connect();
+  const result = await Article.findOne({ stateCode, slug })
+    .populate("hotspots", ["url", "name", "countyCode", "multiCounties"])
+    .lean()
+    .exec();
+
+  return result ? JSON.parse(JSON.stringify(result)) : null;
+}
+
+export async function getArticleById(_id: string) {
+  await connect();
+  const result = await Article.findOne({ _id })
+    .populate("hotspots", ["url", "name", "countyCode", "multiCounties"])
+    .lean()
+    .exec();
 
   return result ? JSON.parse(JSON.stringify(result)) : null;
 }

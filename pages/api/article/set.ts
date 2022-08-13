@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import connect from "lib/mongo";
-import Hotspot from "models/Hotspot.mjs";
-import Drive from "models/Drive";
 import admin from "lib/firebaseAdmin";
+import Article from "models/Article";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   const token = req.headers.authorization;
+  const { isNew }: any = req.query;
 
   try {
     await admin.verifyIdToken(token || "");
@@ -14,13 +14,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return;
   }
 
-  const { id }: any = req.query;
-
   try {
     await connect();
-    await Hotspot.deleteOne({ _id: id });
-    // @ts-ignore
-    await Drive.updateMany({ entries: { $elemMatch: { hotspot: id } } }, { $pull: { entries: { hotspot: id } } });
+    const { data, id } = req.body;
+    if (isNew === "true") {
+      await Article.create({ ...data, _id: id });
+    } else {
+      await Article.replaceOne({ _id: id }, data);
+    }
+
     res.status(200).json({ success: true });
   } catch (error: any) {
     res.status(500).json({ error: error.message });

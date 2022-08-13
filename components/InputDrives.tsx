@@ -7,7 +7,7 @@ type Props = {
   stateCode: string;
 };
 
-const Input = ({ stateCode }: Props) => {
+const InputDrives = ({ stateCode }: Props) => {
   const { control } = useFormContext();
   const { fields, append, remove, insert } = useFieldArray({ name: "entries", control });
   return (
@@ -59,4 +59,4 @@ const Input = ({ stateCode }: Props) => {
   );
 };
 
-export default Input;
+export default InputDrives;

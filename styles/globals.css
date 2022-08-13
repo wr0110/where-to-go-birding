@@ -66,6 +66,22 @@
 	@apply font-bold;
 }
 
+.formatted h2 {
+	@apply mb-1.5;
+	@apply text-2xl;
+	@apply font-bold;
+}
+
+.formatted ul {
+	@apply list-disc;
+	@apply mb-4;
+	@apply ml-6;
+}
+
+.formatted li {
+	@apply mb-0.5;
+}
+
 .formatted cite {
 	font-size: 0.75em;
 	@apply not-italic;
@@ -83,6 +99,24 @@
 
 .formatted br + cite {
 	@apply mt-0;
+}
+
+.formatted .two-columns {
+	@apply md:grid;
+	@apply grid-cols-2;
+	@apply gap-12;
+}
+
+.formatted .three-columns {
+	@apply md:grid;
+	@apply grid-cols-3;
+	@apply gap-12;
+}
+
+.formatted .four-columns {
+	@apply md:grid;
+	@apply grid-cols-4;
+	@apply gap-12;
 }
 
 svg.icon {
@@ -126,6 +160,10 @@ svg.icon {
 	@apply border-gray-200 !important;
 	@apply shadow-sm !important;
 	border-width: 1px !important;
+}
+
+.tox-tinymce-aux {
+	z-index: 10000 !important;
 }
 
 .uppy-DragDrop-container {

@@ -171,6 +171,31 @@ export type DriveInputs = {
   ];
 };
 
+export type Article = {
+  _id?: string;
+  name: string;
+  countryCode: string;
+  stateCode: string;
+  slug: string;
+  content: string;
+  images?: Image[];
+  hotspots: [Hotspot];
+};
+
+export type ArticleInputs = {
+  _id?: string;
+  name: string;
+  countryCode: string;
+  stateCode: string;
+  slug: string;
+  content: string;
+  images?: Image[];
+  hotspotSelect: {
+    label: string;
+    value: string;
+  }[];
+};
+
 export type LocationSearchValue = {
   label: string;
   lat: number;

@@ -70,7 +70,7 @@ export default function RoadsideBirding({ countrySlug, state, hotspots }: Props)
       </div>
       <h3 className="text-lg mb-8 font-bold">Roadside Birding Locations Listed by County</h3>
       <div className="columns-1 sm:columns-3 mb-12">
-        <ListHotspotsByCounty stateSlug={state.slug} hotspots={hotspots} />
+        <ListHotspotsByCounty countrySlug={countrySlug} stateSlug={state.slug} hotspots={hotspots} />
       </div>
     </div>
   );

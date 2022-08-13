@@ -31,16 +31,18 @@ const DriveSchema = new Schema({
       description: String,
     },
   ],
-  images: [{
-		smUrl: String,
-		lgUrl: String,
-		by: String,
-		isMap: Boolean,
-		width: Number,
-		height: Number,
-		caption: String,
-		legacy: Boolean,
-	}],
+  images: [
+    {
+      smUrl: String,
+      lgUrl: String,
+      originalUrl: String,
+      by: String,
+      width: Number,
+      height: Number,
+      caption: String,
+      legacy: Boolean,
+    },
+  ],
   createdAt: {
     type: "string",
     default: dayjs().format("YYYY-MM-DD"),

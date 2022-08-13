@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import connect from "lib/mongo";
 import admin from "lib/firebaseAdmin";
-import Drive from "models/Drive.mjs";
+import Drive from "models/Drive";
 import Hotspot from "models/Hotspot.mjs";
 
 type Entry = {

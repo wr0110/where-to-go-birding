@@ -1,4 +1,4 @@
-import { GetStaticProps, GetStaticPaths } from "next";
+import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Link from "next/link";
 import EbirdStateSummary from "components/EbirdStateSummary";
@@ -17,8 +17,7 @@ import EbirdDescription from "components/EbirdDescription";
 import EbirdHelpLinks from "components/EbirdHelpLinks";
 import StateFeatureLinks from "components/StateFeatureLinks";
 import RareBirds from "components/RareBirds";
-import States from "data/states.json";
-import { State as StateType, County as CountyType } from "lib/types";
+import { State as StateType, Article, County as CountyType } from "lib/types";
 import Heading from "components/Heading";
 import PageHeading from "components/PageHeading";
 import EditorActions from "components/EditorActions";
@@ -28,20 +27,14 @@ import TopHotspotList from "components/TopHotspotList";
 import fs from "fs";
 import path from "path";
 import ReactMarkdown from "react-markdown";
+import { getArticlesByState } from "lib/mongo";
 
 interface Params extends ParsedUrlQuery {
   countrySlug: string;
   stateSlug: string;
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = States.filter(({ active }) => active).map(({ slug }) => ({
-    params: { countrySlug: "us", stateSlug: slug },
-  }));
-  return { paths, fallback: true };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { countrySlug, stateSlug } = params as Params;
   const state = getState(stateSlug);
   if (!countrySlug || !state) return { notFound: true };
@@ -54,7 +47,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const infoFile = path.join(process.cwd(), "data", "state-info", `${state.code.toLowerCase()}.md`);
   const info = fs.readFileSync(infoFile.toString(), "utf8");
 
-  return { props: { countrySlug, counties, state, topHotspots, info } };
+  const articles = (await getArticlesByState(state.code)) || [];
+
+  return { props: { countrySlug, counties, state, topHotspots, info, articles } };
 };
 
 type Props = {
@@ -62,6 +57,7 @@ type Props = {
   state: StateType;
   counties: CountyType[];
   info: string;
+  articles: Article[];
   topHotspots: {
     name: string;
     total: number;
@@ -69,7 +65,7 @@ type Props = {
   }[];
 };
 
-export default function State({ countrySlug, state, counties, topHotspots, info }: Props) {
+export default function State({ countrySlug, state, counties, topHotspots, info, articles }: Props) {
   const { label, code, slug, features } = state || ({} as StateType);
   const maps: any = {
     OH: <OhioMap />,
@@ -101,6 +97,7 @@ export default function State({ countrySlug, state, counties, topHotspots, info 
       <EditorActions className="-mt-10">
         <Link href="/add">Add Hotspot</Link>
         <Link href={`/edit/group/new?state=${code}&country=${countrySlug}`}>Add Group Hotspot</Link>
+        <Link href={`/${countrySlug}/${slug}/article/edit/new`}>Add Article</Link>
       </EditorActions>
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
         <div>
@@ -163,6 +160,18 @@ export default function State({ countrySlug, state, counties, topHotspots, info 
 
       <div className="md:columns-2 gap-16 formatted">
         <ReactMarkdown linkTarget="_blank">{info}</ReactMarkdown>
+        {articles.length > 0 && (
+          <>
+            <h3 className="text-lg mb-1.5 font-bold">Birding in {label} Articles</h3>
+            <p className="mb-4">
+              {articles.map(({ name, slug }) => (
+                <Link href={`/${countrySlug}/${slug}/article/${slug}`} key={slug}>
+                  {name}
+                </Link>
+              ))}
+            </p>
+          </>
+        )}
       </div>
       <hr className="my-8 opacity-70" />
       <div className="grid md:grid-cols-2 gap-12">
