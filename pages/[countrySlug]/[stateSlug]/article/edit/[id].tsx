@@ -3,7 +3,6 @@ import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
-import InputHotspotsWithText from "components/InputHotspotsWithText";
 import Form from "components/Form";
 import Submit from "components/Submit";
 import Input from "components/Input";
