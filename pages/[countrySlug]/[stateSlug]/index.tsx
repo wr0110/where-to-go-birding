@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Link from "next/link";
 import EbirdStateSummary from "components/EbirdStateSummary";
-import OhioMap from "components/OhioMap";
+import OhioMap from "components/state-maps/OhioMap";
 import ArizonaMap from "components/ArizonaMap";
 import VermontMap from "components/VermontMap";
 import NewMexicoMap from "components/NewMexicoMap";

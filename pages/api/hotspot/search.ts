@@ -11,7 +11,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   };
 
   if (Array.isArray(selectedIds) && selectedIds.length > 0) {
-    console.log("selectedIds", selectedIds);
     query = { ...query, _id: { $nin: selectedIds } };
   }
 

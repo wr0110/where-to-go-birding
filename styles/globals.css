@@ -266,3 +266,21 @@ img.marker {
 .pac-item:first-of-type{
 	border-top: none;
 }
+
+/*SVG Maps*/
+
+.state-map path, .state-map a {
+	cursor: pointer;
+}
+
+.state-map path {
+	@apply fill-slate-200;
+}
+
+.state-map a:hover path {
+	@apply fill-slate-300;
+}
+
+.state-map text {
+	font-size: 9px;
+}
