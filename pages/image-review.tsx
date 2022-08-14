@@ -94,7 +94,7 @@ export default function County({ items: allItems }: Props) {
               </p>
             )}
             <div className={`grid ${item.uploads.length > 0 ? "grid-cols-4" : ""} gap-4 mt-4`}>
-              <Gallery>
+              <Gallery withCaption>
                 {item.uploads.map(({ width, height, _id, smUrl, lgUrl, caption, by, email }) => {
                   const isVertical = width && height && height > width;
                   return (

@@ -100,6 +100,7 @@ const HotspotSchema = new Schema({
 		by: String,
 		isMap: Boolean,
 		isStreetview: Boolean,
+		isPublicDomain: Boolean,
 		width: Number,
 		height: Number,
 		caption: String,

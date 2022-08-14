@@ -25,6 +25,7 @@ export type Image = {
   by?: string;
   isMap?: boolean;
   isStreetview?: boolean;
+  isPublicDomain?: boolean;
   width?: number;
   height?: number;
   preview?: string;

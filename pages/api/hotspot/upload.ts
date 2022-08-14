@@ -17,6 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     await admin.verifyIdToken(authToken || "");
     const formattedImages = images.map((it: Image) => ({
       ...it,
+      isPublicDomain: true,
       by: name,
     }));
     let featuredImg = hotspot.featuredImg;

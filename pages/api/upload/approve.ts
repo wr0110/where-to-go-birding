@@ -34,7 +34,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     if (!featuredImg?.smUrl) {
       featuredImg = upload;
     }
-    await Hotspot.updateOne({ locationId: upload.locationId }, { featuredImg, $push: { images: upload } });
+    const formattedImage = { ...upload.toObject(), isPublicDomain: true };
+    await Hotspot.updateOne({ locationId: upload.locationId }, { featuredImg, $push: { images: formattedImage } });
     await Upload.updateOne({ _id: id }, { status: "approved" });
     res.status(200).json({ success: true });
   } catch (error: any) {
