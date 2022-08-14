@@ -14,10 +14,12 @@ type Props = {
 };
 
 export default function HotspotSelect({ name, stateCode, required, ...props }: Props) {
-  const { control } = useFormContext();
+  const { control, watch } = useFormContext();
+  const value = watch(name);
 
   const loadOptions = async (inputValue: string, callback: (options: Option[]) => void) => {
-    const response = await fetch(`/api/hotspot/search?stateCode=${stateCode || ""}&q=${inputValue}`);
+    const ids = Array.isArray(value) ? value.map(({ value }) => value).join(",") : value?.value || "";
+    const response = await fetch(`/api/hotspot/search?stateCode=${stateCode || ""}&q=${inputValue}&ids=${ids}`);
     const json = await response.json();
     const options = json.results;
     callback(options || []);
@@ -32,7 +34,6 @@ export default function HotspotSelect({ name, stateCode, required, ...props }: P
         return (
           <AsyncSelectStyled
             loadOptions={loadOptions}
-            cacheOptions
             defaultOptions
             noOptionsMessage={({ inputValue }: any) => (inputValue.length ? "No Results" : "Search for a hotspot...")}
             {...field}
