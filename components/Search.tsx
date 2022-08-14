@@ -3,6 +3,7 @@ import AsyncSelect from "react-select/async";
 import { components, DropdownIndicatorProps } from "react-select";
 import { SearchIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
+import Highlighter from "react-highlight-words";
 
 type Option = {
   value: string;
@@ -20,6 +21,10 @@ const DropdownIndicator = ({ children, ...props }: DropdownIndicatorProps) => (
     <SearchIcon className="h-5 w-5 opacity-80 mr-2" />
   </components.DropdownIndicator>
 );
+
+function formatOptionLabel({ label }: any, { inputValue }: any) {
+  return <Highlighter searchWords={[inputValue]} textToHighlight={label} highlightTag="b" />;
+}
 
 export default function Search({ onChange, pill, ...props }: Props) {
   const [value, setValue] = React.useState<Option | null>(null);
@@ -73,6 +78,7 @@ export default function Search({ onChange, pill, ...props }: Props) {
       autoFocus
       // @ts-expect-error
       components={{ DropdownIndicator }}
+      formatOptionLabel={formatOptionLabel}
       noOptionsMessage={() => null}
       loadingMessage={() => null}
       placeholder="Find a region or hotspot..."
