@@ -93,7 +93,11 @@ export default function County({ items: allItems }: Props) {
                 {item.stateLabel}, {item.countryCode}
               </p>
             )}
-            <div className={`grid ${item.uploads.length > 0 ? "grid-cols-4" : ""} gap-4 mt-4`}>
+            <div
+              className={`grid ${
+                item.uploads.length > 0 ? "xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : ""
+              } gap-4 mt-4`}
+            >
               <Gallery withCaption>
                 {item.uploads.map(({ width, height, _id, smUrl, lgUrl, caption, by, email }) => {
                   const isVertical = width && height && height > width;
