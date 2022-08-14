@@ -278,9 +278,38 @@ img.marker {
 }
 
 .state-map a:hover path {
-	@apply fill-slate-300;
+	opacity: 0.8;
 }
 
 .state-map text {
 	font-size: 9px;
+	font-weight: 500;
+}
+
+.teal path {
+	fill: #46a695;
+}
+
+.teal text, .purple text, .green text, .red text, .orange text {
+	fill: white;
+}
+
+.green path {
+	fill: #92ad39;
+}
+
+.yellow path {
+	fill: #efd75e;
+}
+
+.purple path {
+	fill: #8d4cb6;
+}
+
+.orange path {
+	fill: #e57701;
+}
+
+.red path {
+	fill: #ce0d03;
 }
