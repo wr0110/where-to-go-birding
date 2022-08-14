@@ -13,8 +13,8 @@ export function slugify(title?: string) {
 
 export const tinyConfig = {
   menubar: false,
-  plugins: "link autoresize",
-  toolbar: "bold italic underline | link | cite",
+  plugins: "link autoresize lists",
+  toolbar: "bold italic underline bullist | link | cite",
   content_style:
     "body { font-family:Helvetica,Arial,sans-serif; font-size:14px } cite { font-size: 0.75em; font-style: normal; color: #666; }",
   branding: false,
