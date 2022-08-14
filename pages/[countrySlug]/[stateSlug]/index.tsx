@@ -160,7 +160,6 @@ export default function State({ countrySlug, state, counties, topHotspots, info,
       </Heading>
 
       <div className="md:columns-2 gap-16 formatted">
-        <ReactMarkdown linkTarget="_blank">{info}</ReactMarkdown>
         {articles.length > 0 && (
           <>
             <h3 className="text-lg mb-1.5 font-bold">Birding in {label} Articles</h3>
@@ -174,6 +173,7 @@ export default function State({ countrySlug, state, counties, topHotspots, info,
             </p>
           </>
         )}
+        <ReactMarkdown linkTarget="_blank">{info}</ReactMarkdown>
       </div>
       <hr className="my-8 opacity-70" />
       <div className="grid md:grid-cols-2 gap-12">

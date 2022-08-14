@@ -10,10 +10,6 @@
 [Best Bets for Birding Crane Creek/Magee Marsh](http://cranecreekbirding.blogspot.com/)  
 [Ohio-birds email list (Ohio Ornithological Society)](https://ohiobirds.org/birding-discussion-mailing-list/)
 
-### Books
-
-[Books on Birding in Ohio](/books-on-birding-in-ohio)
-
 ### Facebook and Other Groups
 
 [Birding Ohio](https://www.facebook.com/groups/BirdingOhio/)  
