@@ -93,6 +93,8 @@ export default function Upload({ locationId, hotspotName, error }: Props) {
     }
   };
 
+  const value = form.watch("images");
+
   const handleSubmit: SubmitHandler<Inputs> = async (data) => {
     // @ts-ignore
     window.grecaptcha.ready(() => {
@@ -137,9 +139,9 @@ export default function Upload({ locationId, hotspotName, error }: Props) {
           <li>Choose a few of your best photos from the hotspot</li>
         </ul>
       </div>
-      <Form form={form} onSubmit={handleSubmit}>
+      <Form form={form} onSubmit={handleSubmit} className="form-text-lg">
         <div className="pt-5 bg-white space-y-6 flex-1">
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <label className="text-gray-500 font-bold">
                 Name{" "}
@@ -166,7 +168,7 @@ export default function Upload({ locationId, hotspotName, error }: Props) {
             <p className="text-xs leading-5 text-gray-500 md:max-w-[250px]">
               By uploading you agree to release the photos into the public domain (CC0 license).
             </p>
-            <Submit loading={saving} color="green" className="font-medium">
+            <Submit loading={saving} disabled={value?.length < 1} color="green" className="font-medium">
               Save Photos
             </Submit>
           </div>
