@@ -51,6 +51,10 @@
 		@apply text-lg;
 	}
 
+	.form-text-lg .form-input {
+		@apply text-base;
+	}
+
 	.form-input.input-error {
 		border-color: #e90000ad;
 	}
