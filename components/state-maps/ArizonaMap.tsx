@@ -7,7 +7,8 @@ export default function ArizonaMap() {
       className="state-map"
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMinYMin meet"
-      viewBox="230 20 482 520"
+      viewBox="248 35 464 505"
+      width="100%"
     >
       <g>
         <g id="states">

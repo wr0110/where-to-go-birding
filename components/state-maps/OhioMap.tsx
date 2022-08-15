@@ -7,6 +7,7 @@ export default function OhioMap() {
       preserveAspectRatio="xMinYMin meet"
       viewBox="230 20 482 520"
       className="state-map"
+      width="100%"
     >
       <g>
         <g id="states">
