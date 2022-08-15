@@ -9,7 +9,7 @@ import VermontMap from "components/VermontMap";
 import NewMexicoMap from "components/NewMexicoMap";
 import RhodeIslandMap from "components/RhodeIslandMap";
 import MichiganMap from "components/MichiganMap";
-import MassachusettsMap from "components/MassachusettsMap";
+import MassachusettsMap from "components/state-maps/MassachusettsMap";
 import KentuckyMap from "components/KentuckyMap";
 import GeorgiaMap from "components/GeorgiaMap";
 import NewHampshireMap from "components/NewHampshireMap";
