@@ -10,7 +10,7 @@ export default function ArizonaMap() {
       width="100%"
     >
       <g>
-        <g id="states">
+        <g>
           <Link href="/us/arizona/apache-county">
             <a>
               <path

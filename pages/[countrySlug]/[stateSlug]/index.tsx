@@ -5,7 +5,7 @@ import Link from "next/link";
 import EbirdStateSummary from "components/EbirdStateSummary";
 import OhioMap from "components/state-maps/OhioMap";
 import ArizonaMap from "components/state-maps/ArizonaMap";
-import VermontMap from "components/VermontMap";
+import VermontMap from "components/state-maps/VermontMap";
 import NewMexicoMap from "components/state-maps/NewMexicoMap";
 import RhodeIslandMap from "components/state-maps/RhodeIslandMap";
 import MichiganMap from "components/MichiganMap";
