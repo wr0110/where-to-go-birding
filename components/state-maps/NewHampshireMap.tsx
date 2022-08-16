@@ -9,7 +9,7 @@ export default function NewHampshireMap() {
       viewBox="250 38 450  500"
     >
       <g>
-        <g id="states">
+        <g>
           <Link href="/us/new-hampshire/coos-county">
             <a>
               <path
