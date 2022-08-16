@@ -286,6 +286,10 @@ img.marker {
 	font-weight: 500;
 }
 
+.hover-map a text {
+	display: none;
+}
+
 .teal path {
 	fill: #46a695;
 }

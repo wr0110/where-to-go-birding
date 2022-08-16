@@ -11,7 +11,7 @@ import RhodeIslandMap from "components/state-maps/RhodeIslandMap";
 import MichiganMap from "components/MichiganMap";
 import MassachusettsMap from "components/state-maps/MassachusettsMap";
 import KentuckyMap from "components/KentuckyMap";
-import GeorgiaMap from "components/GeorgiaMap";
+import GeorgiaMap from "components/state-maps/GeorgiaMap";
 import NewHampshireMap from "components/state-maps/NewHampshireMap";
 import { getState, getCounties } from "lib/localData";
 import EbirdDescription from "components/EbirdDescription";
