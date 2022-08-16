@@ -7,7 +7,7 @@ import OhioMap from "components/state-maps/OhioMap";
 import ArizonaMap from "components/state-maps/ArizonaMap";
 import VermontMap from "components/VermontMap";
 import NewMexicoMap from "components/state-maps/NewMexicoMap";
-import RhodeIslandMap from "components/RhodeIslandMap";
+import RhodeIslandMap from "components/state-maps/RhodeIslandMap";
 import MichiganMap from "components/MichiganMap";
 import MassachusettsMap from "components/state-maps/MassachusettsMap";
 import KentuckyMap from "components/KentuckyMap";
