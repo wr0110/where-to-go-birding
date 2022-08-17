@@ -3,16 +3,6 @@ import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Link from "next/link";
 import EbirdStateSummary from "components/EbirdStateSummary";
-import OhioMap from "components/state-maps/OhioMap";
-import ArizonaMap from "components/state-maps/ArizonaMap";
-import VermontMap from "components/state-maps/VermontMap";
-import NewMexicoMap from "components/state-maps/NewMexicoMap";
-import RhodeIslandMap from "components/state-maps/RhodeIslandMap";
-import MichiganMap from "components/MichiganMap";
-import MassachusettsMap from "components/state-maps/MassachusettsMap";
-import KentuckyMap from "components/KentuckyMap";
-import GeorgiaMap from "components/state-maps/GeorgiaMap";
-import NewHampshireMap from "components/state-maps/NewHampshireMap";
 import { getState, getCounties } from "lib/localData";
 import EbirdDescription from "components/EbirdDescription";
 import EbirdHelpLinks from "components/EbirdHelpLinks";
@@ -29,6 +19,7 @@ import fs from "fs";
 import path from "path";
 import ReactMarkdown from "react-markdown";
 import { getArticlesByState } from "lib/mongo";
+import StateMap from "components/StateMap";
 
 interface Params extends ParsedUrlQuery {
   countrySlug: string;
@@ -68,20 +59,6 @@ type Props = {
 
 export default function State({ countrySlug, state, counties, topHotspots, info, articles }: Props) {
   const { label, code, slug, features } = state || ({} as StateType);
-  const maps: any = {
-    OH: <OhioMap />,
-    AZ: <ArizonaMap />,
-    VT: <VermontMap />,
-    RI: <RhodeIslandMap />,
-    NM: <NewMexicoMap />,
-    MI: <MichiganMap />,
-    MA: <MassachusettsMap />,
-    KY: <KentuckyMap />,
-    GA: <GeorgiaMap />,
-    NH: <NewHampshireMap />,
-  };
-
-  const map = maps[code];
 
   return (
     <div className="container pb-16 mt-12">
@@ -122,7 +99,14 @@ export default function State({ countrySlug, state, counties, topHotspots, info,
           <EbirdStateSummary {...state} code={`${countrySlug?.toUpperCase()}-${state?.code}`} />
         </div>
         <div className="mb-8">
-          <div className="flex justify-center items-start md:mt-12">{map}</div>
+          <div className="flex justify-center items-start md:mt-12">
+            <StateMap regionCode={`${countrySlug.toUpperCase()}-${code}`} />
+          </div>
+          <div className="grid gap-8 grid-cols-2">
+            <div className="flex gap-4 items-center">
+              <div className="w-6 h-3" />
+            </div>
+          </div>
         </div>
       </div>
 
