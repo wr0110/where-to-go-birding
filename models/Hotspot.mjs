@@ -124,6 +124,7 @@ const HotspotSchema = new Schema({
 		required: true
 	},
 	isGroup: Boolean,
+	species: Number,
 	migrateParentSlug: String, //TODO remove
 	migrateParentGroupSlug: String, //TODO remove
 	reviewed: Boolean, //TODO remove
