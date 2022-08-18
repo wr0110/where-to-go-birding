@@ -89,9 +89,9 @@ export function getAllCounties() {
   const counties: any = [];
   Object.entries(countyArrays).forEach(([stateCode, array]: any) => {
     const stateSlug = getStateByCode(stateCode)?.slug;
-    array.forEach(({ slug }: County) => {
+    array.forEach(({ slug, ebirdCode }: County) => {
       const name = capitalize(slug.replaceAll("-", " "));
-      counties.push({ slug, name: `${name} County, ${stateCode}, US`, stateSlug });
+      counties.push({ slug, code: ebirdCode, name: `${name} County, ${stateCode}, US`, stateSlug });
     });
   });
   return counties;
