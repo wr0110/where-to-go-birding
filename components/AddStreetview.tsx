@@ -5,10 +5,10 @@ import StreetView from "components/StreetView";
 import { RefreshIcon } from "@heroicons/react/outline";
 import useSecureFetch from "hooks/useSecureFetch";
 
-export default function MapZoomInput() {
+export default function AddStreetView() {
   const [loading, setLoading] = React.useState(false);
   const [url, setUrl] = React.useState("");
-  const [fov, setFov] = React.useState(90);
+  const [fov, setFov] = React.useState(80);
   const [open, setOpen] = React.useState(false);
   const [rendered, setRendered] = React.useState(false);
   const { setValue, getValues } = useFormContext();
