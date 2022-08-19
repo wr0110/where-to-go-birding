@@ -14,7 +14,6 @@ import PageHeading from "components/PageHeading";
 import EditorActions from "components/EditorActions";
 import Title from "components/Title";
 import { scrollToAnchor } from "lib/helpers";
-import TopHotspotList from "components/TopHotspotList";
 import fs from "fs";
 import path from "path";
 import ReactMarkdown from "react-markdown";
@@ -34,16 +33,12 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!countrySlug || !state) return { notFound: true };
   const counties = getCounties(state.code);
 
-  const top10File = path.join(process.cwd(), "public", "top10", `US-${state.code}.json`);
-  const topHotspotFile = fs.readFileSync(top10File);
-  const topHotspots = JSON.parse(topHotspotFile.toString());
-
   const infoFile = path.join(process.cwd(), "data", "state-info", `${state.code.toLowerCase()}.md`);
   const info = fs.readFileSync(infoFile.toString(), "utf8");
 
   const articles = (await getArticlesByState(state.code)) || [];
 
-  return { props: { countrySlug, counties, state, topHotspots, info, articles } };
+  return { props: { countrySlug, counties, state, info, articles } };
 };
 
 type Props = {
@@ -52,14 +47,9 @@ type Props = {
   counties: CountyType[];
   info: string;
   articles: Article[];
-  topHotspots: {
-    name: string;
-    total: number;
-    url?: string;
-  }[];
 };
 
-export default function State({ countrySlug, state, counties, topHotspots, info, articles }: Props) {
+export default function State({ countrySlug, state, counties, info, articles }: Props) {
   const [view, setView] = React.useState<string>("map");
   const { label, code, slug, features } = state || ({} as StateType);
 
