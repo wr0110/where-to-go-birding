@@ -135,8 +135,8 @@ export default function Upload({ locationId, hotspotName, error }: Props) {
             Upload photos of habitat, features, ponds, trails, parking &ndash; help birders know what to expect when
             they visit.
           </li>
-          <li>Avoid uploading multiple photos from a similar angle</li>
           <li>Choose a few of your best photos from the hotspot</li>
+          <li>Avoid adding a watermark your images</li>
         </ul>
       </div>
       <Form form={form} onSubmit={handleSubmit} className="form-text-lg">
