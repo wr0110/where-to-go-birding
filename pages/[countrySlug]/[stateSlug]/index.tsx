@@ -74,10 +74,6 @@ export default function State({ countrySlug, state, counties, info, articles }: 
         <div>
           <h3 className="text-lg mb-1.5 font-bold">Where to Go Birding in {label}</h3>
           <p className="mb-4">
-            <a href="#counties" onClick={scrollToAnchor}>
-              Alphabetical list of {label} Counties
-            </a>
-            <br />
             <Link href={`/${countrySlug}/${slug}/alphabetical-index`}>{`Alphabetical list of ${label} Hotspots`}</Link>
             <br />
             <a href="#hotspots" onClick={scrollToAnchor}>
@@ -104,7 +100,7 @@ export default function State({ countrySlug, state, counties, info, articles }: 
                 </>
               ) : (
                 <>
-                  <ViewListIcon className="w-4 h-4" /> View List
+                  <ViewListIcon className="w-4 h-4" /> View County List
                 </>
               )}
             </button>
