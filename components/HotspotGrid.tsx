@@ -23,13 +23,15 @@ export default function HotspotGrid({ lat, lng, hotspots, loading, showFullName 
       </>
     );
   }
+
   return (
     <>
-      {hotspots.map(({ name, _id, featuredImg, locationId, parent, lat: hsLat, lng: hsLng }) => {
+      {hotspots.map(({ name, _id, featuredImg, locationId, parent, lat: hsLat, lng: hsLng, species }) => {
         let distance = distanceBetween(lat || 0, lng || 0, hsLat, hsLng);
         distance = distance < 10 ? parseFloat(distance.toFixed(1)) : parseFloat(distance.toFixed(0));
         showFullName = showFullName || !parent?.name;
         const shortName = showFullName ? name : name.split("--")?.[1] || name;
+        const showMeta = (lat && lng) || Number.isInteger(species);
         return (
           <article key={_id} className="flex flex-col gap-3">
             <Link href="/hotspot/[id]" as={`/hotspot/${locationId}`}>
@@ -50,7 +52,13 @@ export default function HotspotGrid({ lat, lng, hotspots, loading, showFullName 
                       <a className="text-gray-700">{shortName}</a>
                     </Link>
                   </h2>
-                  {lat && lng && <p className="text-gray-500 text-[11px]">{distance} miles away</p>}
+                  {showMeta && (
+                    <p className="flex items-center gap-1.5 text-gray-500 text-[11px]">
+                      {lat && lng && <span>{distance} miles away</span>}
+                      {lat && lng && Number.isInteger(species) && <span>•</span>}
+                      {Number.isInteger(species) && <span>{species} species</span>}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

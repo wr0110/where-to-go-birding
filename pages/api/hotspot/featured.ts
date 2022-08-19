@@ -9,7 +9,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     await connect();
     const settings = await Settings.findOne({ key: "global" }).exec();
     const featuredIds = settings.featuredIds;
-    const results = await Hotspot.find({ _id: { $in: featuredIds } })
+    const results = await Hotspot.find({ _id: { $in: featuredIds } }, [
+      "parent",
+      "stateCode",
+      "countyCode",
+      "name",
+      "url",
+      "featuredImg",
+      "locationId",
+      "species",
+    ])
       .populate("parent", ["name"])
       .sort({ name: 1 })
       .lean()
