@@ -26,7 +26,7 @@ export default function HotspotGrid({ lat, lng, hotspots, loading, showFullName 
 
   return (
     <>
-      {hotspots.map(({ name, _id, featuredImg, locationId, parent, lat: hsLat, lng: hsLng, species }) => {
+      {hotspots.map(({ name, _id, featuredImg, url, parent, lat: hsLat, lng: hsLng, species }) => {
         let distance = distanceBetween(lat || 0, lng || 0, hsLat, hsLng);
         distance = distance < 10 ? parseFloat(distance.toFixed(1)) : parseFloat(distance.toFixed(0));
         showFullName = showFullName || !parent?.name;
@@ -34,7 +34,7 @@ export default function HotspotGrid({ lat, lng, hotspots, loading, showFullName 
         const showMeta = (lat && lng) || Number.isInteger(species);
         return (
           <article key={_id} className="flex flex-col gap-3">
-            <Link href="/hotspot/[id]" as={`/hotspot/${locationId}`}>
+            <Link href={url}>
               <a>
                 <img
                   src={featuredImg?.smUrl || "/placeholder.png"}
@@ -48,7 +48,7 @@ export default function HotspotGrid({ lat, lng, hotspots, loading, showFullName 
                 <div>
                   {parent?.name && <p className="text-gray-600 text-[11px]">{parent.name}</p>}
                   <h2 className="font-bold">
-                    <Link href="/hotspot/[id]" as={`/hotspot/${locationId}`}>
+                    <Link href={url}>
                       <a className="text-gray-700">{shortName}</a>
                     </Link>
                   </h2>

@@ -20,6 +20,8 @@ import path from "path";
 import ReactMarkdown from "react-markdown";
 import { getArticlesByState } from "lib/mongo";
 import StateMap from "components/StateMap";
+import { MapIcon, ViewListIcon } from "@heroicons/react/outline";
+import TopHotspots from "components/TopHotspots";
 
 interface Params extends ParsedUrlQuery {
   countrySlug: string;
@@ -58,6 +60,7 @@ type Props = {
 };
 
 export default function State({ countrySlug, state, counties, topHotspots, info, articles }: Props) {
+  const [view, setView] = React.useState<string>("map");
   const { label, code, slug, features } = state || ({} as StateType);
 
   return (
@@ -99,9 +102,49 @@ export default function State({ countrySlug, state, counties, topHotspots, info,
           <EbirdStateSummary {...state} code={`${countrySlug?.toUpperCase()}-${state?.code}`} />
         </div>
         <div className="mb-8">
-          <div className="flex justify-center items-start md:mt-12">
-            <StateMap regionCode={`${countrySlug.toUpperCase()}-${code}`} />
+          <div className="flex">
+            <button
+              type="button"
+              className="border py-1 px-2.5 text-xs rounded-full text-gray-600 flex items-center gap-2 hover:bg-gray-50/75 transition-all ml-auto mb-2"
+              onClick={() => setView((prev) => (prev === "map" ? "list" : "map"))}
+            >
+              {view === "list" ? (
+                <>
+                  <MapIcon className="w-4 h-4" /> View Map
+                </>
+              ) : (
+                <>
+                  <ViewListIcon className="w-4 h-4" /> View List
+                </>
+              )}
+            </button>
           </div>
+          {view === "map" ? (
+            <div className="flex justify-center items-start">
+              <StateMap regionCode={`${countrySlug.toUpperCase()}-${code}`} />
+            </div>
+          ) : (
+            <div className="columns-3 sm:columns-4 flex-grow bg-gradient-to-t from-slate-600 to-slate-600/95 px-4 py-2 rounded">
+              {counties?.map(({ name, slug: countySlug, ebirdCode, active }) => (
+                <p key={name}>
+                  {active ? (
+                    <Link href={`/${countrySlug}/${slug}/${countySlug}-county`}>
+                      <a className="font-bold text-slate-300">{name}</a>
+                    </Link>
+                  ) : (
+                    <a
+                      href={`https://ebird.org/region/${ebirdCode}?yr=all`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-slate-300"
+                    >
+                      {name}
+                    </a>
+                  )}
+                </p>
+              ))}
+            </div>
+          )}
           <div className="grid gap-8 grid-cols-2">
             <div className="flex gap-4 items-center">
               <div className="w-6 h-3" />
@@ -110,32 +153,15 @@ export default function State({ countrySlug, state, counties, topHotspots, info,
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-12">
+      <div>
         <section>
           <Heading id="hotspots" color="green" className="mt-12 mb-8">
             Top Hotspots in {label}
           </Heading>
-          <TopHotspotList hotspots={topHotspots} />
-        </section>
-        <section className="mb-8 flex flex-col">
-          <Heading id="counties" color="green" className="mt-12 mb-8">
-            {label} Counties
-          </Heading>
-          <div className="columns-3 sm:columns-4 flex-grow">
-            {counties?.map(({ name, slug: countySlug, ebirdCode, active }) => (
-              <p key={name}>
-                {active ? (
-                  <Link href={`/${countrySlug}/${slug}/${countySlug}-county`}>
-                    <a className="font-bold">{name}</a>
-                  </Link>
-                ) : (
-                  <a href={`https://ebird.org/region/${ebirdCode}?yr=all`} target="_blank" rel="noreferrer">
-                    {name}
-                  </a>
-                )}
-              </p>
-            ))}
-          </div>
+          <TopHotspots
+            region={`${countrySlug.toUpperCase()}-${code}`}
+            label={`${label}, ${countrySlug.toUpperCase()}`}
+          />
         </section>
       </div>
 

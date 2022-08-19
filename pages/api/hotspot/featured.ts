@@ -16,7 +16,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       "name",
       "url",
       "featuredImg",
-      "locationId",
       "species",
     ])
       .populate("parent", ["name"])
