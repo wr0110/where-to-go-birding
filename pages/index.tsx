@@ -66,7 +66,7 @@ export default function Home2() {
             </p>
             <h3 className="text-lg font-bold mb-1.5">Links to eBird website</h3>
             <p className="mb-4">
-              <a href="https://birding-in-ohio.com/about-ebird" target="_blank" rel="noreferrer">
+              <a href="https://ebird.org/about" target="_blank" rel="noreferrer">
                 About eBird
               </a>
               <br />
