@@ -13,6 +13,12 @@ export default function useHoverMap() {
 
   useEventListener("mousemove", onMouseMove, svgRef);
 
+  const onScroll = (e: any) => {
+    setTooltip(null);
+  };
+
+  useEventListener("scroll", onScroll);
+
   const onMouseEnter = (e: React.MouseEvent<SVGPathElement, MouseEvent>) => {
     const text = e.currentTarget.parentElement?.querySelector("text")?.textContent || "";
     setTooltip(text);
