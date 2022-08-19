@@ -30,7 +30,7 @@ export default function TopHotspots({ region, label }: Props) {
   return (
     <>
       <div className="mt-12 grid xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        <HotspotGrid hotspots={results} loading={false} showFullName />
+        <HotspotGrid hotspots={results} loading={false} smallTitle />
       </div>
       <Link href={`/explore?mode=region&region=${region}&label=${label || region}`}>
         <a className="bg-[#4a84b2] hover:bg-[#325a79] text-white font-bold py-1.5 text-sm px-4 rounded-full w-[140px] mx-auto block mt-4 text-center">

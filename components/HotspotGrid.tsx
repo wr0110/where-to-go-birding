@@ -8,9 +8,10 @@ type Props = {
   hotspots: Hotspot[];
   loading: boolean;
   showFullName?: boolean;
+  smallTitle?: boolean;
 };
 
-export default function HotspotGrid({ lat, lng, hotspots, loading, showFullName }: Props) {
+export default function HotspotGrid({ lat, lng, hotspots, loading, showFullName, smallTitle }: Props) {
   if (loading) {
     return (
       <>
@@ -49,7 +50,7 @@ export default function HotspotGrid({ lat, lng, hotspots, loading, showFullName 
                   {parent?.name && <p className="text-gray-600 text-[11px]">{parent.name}</p>}
                   <h2 className="font-bold">
                     <Link href={url}>
-                      <a className="text-gray-700">{shortName}</a>
+                      <a className={`text-gray-700 ${smallTitle ? "text-[13px] leading-3" : ""}`}>{shortName}</a>
                     </Link>
                   </h2>
                   {showMeta && (
