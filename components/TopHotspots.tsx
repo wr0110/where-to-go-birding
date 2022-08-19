@@ -15,7 +15,7 @@ export default function TopHotspots({ region, label }: Props) {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/api/hotspot/by-region?region=${region}&limit=12`);
+        const response = await fetch(`/api/hotspot/by-region?region=${region}&limit=8`);
         const json = await response.json();
         setResults(json?.results || []);
       } catch (error) {}
