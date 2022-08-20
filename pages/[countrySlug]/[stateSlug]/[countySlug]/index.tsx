@@ -8,15 +8,11 @@ import PageHeading from "components/PageHeading";
 import { State, Hotspot, County as CountyType } from "lib/types";
 import EbirdCountySummary from "components/EbirdCountySummary";
 import HotspotList from "components/HotspotList";
-import TopHotspotList from "components/TopHotspotList";
 import RareBirds from "components/RareBirds";
 import EditorActions from "components/EditorActions";
 import Title from "components/Title";
 import { scrollToAnchor } from "lib/helpers";
-import fs from "fs";
-import path from "path";
 import TopHotspots from "components/TopHotspots";
-import Heading from "components/Heading";
 
 interface Params extends ParsedUrlQuery {
   countrySlug: string;
@@ -32,13 +28,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const county = getCountyBySlug(state.code, countySlug);
   if (!county?.name) return { notFound: true };
 
-  const file = path.join(process.cwd(), "public", "top10", `${county.ebirdCode}.json`);
-  const topHotspotFile = fs.readFileSync(file);
-  const topHotspots = JSON.parse(topHotspotFile.toString());
-
   const hotspots = (await getHotspotsByCounty(county.ebirdCode)) || [];
   return {
-    props: { countrySlug, state, county, hotspots, topHotspots },
+    props: { countrySlug, state, county, hotspots },
   };
 };
 
@@ -47,14 +39,9 @@ type Props = {
   county: CountyType;
   state: State;
   hotspots: Hotspot[];
-  topHotspots: {
-    name: string;
-    total: number;
-    url?: string;
-  }[];
 };
 
-export default function County({ countrySlug, state, county, hotspots, topHotspots }: Props) {
+export default function County({ countrySlug, state, county, hotspots }: Props) {
   const { slug, name, ebirdCode } = county;
   const dayHikeHotspots = hotspots.filter((it) => it.dayhike === "Yes");
   const hotspotIBA = hotspots.filter(({ iba }) => iba?.value).map(({ iba }) => iba);
