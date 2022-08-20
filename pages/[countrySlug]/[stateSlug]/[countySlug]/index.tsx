@@ -130,9 +130,9 @@ export default function County({ countrySlug, state, county, hotspots }: Props) 
         <h3 className="text-lg mb-2 font-bold" id="hotspots">
           All Hotspots in {name} County
         </h3>
-        <HotspotList hotspots={hotspots} className="columns-3" />
+        <HotspotList hotspots={hotspots} className="md:columns-3" />
       </section>
-      <div className="columns-3">
+      <div className="md:columns-3">
         {dayHikeHotspots.length > 0 && (
           <section className="break-inside-avoid-column mb-4">
             <h3 className="text-lg mb-2 font-bold" id="hikes">
