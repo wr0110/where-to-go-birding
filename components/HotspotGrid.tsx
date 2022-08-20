@@ -9,18 +9,16 @@ type Props = {
   loading: boolean;
   showFullName?: boolean;
   smallTitle?: boolean;
+  skeletonCount?: number;
 };
 
-export default function HotspotGrid({ lat, lng, hotspots, loading, showFullName, smallTitle }: Props) {
+export default function HotspotGrid({ lat, lng, hotspots, loading, showFullName, smallTitle, skeletonCount }: Props) {
   if (loading) {
     return (
       <>
-        <Skeleton />
-        <Skeleton />
-        <Skeleton />
-        <Skeleton />
-        <Skeleton />
-        <Skeleton />
+        {Array.from(Array(skeletonCount || 6)).map((item, i) => (
+          <Skeleton key={i} />
+        ))}
       </>
     );
   }

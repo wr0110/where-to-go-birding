@@ -162,13 +162,6 @@ export default function Edit({ id, isNew, data, error, childLocations, state }: 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, lat, lng]);
 
-  const handleHikeBlur = () => {
-    const value = form.getValues("hikes");
-    if (isNew && value) {
-      form.setValue("dayhike", "Yes");
-    }
-  };
-
   if (error) return <Error statusCode={404} title={error} />;
 
   return (
@@ -202,11 +195,9 @@ export default function Edit({ id, isNew, data, error, childLocations, state }: 
                 <TinyMCE name="about" defaultValue={data?.about} />
               </Field>
 
-              {features.includes("hikes") && (
-                <Field label="Birding Day Hike">
-                  <TinyMCE name="hikes" defaultValue={data?.hikes} onBlur={handleHikeBlur} />
-                </Field>
-              )}
+              <Field label="Notable Trails">
+                <TinyMCE name="hikes" defaultValue={data?.hikes} />
+              </Field>
 
               <div className="grid md:grid-cols-2 gap-4">
                 <Field label="Parent Hotspot">

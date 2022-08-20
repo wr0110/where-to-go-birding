@@ -164,13 +164,6 @@ export default function Edit({ id, isNew, data, state, childLocations }: Props) 
     }
   };
 
-  const handleHikeBlur = () => {
-    const value = form.getValues("hikes");
-    if (isNew && value) {
-      form.setValue("dayhike", "Yes");
-    }
-  };
-
   return (
     <AdminPage title="Edit Hotspot">
       <div className="container pb-16 my-12">
@@ -217,11 +210,9 @@ export default function Edit({ id, isNew, data, state, childLocations }: Props) 
                 <TinyMCE name="about" defaultValue={data?.about} />
               </Field>
 
-              {features.includes("hikes") && (
-                <Field label="Birding Day Hike">
-                  <TinyMCE name="hikes" defaultValue={data?.hikes} onBlur={handleHikeBlur} />
-                </Field>
-              )}
+              <Field label="Notable Trails">
+                <TinyMCE name="hikes" defaultValue={data?.hikes} />
+              </Field>
 
               <Field label="Counties">
                 <CountySelect name="multiCounties" stateCode={state.code} isMulti required />

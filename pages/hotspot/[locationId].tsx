@@ -242,7 +242,7 @@ export default function Hotspot({
 
           {about && <AboutSection heading="About this Location" text={about} />}
 
-          {hikes && <AboutSection heading="Birding Day Hike" text={hikes} />}
+          {hikes && <AboutSection heading="Notable Trails" text={hikes} />}
 
           {parent?.about && parent?.name && <AboutSection heading={`About ${parent.name}`} text={parent.about} />}
 
