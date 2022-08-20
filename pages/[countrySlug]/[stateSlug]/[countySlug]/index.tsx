@@ -15,6 +15,8 @@ import Title from "components/Title";
 import { scrollToAnchor } from "lib/helpers";
 import fs from "fs";
 import path from "path";
+import TopHotspots from "components/TopHotspots";
+import Heading from "components/Heading";
 
 interface Params extends ParsedUrlQuery {
   countrySlug: string;
@@ -86,10 +88,10 @@ export default function County({ countrySlug, state, county, hotspots, topHotspo
       <PageHeading countrySlug={countrySlug} state={state}>
         {name} County
       </PageHeading>
-      <EditorActions>
+      <EditorActions className="-mt-10">
         <Link href="/add">Add Hotspot</Link>
       </EditorActions>
-      <div className="grid md:grid-cols-2 gap-12">
+      <div className="grid md:grid-cols-[2fr_3fr] gap-8 mb-16">
         <div className="flex flex-col gap-8">
           <section>
             <h3 className="text-lg mb-2 font-bold">Where to Go Birding in {name} County</h3>
@@ -124,58 +126,62 @@ export default function County({ countrySlug, state, county, hotspots, topHotspo
             </p>
           </section>
           <EbirdCountySummary {...{ state, county }} />
-          <section>
-            <h3 className="text-lg mb-2 font-bold" id="tophotspots">
-              Top Hotspots in {name} County
-            </h3>
-            <TopHotspotList hotspots={topHotspots} />
-          </section>
-          {dayHikeHotspots.length > 0 && (
-            <section>
-              <h3 className="text-lg mb-2 font-bold" id="hikes">
-                Day Hikes
-              </h3>
-              <HotspotList hotspots={dayHikeHotspots} />
-            </section>
-          )}
-          {sortedIba.length > 0 && (
-            <section>
-              <h3 className="text-lg mb-2 font-bold" id="iba">
-                Important Bird Areas
-              </h3>
-              <ul>
-                {sortedIba?.map(({ label, value }: any) => (
-                  <li key={value}>
-                    <Link href={`/${countrySlug}/${state.slug}/important-bird-areas/${value}`}>{label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-          {sortedDrives.length > 0 && (
-            <section>
-              <h3 className="text-lg mb-2 font-bold" id="iba">
-                Birding Drives
-              </h3>
-              <ul>
-                {sortedDrives?.map(({ name, slug }: any) => (
-                  <li key={slug}>
-                    <Link href={`/${countrySlug}/${state.slug}/drive/${slug}`}>{name}</Link>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
         </div>
-        <div className="flex flex-col gap-8">
-          {name && <RegionMap location={`${name} County, ${state.label}`} />}
-          <section>
-            <h3 className="text-lg mb-2 font-bold" id="hotspots">
-              All Hotspots in {name} County
+        {name && <RegionMap location={`${name} County, ${state.label}`} />}
+      </div>
+      <section className="mb-16">
+        <h3 className="text-lg mb-2 font-bold" id="tophotspots">
+          Top Hotspots
+        </h3>
+        <TopHotspots
+          region={ebirdCode}
+          label={`${name}, ${state.label}, ${countrySlug.toUpperCase()}`}
+          className="mt-4"
+        />
+      </section>
+      <section className="mb-12">
+        <h3 className="text-lg mb-2 font-bold" id="hotspots">
+          All Hotspots in {name} County
+        </h3>
+        <HotspotList hotspots={hotspots} className="columns-3" />
+      </section>
+      <div className="columns-3">
+        {dayHikeHotspots.length > 0 && (
+          <section className="break-inside-avoid-column mb-4">
+            <h3 className="text-lg mb-2 font-bold" id="hikes">
+              Day Hikes
             </h3>
-            <HotspotList hotspots={hotspots} />
+            <HotspotList hotspots={dayHikeHotspots} />
           </section>
-        </div>
+        )}
+        {sortedIba.length > 0 && (
+          <section className="break-inside-avoid-column mb-4">
+            <h3 className="text-lg mb-2 font-bold" id="iba">
+              Important Bird Areas
+            </h3>
+            <ul>
+              {sortedIba?.map(({ label, value }: any) => (
+                <li key={value}>
+                  <Link href={`/${countrySlug}/${state.slug}/important-bird-areas/${value}`}>{label}</Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+        {sortedDrives.length > 0 && (
+          <section className="break-inside-avoid-column mb-4">
+            <h3 className="text-lg mb-2 font-bold" id="iba">
+              Birding Drives
+            </h3>
+            <ul>
+              {sortedDrives?.map(({ name, slug }: any) => (
+                <li key={slug}>
+                  <Link href={`/${countrySlug}/${state.slug}/drive/${slug}`}>{name}</Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </div>
       <RareBirds region={ebirdCode} label={`${name} County`} className="mt-16" />
     </div>

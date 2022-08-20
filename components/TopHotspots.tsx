@@ -7,9 +7,10 @@ import { ArrowNarrowRightIcon } from "@heroicons/react/solid";
 type Props = {
   region: string;
   label?: string;
+  className?: string;
 };
 
-export default function TopHotspots({ region, label }: Props) {
+export default function TopHotspots({ region, label, className }: Props) {
   const [results, setResults] = React.useState<Hotspot[]>([]);
 
   React.useEffect(() => {
@@ -29,7 +30,7 @@ export default function TopHotspots({ region, label }: Props) {
 
   return (
     <>
-      <div className="mt-12 grid xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <div className={`grid xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 ${className || ""}`}>
         <HotspotGrid hotspots={results} loading={false} smallTitle />
       </div>
       <Link href={`/explore?mode=region&region=${region}&label=${label || region}`}>

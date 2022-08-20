@@ -139,17 +139,16 @@ export default function State({ countrySlug, state, counties, info, articles }: 
         </div>
       </div>
 
-      <div>
-        <section>
-          <Heading id="hotspots" color="green" className="mt-12 mb-8">
-            Top Hotspots in {label}
-          </Heading>
-          <TopHotspots
-            region={`${countrySlug.toUpperCase()}-${code}`}
-            label={`${label}, ${countrySlug.toUpperCase()}`}
-          />
-        </section>
-      </div>
+      <section>
+        <Heading id="hotspots" color="green" className="mt-12 mb-8">
+          Top Hotspots in {label}
+        </Heading>
+        <TopHotspots
+          region={`${countrySlug.toUpperCase()}-${code}`}
+          label={`${label}, ${countrySlug.toUpperCase()}`}
+          className="mt-12"
+        />
+      </section>
 
       <Heading id="hotspots" color="yellow" className="mt-12 mb-8">
         More Information
