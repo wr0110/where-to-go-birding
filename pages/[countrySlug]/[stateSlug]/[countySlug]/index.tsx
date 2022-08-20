@@ -78,7 +78,7 @@ export default function County({ countrySlug, state, county, hotspots }: Props) 
       <EditorActions className="-mt-10">
         <Link href="/add">Add Hotspot</Link>
       </EditorActions>
-      <div className="grid md:grid-cols-[2fr_3fr] gap-8 mb-16">
+      <div className="grid md:grid-cols-2 gap-8 mb-16">
         <div className="flex flex-col gap-8">
           <section>
             <h3 className="text-lg mb-2 font-bold">Where to Go Birding in {name} County</h3>
