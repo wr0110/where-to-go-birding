@@ -43,7 +43,6 @@ type Props = {
 
 export default function County({ countrySlug, state, county, hotspots }: Props) {
   const { slug, name, ebirdCode } = county;
-  const dayHikeHotspots = hotspots.filter((it) => it.dayhike === "Yes");
   const hotspotIBA = hotspots.filter(({ iba }) => iba?.value).map(({ iba }) => iba);
   const hotspotDrives = hotspots.filter(({ drive }) => drive?.slug).map(({ drive }) => drive);
 
@@ -92,13 +91,6 @@ export default function County({ countrySlug, state, county, hotspots }: Props) 
                 Top Hotspots
               </a>
             </p>
-            {dayHikeHotspots.length > 0 && (
-              <p>
-                <a href="#hikes" onClick={scrollToAnchor}>
-                  Day Hikes
-                </a>
-              </p>
-            )}
             {iba.length > 0 && (
               <p>
                 <a href="#iba" onClick={scrollToAnchor}>
@@ -133,14 +125,6 @@ export default function County({ countrySlug, state, county, hotspots }: Props) 
         <HotspotList hotspots={hotspots} className="md:columns-3" />
       </section>
       <div className="md:columns-3">
-        {dayHikeHotspots.length > 0 && (
-          <section className="break-inside-avoid-column mb-4">
-            <h3 className="text-lg mb-2 font-bold" id="hikes">
-              Day Hikes
-            </h3>
-            <HotspotList hotspots={dayHikeHotspots} />
-          </section>
-        )}
         {sortedIba.length > 0 && (
           <section className="break-inside-avoid-column mb-4">
             <h3 className="text-lg mb-2 font-bold" id="iba">

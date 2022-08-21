@@ -70,7 +70,6 @@ export type Hotspot = {
   restrooms?: string;
   roadside?: string;
   accessible?: string[];
-  dayhike?: string;
   parent?: any;
   iba?: {
     value: string;

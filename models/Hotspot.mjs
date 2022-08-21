@@ -75,11 +75,6 @@ const HotspotSchema = new Schema({
 		type: Array,
 		default: null,
 	},
-	dayhike: {
-		type: String,
-		enum: ["Yes", "No"],
-		default: "No",
-	},
 	parent: {
 		type: Schema.Types.ObjectId,
 		ref: "Hotspot",

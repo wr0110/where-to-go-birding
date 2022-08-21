@@ -13,7 +13,6 @@
 		"label": "Arizona",
 		"slug": "arizona",
 		"code": "AZ",
-		"features": ["hikes"],
 		"active": true,
 		"color": "#e57700"
 	},
@@ -110,7 +109,6 @@
 		"label": "Massachusetts",
 		"slug": "massachusetts",
 		"code": "MA",
-		"features": ["hikes"],
 		"active": true,
 		"portal": "massaudubon"
 	},
@@ -155,7 +153,6 @@
 		"label": "New Hampshire",
 		"slug": "new-hampshire",
 		"code": "NH",
-		"features": ["hikes"],
 		"active": true
 	},
 	{
@@ -167,7 +164,6 @@
 		"label": "New Mexico",
 		"slug": "new-mexico",
 		"code": "NM",
-		"features": ["hikes"],
 		"active": true
 	},
 	{
@@ -190,7 +186,7 @@
 		"slug": "ohio",
 		"code": "OH",
 		"email": "hotspots@ohiobirds.org",
-		"features": [ "roadside", "accessible", "iba", "hikes", "drives" ],
+		"features": [ "roadside", "accessible", "iba", "drives" ],
 		"active": true,
 		"color": "#4a84b2"
 	},
@@ -246,7 +242,6 @@
 		"slug": "vermont",
 		"code": "VT",
 		"portal": "vt",
-		"features": ["hikes"],
 		"active": true
 	},
 	{

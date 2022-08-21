@@ -65,7 +65,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         roadside: data?.roadside || "Unknown",
         restrooms: restroomOptions.find((it) => it.value === data?.restrooms) || null,
         accessible: data?.accessible || null,
-        dayhike: data?.dayhike || "No",
         zoom: data?.zoom || 14,
       },
     },
@@ -241,9 +240,6 @@ export default function Edit({ id, isNew, data, state, childLocations }: Props) 
               </Field>
               <CheckboxGroup name="accessible" label="Accessible Facilities" options={accessibleOptions} />
               <RadioGroup name="roadside" label="Roadside accessible" options={["Yes", "No", "Unknown"]} />
-              {features.includes("hikes") && (
-                <RadioGroup name="dayhike" label="Show in Day Hike index" options={["Yes", "No"]} />
-              )}
               {markers.length > 0 && (
                 <div className="flex-1">
                   <label className="text-gray-500 font-bold mb-1 block">Hotspot Map</label>
