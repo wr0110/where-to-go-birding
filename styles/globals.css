@@ -123,6 +123,10 @@
 	@apply gap-12;
 }
 
+.formatted a[href^="/"], .formatted a[href^=".."], .formatted a[href^="https://birdinghotspots.org/"] {
+	font-weight: bold;
+}
+
 svg.icon {
 	width: 1em;
 	height: 1em;		
