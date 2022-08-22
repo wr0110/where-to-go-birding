@@ -84,7 +84,7 @@ export default function RareBirds({ region, label, className }: Props) {
                   </button>
                 </div>
                 <div className="whitespace-nowrap ml-auto">
-                  <span className="bg-gray-300 text-gray-700 rounded-sm px-2 py-1 text-xs whitespace-nowrap font-medium">
+                  <span className="bg-gray-200/75 text-gray-600 rounded-full px-2 py-[3px] text-[11px] whitespace-nowrap font-medium">
                     <Timeago datetime={date} />
                   </span>
                 </div>
