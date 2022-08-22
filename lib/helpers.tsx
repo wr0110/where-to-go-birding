@@ -285,3 +285,7 @@ export const getEbirdColor = (count: number) => {
   if (count <= 500) return "#ce0d02";
   return "#ad0002";
 };
+
+export function truncate(string: string, length: number) {
+  return string.length > length ? `${string.substring(0, length)}...` : string;
+}

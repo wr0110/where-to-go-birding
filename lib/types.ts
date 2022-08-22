@@ -219,3 +219,15 @@ export type Upload = {
   status: string;
   _id?: string;
 };
+
+export type NotableReport = {
+  location: string;
+  date: string;
+  checklistId: string;
+  lat: number;
+  lng: number;
+  hasRichMedia: boolean;
+  countyName: string;
+  userDisplayName: string;
+  id: string;
+};
