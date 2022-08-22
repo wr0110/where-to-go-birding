@@ -67,6 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       hasRichMedia: item.hasRichMedia,
       countyName: item.subnational2Name,
       userDisplayName: item.userDisplayName,
+      approved: item.obsValid,
     });
   });
 

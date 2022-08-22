@@ -227,6 +227,7 @@ export type NotableReport = {
   lat: number;
   lng: number;
   hasRichMedia: boolean;
+  approved: boolean;
   countyName: string;
   userDisplayName: string;
   id: string;
