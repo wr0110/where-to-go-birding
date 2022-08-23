@@ -1,7 +1,7 @@
 import { truncate } from "lib/helpers";
-import Timeago from "components/Timeago";
 import { CameraIcon, CheckCircleIcon } from "@heroicons/react/solid";
 import { NotableReport } from "lib/types";
+import dayjs from "dayjs";
 
 type Props = {
   items: NotableReport[];
@@ -20,7 +20,7 @@ export default function NotableObservationList({ items }: Props) {
             </div>
 
             <p className="text-gray-500 text-[0.85em] leading-5 font-medium">
-              <Timeago datetime={date} /> by {userDisplayName}
+              {dayjs(date).format("MMM D [at] h:mm a ")} by {userDisplayName}
               {hasRichMedia && (
                 <span title="Has photo or audio">
                   <CameraIcon className="ml-1.5 w-4 h-4 inline text-lime-600" />

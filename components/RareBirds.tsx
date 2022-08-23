@@ -2,7 +2,6 @@ import Heading from "components/Heading";
 import * as React from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { NotableReport } from "lib/types";
-import { truncate } from "lib/helpers";
 import Timeago from "components/Timeago";
 import NotableObservationList from "components/NotableObservationList";
 
@@ -85,7 +84,7 @@ export default function RareBirds({ region, label, className }: Props) {
                 </div>
                 <div className="whitespace-nowrap ml-auto">
                   <span className="bg-gray-200/75 text-gray-600 rounded-full px-2 py-[3px] text-[11px] whitespace-nowrap font-medium">
-                    <Timeago datetime={date} />
+                    {dayjs(date).format("MMM D [at] h:mm a ")}
                   </span>
                 </div>
               </header>
