@@ -109,7 +109,7 @@ export default function Hotspot({
   locationIds,
   slug,
   iba,
-  drive,
+  drives,
   images,
   isGroup,
   markers,
@@ -136,12 +136,12 @@ export default function Hotspot({
       url: `/${countrySlug}/${state.slug}/important-bird-areas/${iba.value}`,
     });
   }
-  if (drive) {
+  drives?.forEach((drive) => {
     extraLinks.push({
       label: drive.name,
       url: `/${countrySlug}/${state.slug}/drive/${drive.slug}`,
     });
-  }
+  });
 
   const photos = images?.filter((it) => !it.isMap) || [];
   const mapImages = images?.filter((item) => item.smUrl && item.isMap) || [];

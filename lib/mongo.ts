@@ -25,13 +25,13 @@ export async function getHotspotsByCounty(countyCode: string) {
     {
       $or: [{ countyCode }, { multiCounties: countyCode }],
     },
-    ["-_id", "name", "url", "iba", "drive"]
+    ["-_id", "name", "url", "iba", "drives"]
   )
     .sort({ name: 1 })
     .lean()
     .exec();
 
-  return result;
+  return result ? JSON.parse(JSON.stringify(result)) : null;
 }
 
 export async function getAccessibleHotspotsByState(stateCode: string) {

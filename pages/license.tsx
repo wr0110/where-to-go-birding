@@ -17,18 +17,18 @@ export default function License() {
           >
             CC0
           </a>
-          . However, content in the following scenarios belons to their respective owners:
+          . However, content in the following scenarios belongs to the respective owner:
         </p>
         <p className="mb-2 ml-6">
-          - Quote text as indicted by <em>From ...</em> at the end of the section
+          - Quoted text as indicted by <em>From ...</em> at the end of the section
           <br />
           - All maps
           <br />
-          - Images with a copyright watermark
+          - Images with a copyright or license notice
           <br />
         </p>
         <p className="mb-4">
-          Note that if you contribute images or text to this site, you agree to release the content into the public
+          Note that if you contribute images or text to this site, you agree to release your content into the public
           domain.
         </p>
       </div>

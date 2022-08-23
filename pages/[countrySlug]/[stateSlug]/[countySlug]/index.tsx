@@ -5,7 +5,7 @@ import { getHotspotsByCounty } from "lib/mongo";
 import { getState, getCountyBySlug } from "lib/localData";
 import RegionMap from "components/RegionMap";
 import PageHeading from "components/PageHeading";
-import { State, Hotspot, County as CountyType } from "lib/types";
+import { State, HotspotDrive, Hotspot, County as CountyType } from "lib/types";
 import EbirdCountySummary from "components/EbirdCountySummary";
 import HotspotList from "components/HotspotList";
 import RareBirds from "components/RareBirds";
@@ -44,7 +44,12 @@ type Props = {
 export default function County({ countrySlug, state, county, hotspots }: Props) {
   const { slug, name, ebirdCode } = county;
   const hotspotIBA = hotspots.filter(({ iba }) => iba?.value).map(({ iba }) => iba);
-  const hotspotDrives = hotspots.filter(({ drive }) => drive?.slug).map(({ drive }) => drive);
+  const drives: HotspotDrive[] = [];
+  hotspots.forEach((hotspot) => {
+    hotspot.drives?.forEach((drive) => {
+      drives.push(drive);
+    });
+  });
 
   //Removes duplicate objects from IBA array
   const iba = hotspotIBA.filter(
@@ -55,7 +60,7 @@ export default function County({ countrySlug, state, county, hotspots }: Props) 
   );
 
   //Removes duplicate objects from drive array
-  const drives = hotspotDrives.filter(
+  const uniqueDrives = drives.filter(
     (elem, index, self) =>
       self.findIndex((t) => {
         return t?.slug === elem?.slug && t?.name === elem?.name;
@@ -66,7 +71,7 @@ export default function County({ countrySlug, state, county, hotspots }: Props) 
   const sortedIba = iba.sort((a, b) => a.label.localeCompare(b.label));
 
   //@ts-ignore
-  const sortedDrives = drives.sort((a, b) => a.name.localeCompare(b.name));
+  const sortedDrives = uniqueDrives.sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <div className="container pb-16">

@@ -18,7 +18,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   try {
     await connect();
     await Article.findByIdAndDelete(id);
-    console.log(id);
     res.status(200).json({ success: true });
   } catch (error: any) {
     res.status(500).json({ error: error.message });

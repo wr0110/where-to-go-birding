@@ -3,6 +3,7 @@ import connect from "lib/mongo";
 import admin from "lib/firebaseAdmin";
 import Drive from "models/Drive";
 import Hotspot from "models/Hotspot.mjs";
+import { HotspotDrive } from "lib/types";
 
 type Entry = {
   hotspot: string;
@@ -23,26 +24,43 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   try {
     await connect();
     const { data, id } = req.body;
+    let driveId = id;
     if (isNew === "true") {
-      await Drive.create({ ...data, _id: id });
+      const newDrive = await Drive.create(data);
+      driveId = newDrive._id;
     } else {
       await Drive.replaceOne({ _id: id }, data);
     }
 
-    data?.entries?.forEach(async ({ hotspot: hotspotId }: Entry) => {
-      try {
-        const hotspot = await Hotspot.findOne({ _id: hotspotId });
-        if (
-          hotspot?.drive?.slug &&
-          hotspot?.drive?.name &&
-          hotspot.drive.slug === data.slug &&
-          hotspot.drive.name === data.name
-        ) {
-          return;
-        }
-        await Hotspot.updateOne({ _id: hotspotId }, { $set: { drive: { slug: data.slug, name: data.name } } });
-      } catch (error) {}
+    const hotspotIds = data.entries.map((entry: any) => entry.hotspot._id);
+
+    data?.entries?.forEach(async ({ hotspot: hotspotEntry }: Entry) => {
+      const hotspot = await Hotspot.findOne({ _id: hotspotEntry });
+      let exists = false;
+      await Promise.all(
+        hotspot.drives?.map(async (drive: HotspotDrive) => {
+          if (drive.driveId.toString() === driveId) {
+            exists = true;
+            drive.name = data.name;
+            drive.slug = data.slug;
+          }
+        })
+      );
+      if (!exists) {
+        await hotspot.drives.push({
+          name: data.name,
+          slug: data.slug,
+          driveId,
+        });
+      }
+      await hotspot.save();
     });
+
+    await Hotspot.updateMany(
+      { drives: { $elemMatch: { driveId } }, _id: { $nin: hotspotIds } },
+      // @ts-ignore
+      { $pull: { drives: { driveId } } }
+    );
 
     res.status(200).json({ success: true });
   } catch (error: any) {

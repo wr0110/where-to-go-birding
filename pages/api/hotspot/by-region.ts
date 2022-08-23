@@ -7,7 +7,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const { region, limit, offset }: any = req.query;
   const isCounty = region.split("-").length === 3;
   const regionName = isCounty ? `${getCountyByCode(region)?.name} County` : getStateByCode(region.split("-")[1])?.label;
-  console.log(regionName);
 
   const query = isCounty
     ? {

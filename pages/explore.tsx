@@ -77,7 +77,6 @@ export default function Explore({ params }: Props) {
   };
 
   const handleRegionChange = (option: Option) => {
-    console.log("handleRegionChange", option);
     setRegion(option);
   };
 

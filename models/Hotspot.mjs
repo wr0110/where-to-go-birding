@@ -88,6 +88,14 @@ const HotspotSchema = new Schema({
 		slug: String,
 		name: String,
 	},
+	drives: [{
+		slug: String,
+		name: String,
+		driveId: {
+			type: Schema.Types.ObjectId,
+			ref: "Drive",
+		},
+	}],
 	images: [{
 		smUrl: String,
 		lgUrl: String,

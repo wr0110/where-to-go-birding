@@ -75,10 +75,13 @@ export type Hotspot = {
     value: string;
     label: string;
   };
-  drive?: {
-    slug: string;
-    name: string;
-  };
+  drives?: [
+    {
+      slug: string;
+      name: string;
+      driveId: string;
+    }
+  ];
   images?: Image[];
   featuredImg?: Image;
   isGroup?: boolean;
@@ -231,4 +234,10 @@ export type NotableReport = {
   countyName: string;
   userDisplayName: string;
   id: string;
+};
+
+export type HotspotDrive = {
+  name: string;
+  slug: string;
+  driveId: string;
 };
