@@ -84,10 +84,6 @@ const HotspotSchema = new Schema({
 		value: String,
 		label: String,
 	},
-	drive: {
-		slug: String,
-		name: String,
-	},
 	drives: [{
 		slug: String,
 		name: String,

@@ -7,6 +7,7 @@ import PageHeading from "components/PageHeading";
 import { GetServerSideProps } from "next";
 import { DrivesByCounty, State } from "lib/types";
 import Title from "components/Title";
+import EditorActions from "components/EditorActions";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const countrySlug = query.countrySlug as string;
@@ -35,6 +36,9 @@ export default function Drives({ countrySlug, state, drives }: Props) {
       <PageHeading countrySlug={countrySlug} state={state}>
         Birding Drives
       </PageHeading>
+      <EditorActions className="-mt-12">
+        <Link href={`/${countrySlug}/${state.slug}/drive/edit/new`}>Add Drive</Link>
+      </EditorActions>
       <div className="md:flex gap-8 items-start mb-8">
         <div>
           <p className="mb-4">

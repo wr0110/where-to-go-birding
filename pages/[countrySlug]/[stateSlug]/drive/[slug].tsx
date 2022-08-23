@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Link from "next/link";
 import { getDriveBySlug } from "lib/mongo";
-import { getCountyByCode, getState } from "lib/localData";
+import { getState } from "lib/localData";
 import { State, Drive as DriveType } from "lib/types";
 import PageHeading from "components/PageHeading";
 import Title from "components/Title";
@@ -25,17 +25,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const data = await getDriveBySlug(state.code, slug);
   if (!data) return { notFound: true };
 
-  const countySlugs = data.counties?.map((item: string) => {
-    const county = getCountyByCode(item);
-    return county?.slug;
-  });
-
   return {
     props: {
       countrySlug,
       state,
       portal: state.portal || null,
-      countySlugs,
       ...data,
     },
   };
@@ -45,20 +39,9 @@ interface Props extends DriveType {
   countrySlug: string;
   state: State;
   portal: string;
-  countySlugs: string[];
 }
 
-export default function Drive({
-  countrySlug,
-  name,
-  description,
-  state,
-  mapId,
-  countySlugs,
-  entries,
-  images,
-  _id,
-}: Props) {
+export default function Drive({ countrySlug, name, description, state, mapId, entries, images, _id }: Props) {
   const [rendered, isRendered] = React.useState(false);
   React.useEffect(() => {
     isRendered(true);
@@ -75,7 +58,6 @@ export default function Drive({
       </PageHeading>
       <EditorActions className="-mt-12">
         <Link href={`/${countrySlug}/${state.slug}/drive/edit/${_id}`}>Edit Drive</Link>
-        <Link href={`/${countrySlug}/${state.slug}/drive/edit/new`}>Add Drive</Link>
         <DeleteBtn url={`/api/drive/delete?id=${_id}`} entity="drive" className="ml-auto">
           Delete Drive
         </DeleteBtn>
