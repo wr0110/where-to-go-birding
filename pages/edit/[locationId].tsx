@@ -210,9 +210,10 @@ export default function Edit({ id, isNew, data, error, childLocations, state }: 
                 )}
               </div>
 
-              <Field label="Images">
+              <div>
+                <label className="text-gray-500 font-bold">Images</label>
                 <ImagesInput enableStreetview />
-              </Field>
+              </div>
               <div className="px-4 py-3 bg-gray-100 text-right sm:px-6 rounded hidden md:block">
                 <Submit loading={saving} color="green" className="font-medium">
                   Save Hotspot

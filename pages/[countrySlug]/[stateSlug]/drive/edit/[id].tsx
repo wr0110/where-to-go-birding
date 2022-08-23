@@ -105,9 +105,10 @@ export default function Edit({ isNew, data, id, state, countrySlug }: Props) {
                 <CountySelect name="counties" stateCode={state.code} isMulti required />
                 <FormError name="counties" />
               </Field>
-              <Field label="Images">
+              <div>
+                <label className="text-gray-500 font-bold">Images</label>
                 <ImagesInput hideExtraFields />
-              </Field>
+              </div>
               <InputDrives stateCode={state.code} />
             </div>
             <div className="px-4 py-3 bg-gray-100 text-right sm:px-6 rounded">

@@ -107,9 +107,10 @@ export default function Edit({ isNew, data, id, state, countrySlug }: Props) {
                 <TinyMCE config={tinyConfig} name="content" defaultValue={data?.content} />
                 <FormError name="content" />
               </Field>
-              <Field label="Images">
+              <div>
+                <label className="text-gray-500 font-bold">Images</label>
                 <ImagesInput hideExtraFields />
-              </Field>
+              </div>
               <Field label="Attached Hotspots">
                 <HotspotSelect name="hotspotSelect" stateCode={state.code} className="mt-1 w-full" isMulti />
               </Field>

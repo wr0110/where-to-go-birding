@@ -34,20 +34,11 @@ export default function ImagesInput({ hideExtraFields, enableStreetview }: Props
   const ids = fields.map(({ id }) => id);
 
   function handleDragEnd(event: any) {
-    //Prevent useFieldArray from focusing first image input after move()
-    document.querySelectorAll(".sortableGrid input").forEach((element: any) => {
-      element.disabled = true;
-    });
     const { active, over } = event;
     if (active.id === over.id) return;
     const oldIndex = ids.indexOf(active.id);
     const newIndex = ids.indexOf(over.id);
     move(oldIndex, newIndex);
-    setTimeout(() => {
-      document.querySelectorAll(".sortableGrid input").forEach((element: any) => {
-        element.disabled = false;
-      });
-    }, 500);
   }
 
   return (
