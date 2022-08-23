@@ -1,0 +1,12 @@
+name: Sync Hotspots
+on:
+  schedule:
+    - cron: "0 0 * * 1"
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync Hotspots
+        run: |
+          curl --request POST \
+          --url 'https://birdinghotspots.org/api/hotspot/sync?key=${{ secrets.CRON_KEY }}' \
