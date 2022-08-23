@@ -88,12 +88,12 @@ export default function County({ countrySlug, state, county, hotspots }: Props) 
             <h3 className="text-lg mb-2 font-bold">Where to Go Birding in {name} County</h3>
             <p>
               <a href="#hotspots" onClick={scrollToAnchor}>
-                Alphabetical List of Hotspots
+                Alphabetical List of eBird Hotspots
               </a>
             </p>
             <p>
               <a href="#tophotspots" onClick={scrollToAnchor}>
-                Top Hotspots
+                Top eBird Hotspots
               </a>
             </p>
             {iba.length > 0 && (
@@ -115,7 +115,7 @@ export default function County({ countrySlug, state, county, hotspots }: Props) 
       </div>
       <section className="mb-16">
         <h3 className="text-lg mb-2 font-bold" id="tophotspots">
-          Top Hotspots
+          Top eBird Hotspots
         </h3>
         <TopHotspots
           region={ebirdCode}

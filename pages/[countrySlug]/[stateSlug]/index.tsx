@@ -74,10 +74,10 @@ export default function State({ countrySlug, state, counties, info, articles }: 
         <div>
           <h3 className="text-lg mb-1.5 font-bold">Where to Go Birding in {label}</h3>
           <p className="mb-4">
-            <Link href={`/${countrySlug}/${slug}/alphabetical-index`}>{`Alphabetical list of ${label} Hotspots`}</Link>
+            <Link href={`/${countrySlug}/${slug}/alphabetical-index`}>Alphabetical list of eBird Hotspots</Link>
             <br />
             <a href="#hotspots" onClick={scrollToAnchor}>
-              Top Hotspots
+              Top eBird Hotspots
             </a>
             <br />
             <a href="#notable" onClick={scrollToAnchor}>
@@ -141,7 +141,7 @@ export default function State({ countrySlug, state, counties, info, articles }: 
 
       <section>
         <Heading id="hotspots" color="green" className="mt-12 mb-8">
-          Top Hotspots in {label}
+          Top eBird Hotspots
         </Heading>
         <TopHotspots
           region={`${countrySlug.toUpperCase()}-${code}`}
