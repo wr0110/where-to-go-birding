@@ -153,6 +153,7 @@
 		"label": "New Hampshire",
 		"slug": "new-hampshire",
 		"code": "NH",
+		"portal": "nh",
 		"active": true
 	},
 	{
